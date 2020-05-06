@@ -1,0 +1,22 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "twitter-bootstrap@4.4.0",
+      "destination": "wwwroot/lib/bootstrap/"
+    },
+    {
+      "library": "font-awesome@5.13.0",
+      "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "html5shiv@3.7.3",
+      "destination": "wwwroot/lib/html5shiv/"
+    },
+    {
+      "library": "respond.js@1.4.2",
+      "destination": "wwwroot/lib/respond.js/"
+    }
+  ]
+}
