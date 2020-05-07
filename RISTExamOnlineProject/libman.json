@@ -17,6 +17,16 @@
     {
       "library": "respond.js@1.4.2",
       "destination": "wwwroot/lib/respond.js/"
+    },
+    {
+      "library": "popper.js@2.4.0",
+      "destination": "wwwroot/lib/popper.js/"
     }
-  ]
+  ,
+{
+  "provider": "cdnjs",
+  "library": "jquery@3.5.1",
+  "destination": "wwwroot/lib/jquery/"
+}
+]
 }
