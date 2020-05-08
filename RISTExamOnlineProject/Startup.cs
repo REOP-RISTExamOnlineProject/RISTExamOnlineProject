@@ -37,7 +37,7 @@ namespace RISTExamOnlineProject
             {
                 routes.MapRoute(
                     "default",
-                    "{controller=Home}/{action=Index}/{id?}");
+                    "{controller=Home}/{action=Login}");
             });
         }
     }

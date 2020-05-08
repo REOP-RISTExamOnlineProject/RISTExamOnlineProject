@@ -4,5 +4,126 @@
     Layout = "_Layout";
 }
 
+<h5 class="mb-3"><strong>Dashboard</strong></h5>
+
+<!--Dashboard widget-->
+<div class="mt-1 mb-3 button-container">
+    <div class="row pl-0">
+        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3">
+            <div class="bg-white border shadow">
+                <div class="media p-4">
+                    <div class="align-self-center mr-3 rounded-circle notify-icon bg-theme">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div class="media-body pl-2">
+                        <h3 class="mt-0 mb-0"><strong>85</strong></h3>
+                        <p><small class="text-muted bc-description">Total User Online</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3">
+            <div class="bg-white border shadow">
+                <div class="media p-4">
+                    <div class="align-self-center mr-3 rounded-circle notify-icon bg-danger">
+                        <i class="fas fa-envelope-open"></i>
+                    </div>
+                    <div class="media-body pl-2">
+                        <h3 class="mt-0 mb-0"><strong>15</strong></h3>
+                        <p><small class="text-muted bc-description">Patrol</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3">
+            <div class="bg-theme border shadow">
+                <div class="media p-4">
+                    <div class="align-self-center mr-3 rounded-circle notify-icon bg-white">
+                        <i class="fa fa-tags text-theme"></i>
+                    </div>
+                    <div class="media-body pl-2">
+                        <h3 class="mt-0 mb-0"><strong>60</strong></h3>
+                        <p><small class="bc-description text-white">Total Exam</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/Dashboard widget-->
+<div class="row mt-3">
+    <div class="col-sm-6">
+        <!--Doughnut Chart-->
+        <div class="mt-1 mb-3 p-3 button-container bg-white shadow-sm border">
+            <h6 class="mb-2">Doughnut chart</h6>
+
+            <canvas id="doughnutChart" height="150px"></canvas>
+        </div>
+        <!--/Doughnut Chart-->
+
+    </div>
 
 
+    <div class="col-sm-6">
+        <!--Radar Chart-->
+        <div class="mt-1 mb-3 p-3 button-container  bg-white shadow-sm border">
+            <h6>Radar Chart</h6>
+
+            <canvas id="radarChart" height="150px"></canvas>
+        </div>
+        <!--/Radar Table-->
+    </div>
+</div>
+<!--Latest projects-->
+<div class="row mt-3">
+    <div class="col-sm-12">
+        <div class="shadow panel-head-primary">
+            <h5 class="text-center mt-3 mb-3"><strong>Latest Exam</strong></h5>
+            <div class="table-responsive">
+                <table class="table table-striped" id="project_table">
+                    <thead>
+                        <tr>
+                            <th>Project id</th>
+                            <th>Project name</th>
+                            <th>Start date</th>
+                            <th>Due date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>01</td>
+                            <td>Web design</td>
+                            <td>13 Feb, 2020</td>
+                            <td>10 June, 2020</td>
+                            <td><span class="badge badge-success">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>02</td>
+                            <td>App development</td>
+                            <td>03 July, 2020</td>
+                            <td>09 November, 2020</td>
+                            <td><span class="badge badge-warning">Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td>03</td>
+                            <td>App prototyping</td>
+                            <td>31 January, 2020</td>
+                            <td>02 September, 2020</td>
+                            <td><span class="badge badge-danger">Suspended</span></td>
+                        </tr>
+                        <tr>
+                            <td>04</td>
+                            <td>Web development</td>
+                            <td>23 October, 2018</td>
+                            <td>15 December, 2018</td>
+                            <td><span class="badge badge-info">Negotiations</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
