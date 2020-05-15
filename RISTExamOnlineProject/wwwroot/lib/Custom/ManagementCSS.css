@@ -1,0 +1,13 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    font-family: 'JetBrainsMono';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #F8FAFD;
+    /* background: url(/Content/img/bg.jpg) no-repeat; */
+    /* background-position: center;
+    background-size: cover;
+    height: 100vh;
+    transition: all .5s; */
+}

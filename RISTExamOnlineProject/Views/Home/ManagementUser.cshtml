@@ -1,0 +1,244 @@
+﻿
+@{
+    ViewData["Title"] = "ManagementUser";
+    Layout = "_Layout";
+}
+
+
+<h5 class="mb-0"><strong>User profile</strong></h5>
+<span class="text-secondary">Employee Management <i class="fa fa-angle-right"></i> User profile</span>
+
+<div class="row mt-3">
+    <div class="col-sm-12">
+        <!--User profile header-->
+        <div class="mt-1 mb-3 button-container bg-white border shadow-sm">
+            <div class="profile-bg p-5">
+                <img src="~/lib/img/avatar1.png" height="125px" width="125px" class="rounded-circle shadow profile-img" />
+            </div>
+            <div class="profile-bio-main container-fluid">
+                <div class="row">
+                    <div class="col-md-5 offset-md-3 col-sm-12 offset-sm-0 col-12 bio-header">
+                        <h3 class="mt-4">Wittaya Suttisak</h3>
+                        <span class="text-muted mt-0 bio-request">System Development 2</span>
+                    </div>
+
+                    <div class="col-md-4 col-sm-2 col-12 px-5 text-right pt-4 bio-comment">
+                        <div class="container">
+                            <div class="col-sm-12">
+                                <form action="" class="mb-4">
+                                    <div class="input-group mt-2">
+                                        <input type="text" class="form-control shadow-sm" placeholder="Search Staff Code.." aria-label="Search Staff Code" aria-describedby="button-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-theme" type="button" id="button-addon2">Search</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/User profile header-->
+
+    </div>
+</div>
+<div class="row mt-3">
+    <div class=" col-sm-12 col-md-4">
+        <h5 class="mb-0"><strong>Additional department</strong></h5>
+        <span class="text-secondary">Employee Management <i class="fa fa-angle-right"></i> Additional department</span>
+        <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
+            <form action="">
+                <div class="form-group">
+                    <label for="email-vr" class="mb-0">Division</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option>Choose ...</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="email-vr" class="mb-0">Department</label>
+                    <select class="form-control" id="exampleFormControlSelect2">
+                        <option>Choose ...</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="email-vr" class="mb-0">Department</label>
+                    <select class="form-control" id="exampleFormControlSelect3">
+                        <option>Choose ...</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-8">
+        <h5 class="mb-0"><strong>User Details</strong></h5>
+        <span class="text-secondary">Employee Management <i class="fa fa-angle-right"></i> User Details</span>
+        <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
+            <form action="">
+                <div class="form-group row">
+                    <div class="col-sm-2">
+                        <label for="PrefixEn" class="mb-0">Prefix</label>
+                        <select class="form-control" id="PrefixEn">
+                            <option>Choose ...</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-5">
+                        <label for="NameEn" class="mb-0">Name</label>
+                        <input type="text" class="form-control" id="NameEn" placeholder="Name ...">
+                    </div>
+                    <div class="col-sm-5">
+                        <label for="SurnameEn" class="mb-0">Surname</label>
+                        <input type="text" class="form-control" id="SurnameEn" placeholder="Surname ...">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2">
+                        <label for="PrefixTh" class="mb-0">คำนำหน้า</label>
+                        <select class="form-control" id="PrefixTh">
+                            <option>Choose ...</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-5">
+                        <label for="NameTh" class="mb-0">ชื่อ</label>
+                        <input type="text" class="form-control" id="NameTh" placeholder="ชื่อ ...">
+                    </div>
+                    <div class="col-sm-5">
+                        <label for="SurnameTh" class="mb-0">นามสกุล</label>
+                        <input type="text" class="form-control" id="SurnameTh" placeholder="นามสกุล ...">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="Position" class="mb-0">Position</label>
+                        <select class="form-control" id="Position">
+                            <option>Choose ...</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="Division" class="mb-0">Division</label>
+                        <select class="form-control" id="Division">
+                            <option>Choose ...</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="Department" class="mb-0">Department</label>
+                        <select class="form-control" id="Department">
+                            <option>Choose ...</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="Section" class="mb-0">Section</label>
+                        <select class="form-control" id="Section">
+                            <option>Choose ...</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="Shift" class="mb-0">Shift</label>
+                        <select class="form-control" id="Shift">
+                            <option>Choose ...</option>
+                            <option>1.A-Shift</option>
+                            <option>2.B-Shift</option>
+                            <option>3.C-Shift</option>
+                            <option>4.Day-Shift</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="License" class="mb-0">License</label>
+                        <select class="form-control" id="License">
+                            <option>Choose ...</option>
+                            <option>1.OP</option>
+                            <option>2.INS</option>
+                            <option>3.MK</option>
+                            <option>4.Staff</option>
+                            <option>5.MGR</option>
+                            <option>6.ETG</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="Email" class="mb-0">Email</label>
+                        <input type="text" class="form-control" id="Email" placeholder="Email ...">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="Rfid" class="mb-0">RFID</label>
+                        <input type="text" class="form-control" id="Rfid" placeholder="RFID ...">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="datetimepicker1" class="mb-0">Update Date</label>
+                        <input type="text" class="form-control datetimepicker-input" id="datetimepicker1" data-toggle="datetimepicker" data-target="#datetimepicker1" />
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="datetimepicker2" class="mb-0">Work Start Date</label>
+                        <input type="text" class="form-control datetimepicker-input" id="datetimepicker2" data-toggle="datetimepicker" data-target="#datetimepicker2" />
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--/Content Employee-->
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: 'L'
+            });
+
+            $('#datetimepicker2').datetimepicker({
+                format: 'L'
+            });
+        });
+    </script>
+}
+
+
+
+

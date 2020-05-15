@@ -17,5 +17,10 @@ namespace RISTExamOnlineProject.Controllers
         {
             return View();
         }
+
+        public IActionResult ManagementUser()
+        {
+            return View();
+        }
     }
 }

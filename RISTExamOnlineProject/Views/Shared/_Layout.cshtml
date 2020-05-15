@@ -12,18 +12,26 @@
 
     <!--Meta Responsive tag-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!--Bootstrap CSS-->
-    <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <!--Custom style.css-->
-    <link href="~/lib/Custom/style.css" rel="stylesheet" />
-    <!--Font Awesome-->
-    <script src="~/lib/font-awesome/js/a4c93cd695.js"></script>
-    @*<script src="https://kit.fontawesome.com/a4c93cd695.js" crossorigin="anonymous"></script>*@
-    @*<link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
-        <link href="~/lib/font-awesome/css/solid.css" rel="stylesheet" />*@
-    <!--FOR IE9-->
-    <script src="~/lib/html5shiv/html5shiv.js"></script>
-    <script src="~/lib/respond.js/respond.js"></script>
+
+
+    
+
+    <environment include="Development">
+        <!--Bootstrap CSS-->
+        <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <!--Custom style.css-->
+        <link href="~/lib/Custom/style.css" rel="stylesheet" />
+        <!--Font Awesome-->
+        <script src="~/lib/font-awesome/js/a4c93cd695.js"></script>
+
+        <!--FOR IE9-->
+        <script src="~/lib/html5shiv/html5shiv.js"></script>
+        <script src="~/lib/respond.js/respond.js"></script>
+
+        <!-- tempusdominus-bootstrap-4 -->
+        <link rel="stylesheet" href="~/lib/datepicker/css/tempusdominus-bootstrap-4.css">
+        <!-- tempusdominus-bootstrap-4 -->
+    </environment>
     <title>@ViewBag.Title</title>
 
 </head>
@@ -56,7 +64,7 @@
                         <!--Toggle sidebar-->
                         <!--Notification icon-->
                         <div class="menu-icon">
-                            <a  href="#" onclick="toggle_dropdown(this); return false;" role="button" class="dropdown-toggle">
+                            <a href="#" onclick="toggle_dropdown(this); return false;" role="button" class="dropdown-toggle">
                                 <i class="fa fa-bell"></i>
                                 <span class="badge badge-danger">5</span>
                             </a>
@@ -117,7 +125,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a href="#" class="dropdown-item">
                                     <div class="media">
-                                        <img class="align-self-center mr-3 rounded-circle" src="lib/img/man-512.png" width="50px" height="50px" alt="Generic placeholder image">
+                                        <img class="align-self-center mr-3 rounded-circle" src="~/lib/img/man-512.png" width="50px" height="50px" alt="Generic placeholder image">
                                         <div class="media-body">
                                             <h6 class="mt-0"><strong>Adam Abdulrahman</strong></h6>
                                             <p>How are you?</p>
@@ -128,7 +136,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a href="#" class="dropdown-item">
                                     <div class="media">
-                                        <img class="align-self-center mr-3 rounded-circle" src="lib/img/man-512.png" width="50px" height="50px" alt="Generic placeholder image">
+                                        <img class="align-self-center mr-3 rounded-circle" src="~/lib/img/man-512.png" width="50px" height="50px" alt="Generic placeholder image">
                                         <div class="media-body">
                                             <h6 class="mt-0"><strong>Adam Abdulrahman</strong></h6>
                                             <p>How are you?</p>
@@ -139,7 +147,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a href="#" class="dropdown-item">
                                     <div class="media">
-                                        <img class="align-self-center mr-3 rounded-circle" src="lib/img/man-512.png" width="50px" height="50px" alt="Generic placeholder image">
+                                        <img class="align-self-center mr-3 rounded-circle" src="~/lib/img/man-512.png" width="50px" height="50px" alt="Generic placeholder image">
                                         <div class="media-body">
                                             <h6 class="mt-0"><strong>Adam Abdulrahman</strong></h6>
                                             <p>How are you?</p>
@@ -164,7 +172,7 @@
                         </div>
                         <div class="mr-4">
                             <a class="" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="lib/img/avatar1.png" alt="#" class="rounded-circle" width="40px" height="40px">
+                                <img src="~/lib/img/avatar1.png" alt="#" class="rounded-circle" width="40px" height="40px">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right mt-13" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item" href="#"><i class="fa fa-user pr-2"></i> Profile</a>
@@ -191,7 +199,7 @@
                 <div class="inner-sidebar mr-3">
                     <!--Image Avatar-->
                     <div class="avatar text-center">
-                        <img src="../lib/img/avatar1.png" alt="" class="rounded-circle" />
+                        <img src="~/lib/img/avatar1.png" alt="" class="rounded-circle" />
                         <p><strong>Mr.Wittaya S.</strong></p>
                         <span class="text-primary small"><strong>System Dev.</strong></span>
                     </div>
@@ -250,15 +258,14 @@
                 </div>
             </div>
             <!--Sidebar left-->
-
             <!--Content right-->
             <div class="col-sm-9 col-12 content pt-3 pl-0">
-               
-                
-                
+
+
+
 
                 @RenderBody()
-                
+
                 <!--Footer-->
                 <div class="row mt-5 mb-4 footer">
                     <div class="col-sm-8">
@@ -272,60 +279,59 @@
                 <!--Footer-->
             </div>
         </div>
-    
+
         <!--Main Content-->
 
     </div>
 
-    <!--Page Wrapper-->
+<!--Page Wrapper-->
 
 
+<environment include="Development">
     <!-- Page JavaScript Files-->
-    <script src="lib/js/jquery.min.js"></script>
-    <script src="lib/js/jquery-1.12.4.min.js"></script>
+    <script src="~/lib/js/jquery.min.js"></script>
+    <script src="~/lib/js/jquery-1.12.4.min.js"></script>
+
+
     <!--Popper JS-->
-    <script src="lib/js/popper.min.js"></script>
+    <script src="~/lib/js/popper.min.js"></script>
     <!--Bootstrap-->
-    <script src="lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     <!--Sweet alert JS-->
-    <script src="lib/js/sweetalert.js"></script>
+    <script src="~/lib/js/sweetalert.js"></script>
     <!--Progressbar JS-->
-    <script src="lib/js/progressbar.min.js"></script>
+    <script src="~/lib/js/progressbar.min.js"></script>
     <!--Flot.JS-->
-    <script src="lib/js/charts/jquery.flot.min.js"></script>
-    <script src="lib/js/charts/jquery.flot.pie.min.js"></script>
-    <script src="lib/js/charts/jquery.flot.categories.min.js"></script>
-    <script src="lib/js/charts/jquery.flot.stack.min.js"></script>
+    <script src="~/lib/js/charts/jquery.flot.min.js"></script>
+    <script src="~/lib/js/charts/jquery.flot.pie.min.js"></script>
+    <script src="~/lib/js/charts/jquery.flot.categories.min.js"></script>
+    <script src="~/lib/js/charts/jquery.flot.stack.min.js"></script>
     <!--Chart JS-->
-    <script src="lib/js/charts/chart.min.js"></script>
+    <script src="~/lib/js/charts/chart.min.js"></script>
     <!--Chartist JS-->
-    <script src="lib/js/charts/chartist.min.js"></script>
-    <script src="lib/js/charts/chartist-data.js"></script>
-    <script src="lib/js/charts/demo.js"></script>
-    <!--Maps-->
-    <script src="lib/js/maps/jquery-jvectormap-2.0.2.min.js"></script>
-    <script src="lib/js/maps/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="lib/js/maps/jvector-maps.js"></script>
-    <!--Bootstrap Calendar JS-->
-    <script src="lib/js/calendar/bootstrap_calendar.js"></script>
-    <script src="lib/js/calendar/demo.js"></script>
-    <!--Nice select-->
-    <script src="lib/js/jquery.nice-select.min.js"></script>
+    <script src="~/lib/js/charts/chartist.min.js"></script>
+    <script src="~/lib/js/charts/chartist-data.js"></script>
+    <script src="~/lib/js/charts/demo.js"></script>
+
+
+
 
     <!--Custom Js Script-->
-    <script src="lib/js/custom.js"></script>
+    <script src="~/lib/js/custom.js"></script>
     <!--Custom Js Script-->
-    <script>
+    @*<script>
         //Nice select
         $('.bulk-actions').niceSelect();
-    </script>
+    </script>*@
+    <!-- tempusdominus-bootstrap-4 -->
+    <script src="~/lib/datepicker/jquery/jquery.js"></script>
+    <script src="~/lib/datepicker/momentjs/moment.js"></script>
+    <script src="~/lib/datepicker/js/tempusdominus-bootstrap-4.js"></script>
+    <!-- tempusdominus-bootstrap-4 -->
 
+</environment>
 
-    @*<script src="~/lib/bootstrap/js/bootstrap.js"></script>
-    <script src="~/lib/popper.js/cjs/popper.js"></script>
-    <script src="~/lib/jquery/jquery.js"></script>
-    <script src="~/lib/CustomJS/custom.js"></script>*@
-
-@*@RenderSection("scripts", false)*@
+   
+    @RenderSection("scripts", false)
 </body>
 </html>

@@ -36,7 +36,8 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     /*background-image: url('../img/bg.jpg');*/
-    background: url('../img/bg.jpg') no-repeat;
+    /*background: url('../img/bg.jpg') no-repeat;*/
+    background-color: #F8FAFD;
     background-position: center;
     background-size: cover;
     height: 100vh;
@@ -1647,7 +1648,7 @@ span.tag.label.label-info {
 /*========Profile page CSS Rules=========*/
 
 .profile-bg {
-    background-image: url('../img/tarred.jpeg');
+    background-image: url('../img/bg-profileheader.jpg');
     background-size: cover;
     background-position-y: 60%;
     background-repeat: no-repeat;
