@@ -6,20 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace RISTExamOnlineProject.Controllers
 {
-    public class HomeController : Controller
+    public class ManagementController : Controller
     {
         public IActionResult Index()
         {
             return View();
         }
-
-        public IActionResult Login()
+        public IActionResult ManagementUser()
         {
             return View();
         }
-
-       
-
-      
     }
 }
