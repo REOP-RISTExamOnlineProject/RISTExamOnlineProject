@@ -33,6 +33,7 @@ namespace RISTExamOnlineProject
 
             app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
+            app.UseCookiePolicy();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

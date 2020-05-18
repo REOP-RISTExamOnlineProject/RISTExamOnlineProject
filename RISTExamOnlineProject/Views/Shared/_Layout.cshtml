@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using System.Globalization
+@using RISTExamOnlineProject.Controllers
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -12,13 +14,13 @@
 
     <!--Meta Responsive tag-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <title>@ViewBag.Title</title>
 
     
 
     <environment include="Development">
         <!--Bootstrap CSS-->
-        <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
         <!--Custom style.css-->
         <link href="~/lib/Custom/style.css" rel="stylesheet" />
         <!--Font Awesome-->
@@ -28,11 +30,11 @@
         <script src="~/lib/html5shiv/html5shiv.js"></script>
         <script src="~/lib/respond.js/respond.js"></script>
 
-        <!-- tempusdominus-bootstrap-4 -->
+        <!-- tempusdominus-bootstrap-4 datetimepicker -->
         <link rel="stylesheet" href="~/lib/datepicker/css/tempusdominus-bootstrap-4.css">
         <!-- tempusdominus-bootstrap-4 -->
     </environment>
-    <title>@ViewBag.Title</title>
+    @await RenderSectionAsync("Styles",false)
 
 </head>
 <body>
@@ -193,92 +195,94 @@
         <!--Header-->
         <!--Main Content-->
 
-        <div class="row main-content">
-            <!--Sidebar left-->
-            <div class="col-sm-3 col-xs-6 sidebar pl-0">
-                <div class="inner-sidebar mr-3">
-                    <!--Image Avatar-->
-                    <div class="avatar text-center">
-                        <img src="~/lib/img/avatar1.png" alt="" class="rounded-circle" />
-                        <p><strong>Mr.Wittaya S.</strong></p>
-                        <span class="text-primary small"><strong>System Dev.</strong></span>
-                    </div>
-                    <!--Image Avatar-->
-                    <!--Sidebar Navigation Menu-->
-                    <div class="sidebar-menu-container">
-                        <ul class="sidebar-menu mt-4 mb-4">
-                            <li class="parent">
-                                <a href="#" class="">
-                                    <i class="fa fa-qrcode mr-3"> </i>
-                                    <span class="none">Dashboard </span>
-                                </a>
-                            </li>
-                            <li class="parent">
-                                <a href="#" onclick="toggle_menu('Shortcuts'); return false;" class="">
-                                    <i class="fas fa-link mr-3"></i>
-                                    <span class="none">Shortcuts <i class="fa fa-angle-down pull-right align-bottom"></i></span>
-                                </a>
-
-                                <ul class="children" id="Shortcuts">
-                                    <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam1</a></li>
-                                    <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam2</a></li>
-                                    <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam3</a></li>
-                                    <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam4</a></li>
-                                </ul>
-                            </li>
-
-                            <li class="parent">
-                                <a href="#">
-                                    <i class="fas fa-stream mr-3"></i>
-                                    <span class="none">Overview</span>
-                                </a>
-                            </li>
-
-                            <li class="parent">
-                                <a href="#">
-                                    <i class="fas fa-question-circle mr-3"></i>
-                                    <span class="none">About</span>
-                                </a>
-                            </li>
-                            <li class="parent">
-                                <a href="#">
-                                    <i class="fas fa-sliders-h mr-3"></i>
-                                    <span class="none">Services</span>
-                                </a>
-                            </li>
-                            <li class="parent">
-                                <a href="#">
-                                    <i class="fas fa-envelope mr-3"></i>
-                                    <span class="none">Contact</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <!--Sidebar Naigation Menu-->
+    <div class="row main-content">
+        
+        <!--Sidebar left-->
+        <div class="col-sm-3 col-xs-6 sidebar pl-0">
+            <div class="inner-sidebar mr-3">
+                <!--Image Avatar-->
+                <div class="avatar text-center">
+                    <img src="~/lib/img/avatar1.png" alt="" class="rounded-circle"/>
+                    <p><strong>Mr.Wittaya S.</strong></p>
+                    <span class="text-primary small"><strong>System Dev.</strong></span>
                 </div>
-            </div>
-            <!--Sidebar left-->
-            <!--Content right-->
-            <div class="col-sm-9 col-12 content pt-3 pl-0">
+                <!--Image Avatar-->
+                <!--Sidebar Navigation Menu-->
+                <div class="sidebar-menu-container">
+                    <ul class="sidebar-menu mt-4 mb-4">
+                        <li class="parent">
+                            <a href="#" class="">
+                                <i class="fa fa-qrcode mr-3"> </i>
+                                <span class="none">Dashboard </span>
+                            </a>
+                        </li>
+                        <li class="parent">
+                            <a href="#" onclick="toggle_menu('Shortcuts');return false;" class="">
+                                <i class="fas fa-link mr-3"></i>
+                                <span class="none">Shortcuts <i class="fa fa-angle-down pull-right align-bottom"></i></span>
+                            </a>
 
+                            <ul class="children" id="Shortcuts">
+                                <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam1</a></li>
+                                <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam2</a></li>
+                                <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam3</a></li>
+                                <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam4</a></li>
+                            </ul>
+                        </li>
 
+                        <li class="parent">
+                            <a href="#">
+                                <i class="fas fa-stream mr-3"></i>
+                                <span class="none">Overview</span>
+                            </a>
+                        </li>
 
-
-                @RenderBody()
-
-                <!--Footer-->
-                <div class="row mt-5 mb-4 footer">
-                    <div class="col-sm-8">
-                        <span>&copy; All rights reserved 2020 designed by <a class="text-theme" href="#">IS-SYSTEM</a></span>
-                    </div>
-                    <div class="col-sm-4 text-right">
-                        <a href="#" class="ml-2">Contact Us</a>
-                        <a href="#" class="ml-2">Support</a>
-                    </div>
+                        <li class="parent">
+                            <a href="#">
+                                <i class="fas fa-question-circle mr-3"></i>
+                                <span class="none">About</span>
+                            </a>
+                        </li>
+                        <li class="parent">
+                            <a href="@Url.Action("ManagementUser", "Home")">
+                                <i class="fas fa-sliders-h mr-3"></i>
+                                <span class="none">Management User</span>
+                            </a>
+                        </li>
+                        <li class="parent">
+                            <a href="#">
+                                <i class="fas fa-envelope mr-3"></i>
+                                <span class="none">Contact</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <!--Footer-->
+                <!--Sidebar Naigation Menu-->
             </div>
         </div>
+        <!--Sidebar left-->
+
+        <!--Content right-->
+        <div class="col-sm-9 col-12 content pt-3 pl-0">
+            <partial name="_CookieConsentPartial"></partial>
+
+
+
+            @RenderBody()
+
+            <!--Footer-->
+            <div class="row mt-5 mb-4 footer">
+                <div class="col-sm-8">
+                    <span>&copy; All rights reserved 2020 designed by <a class="text-theme" href="#">IS-SYSTEM</a></span>
+                </div>
+                <div class="col-sm-4 text-right">
+                    <a href="#" class="ml-2">Contact Us</a>
+                    <a href="#" class="ml-2">Support</a>
+                </div>
+            </div>
+            <!--Footer-->
+        </div>
+    </div>
 
         <!--Main Content-->
 
@@ -287,51 +291,51 @@
 <!--Page Wrapper-->
 
 
-<environment include="Development">
-    <!-- Page JavaScript Files-->
-    <script src="~/lib/js/jquery.min.js"></script>
-    <script src="~/lib/js/jquery-1.12.4.min.js"></script>
+    <environment include="Development">
+        <!-- Page JavaScript Files-->
+        <script src="~/lib/js/jquery.min.js"></script>
+        <script src="~/lib/js/jquery-1.12.4.min.js"></script>
 
 
-    <!--Popper JS-->
-    <script src="~/lib/js/popper.min.js"></script>
-    <!--Bootstrap-->
-    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
-    <!--Sweet alert JS-->
-    <script src="~/lib/js/sweetalert.js"></script>
-    <!--Progressbar JS-->
-    <script src="~/lib/js/progressbar.min.js"></script>
-    <!--Flot.JS-->
-    <script src="~/lib/js/charts/jquery.flot.min.js"></script>
-    <script src="~/lib/js/charts/jquery.flot.pie.min.js"></script>
-    <script src="~/lib/js/charts/jquery.flot.categories.min.js"></script>
-    <script src="~/lib/js/charts/jquery.flot.stack.min.js"></script>
-    <!--Chart JS-->
-    <script src="~/lib/js/charts/chart.min.js"></script>
-    <!--Chartist JS-->
-    <script src="~/lib/js/charts/chartist.min.js"></script>
-    <script src="~/lib/js/charts/chartist-data.js"></script>
-    <script src="~/lib/js/charts/demo.js"></script>
+        <!--Popper JS-->
+        <script src="~/lib/js/popper.min.js"></script>
+        <!--Bootstrap-->
+        <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+        <!--Sweet alert JS-->
+        <script src="~/lib/js/sweetalert.js"></script>
+        <!--Progressbar JS-->
+        <script src="~/lib/js/progressbar.min.js"></script>
+        <!--Flot.JS-->
+        <script src="~/lib/js/charts/jquery.flot.min.js"></script>
+        <script src="~/lib/js/charts/jquery.flot.pie.min.js"></script>
+        <script src="~/lib/js/charts/jquery.flot.categories.min.js"></script>
+        <script src="~/lib/js/charts/jquery.flot.stack.min.js"></script>
+        <!--Chart JS-->
+        <script src="~/lib/js/charts/chart.min.js"></script>
+        <!--Chartist JS-->
+        <script src="~/lib/js/charts/chartist.min.js"></script>
+        <script src="~/lib/js/charts/chartist-data.js"></script>
+        <script src="~/lib/js/charts/demo.js"></script>
 
 
 
 
-    <!--Custom Js Script-->
-    <script src="~/lib/js/custom.js"></script>
-    <!--Custom Js Script-->
-    @*<script>
-        //Nice select
-        $('.bulk-actions').niceSelect();
-    </script>*@
-    <!-- tempusdominus-bootstrap-4 -->
-    <script src="~/lib/datepicker/jquery/jquery.js"></script>
-    <script src="~/lib/datepicker/momentjs/moment.js"></script>
-    <script src="~/lib/datepicker/js/tempusdominus-bootstrap-4.js"></script>
-    <!-- tempusdominus-bootstrap-4 -->
+        <!--Custom Js Script-->
+        <script src="~/lib/js/custom.js"></script>
+        <!--Custom Js Script-->
+        @*<script>
+            //Nice select
+            $('.bulk-actions').niceSelect();
+        </script>*@
+        <!-- tempusdominus-bootstrap-4 -->
+        <script src="~/lib/datepicker/jquery/jquery.js"></script>
+        <script src="~/lib/datepicker/momentjs/moment.js"></script>
+        <script src="~/lib/datepicker/js/tempusdominus-bootstrap-4.js"></script>
+        <!-- tempusdominus-bootstrap-4 -->
 
-</environment>
+    </environment>
 
-   
-    @RenderSection("scripts", false)
+
+@await RenderSectionAsync("Scripts", false)
 </body>
 </html>

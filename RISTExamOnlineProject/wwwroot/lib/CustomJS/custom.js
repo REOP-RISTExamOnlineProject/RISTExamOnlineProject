@@ -19,7 +19,7 @@ $(document).ready(function() {
     /*============Dynamic modal content ============*/
 
     //Tooltips
-    $('[data-toggle="tooltip"]').tooltip();
+    //$('[data-toggle="tooltip"]').tooltip();
 
     //Popovers
     $('[data-toggle="popover"]').popover();
