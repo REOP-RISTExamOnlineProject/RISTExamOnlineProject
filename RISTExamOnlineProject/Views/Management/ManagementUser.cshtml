@@ -27,7 +27,8 @@
                             <div class="col-sm-12">
                                 <form action="" class="mb-4">
                                     <div class="input-group mt-2">
-                                        <input type="text" class="form-control shadow-sm" name="OpnoSearch" placeholder="Search Staff Code.." aria-label="Search Staff Code" aria-describedby="button-addon2">
+                                        @Html.TextBox("OpnoSearch", "", new { @class = "form-control shadow-sm", placeholder = "Search Staff Code.. Razor" })
+                                        @*<input type="text" class="form-control shadow-sm" name="OpnoSearch" placeholder="Search Staff Code.." aria-label="Search Staff Code" aria-describedby="button-addon2">*@
                                         <div class="input-group-append">
                                             <button class="btn btn-theme" type="button" id="button-addon2">Search</button>
                                         </div>
