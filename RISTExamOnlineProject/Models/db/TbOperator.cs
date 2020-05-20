@@ -15,7 +15,7 @@ namespace RISTExamOnlineProject.Models.db
         
         public string Password { get; set; }
         [Display(Name = "Name Eng")]
-        public int NameEng { get; set; }
+        public string NameEng { get; set; }
 
         [Display(Name = "Name Th")]
         public string NameThai { get; set; }

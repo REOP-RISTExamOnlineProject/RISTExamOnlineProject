@@ -14,6 +14,18 @@ namespace RISTExamOnlineProject
 {
     public class Startup
     {
+
+
+        public Startup(IHostingEnvironment env)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+            Configuration = builder.Build();
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         private IConfiguration Configuration { get; }
@@ -21,7 +33,7 @@ namespace RISTExamOnlineProject
         {
             string constr = Configuration.GetConnectionString("CONSPTO");
             services.AddEntityFrameworkSqlServer()
-                .AddDbContext<STPODbContext>(options =>
+                .AddDbContext<SPTODbContext>(options =>
                     options.UseSqlServer(constr));
 
             // Add framework services.

@@ -3,7 +3,12 @@
     ViewData["Title"] = "ManagementUser";
     Layout = "_Layout";
 }
+@model IEnumerable<RISTExamOnlineProject.Models.db.TbOperator>;
 
+@{
+    var nameEng = ViewBag.NameEng;
+   
+}
 
 <h5 class="mb-0"><strong>User profile</strong></h5>
 <span class="text-secondary">Employee Management <i class="fa fa-angle-right"></i> User profile</span>
@@ -27,8 +32,9 @@
                             <div class="col-sm-12">
                                 <form action="" class="mb-4">
                                     <div class="input-group mt-2">
-                                        @Html.TextBox("OpnoSearch", "", new { @class = "form-control shadow-sm", placeholder = "Search Staff Code.. Razor" })
-                                        @*<input type="text" class="form-control shadow-sm" name="OpnoSearch" placeholder="Search Staff Code.." aria-label="Search Staff Code" aria-describedby="button-addon2">*@
+
+                                        @*@Html.TextBox("OpnoSearch", "", new {@class = "form-control shadow-sm", placeholder = "Search Staff Code.. Razor"})*@
+                                        <input type="text" class="form-control shadow-sm" name="OpnoSearch" placeholder="Search Staff Code.." aria-label="Search Staff Code" aria-describedby="button-addon2">
                                         <div class="input-group-append">
                                             <button class="btn btn-theme" type="button" id="button-addon2">Search</button>
                                         </div>
@@ -136,8 +142,9 @@
                         </select>
                     </div>
                     <div class="col-sm-5">
-                        <label for="NameEn" class="mb-0">Name</label>
-                        <input type="text" class="form-control" id="NameEn" placeholder="Name ...">
+                        <label for="NameEng" class="mb-0">Name</label>
+                        @Html.TextBox("NameEng", $"{nameEng}", new { @class = "form-control", placeholder = "Name..." })
+                       
                     </div>
                     <div class="col-sm-5">
                         <label for="SurnameEn" class="mb-0">Surname</label>

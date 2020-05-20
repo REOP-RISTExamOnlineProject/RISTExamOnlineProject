@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace RISTExamOnlineProject.Models.db
 {
-    public class STPODbContext : DbContext
+    public class SPTODbContext : DbContext
     {
-        public STPODbContext(DbContextOptions<STPODbContext> options) : base(options)
+        public SPTODbContext(DbContextOptions<SPTODbContext> options) : base(options)
         {
 
         }
