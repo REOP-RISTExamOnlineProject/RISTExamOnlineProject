@@ -19,9 +19,10 @@ namespace RISTExamOnlineProject.Controllers
         {
             return View();
         }
+       
         public IActionResult ManagementUser(string opno)
         {
-
+            ViewBag.opno = opno;
             var data = _sptoDbContext.Operator.Where(x => x.OperatorID == opno).ToList();
 
             foreach (var itemOperator in data)
