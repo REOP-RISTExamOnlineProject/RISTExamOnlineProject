@@ -15,6 +15,7 @@ namespace RISTExamOnlineProject.Controllers
         {
             _sptoDbContext = context;
         }
+
         public IActionResult Index()
         {
             return View();
@@ -22,15 +23,15 @@ namespace RISTExamOnlineProject.Controllers
        
         public IActionResult ManagementUser(string opno)
         {
-            ViewBag.opno = opno;
-            var data = _sptoDbContext.Operator.Where(x => x.OperatorID == opno).ToList();
+           
 
-            foreach (var itemOperator in data)
-            {
-                ViewBag.NameEng = itemOperator.NameEng;
-            }
+            ViewBag.opno = opno;
+            var data = _sptoDbContext.Operator.FirstOrDefault(x=> x.OperatorID == opno);
 
             return View(data);
+
         }
+
+       
     }
 }

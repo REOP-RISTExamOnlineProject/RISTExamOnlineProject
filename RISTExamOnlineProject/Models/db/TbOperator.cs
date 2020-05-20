@@ -14,6 +14,7 @@ namespace RISTExamOnlineProject.Models.db
 
         
         public string Password { get; set; }
+
         [Display(Name = "Name Eng")]
         public string NameEng { get; set; }
 

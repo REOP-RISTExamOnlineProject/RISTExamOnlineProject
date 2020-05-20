@@ -3,13 +3,14 @@
     ViewData["Title"] = "ManagementUser";
     Layout = "_Layout";
 }
-@model IEnumerable<RISTExamOnlineProject.Models.db.TbOperator>;
-
+@model RISTExamOnlineProject.Models.db.TbOperator;
 @{
-    var nameEng = ViewBag.NameEng;
+   
     var opno = (string)ViewBag.opno;
 
+
 }
+
 
 
 
@@ -36,8 +37,8 @@
                                 <div class="col-sm-12">
                                     <form action="" class="mb-4">
                                         <div class="input-group mt-2">
-                                            @Html.TextBox("opno", $"{opno}", new { @class = "form-control shadow-sm", placeholder = "Search Staff Code.. Razor" })
-                                           <div class="input-group-append">
+                                            @Html.TextBox("opno", $"{opno}", new { @class = "form-control shadow-sm", placeholder = "Search Staff Code.." })
+                                            <div class="input-group-append">
                                                 <button class="btn btn-theme" type="submit" id="button-addon2" formaction="@Url.Action("ManagementUser")">Search</button>
                                             </div>
                                         </div>
@@ -136,46 +137,19 @@
             <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
                 <form action="">
                     <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label for="PrefixEn" class="mb-0">Prefix</label>
-                            <select class="form-control" id="PrefixEn">
-                                <option>Choose ...</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-5">
+
+                        <div class="col-sm-6">
                             <label for="NameEng" class="mb-0">Name</label>
-                            @Html.TextBox("NameEng", $"{nameEng}", new { @class = "form-control", placeholder = "Name..." })
+                            @Html.TextBoxFor(model => model.NameEng,  new { @class = "form-control", placeholder = "Name...", id = "NameEn",Value = "xxx" })
 
                         </div>
-                        <div class="col-sm-5">
-                            <label for="SurnameEn" class="mb-0">Surname</label>
-                            <input type="text" class="form-control" id="SurnameEn" placeholder="Surname ...">
+                        <div class="col-sm-6">
+                            <label for="NameTh" class="mb-0">ชื่อ - นามสกุล</label>
+                            @Html.TextBoxFor(model => model.NameThai, new { @class = "form-control", placeholder = "ชื่อ...", id = "NameTh", Value = "3x" })
+
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-sm-2">
-                            <label for="PrefixTh" class="mb-0">คำนำหน้า</label>
-                            <select class="form-control" id="PrefixTh">
-                                <option>Choose ...</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-5">
-                            <label for="NameTh" class="mb-0">ชื่อ</label>
-                            <input type="text" class="form-control" id="NameTh" placeholder="ชื่อ ...">
-                        </div>
-                        <div class="col-sm-5">
-                            <label for="SurnameTh" class="mb-0">นามสกุล</label>
-                            <input type="text" class="form-control" id="SurnameTh" placeholder="นามสกุล ...">
-                        </div>
-                    </div>
+
                     <div class="form-group row">
                         <div class="col-sm-6">
                             <label for="Position" class="mb-0">Position</label>
@@ -271,7 +245,7 @@
     </div>
 
 
-<!--/Content Employee-->
+    <!--/Content Employee-->
 
 @section scripts{
     <script type="text/javascript">
