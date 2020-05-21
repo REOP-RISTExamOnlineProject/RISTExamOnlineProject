@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace RISTExamOnlineProject.Models.db
 {
-    public class vewT_Training_Record
+    public class vewOperatorTrainingRecord
     {
-
+        [Key]
         public Int32 TRec_ID { get; set; }
         public string StaffCode { get; set; }
         public string Name_of_training { get; set; }
