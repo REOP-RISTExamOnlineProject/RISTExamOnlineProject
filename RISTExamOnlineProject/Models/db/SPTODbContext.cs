@@ -12,7 +12,6 @@ namespace RISTExamOnlineProject.Models.db
         {
 
         }
-        public virtual DbSet<vewOperatorAll> vewOperatorAll { get; set; }
-        public virtual DbSet<vewOperatorLicense> vewOperatorLicense { get; set; }
+        public virtual DbSet<TbOperator> Operator { get; set; }
     }
 }
