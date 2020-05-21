@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RISTExamOnlineProject.Models.db
 {
-    public class vewT_Training_Record
+    public class vewOperatorTrainingRecord
     {
         [Key]
         public Int32 TRec_ID { get; set; }
