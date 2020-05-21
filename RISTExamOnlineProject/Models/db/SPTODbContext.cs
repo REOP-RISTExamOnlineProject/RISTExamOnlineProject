@@ -14,7 +14,7 @@ namespace RISTExamOnlineProject.Models.db
         }
 
         public virtual DbSet<TbOperator> Operator { get; set; }
-        public virtual DbSet<vewT_Curriculum_Vitae> CurriculumVitae { get; set; }
+        public virtual DbSet<vewT_Training_Record> Training_Record { get; set; }
 
     }
 }
