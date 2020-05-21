@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RISTExamOnlineProject.Models.db;
@@ -88,13 +87,13 @@ namespace RISTExamOnlineProject.Controllers
             int recordsTotal = 0;
 
 
-            var DataShow = (from tempcustomer in _sptoDbContext.Training_Record.Where(x => x.StaffCode == OPID)
-                                select tempcustomer);        
+            var dataShow = _sptoDbContext.Training_Record.Where(x => x.StaffCode == OPID).ToList();
+                                 
 
 
             if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
             {
-                DataShow = DataShow.OrderBy(sortColumn + " " + sortColumnDir);
+               // dataShow = dataShow.OrderBy(sortColumn + " " + sortColumnDir);
 
             }
 
@@ -106,9 +105,9 @@ namespace RISTExamOnlineProject.Controllers
             //}
 
             //total number of rows count     
-            recordsTotal = DataShow.Count();
+            recordsTotal = dataShow.Count();
             //Paging     
-            var data = DataShow.Skip(skip).Take(pageSize).ToList();
+            var data = dataShow.Skip(skip).Take(pageSize).ToList();
             //Returning Json Data    
             return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
 
