@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace RISTExamOnlineProject.Models.db
 {
-    public class vewOperatorAll
+    public class vewOperatorAlls
     {
         [Key]
         [Display(Name = "OPNO.")]
@@ -26,29 +26,8 @@ namespace RISTExamOnlineProject.Models.db
         public string Email1 { get; set; }
         public string RFID { get; set; }
 
-        //public IEnumerable<SelectListItem> PositionSelectListItems { get; set; }
-
-
-        //[NotMapped]
-        ////SelectListeItem type list creating Dropdown 
-        //public IEnumerable<SelectListItem> PositionListItems { get; set; }
-
-        //for first dropdown selected value
-
-
-        //for second dropdown selected value
-
+      
     }
+   
 
-    //public class DropdownViewModel
-    //{
-    //    //SelectListeItem type list creating Dropdown 
-    //    public IEnumerable<SelectListItem> EmpList { get; set; }
-
-    //    //for first dropdown selected value
-    //    public string SelectedEmp { get; set; }
-
-    //    //for second dropdown selected value
-    //    public string SelectedEmp2 { get; set; }
-    //}
 }

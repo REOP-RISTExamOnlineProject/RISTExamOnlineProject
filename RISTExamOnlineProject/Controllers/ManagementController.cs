@@ -1,8 +1,16 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Routing;
 using RISTExamOnlineProject.Models.db;
+
+
 
 namespace RISTExamOnlineProject.Controllers
 {
@@ -59,6 +67,7 @@ namespace RISTExamOnlineProject.Controllers
 
         }
 
+       
 
 
 
@@ -66,8 +75,6 @@ namespace RISTExamOnlineProject.Controllers
 
 
 
-
-      
 
 
 
@@ -93,7 +100,8 @@ namespace RISTExamOnlineProject.Controllers
 
             if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
             {
-               // dataShow = dataShow.OrderBy(sortColumn + " " + sortColumnDir);
+               
+                 //dataShow =  dataShow.OrderBy(sortColumn).ThenBy(so);
                //Test Commit
             }
 

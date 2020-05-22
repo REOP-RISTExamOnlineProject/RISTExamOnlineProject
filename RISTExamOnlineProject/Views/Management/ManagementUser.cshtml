@@ -3,15 +3,16 @@
     ViewData["Title"] = "ManagementUser";
     Layout = "_Layout";
 }
+@using Microsoft.EntityFrameworkCore.Internal
 @using RISTExamOnlineProject.Models.db
-@model RISTExamOnlineProject.Models.db.vewOperatorAll;
+@model RISTExamOnlineProject.Models.db.vewOperatorAlls
 @{
 
     var opno = (string)ViewBag.opno;
+    var license = (MultiSelectList)ViewBag.CategoryLicense;
     //var positionlist = ViewBag.Positionlist;
 
 }
-
 
 
 
@@ -140,12 +141,16 @@
 
                     <div class="col-sm-6">
                         <label for="NameEng" class="mb-0">Name - Surname</label>
-                        @Html.TextBoxFor(model => model.NameEng, new { @class = "form-control", placeholder = "Name...", id = "NameEn", Value = "xxx" })
+
+
+                        @Html.TextBoxFor(model => model.NameEng, new { @class = (Model?.NameEng == null ? "form-control" : "form-control border-success"), placeholder = "Name...", id = "NameEn" })
+
 
                     </div>
                     <div class="col-sm-6">
                         <label for="NameTh" class="mb-0">ชื่อ - นามสกุล</label>
-                        @Html.TextBoxFor(model => model.NameThai, new { @class = "form-control", placeholder = "ชื่อ...", id = "NameTh", Value = "3x" })
+
+                        @Html.TextBoxFor(model => model.NameThai, new { @class = (Model?.NameThai == null ? "form-control" : "form-control border-success"), placeholder = "ชื่อ...", id = "NameTh", Value = "" })
 
                     </div>
                 </div>
@@ -153,41 +158,42 @@
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="Position" class="mb-0">Position</label>
-                        @Html.DropDownList("Position", (IEnumerable<SelectListItem>) ViewBag.CategoryPosition, new { @class = "form-control" })
+                        @Html.DropDownList("Position", (IEnumerable<SelectListItem>)ViewBag.CategoryPosition, new { @class = (Model?.JobTitle == null ? "form-control" : "form-control border-success") })
                     </div>
                     <div class="col-sm-6">
                         <label for="Division" class="mb-0">Division</label>
-                        @Html.DropDownList("Division", (IEnumerable<SelectListItem>) ViewBag.CategoryDivision, new { @class = "form-control" })
+                        @Html.DropDownList("Division", (IEnumerable<SelectListItem>)ViewBag.CategoryDivision, new { @class = (Model?.Division == null ? "form-control" : "form-control border-success") })
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="Department" class="mb-0">Department</label>
-                        @Html.DropDownList("Department", (IEnumerable<SelectListItem>) ViewBag.CategoryDepartment, new { @class = "form-control" })
+                        @Html.DropDownList("Department", (IEnumerable<SelectListItem>)ViewBag.CategoryDepartment, new { @class = (Model?.Department == null ? "form-control" : "form-control border-success") })
                     </div>
                     <div class="col-sm-6">
                         <label for="Section" class="mb-0">Section</label>
-                        @Html.DropDownList("Section", (IEnumerable<SelectListItem>)ViewBag.CategorySection, new { @class = "form-control" })
+                        @Html.DropDownList("Section", (IEnumerable<SelectListItem>)ViewBag.CategorySection, new { @class = (Model?.Section == null ? "form-control" : "form-control border-success") })
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="Shift" class="mb-0">Shift</label>
-                        @Html.DropDownList("Shift", (IEnumerable<SelectListItem>)ViewBag.CategoryShift, new { @class = "form-control" })
+                        @Html.DropDownList("Shift", (IEnumerable<SelectListItem>)ViewBag.CategoryShift, new { @class = (Model?.GroupName == null ? "form-control" : "form-control border-success") })
                     </div>
                     <div class="col-sm-6">
                         <label for="License" class="mb-0">License</label>
-                        @Html.DropDownList("License", (MultiSelectList)ViewBag.CategoryLicense, new { @class = "form-control", multiple = "multiple" })
+                        @Html.DropDownList("License", (MultiSelectList)ViewBag.CategoryLicense, new { @class = (!license.Any() ? "form-control" : "form-control border-success"), multiple = "multiple" })
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="Email" class="mb-0">Email</label>
-                        @Html.TextBoxFor(model => model.Email1, new { @class = "form-control", placeholder = "Email...", id = "Email"})
+                        @Html.TextBoxFor(model => model.Email1, new { @class = (Model?.Email1 == null ? "form-control" : "form-control border-success"), placeholder = "Email...", id = "Email" })
                     </div>
                     <div class="col-sm-6">
                         <label for="Rfid" class="mb-0">RFID</label>
-                        @Html.PasswordFor(model => model.RFID, new { @class = "form-control",  id = "RFID"})
+                        @Html.TextBoxFor(model => model.RFID, new { @class = (Model?.RFID == null ? "form-control" : "form-control border-success"), type = "password" })
+                       
                     </div>
                 </div>
                 <div class="form-group row">
