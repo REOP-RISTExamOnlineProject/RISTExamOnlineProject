@@ -21,12 +21,20 @@
     {
       "library": "popper.js@2.4.0",
       "destination": "wwwroot/lib/popper.js/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "jquery@3.5.1",
+      "destination": "wwwroot/lib/jquery/"
+    },
+
+    {
+      "provider": "unpkg",
+      "library": "@aspnet/signalr@3.0.0-preview6.19307.2",
+      "destination": "wwwroot/lib/signalr/",
+      "files": [
+        "dist/browser/signalr.js"
+      ]
     }
-  ,
-{
-  "provider": "cdnjs",
-  "library": "jquery@3.5.1",
-  "destination": "wwwroot/lib/jquery/"
-}
-]
+  ]
 }

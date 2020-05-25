@@ -3,7 +3,8 @@
     ViewData["Title"] = "Index";
     Layout = "_Layout";
 }
-
+@*<h1>Active Users</h1>
+    <h2><span id="users"></span></h2>*@
 <h5 class="mb-3"><strong>Dashboard</strong></h5>
 
 <!--Dashboard widget-->
@@ -16,7 +17,7 @@
                         <i class="fa fa-user"></i>
                     </div>
                     <div class="media-body pl-2">
-                        <h3 class="mt-0 mb-0"><strong>85</strong></h3>
+                        <h3 class="mt-0 mb-0"><strong id="users"></strong></h3>
                         <p><small class="text-muted bc-description">Total User Online</small></p>
                     </div>
                 </div>
@@ -127,3 +128,45 @@
         </div>
     </div>
 </div>
+@section scripts{
+   
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script type="text/javascript">
+
+        document.addEventListener('DOMContentLoaded', function () {
+            function bindConnectionMessage(connection) {
+                var messageCallback = function (message) {
+                    console.log('message' + message);
+                    if (!message) return;
+                    var userCountSpan = document.getElementById('users');
+                    userCountSpan.innerText = message;
+                };
+                connection.on("updateCount", messageCallback);
+                connection.onclose(onConnectionError);
+            }
+            function onConnected(connection) {
+                console.log('connection started');
+            }
+            function onConnectionError(error) {
+                if (error && error.message) {
+                    console.error(error.message);
+                }
+            }
+            var connection = new window.signalR.HubConnectionBuilder().withUrl('/chat').build();
+            bindConnectionMessage(connection);
+            connection.start()
+                .then(function () {
+                    onConnected(connection);
+                })
+                .catch(function (error) {
+                    console.error(error.message);
+                });
+        });
+
+       
+
+
+       
+
+    </script>
+}

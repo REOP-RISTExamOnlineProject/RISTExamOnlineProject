@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RISTExamOnlineProject.Models.db;
+using Microsoft.AspNetCore.SignalR;
+using RISTExamOnlineProject.Hubs;
 
 namespace RISTExamOnlineProject
 {
@@ -38,7 +40,9 @@ namespace RISTExamOnlineProject
 
             // Add framework services.
             services.AddMvc();
-           
+
+            services.AddSignalR();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +58,8 @@ namespace RISTExamOnlineProject
                 app.UseExceptionHandler("/Error");
             }
 
+           
+
             app.UseStaticFiles();
             //app.UseMvcWithDefaultRoute();
             app.UseCookiePolicy();
@@ -62,6 +68,11 @@ namespace RISTExamOnlineProject
                 routes.MapRoute(
                     "default",
                     "{controller=Home}/{action=Login}");
+            });
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<CounterHub>("/chat");
             });
         }
     }
