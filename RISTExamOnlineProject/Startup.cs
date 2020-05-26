@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using RISTExamOnlineProject.Models.db;
 using Microsoft.AspNetCore.SignalR;
 using RISTExamOnlineProject.Hubs;
+using Microsoft.AspNetCore.SignalR.Client;
 
 namespace RISTExamOnlineProject
 {
@@ -31,6 +32,7 @@ namespace RISTExamOnlineProject
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         private IConfiguration Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
             string constr = Configuration.GetConnectionString("CONSPTO");
@@ -38,10 +40,19 @@ namespace RISTExamOnlineProject
                 .AddDbContext<SPTODbContext>(options =>
                     options.UseSqlServer(constr));
 
+
+            services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
+                {
+                    builder.AllowAnyMethod().AllowAnyHeader()
+                        .AllowAnyOrigin()
+                        .AllowCredentials().Build();
+                }));
+
+            services.AddSignalR();
             // Add framework services.
             services.AddMvc();
 
-            services.AddSignalR();
+       
 
         }
 
@@ -58,22 +69,25 @@ namespace RISTExamOnlineProject
                 app.UseExceptionHandler("/Error");
             }
 
-           
+
+          
 
             app.UseStaticFiles();
             //app.UseMvcWithDefaultRoute();
             app.UseCookiePolicy();
+            app.UseCors("CorsPolicy");
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     "default",
                     "{controller=Home}/{action=Login}");
             });
-
             app.UseSignalR(routes =>
             {
-                routes.MapHub<CounterHub>("/chat");
+                routes.MapHub<CounterHub>("/CounterHub");
             });
+
+
         }
     }
 }

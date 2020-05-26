@@ -28,13 +28,11 @@
       "destination": "wwwroot/lib/jquery/"
     },
 
-    {
-      "provider": "unpkg",
-      "library": "@aspnet/signalr@3.0.0-preview6.19307.2",
-      "destination": "wwwroot/lib/signalr/",
-      "files": [
-        "dist/browser/signalr.js"
-      ]
-    }
-  ]
+    
+{
+  "provider": "cdnjs",
+  "library": "microsoft-signalr@5.0.0-preview.4.20257.10",
+  "destination": "wwwroot/lib/microsoft-signalr/"
+}
+]
 }
