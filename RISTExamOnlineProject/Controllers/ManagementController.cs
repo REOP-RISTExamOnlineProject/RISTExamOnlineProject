@@ -105,8 +105,6 @@ namespace RISTExamOnlineProject.Controllers
         //        Select(c => new { c.OperatorID, c.License });
         //    ViewBag.CategoryLicense = new MultiSelectList(queryLicense.AsEnumerable(), "OperatorID", "License");
 
-
-
         //    return View(data);
 
         //} 
@@ -140,7 +138,6 @@ namespace RISTExamOnlineProject.Controllers
             int pageSize = length != null ? Convert.ToInt32(length) : 0;
             int skip = start != null ? Convert.ToInt32(start) : 0;
             int recordsTotal = 0;
-
 
             var dataShow = _sptoDbContext.Training_Record.Where(x => x.StaffCode == OPID).ToList();
                                  
