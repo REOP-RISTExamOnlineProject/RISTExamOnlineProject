@@ -26,10 +26,12 @@
                             <div class="col-sm-12">
                                 <form action="" class="mb-4">
                                     <div class="input-group mt-2">
-                                        @Html.TextBox("opno", null, new { @class = "form-control shadow-sm", placeholder = "Search Staff Code..", id = "opno" })
+                                        @Html.TextBox("strOPNo", null, new { @class = "form-control shadow-sm", placeholder = "Search Staff Code..", id = "strOPNo" })
 
                                         <div class="input-group-append">
-                                            <button class="btn btn-theme" type="submit" id="button-addon2" formaction="@Url.Action("UserDetailMaintenance")">Search</button>
+                                            @*<button class="btn btn-theme" type="submit" id="button-addon2" formaction="@Url.Action("UserDetailMaintenance")">Search</button>*@
+
+                                            <button class="btn btn-theme" type="button" onclick="GetuserDetail()"  id="btnSearch">Search1</button>
                                         </div>
                                     </div>
                                 </form>
@@ -80,44 +82,6 @@
 </nav>
 
 <div class="form-row ">
-    @*<div class="col-auto">
-            <div class="sidebar-menu-container bg-dark " style="font-size:x-small">
-
-                <ul class="sidebar-menu mt-4 mb-4">
-                    <li class="parent">
-                        <a href="@Url.Action("UserDetailMaintenance")?Event=Info">
-                            <i class="fas fa-info-circle mr-3"></i>
-                            <span class="none">info</span>
-                        </a>
-                    </li>
-                    <li class="parent">
-                        <a href="#" class="">
-                            <i class="fa fa-user-alt mr-3"> </i>
-                            <span class="none">User detail</span>
-                        </a>
-                    </li>
-                    <li class="parent">
-                        <a href="#">
-                            <i class="fas fa-magic mr-3"></i>
-                            <span class="none">License Manager</span>
-                        </a>
-                    </li>
-                    <li class="parent">
-                        <a href="#">
-                            <i class="fas fa-edit mr-3"></i>
-                            <span class="none">Addition Department</span>
-                        </a>
-                    </li>
-                    <li class="parent">
-                        <a href="#">
-                            <i class="fas fa-edit mr-3"></i>
-                            <span class="none">Addition Department</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>*@
-
     <div class="col">
 
 
@@ -139,3 +103,14 @@
 </div>
 
 
+@section scripts{
+
+<script src="~/lib/CustomJS/ScriptUserManage/UserManagemant.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+          
+        });
+
+    </script>
+}

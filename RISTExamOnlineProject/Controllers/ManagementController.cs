@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
-using RISTExamOnlineProject.Models.db;
+using RISTExamOnlineProject.Models.db; 
 
 
 
@@ -24,48 +24,48 @@ namespace RISTExamOnlineProject.Controllers
         }
 
 
-        //public IActionResult ManagementUser(string opno)
-        //{
+        public IActionResult ManagementUser(string opno)
+        {
 
 
-        //    ViewBag.opno = opno;
-        //    var data = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == opno);
+            ViewBag.opno = opno;
+            var data = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == opno);
 
-        //    //Get Position to Dropdown
-        //    var queryPosition = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
-        //        Select(c => new { c.OperatorID, c.JobTitle });
-        //    ViewBag.CategoryPosition = new SelectList(queryPosition.AsEnumerable(), "OperatorID", "JobTitle");
+            //Get Position to Dropdown
+            var queryPosition = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
+                Select(c => new { c.OperatorID, c.JobTitle });
+            ViewBag.CategoryPosition = new SelectList(queryPosition.AsEnumerable(), "OperatorID", "JobTitle");
 
-        //    //Get Division to Dropdown
-        //    var queryDivision = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
-        //        Select(c => new { c.OperatorID, c.Division });
-        //    ViewBag.CategoryDivision = new SelectList(queryDivision.AsEnumerable(), "OperatorID", "Division");
+            //Get Division to Dropdown
+            var queryDivision = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
+                Select(c => new { c.OperatorID, c.Division });
+            ViewBag.CategoryDivision = new SelectList(queryDivision.AsEnumerable(), "OperatorID", "Division");
 
-        //    //Get Department to Dropdown
-        //    var queryDepartment = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
-        //        Select(c => new { c.OperatorID, c.Department });
-        //    ViewBag.CategoryDepartment = new SelectList(queryDepartment.AsEnumerable(), "OperatorID", "Department");
+            //Get Department to Dropdown
+            var queryDepartment = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
+                Select(c => new { c.OperatorID, c.Department });
+            ViewBag.CategoryDepartment = new SelectList(queryDepartment.AsEnumerable(), "OperatorID", "Department");
 
-        //    //Get Section to Dropdown
-        //    var querySection = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
-        //        Select(c => new { c.OperatorID, c.Section });
-        //    ViewBag.CategorySection = new SelectList(querySection.AsEnumerable(), "OperatorID", "Section");
+            //Get Section to Dropdown
+            var querySection = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
+                Select(c => new { c.OperatorID, c.Section });
+            ViewBag.CategorySection = new SelectList(querySection.AsEnumerable(), "OperatorID", "Section");
 
-        //    //Get Shift to Dropdown
-        //    var queryShift = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
-        //        Select(c => new { c.OperatorID, c.GroupName });
-        //    ViewBag.CategoryShift = new SelectList(queryShift.AsEnumerable(), "OperatorID", "GroupName");
+            //Get Shift to Dropdown
+            var queryShift = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
+                Select(c => new { c.OperatorID, c.GroupName });
+            ViewBag.CategoryShift = new SelectList(queryShift.AsEnumerable(), "OperatorID", "GroupName");
 
-        //    //Get License to Dropdown
-        //    var queryLicense = _sptoDbContext.vewOperatorLicense.Where(x => x.OperatorID == opno).
-        //        Select(c => new { c.OperatorID, c.License });
-        //    ViewBag.CategoryLicense = new MultiSelectList(queryLicense.AsEnumerable(), "OperatorID", "License");
+            //Get License to Dropdown
+            var queryLicense = _sptoDbContext.vewOperatorLicense.Where(x => x.OperatorID == opno).
+                Select(c => new { c.OperatorID, c.License });
+            ViewBag.CategoryLicense = new MultiSelectList(queryLicense.AsEnumerable(), "OperatorID", "License");
 
 
 
-        //    return View(data);
+            return View(data);
 
-        //}
+        }
 
 
         //public IActionResult UserDetailMaintenance(string opno)
@@ -120,9 +120,26 @@ namespace RISTExamOnlineProject.Controllers
         }
 
 
+        public JsonResult GetDataUserdetail(string opno)
+        {
+            string _Result = "OK";
+            string _DataResult = "";
+            Boolean _ResultLabel = true;
+            ViewBag.opno = opno;
+               var data_ = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == opno);
+
+            vewOperatorAlls dataOperator = new vewOperatorAlls();
+
+            dataOperator = data_;
 
 
+            var jsonResult = Json(new { strResult = _Result, dataLabel = _DataResult, strboolbel = _ResultLabel, data = data_ });
+           
+            return jsonResult;
 
+        }
+
+        
 
         public IActionResult Load_OperatorAdditional_Detail(string OPID) {
 
