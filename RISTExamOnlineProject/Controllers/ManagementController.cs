@@ -34,6 +34,7 @@ namespace RISTExamOnlineProject.Controllers
             //Get Position to Dropdown
             var queryPosition = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
                 Select(c => new { c.OperatorID, c.JobTitle });
+
             ViewBag.CategoryPosition = new SelectList(queryPosition.AsEnumerable(), "OperatorID", "JobTitle");
 
             //Get Division to Dropdown

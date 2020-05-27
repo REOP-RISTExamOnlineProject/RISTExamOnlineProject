@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace RISTExamOnlineProject.Models.db
 {
     public class vewOperatorAlls
     {
         [Key]
+        [Required]
         [Display(Name = "OPNO.")]
         public string OperatorID { get; set; }
+        [Required(ErrorMessage = "Please enter password.")]
         public string Password { get; set; }
         [Display(Name = "Name Eng")]
         public string NameEng { get; set; }
@@ -25,7 +21,8 @@ namespace RISTExamOnlineProject.Models.db
         public string GroupName { get; set; }
         public string Email1 { get; set; }
         public string RFID { get; set; }
-
+        public string Authority { get; set; }
+        public bool Active { get; set; }
       
     }
    
