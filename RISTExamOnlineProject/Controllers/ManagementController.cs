@@ -135,10 +135,26 @@ namespace RISTExamOnlineProject.Controllers
 
             var jsonResult = Json(new { strResult = _Result, dataLabel = _DataResult, strboolbel = _ResultLabel, data = data_ });
            
-            return jsonResult;
-
+            return jsonResult; 
         }
 
+
+
+        public JsonResult GetPosition()
+        {
+
+            //var queryPosition = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
+            //   Select(c => new { c.OperatorID, c.JobTitle });
+            //ViewBag.CategoryPosition = new SelectList(queryPosition.AsEnumerable(), "OperatorID", "JobTitle");
+
+
+            List<SelectListItem> listItems = new List<SelectListItem>();
+
+
+
+
+            return Json(new MultiSelectList(listItems, "Value", "Text"));
+        }
         
 
         public IActionResult Load_OperatorAdditional_Detail(string OPID) {

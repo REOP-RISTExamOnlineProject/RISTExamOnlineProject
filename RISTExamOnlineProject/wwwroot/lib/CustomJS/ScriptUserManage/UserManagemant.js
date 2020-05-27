@@ -8,8 +8,16 @@ function GetuserDetail() {
         dataType: 'json',
         success: function (Data) { 
             if (Data.strboolbel == true && Data.strResult == "OK") {
-                debugger
-
+                var _Data = Data.data;
+                $("#NameEn").val(_Data.nameEng);
+                $("#NameTh").val(_Data.nameThai);
+                $("#ddlPosition").val(_Data.jobTitle);
+                $("#ddlDivision").val(_Data.division);
+                $("#ddlDepartment").val(_Data.department);
+                $("#ddlSection").val(_Data.section);
+                $("#ddlShift").val(_Data.groupName);
+                $("#Email").val(_Data.email1);
+                $("#password").val(_Data.rFID); 
             } else {
                 Swal.fire({
                     icon: 'warning',

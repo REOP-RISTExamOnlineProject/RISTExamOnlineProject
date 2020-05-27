@@ -23,7 +23,7 @@
             <div class="form-group row">
                 <div class="col-sm">
                     <label for="Position" class="mb-0">Position</label>
-                    @Html.DropDownList("ddlPosition", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlPosition", @class = " form-control form-control-sm", width = "300px" })
+                    @Html.DropDownList("ddlPosition", (IEnumerable<SelectListItem>)ViewBag.CategoryPosition, new { @id = "ddlPosition", @class = " form-control form-control-sm", width = "300px" })
                 </div>
                 <div class="col-sm">
                     <label for="Division" class="mb-0">Division</label>
