@@ -20,7 +20,7 @@ namespace RISTExamOnlineProject.Models.db
         public string S4 { get; set; }
         public string S5 { get; set; }
         public string S6 { get; set; }
-        public string StatusC { get; set; }
+        public int StatusC { get; set; }
 
     }
 }
