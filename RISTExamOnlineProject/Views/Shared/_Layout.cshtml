@@ -216,19 +216,7 @@
                                 <span class="none">Dashboard </span>
                             </a>
                         </li>
-                        <li class="parent">
-                            <a href="#" onclick="toggle_menu('Shortcuts');return false;" class="">
-                                <i class="fas fa-link mr-3"></i>
-                                <span class="none">Shortcuts <i class="fa fa-angle-down pull-right align-bottom"></i></span>
-                            </a>
 
-                            <ul class="children" id="Shortcuts">
-                                <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam1</a></li>
-                                <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam2</a></li>
-                                <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam3</a></li>
-                                <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam4</a></li>
-                            </ul>
-                        </li>
 
                         <li class="parent">
                             <a href="#">
@@ -242,12 +230,19 @@
                                 <i class="fas fa-question-circle mr-3"></i>
                                 <span class="none">About</span>
                             </a>
-                        </li>
+                        </li> 
                         <li class="parent">
-                            <a href="@Url.Action("ManagementUser", "Management")">
-                                <i class="fas fa-sliders-h mr-3"></i>
-                                <span class="none">Management User</span>
+                            <a href="#" onclick="toggle_menu('Shortcuts');return false;" class="">
+                                <i class="fas fa-link mr-3"></i>
+                                <span class="none">User Managemant <i class="fa fa-angle-down pull-right align-bottom"></i></span>
                             </a>
+
+                            <ul class="children" id="Shortcuts">
+                                <li class="child"><a href="@Url.Action("UserDetailMaintenance","Management")" class="ml-4"><i class="fa fa-angle-right mr-2 "></i><i class="fa fa-font-awesome"></i> Edit User detail</a></li>
+                                <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i><i class="fa fa-font-awesome"></i> Request Change</a></li>
+                                <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i><i class="fa fa-font-awesome"></i> TEC Approved</a></li>
+                                <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i><i class="fa fa-font-awesome"></i> Request Inquiry</a></li>
+                            </ul>
                         </li>
                         <li class="parent">
                             <a href="#">
@@ -271,7 +266,7 @@
             @RenderBody()
 
             <!--Footer-->
-            <div class="row mt-5 mb-4 footer">
+            <div class="row mt-5 mb-4 footer ">
                 <div class="col-sm-8">
                     <span>&copy; All rights reserved 2020 designed by <a class="text-theme" href="#">IS-SYSTEM</a></span>
                 </div>
