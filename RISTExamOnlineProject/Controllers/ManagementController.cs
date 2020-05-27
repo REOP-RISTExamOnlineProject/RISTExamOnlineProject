@@ -124,7 +124,7 @@ namespace RISTExamOnlineProject.Controllers
 
 
 
-        public IActionResult Load_Training_Record(string OPID) {
+        public IActionResult Load_OperatorAdditional_Detail(string OPID) {
 
 
 
@@ -139,16 +139,16 @@ namespace RISTExamOnlineProject.Controllers
             int skip = start != null ? Convert.ToInt32(start) : 0;
             int recordsTotal = 0;
 
-            var dataShow = _sptoDbContext.Training_Record.Where(x => x.StaffCode == OPID).ToList();
+            var dataShow = _sptoDbContext.vewOperatorAdditionalDep.Where(x => x.OperatorID == OPID).ToList();
                                  
 
 
-            if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
-            {
+            //if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
+            //{
                
-                 //dataShow =  dataShow.OrderBy(sortColumn).ThenBy(so);
-               //Test Commit
-            }
+            //     //dataShow =  dataShow.OrderBy(sortColumn).ThenBy(so);
+            //   //Test Commit
+            //}
 
 
             //if (!string.IsNullOrEmpty(searchValue))
@@ -163,7 +163,6 @@ namespace RISTExamOnlineProject.Controllers
             var data = dataShow.Skip(skip).Take(pageSize).ToList();
             //Returning Json Data    
             return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
-
           
         }
     }

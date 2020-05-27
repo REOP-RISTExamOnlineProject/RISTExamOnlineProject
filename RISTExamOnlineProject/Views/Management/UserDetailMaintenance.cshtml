@@ -65,7 +65,7 @@
             </a>
         </li>
         <li class="nav-item mr-1">
-            <a href="@Url.Action("UserDetailMaintenance")?Event=Info" class="btn btn-dark  nav-link">
+            <a href="@Url.Action("UserDetailMaintenance")?Event=ADDDe" class="btn btn-dark  nav-link">
                 <i class="fas fa-edit mr-3"></i>
                 <span class=" ">Addition Department</span>
             </a>
@@ -126,9 +126,9 @@
             {
                 @await Html.PartialAsync("/Views/Shared/_partsUserManage/_partsUserDetail.cshtml")
             }
-            else if (@ViewBag.Event == "UndoCancel")
+            else if (@ViewBag.Event == "ADDDe")
             {
-                @await Html.PartialAsync("/Views/Shared/_partsUserManage/_partsUserDetail.cshtml")
+                @await Html.PartialAsync("/Views/Shared/_partsUserManage/_partsAdditional.cshtml")
             }
             else
             {

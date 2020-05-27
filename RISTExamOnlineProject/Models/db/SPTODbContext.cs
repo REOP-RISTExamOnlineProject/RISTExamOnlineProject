@@ -18,7 +18,7 @@ namespace RISTExamOnlineProject.Models.db
 
         public virtual DbSet<vewOperatorAdditionalDep> vewOperatorAdditionalDep { get; set; }
         
-        public virtual DbSet<vewT_Training_Record> Training_Record { get; set; }
+    
 
 
     }
