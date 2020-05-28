@@ -2,10 +2,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 
-
 namespace RISTExamOnlineProject.Hubs
 {
-   
     public class CounterHub : Hub
     {
         private static int _count;
@@ -25,7 +23,5 @@ namespace RISTExamOnlineProject.Hubs
             Clients.All.SendAsync("updateCount", _count);
             return Task.CompletedTask;
         }
-
-
     }
 }

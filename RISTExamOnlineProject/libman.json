@@ -27,12 +27,10 @@
       "library": "jquery@3.5.1",
       "destination": "wwwroot/lib/jquery/"
     },
-
-    
-{
-  "provider": "cdnjs",
-  "library": "microsoft-signalr@5.0.0-preview.4.20257.10",
-  "destination": "wwwroot/lib/microsoft-signalr/"
-}
-]
+    {
+      "provider": "cdnjs",
+      "library": "microsoft-signalr@5.0.0-preview.4.20257.10",
+      "destination": "wwwroot/lib/microsoft-signalr/"
+    }
+  ]
 }

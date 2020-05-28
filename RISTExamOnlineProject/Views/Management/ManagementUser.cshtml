@@ -1,22 +1,19 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "ManagementUser";
     Layout = "_Layout";
 }
-@using Microsoft.EntityFrameworkCore.Internal
-@using RISTExamOnlineProject.Models.db
 @model RISTExamOnlineProject.Models.db.vewOperatorAlls
 @{
-
-    var opno = (string)ViewBag.opno;
-    var license = (MultiSelectList)ViewBag.CategoryLicense;
+    var opno = (string) ViewBag.opno;
+    var license = (MultiSelectList) ViewBag.CategoryLicense;
     //var positionlist = ViewBag.Positionlist;
 
 }
 
 
-
-<h5 class="mb-0"><strong>User profile</strong></h5>
+<h5 class="mb-0">
+    <strong>User profile</strong>
+</h5>
 <span class="text-secondary">Employee Management <i class="fa fa-angle-right"></i> User profile</span>
 
 <div class="row mt-3">
@@ -24,7 +21,7 @@
         <!--User profile header-->
         <div class="mt-1 mb-3 button-container bg-white border shadow-sm">
             <div class="profile-bg p-5">
-                <img src="~/lib/img/avatar1.png" height="125px" width="125px" class="rounded-circle shadow profile-img" />
+                <img src="~/lib/img/avatar1.png" height="125px" width="125px" class="rounded-circle shadow profile-img"/>
             </div>
             <div class="container-fluid">
                 <div class="row">
@@ -38,7 +35,7 @@
                             <div class="col-sm-12">
                                 <form action="" class="mb-4">
                                     <div class="input-group mt-2">
-                                        @Html.TextBox("opno", $"{opno}", new { @class = "form-control shadow-sm", placeholder = "Search Staff Code.." })
+                                        @Html.TextBox("opno", $"{opno}", new {@class = "form-control shadow-sm", placeholder = "Search Staff Code.."})
                                         <div class="input-group-append">
                                             <button class="btn btn-theme" type="submit" id="button-addon2" formaction="@Url.Action("ManagementUser")">Search</button>
                                         </div>
@@ -56,11 +53,11 @@
 </div>
 
 
-
-
 <div class="row mt-3">
     <div class=" col-sm-12 col-md-4">
-        <h5 class="mb-0"><strong>Additional department</strong></h5>
+        <h5 class="mb-0">
+            <strong>Additional department</strong>
+        </h5>
         <span class="text-secondary">Employee Management <i class="fa fa-angle-right"></i> Additional department</span>
         <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
             <form action="">
@@ -104,28 +101,28 @@
             <div class="table-responsive table-responsive-sm">
                 <table class="table table-striped table-hover table-sm">
                     <thead>
-                        <tr>
-                            <th>Section</th>
-                            <th>Department</th>
-                            <th>Division</th>
-                        </tr>
+                    <tr>
+                        <th>Section</th>
+                        <th>Department</th>
+                        <th>Division</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
-                            <td>content1</td>
-                            <td>content2</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>content1</td>
-                            <td>content2</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>content1</td>
-                            <td>content2</td>
-                        </tr>
+                    <tr>
+                        <td></td>
+                        <td>content1</td>
+                        <td>content2</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>content1</td>
+                        <td>content2</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>content1</td>
+                        <td>content2</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -133,7 +130,9 @@
         </div>
     </div>
     <div class="col-sm-12 col-md-8">
-        <h5 class="mb-0"><strong>User Details</strong></h5>
+        <h5 class="mb-0">
+            <strong>User Details</strong>
+        </h5>
         <span class="text-secondary">Employee Management <i class="fa fa-angle-right"></i> User Details</span>
         <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
             <form action="">
@@ -143,14 +142,14 @@
                         <label for="NameEng" class="mb-0">Name - Surname</label>
 
 
-                        @Html.TextBoxFor(model => model.NameEng, new { @class = (Model?.NameEng == null ? "form-control" : "form-control border-success"), placeholder = "Name...", id = "NameEn" })
+                        @Html.TextBoxFor(model => model.NameEng, new {@class = Model?.NameEng == null ? "form-control" : "form-control border-success", placeholder = "Name...", id = "NameEn"})
 
 
                     </div>
                     <div class="col-sm-6">
                         <label for="NameTh" class="mb-0">ชื่อ - นามสกุล</label>
 
-                        @Html.TextBoxFor(model => model.NameThai, new { @class = (Model?.NameThai == null ? "form-control" : "form-control border-success"), placeholder = "ชื่อ...", id = "NameTh", Value = "" })
+                        @Html.TextBoxFor(model => model.NameThai, new {@class = Model?.NameThai == null ? "form-control" : "form-control border-success", placeholder = "ชื่อ...", id = "NameTh", Value = ""})
 
                     </div>
                 </div>
@@ -158,58 +157,54 @@
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="Position" class="mb-0">Position</label>
-                        @Html.DropDownList("Position", (IEnumerable<SelectListItem>)ViewBag.CategoryPosition, new { @class = (Model?.JobTitle == null ? "form-control" : "form-control border-success") })
+                        @Html.DropDownList("Position", (IEnumerable<SelectListItem>) ViewBag.CategoryPosition, new {@class = Model?.JobTitle == null ? "form-control" : "form-control border-success"})
                     </div>
                     <div class="col-sm-6">
                         <label for="Division" class="mb-0">Division</label>
-                        @Html.DropDownList("Division", (IEnumerable<SelectListItem>)ViewBag.CategoryDivision, new { @class = (Model?.Division == null ? "form-control" : "form-control border-success") })
+                        @Html.DropDownList("Division", (IEnumerable<SelectListItem>) ViewBag.CategoryDivision, new {@class = Model?.Division == null ? "form-control" : "form-control border-success"})
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="Department" class="mb-0">Department</label>
-                        @Html.DropDownList("Department", (IEnumerable<SelectListItem>)ViewBag.CategoryDepartment, new { @class = (Model?.Department == null ? "form-control" : "form-control border-success") })
+                        @Html.DropDownList("Department", (IEnumerable<SelectListItem>) ViewBag.CategoryDepartment, new {@class = Model?.Department == null ? "form-control" : "form-control border-success"})
                     </div>
                     <div class="col-sm-6">
                         <label for="Section" class="mb-0">Section</label>
-                        @Html.DropDownList("Section", (IEnumerable<SelectListItem>)ViewBag.CategorySection, new { @class = (Model?.Section == null ? "form-control" : "form-control border-success") })
+                        @Html.DropDownList("Section", (IEnumerable<SelectListItem>) ViewBag.CategorySection, new {@class = Model?.Section == null ? "form-control" : "form-control border-success"})
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="Shift" class="mb-0">Shift</label>
-                        @Html.DropDownList("Shift", (IEnumerable<SelectListItem>)ViewBag.CategoryShift, new { @class = (Model?.GroupName == null ? "form-control" : "form-control border-success") })
+                        @Html.DropDownList("Shift", (IEnumerable<SelectListItem>) ViewBag.CategoryShift, new {@class = Model?.GroupName == null ? "form-control" : "form-control border-success"})
                     </div>
                     <div class="col-sm-6">
                         <label for="License" class="mb-0">License</label>
-                        @Html.DropDownList("License", (MultiSelectList)ViewBag.CategoryLicense, new { @class = (!license.Any() ? "form-control" : "form-control border-success"), multiple = "multiple" })
+                        @Html.DropDownList("License", (MultiSelectList) ViewBag.CategoryLicense, new {@class = !license.Any() ? "form-control" : "form-control border-success", multiple = "multiple"})
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="Email" class="mb-0">Email</label>
-                        @Html.TextBoxFor(model => model.Email1, new { @class = (Model?.Email1 == null ? "form-control" : "form-control border-success"), placeholder = "Email...", id = "Email" })
+                        @Html.TextBoxFor(model => model.Email1, new {@class = Model?.Email1 == null ? "form-control" : "form-control border-success", placeholder = "Email...", id = "Email"})
                     </div>
                     <div class="col-sm-6">
                         <label for="Rfid" class="mb-0">RFID</label>
-                        @Html.TextBoxFor(model => model.RFID, new { @class = (Model?.RFID == null ? "form-control" : "form-control border-success"), type = "password" })
-                       
+                        @Html.TextBoxFor(model => model.RFID, new {@class = Model?.RFID == null ? "form-control" : "form-control border-success", type = "password"})
+
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="datetimepicker1" class="mb-0">Update Date</label>
-                        <input type="text" class="form-control datetimepicker-input" id="datetimepicker1" data-toggle="datetimepicker" data-target="#datetimepicker1" />
+                        <input type="text" class="form-control datetimepicker-input" id="datetimepicker1" data-toggle="datetimepicker" data-target="#datetimepicker1"/>
                     </div>
                     <div class="col-sm-6">
                         <label for="datetimepicker2" class="mb-0">Work Start Date</label>
-                        <input type="text" class="form-control datetimepicker-input" id="datetimepicker2" data-toggle="datetimepicker" data-target="#datetimepicker2" />
+                        <input type="text" class="form-control datetimepicker-input" id="datetimepicker2" data-toggle="datetimepicker" data-target="#datetimepicker2"/>
                     </div>
                 </div>
-
-
-
-
 
 
                 <div class="form-group">
@@ -225,7 +220,7 @@
 
 @section scripts{
     <script type="text/javascript">
-        $(function () {
+        $(function() {
             $('#datetimepicker1').datetimepicker({
                 format: 'L'
             });
@@ -236,7 +231,3 @@
         });
     </script>
 }
-
-
-
-

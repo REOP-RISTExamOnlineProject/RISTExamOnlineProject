@@ -1,29 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Data;
 using Microsoft.Extensions.Configuration;
-using RISTExamOnlineProject.Models.TSQL;
 
 namespace RISTExamOnlineProject.Models.TSQL
 {
     public class mgrSQLcommand
     {
-
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
+        private DataSet ds = new DataSet();
+        private DataTable dt = new DataTable();
+        private string strSQL = "";
 
         public mgrSQLcommand(IConfiguration configuration)
         {
-            this._configuration = configuration;
+            _configuration = configuration;
         }
-        DataTable dt = new DataTable();
-        DataSet ds = new DataSet();
-        string strSQL = "";
 
         public DataTable GetPosition_()
         {
-            mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
+            var ObjRun = new mgrSQLConnect(_configuration);
             dt = new DataTable();
             strSQL = "";
 

@@ -1,11 +1,12 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "_Layout";
 }
 @*<h1>Active Users</h1>
     <h2><span id="users"></span></h2>*@
-<h5 class="mb-3"><strong>Dashboard</strong></h5>
+<h5 class="mb-3">
+    <strong>Dashboard</strong>
+</h5>
 
 <!--Dashboard widget-->
 <div class="mt-1 mb-3 button-container">
@@ -17,8 +18,12 @@
                         <i class="fa fa-user"></i>
                     </div>
                     <div class="media-body pl-2">
-                        <h3 class="mt-0 mb-0"><strong id="users"></strong></h3>
-                        <p><small class="text-muted bc-description">Total User Online</small></p>
+                        <h3 class="mt-0 mb-0">
+                            <strong id="users"></strong>
+                        </h3>
+                        <p>
+                            <small class="text-muted bc-description">Total User Online</small>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -31,8 +36,12 @@
                         <i class="fas fa-envelope-open"></i>
                     </div>
                     <div class="media-body pl-2">
-                        <h3 class="mt-0 mb-0"><strong>15</strong></h3>
-                        <p><small class="text-muted bc-description">Patrol</small></p>
+                        <h3 class="mt-0 mb-0">
+                            <strong>15</strong>
+                        </h3>
+                        <p>
+                            <small class="text-muted bc-description">Patrol</small>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -45,8 +54,12 @@
                         <i class="fa fa-tags text-theme"></i>
                     </div>
                     <div class="media-body pl-2">
-                        <h3 class="mt-0 mb-0"><strong>60</strong></h3>
-                        <p><small class="bc-description text-white">Total Exam</small></p>
+                        <h3 class="mt-0 mb-0">
+                            <strong>60</strong>
+                        </h3>
+                        <p>
+                            <small class="bc-description text-white">Total Exam</small>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -81,53 +94,64 @@
 <div class="row mt-3">
     <div class="col-sm-12">
         <div class="shadow panel-head-primary">
-            <h5 class="text-center mt-3 mb-3"><strong>Latest Exam</strong></h5>
+            <h5 class="text-center mt-3 mb-3">
+                <strong>Latest Exam</strong>
+            </h5>
             <div class="table-responsive">
                 <table class="table table-striped" id="project_table">
                     <thead>
-                        <tr>
-                            <th>Project id</th>
-                            <th>Project name</th>
-                            <th>Start date</th>
-                            <th>Due date</th>
-                            <th>Status</th>
-                        </tr>
+                    <tr>
+                        <th>Project id</th>
+                        <th>Project name</th>
+                        <th>Start date</th>
+                        <th>Due date</th>
+                        <th>Status</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>01</td>
-                            <td>Web design</td>
-                            <td>13 Feb, 2020</td>
-                            <td>10 June, 2020</td>
-                            <td><span class="badge badge-success">Completed</span></td>
-                        </tr>
-                        <tr>
-                            <td>02</td>
-                            <td>App development</td>
-                            <td>03 July, 2020</td>
-                            <td>09 November, 2020</td>
-                            <td><span class="badge badge-warning">Pending</span></td>
-                        </tr>
-                        <tr>
-                            <td>03</td>
-                            <td>App prototyping</td>
-                            <td>31 January, 2020</td>
-                            <td>02 September, 2020</td>
-                            <td><span class="badge badge-danger">Suspended</span></td>
-                        </tr>
-                        <tr>
-                            <td>04</td>
-                            <td>Web development</td>
-                            <td>23 October, 2018</td>
-                            <td>15 December, 2018</td>
-                            <td><span class="badge badge-info">Negotiations</span></td>
-                        </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>Web design</td>
+                        <td>13 Feb, 2020</td>
+                        <td>10 June, 2020</td>
+                        <td>
+                            <span class="badge badge-success">Completed</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>02</td>
+                        <td>App development</td>
+                        <td>03 July, 2020</td>
+                        <td>09 November, 2020</td>
+                        <td>
+                            <span class="badge badge-warning">Pending</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>03</td>
+                        <td>App prototyping</td>
+                        <td>31 January, 2020</td>
+                        <td>02 September, 2020</td>
+                        <td>
+                            <span class="badge badge-danger">Suspended</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>04</td>
+                        <td>Web development</td>
+                        <td>23 October, 2018</td>
+                        <td>15 December, 2018</td>
+                        <td>
+                            <span class="badge badge-info">Negotiations</span>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
 @section scripts{
     <!--Reference the autogenerated SignalR hub script. -->
 
@@ -142,9 +166,9 @@
     <script type="text/javascript">
 
         document.addEventListener('DOMContentLoaded',
-            function () {
+            function() {
                 function bindConnectionMessage(connection) {
-                    var messageCallback = function (message) {
+                    var messageCallback = function(message) {
                         console.log('message' + message);
                         if (!message) return;
                         var userCountSpan = document.getElementById('users');
@@ -164,15 +188,16 @@
                         //console.error(error.message);
                     }
                 }
+
                 var connection = new window.signalR.HubConnectionBuilder().configureLogging(window.signalR.LogLevel.Debug).withUrl('/DemoSkillTest/CounterHub').build();
-                
+
 
                 bindConnectionMessage(connection);
                 connection.start()
-                    .then(function () {
+                    .then(function() {
                         onConnected(connection);
                     })
-                    .catch(function (error) {
+                    .catch(function(error) {
                         alert(error.message);
                         //console.error(error.message);
                     });

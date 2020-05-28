@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace RISTExamOnlineProject.Models.db
+﻿namespace RISTExamOnlineProject.Models.db
 {
     public class vewOperatorAdditionalDep
     {
-
         public string OperatorID { get; set; }
         public string SectionCode { get; set; }
         public string SectionCode2 { get; set; }
@@ -21,6 +15,5 @@ namespace RISTExamOnlineProject.Models.db
         public string S5 { get; set; }
         public string S6 { get; set; }
         public int StatusC { get; set; }
-
     }
 }

@@ -9,13 +9,13 @@ namespace RISTExamOnlineProject.Controllers
 {
     public class AccountController : Controller
     {
-
         private readonly SPTODbContext _sptoDbContext;
 
         public AccountController(SPTODbContext context)
         {
             _sptoDbContext = context;
         }
+
         public IActionResult Login()
         {
             return View();
@@ -24,20 +24,17 @@ namespace RISTExamOnlineProject.Controllers
         [HttpPost]
         public IActionResult Login(string OperatorID, string Password)
         {
-            if (!string.IsNullOrEmpty(OperatorID) && string.IsNullOrEmpty(Password))
-            {
-                return RedirectToAction("Login");
-            }
+            if (!string.IsNullOrEmpty(OperatorID) && string.IsNullOrEmpty(Password)) return RedirectToAction("Login");
 
             //Check the user name and password
             //Here can be implemented checking logic from the database
             ClaimsIdentity identity = null;
-            bool isAuthenticated = false;
+            var isAuthenticated = false;
             string authority = null;
-            bool active = false;
-            var querylogin = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == OperatorID && x.Password == Password ).
-                Select(c => new { c.OperatorID, c.Active, c.Authority });
-            
+            var active = false;
+            var querylogin = _sptoDbContext.vewOperatorAll
+                .Where(x => x.OperatorID == OperatorID && x.Password == Password)
+                .Select(c => new {c.OperatorID, c.Active, c.Authority});
 
 
             if (querylogin.Any())
@@ -48,15 +45,13 @@ namespace RISTExamOnlineProject.Controllers
                     active = item.Active;
                 }
 
-                if (active == false)
-                {
-                    return RedirectToAction("Login");
-                }
+                if (active == false) return RedirectToAction("Login");
 
                 if (authority == "9")
                 {
                     //Create the identity for the user
-                    identity = new ClaimsIdentity(new[] {
+                    identity = new ClaimsIdentity(new[]
+                    {
                         new Claim(ClaimTypes.Name, OperatorID),
                         new Claim(ClaimTypes.Role, "Admin")
                     }, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -67,7 +62,8 @@ namespace RISTExamOnlineProject.Controllers
                 if (authority == "0")
                 {
                     //Create the identity for the user
-                    identity = new ClaimsIdentity(new[] {
+                    identity = new ClaimsIdentity(new[]
+                    {
                         new Claim(ClaimTypes.Name, OperatorID),
                         new Claim(ClaimTypes.Role, "User")
                     }, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -107,8 +103,10 @@ namespace RISTExamOnlineProject.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
+
             return View();
         }
+
         public IActionResult Logout()
         {
             var login = HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

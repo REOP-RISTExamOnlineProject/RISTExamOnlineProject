@@ -12,56 +12,53 @@ namespace RISTExamOnlineProject.Controllers
 {
     public class ManagementController : Controller
     {
-        private readonly SPTODbContext _sptoDbContext;
         private readonly IConfiguration _configuration;
+        private readonly SPTODbContext _sptoDbContext;
+
         public ManagementController(SPTODbContext context, IConfiguration configuration)
         {
             _sptoDbContext = context;
-            this._configuration = configuration;
+            _configuration = configuration;
         }
 
-        
+
         public IActionResult ManagementUser(string opno)
         {
-
-
             ViewBag.opno = opno;
             var data = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == opno);
 
             //Get Position to Dropdown
-            var queryPosition = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
-                Select(c => new { c.OperatorID, c.JobTitle });
+            var queryPosition = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno)
+                .Select(c => new {c.OperatorID, c.JobTitle});
             ViewBag.CategoryPosition = new SelectList(queryPosition.AsEnumerable(), "OperatorID", "JobTitle");
 
             //Get Division to Dropdown
-            var queryDivision = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
-                Select(c => new { c.OperatorID, c.Division });
+            var queryDivision = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno)
+                .Select(c => new {c.OperatorID, c.Division});
             ViewBag.CategoryDivision = new SelectList(queryDivision.AsEnumerable(), "OperatorID", "Division");
 
             //Get Department to Dropdown
-            var queryDepartment = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
-                Select(c => new { c.OperatorID, c.Department });
+            var queryDepartment = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno)
+                .Select(c => new {c.OperatorID, c.Department});
             ViewBag.CategoryDepartment = new SelectList(queryDepartment.AsEnumerable(), "OperatorID", "Department");
 
             //Get Section to Dropdown
-            var querySection = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
-                Select(c => new { c.OperatorID, c.Section });
+            var querySection = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno)
+                .Select(c => new {c.OperatorID, c.Section});
             ViewBag.CategorySection = new SelectList(querySection.AsEnumerable(), "OperatorID", "Section");
 
             //Get Shift to Dropdown
-            var queryShift = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
-                Select(c => new { c.OperatorID, c.GroupName });
+            var queryShift = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno)
+                .Select(c => new {c.OperatorID, c.GroupName});
             ViewBag.CategoryShift = new SelectList(queryShift.AsEnumerable(), "OperatorID", "GroupName");
 
             //Get License to Dropdown
-            var queryLicense = _sptoDbContext.vewOperatorLicense.Where(x => x.OperatorID == opno).
-                Select(c => new { c.OperatorID, c.License });
+            var queryLicense = _sptoDbContext.vewOperatorLicense.Where(x => x.OperatorID == opno)
+                .Select(c => new {c.OperatorID, c.License});
             ViewBag.CategoryLicense = new MultiSelectList(queryLicense.AsEnumerable(), "OperatorID", "License");
 
 
-
             return View(data);
-
         }
 
 
@@ -107,9 +104,9 @@ namespace RISTExamOnlineProject.Controllers
         //} 
 
 
-        public IActionResult UserDetailMaintenance(string Event) 
+        public IActionResult UserDetailMaintenance(string Event)
         {
-            string Event_ = Event == null?"info": Event;
+            var Event_ = Event == null ? "info" : Event;
 
             ViewBag.Event = Event_;
 
@@ -119,76 +116,72 @@ namespace RISTExamOnlineProject.Controllers
 
         public JsonResult GetDataUserdetail(string opno)
         {
-            string _Result = "OK";
-            string _DataResult = "";
-            Boolean _ResultLabel = true;
+            var _Result = "OK";
+            var _DataResult = "";
+            var _ResultLabel = true;
             ViewBag.opno = opno;
-               var data_ = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == opno);
+            var data_ = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == opno);
 
-            vewOperatorAlls dataOperator = new vewOperatorAlls();
+            var dataOperator = new vewOperatorAlls();
 
             dataOperator = data_;
 
 
-            var jsonResult = Json(new { strResult = _Result, dataLabel = _DataResult, strboolbel = _ResultLabel, data = data_ });
-           
-            return jsonResult; 
-        }
+            var jsonResult = Json(new
+                {strResult = _Result, dataLabel = _DataResult, strboolbel = _ResultLabel, data = data_});
 
+            return jsonResult;
+        }
 
 
         public JsonResult GetPosition()
         {
-            List<SelectListItem> listItems = new List<SelectListItem>();
+            var listItems = new List<SelectListItem>();
 
-            DataTable dt = new DataTable();
-            mgrSQLcommand ObjRun= new mgrSQLcommand(_configuration);
+            var dt = new DataTable();
+            var ObjRun = new mgrSQLcommand(_configuration);
             dt = ObjRun.GetPosition_();
 
             if (dt.Rows.Count != 0)
             {
-                listItems.Add(new SelectListItem()
+                listItems.Add(new SelectListItem
                 {
                     Text = "Choose Position",
                     Value = ""
                 });
 
                 foreach (DataRow row in dt.Rows)
-                {
-                    listItems.Add(new SelectListItem()
+                    listItems.Add(new SelectListItem
                     {
-                        Text = row["Position"].ToString().Trim() ,
-                        Value = row["Position"].ToString().Trim(),
-
+                        Text = row["Position"].ToString().Trim(),
+                        Value = row["Position"].ToString().Trim()
                     });
-                }
-            } 
+            }
+
             return Json(new MultiSelectList(listItems, "Value", "Text"));
         }
-        
-
-        public IActionResult Load_OperatorAdditional_Detail(string OPID) {
 
 
-
+        public IActionResult Load_OperatorAdditional_Detail(string OPID)
+        {
             var draw = HttpContext.Request.Form["draw"].FirstOrDefault();
             var start = Request.Form["start"].FirstOrDefault();
             var length = Request.Form["length"].FirstOrDefault();
-            var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+            var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"]
+                .FirstOrDefault();
             var sortColumnDir = Request.Form["order[0][dir]"].FirstOrDefault();
-            var searchValue = Request.Form["search[value]"].FirstOrDefault();        
+            var searchValue = Request.Form["search[value]"].FirstOrDefault();
 
-            int pageSize = length != null ? Convert.ToInt32(length) : 0;
-            int skip = start != null ? Convert.ToInt32(start) : 0;
-            int recordsTotal = 0;
+            var pageSize = length != null ? Convert.ToInt32(length) : 0;
+            var skip = start != null ? Convert.ToInt32(start) : 0;
+            var recordsTotal = 0;
 
             var dataShow = _sptoDbContext.vewOperatorAdditionalDep.Where(x => x.OperatorID == OPID).ToList();
-                                 
 
 
             //if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
             //{
-               
+
             //     //dataShow =  dataShow.OrderBy(sortColumn).ThenBy(so);
             //   //Test Commit
             //}
@@ -205,8 +198,7 @@ namespace RISTExamOnlineProject.Controllers
             //Paging     
             var data = dataShow.Skip(skip).Take(pageSize).ToList();
             //Returning Json Data    
-            return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
-          
+            return Json(new {draw, recordsFiltered = recordsTotal, recordsTotal, data});
         }
     }
 }

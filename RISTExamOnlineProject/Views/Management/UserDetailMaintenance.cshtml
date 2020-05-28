@@ -1,11 +1,12 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "UserDetailMaintenance";
     Layout = "_Layout";
 }
 
 
-<h5 class="mb-0"><strong>User profile</strong></h5>
+<h5 class="mb-0">
+    <strong>User profile</strong>
+</h5>
 <span class="text-secondary">Employee Management <i class="fa fa-angle-right"></i> User profile</span>
 
 <div class="row mt-3">
@@ -13,7 +14,7 @@
         <!--User profile header-->
         <div class="mt-1 mb-3 button-container bg-white border shadow-sm">
             <div class="profile-bg p-5">
-                <img src="~/lib/img/avatar1.png" height="125px" width="125px" class="rounded-circle shadow profile-img" />
+                <img src="~/lib/img/avatar1.png" height="125px" width="125px" class="rounded-circle shadow profile-img"/>
             </div>
             <div class="container-fluid">
                 <div class="row">
@@ -26,12 +27,12 @@
                             <div class="col-sm-12">
                                 <form action="" class="mb-4">
                                     <div class="input-group mt-2">
-                                        @Html.TextBox("strOPNo", null, new { @class = "form-control shadow-sm", placeholder = "Search Staff Code..", id = "strOPNo" })
+                                        @Html.TextBox("strOPNo", null, new {@class = "form-control shadow-sm", placeholder = "Search Staff Code..", id = "strOPNo"})
 
                                         <div class="input-group-append">
                                             @*<button class="btn btn-theme" type="submit" id="button-addon2" formaction="@Url.Action("UserDetailMaintenance")">Search</button>*@
 
-                                            <button class="btn btn-theme" type="button" onclick="GetuserDetail()"  id="btnSearch">Search1</button>
+                                            <button class="btn btn-theme" type="button" onclick="GetuserDetail()" id="btnSearch">Search1</button>
                                         </div>
                                     </div>
                                 </form>
@@ -86,11 +87,11 @@
 
 
         @{
-            if (@ViewBag.Event == "CancelInquiry")
+            if (ViewBag.Event == "CancelInquiry")
             {
                 @await Html.PartialAsync("/Views/Shared/_partsUserManage/_partsUserDetail.cshtml")
             }
-            else if (@ViewBag.Event == "ADDDe")
+            else if (ViewBag.Event == "ADDDe")
             {
                 @await Html.PartialAsync("/Views/Shared/_partsUserManage/_partsAdditional.cshtml")
             }
@@ -105,10 +106,10 @@
 
 @section scripts{
 
-<script src="~/lib/CustomJS/ScriptUserManage/UserManagemant.js"></script>
+    <script src="~/lib/CustomJS/ScriptUserManage/UserManagemant.js"></script>
     <script type="text/javascript">
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             Getinitial();
         });
 

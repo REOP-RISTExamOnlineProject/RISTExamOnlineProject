@@ -1,12 +1,11 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace RISTExamOnlineProject.Models.db
 {
     public class vewT_Training_Record
     {
-        [Key]
-        public Int32 TRec_ID { get; set; }
+        [Key] public int TRec_ID { get; set; }
+
         public string StaffCode { get; set; }
         public string Name_of_training { get; set; }
         public string Lecturer { get; set; }
@@ -20,6 +19,5 @@ namespace RISTExamOnlineProject.Models.db
         public string Site { get; set; }
         public string Training_period { get; set; }
         public string CreationDate { get; set; }
-
     }
 }

@@ -2,11 +2,10 @@
 
 namespace RISTExamOnlineProject.Models.db
 {
-    public partial class vewOperatorLicense
+    public class vewOperatorLicense
     {
-        [Key]
-        [Display(Name = "OPNO.")]
-        public string OperatorID { get; set; }
+        [Key] [Display(Name = "OPNO.")] public string OperatorID { get; set; }
+
         public string License { get; set; }
     }
 }

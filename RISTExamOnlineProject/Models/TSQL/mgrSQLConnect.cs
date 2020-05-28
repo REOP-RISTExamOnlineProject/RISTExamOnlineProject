@@ -1,57 +1,52 @@
-﻿using System.Configuration;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration; 
+using Microsoft.Extensions.Configuration;
 
 namespace RISTExamOnlineProject.Models.TSQL
 {
     public class mgrSQLConnect
     {
-        private IConfiguration configuration;
+        private readonly IConfiguration configuration;
+        private DataSet ds = new DataSet();
+
+
+        private DataTable dt = new DataTable();
+        private string strSQL = "";
 
         public mgrSQLConnect(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
 
-      
-        DataTable dt = new DataTable();
-        DataSet ds = new DataSet();
-        string strSQL = "";
-
         public DataTable GetPosition_()
-        { 
+        {
             dt = new DataTable();
             strSQL = "";
 
             strSQL += "SELECT  [Position] FROM [SPTOSystem].[dbo].[Operator]  group by [Position]  order by [Position]";
 
-            dt =  GetDatatables(strSQL);
+            dt = GetDatatables(strSQL);
 
             return dt;
-        } 
+        }
 
-        public DataTable GetDatatables(string Sql )
+        public DataTable GetDatatables(string Sql)
         {
-            string constr = configuration.GetConnectionString("CONSPTO");
-            DataTable dt = new DataTable();
+            var constr = configuration.GetConnectionString("CONSPTO");
+            var dt = new DataTable();
             try
             {
-                string query = Sql;
+                var query = Sql;
 
-                DataSet ds = new DataSet();
-                using (SqlConnection con = new SqlConnection(constr))
+                var ds = new DataSet();
+                using (var con = new SqlConnection(constr))
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    using (var cmd = new SqlCommand())
                     {
                         cmd.Connection = con;
                         con.Open();
-                        SqlDataAdapter adpterdata = new SqlDataAdapter();
+                        var adpterdata = new SqlDataAdapter();
                         adpterdata.SelectCommand = new SqlCommand(query, con);
                         adpterdata.Fill(dt);
                         con.Close();
@@ -65,21 +60,22 @@ namespace RISTExamOnlineProject.Models.TSQL
                 return dt;
             }
         }
-        public DataSet GetDataSet(string Sql )
+
+        public DataSet GetDataSet(string Sql)
         {
-            DataSet ds = new DataSet();
+            var ds = new DataSet();
             try
             {
-                string constr = configuration.GetConnectionString("CONSPTO");
-                string query = Sql;
+                var constr = configuration.GetConnectionString("CONSPTO");
+                var query = Sql;
                 //string constr = ConfigurationManager.ConnectionStrings["BOIDbContext1"].ConnectionString; 
-                using (SqlConnection con = new SqlConnection(constr))
+                using (var con = new SqlConnection(constr))
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    using (var cmd = new SqlCommand())
                     {
                         cmd.Connection = con;
                         con.Open();
-                        SqlDataAdapter adpterdata = new SqlDataAdapter();
+                        var adpterdata = new SqlDataAdapter();
                         adpterdata.SelectCommand = new SqlCommand(query, con);
                         adpterdata.Fill(ds);
                         con.Close();
@@ -93,30 +89,29 @@ namespace RISTExamOnlineProject.Models.TSQL
                 return ds;
             }
         }
-        public string[] GetDataExcute(string Sql )
+
+        public string[] GetDataExcute(string Sql)
         {
             string[] DataReturn;
             string DataMgs;
-            Boolean results = true;
-            DataTable dt = new DataTable();
-            string constr = configuration.GetConnectionString("CONSPTO");
+            var results = true;
+            var dt = new DataTable();
+            var constr = configuration.GetConnectionString("CONSPTO");
             try
             {
-
-                string query = Sql;
-                int rowsAffected = 0;
-                DataSet ds = new DataSet();
-                using (SqlConnection con = new SqlConnection(constr))
+                var query = Sql;
+                var rowsAffected = 0;
+                var ds = new DataSet();
+                using (var con = new SqlConnection(constr))
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    using (var cmd = new SqlCommand())
                     {
                         cmd.Connection = con;
                         con.Open();
-                        SqlDataAdapter adpterdata = new SqlDataAdapter();
+                        var adpterdata = new SqlDataAdapter();
                         adpterdata.InsertCommand = new SqlCommand(query, con);
                         rowsAffected = adpterdata.InsertCommand.ExecuteNonQuery();
                         con.Close();
-
 
 
                         if (rowsAffected > 0)
@@ -133,7 +128,6 @@ namespace RISTExamOnlineProject.Models.TSQL
 
 
                     // return results;
-
                 }
             }
             catch (Exception e)
@@ -142,13 +136,9 @@ namespace RISTExamOnlineProject.Models.TSQL
                 results = false;
             }
 
-            DataReturn = new string[] { results.ToString(), DataMgs };
+            DataReturn = new[] {results.ToString(), DataMgs};
 
             return DataReturn;
         }
-
-
-
-
     }
-} 
+}

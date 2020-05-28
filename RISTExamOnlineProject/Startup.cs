@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RISTExamOnlineProject.Models.db;
-using Microsoft.AspNetCore.SignalR;
 using RISTExamOnlineProject.Hubs;
-using Microsoft.AspNetCore.SignalR.Client;
+using RISTExamOnlineProject.Models.db;
 
 namespace RISTExamOnlineProject
 {
     public class Startup
     {
-
-
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -35,42 +26,32 @@ namespace RISTExamOnlineProject
 
         public void ConfigureServices(IServiceCollection services)
         {
-            string constr = Configuration.GetConnectionString("CONSPTO");
+            var constr = Configuration.GetConnectionString("CONSPTO");
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<SPTODbContext>(options =>
                     options.UseSqlServer(constr));
 
 
             services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
-                {
-                    builder.AllowAnyMethod().AllowAnyHeader()
-                        .AllowAnyOrigin()
-                        .AllowCredentials().Build();
-                }));
+            {
+                builder.AllowAnyMethod().AllowAnyHeader()
+                    .AllowAnyOrigin()
+                    .AllowCredentials().Build();
+            }));
 
             services.AddSignalR();
             // Add framework services.
             services.AddMvc();
-
-       
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-               
-            }
             else
-            {
                 app.UseExceptionHandler("/Error");
-            }
 
-
-          
 
             app.UseStaticFiles();
             //app.UseMvcWithDefaultRoute();
@@ -82,12 +63,7 @@ namespace RISTExamOnlineProject
                     "default",
                     "{controller=Home}/{action=Login}");
             });
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<CounterHub>("/CounterHub");
-            });
-
-
+            app.UseSignalR(routes => { routes.MapHub<CounterHub>("/CounterHub"); });
         }
     }
 }
