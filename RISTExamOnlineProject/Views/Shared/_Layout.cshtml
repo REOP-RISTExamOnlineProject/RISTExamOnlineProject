@@ -1,7 +1,5 @@
 ﻿@using System.Globalization
 @using RISTExamOnlineProject.Controllers
-@using System.Security.Claims
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 <!DOCTYPE html>
 
 <html>
@@ -18,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@ViewBag.Title</title>
 
-
+    
 
     <environment include="Development">
         <!--Bootstrap CSS-->
@@ -36,7 +34,7 @@
         <link rel="stylesheet" href="~/lib/datepicker/css/tempusdominus-bootstrap-4.css">
         <!-- tempusdominus-bootstrap-4 -->
     </environment>
-    @await RenderSectionAsync("Styles", false)
+    @await RenderSectionAsync("Styles",false)
 
 </head>
 <body>
@@ -185,14 +183,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#"><i class="fa fa-book pr-2"></i> Projects</a>
                                 <div class="dropdown-divider"></div>
-
-                                @User.Identity.Name !, @User.FindFirst(claim => claim.Type == ClaimTypes.Role)?.Value
-                               
-                                <a  href="@Url.Action("Logout", "Account")" class="dropdown-item">
-                                    <i class="fa fa-power-off pr-2"></i>Logout
-                                </a>
-
-                                @*<a class="dropdown-item" href="@Url.Action("Login","Home")"><i class="fa fa-power-off pr-2"></i> Logout</a>*@
+                                <a class="dropdown-item" href="@Url.Action("Login","Home")"><i class="fa fa-power-off pr-2"></i> Logout</a>
                             </div>
                         </div>
                     </div>
@@ -239,12 +230,12 @@
                             </ul>
                         </li>
 
-                            <li class="parent">
-                                <a href="#">
-                                    <i class="fas fa-stream mr-3"></i>
-                                    <span class="none">Overview</span>
-                                </a>
-                            </li>
+                        <li class="parent">
+                            <a href="#">
+                                <i class="fas fa-stream mr-3"></i>
+                                <span class="none">Overview</span>
+                            </a>
+                        </li>
 
                         <li class="parent">
                             <a href="#">
@@ -277,7 +268,7 @@
 
 
 
-                @RenderBody()
+            @RenderBody()
 
             <!--Footer-->
             <div class="row mt-5 mb-4 footer">
@@ -297,13 +288,13 @@
 
     </div>
 
-    <!--Page Wrapper-->
+<!--Page Wrapper-->
 
 
     <environment include="Development">
         <!-- Page JavaScript Files-->
         @*<script src="~/lib/js/jquery.min.js"></script>
-            <script src="~/lib/js/jquery-1.12.4.min.js"></script>*@
+        <script src="~/lib/js/jquery-1.12.4.min.js"></script>*@
         <script src="~/lib/jquery/jquery.js"></script>
 
         <!--Popper JS-->
@@ -333,9 +324,9 @@
         <script src="~/lib/js/custom.js"></script>
         <!--Custom Js Script-->
         @*<script>
-                //Nice select
-                $('.bulk-actions').niceSelect();
-            </script>*@
+            //Nice select
+            $('.bulk-actions').niceSelect();
+        </script>*@
         <!-- tempusdominus-bootstrap-4 -->
         <script src="~/lib/datepicker/jquery/jquery.js"></script>
         <script src="~/lib/datepicker/momentjs/moment.js"></script>
@@ -345,6 +336,6 @@
     </environment>
 
 
-    @await RenderSectionAsync("Scripts", false)
+@await RenderSectionAsync("Scripts", false)
 </body>
 </html>
