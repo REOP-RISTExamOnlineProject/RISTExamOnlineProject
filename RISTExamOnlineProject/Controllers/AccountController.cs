@@ -109,8 +109,6 @@ namespace RISTExamOnlineProject.Controllers
             }
             return View();
         }
-
-
         public IActionResult Logout()
         {
             var login = HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
