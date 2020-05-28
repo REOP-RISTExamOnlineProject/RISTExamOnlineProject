@@ -237,50 +237,34 @@
                             </a>
                         </li>
 
-                            <li class="parent">
-                                <a href="#">
-                                    <i class="fas fa-question-circle mr-3"></i>
-                                    <span class="none">About</span>
-                                </a>
-                            </li>
-                            @if (User.Identity.IsAuthenticated)
-                            {
-                                var userRoles = "";  
-                                @if (User.IsInRole("Admin"))  
-                                {  
-                                    userRoles = "Admin";
-                                }  
-                                else  
-                                {  
-                                    userRoles = "User";  
-                                } 
-
-                                @if (userRoles == "Admin")
-                                {
-                                    <li class="parent">
-                                        <a href="@Url.Action("ManagementUser", "Management")">
-                                            <i class="fas fa-sliders-h mr-3"></i>
-                                            <span class="none">Management User</span>
-                                        </a>
-                                    </li>
-                                }
-                            }
-                               
-                            <li class="parent">
-                                <a href="#">
-                                    <i class="fas fa-envelope mr-3"></i>
-                                    <span class="none">Contact</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <!--Sidebar Naigation Menu-->
+                        <li class="parent">
+                            <a href="#">
+                                <i class="fas fa-question-circle mr-3"></i>
+                                <span class="none">About</span>
+                            </a>
+                        </li>
+                        <li class="parent">
+                            <a href="@Url.Action("ManagementUser", "Management")">
+                                <i class="fas fa-sliders-h mr-3"></i>
+                                <span class="none">Management User</span>
+                            </a>
+                        </li>
+                        <li class="parent">
+                            <a href="#">
+                                <i class="fas fa-envelope mr-3"></i>
+                                <span class="none">Contact</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
+                <!--Sidebar Naigation Menu-->
             </div>
-            <!--Sidebar left-->
-            <!--Content right-->
-            <div class="col-sm-9 col-12 content pt-3 pl-0">
-                <partial name="_CookieConsentPartial"></partial>
+        </div>
+        <!--Sidebar left-->
+
+        <!--Content right-->
+        <div class="col-sm-9 col-12 content pt-3 pl-0">
+            <partial name="_CookieConsentPartial"></partial>
 
 
 
