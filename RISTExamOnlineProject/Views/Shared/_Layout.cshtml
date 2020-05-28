@@ -3,8 +3,6 @@
 
 <html>
 <head>
-    @*<meta name="viewport" content="width=device-width" />*@
-
     <meta charset="utf-8"/>
     <meta name="description" content="">
     <meta name="author" content="">
@@ -32,7 +30,7 @@
         <link rel="stylesheet" href="~/lib/datepicker/css/tempusdominus-bootstrap-4.css">
         <!-- tempusdominus-bootstrap-4 -->
     </environment>
-    @await RenderSectionAsync("Styles", false)
+    @RenderSection("Styles", false)
 
 </head>
 <body>
@@ -384,6 +382,7 @@
 </environment>
 
 
-@await RenderSectionAsync("Scripts", false)
+@RenderSection("Scripts", false)
+
 </body>
 </html>

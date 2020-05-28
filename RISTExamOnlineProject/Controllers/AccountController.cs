@@ -49,7 +49,7 @@ namespace RISTExamOnlineProject.Controllers
 
                 if (authority == "9")
                 {
-                    //Create the identity for the user
+                    //Create the identity for the Admin
                     identity = new ClaimsIdentity(new[]
                     {
                         new Claim(ClaimTypes.Name, OperatorID),
@@ -72,28 +72,7 @@ namespace RISTExamOnlineProject.Controllers
                 }
             }
 
-            //if (OperatorID == "Admin" && Password == "password")
-            //{
-
-            //    //Create the identity for the user
-            //    identity = new ClaimsIdentity(new[] {
-            //        new Claim(ClaimTypes.Name, OperatorID),
-            //        new Claim(ClaimTypes.Role, "Admin")
-            //    }, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            //    isAuthenticated = true;
-            //}
-
-            //if (OperatorID == "Mukesh" && Password == "password")
-            //{
-            //    //Create the identity for the user
-            //    identity = new ClaimsIdentity(new[] {
-            //        new Claim(ClaimTypes.Name, OperatorID),
-            //        new Claim(ClaimTypes.Role, "User")
-            //    }, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            //    isAuthenticated = true;
-            //}
+           
 
             if (isAuthenticated)
             {
