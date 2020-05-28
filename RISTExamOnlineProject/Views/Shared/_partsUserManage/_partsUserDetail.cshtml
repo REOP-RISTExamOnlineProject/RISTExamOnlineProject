@@ -1,0 +1,87 @@
+﻿<div class="col-sm-12  ">
+    <div class=" row">
+        <div class="col-7">
+            <h5 class=" mb-0"><strong>@ViewBag.Event</strong></h5>
+            <span class="text-secondary">Employee Management <i class="fa fa-angle-right"></i> User Details</span>
+        </div>
+
+    </div>
+    <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
+        <form action="">
+            <div class="form-group row">
+
+                <div class="col-sm">
+                    <label for="NameEng" class="mb-0">Name - Surname</label>
+                    @Html.TextBox("NameEn", null, new { @class = "form-control shadow-sm", placeholder = "Search Staff Code..", id = "NameEn" })
+
+                </div>
+                <div class="col-sm">
+                    <label for="NameTh" class="mb-0">ชื่อ - นามสกุล</label>
+                    @Html.TextBox("NameTh", null, new { @class = "form-control shadow-sm", placeholder = "Search Staff Code..", id = "NameTh" })
+                </div>
+            </div> 
+            <div class="form-group row">
+                <div class="col-sm">
+                    <label for="Position" class="mb-0">Position</label>
+                    @Html.DropDownList("ddlPosition", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlPosition", @class = " form-control form-control-sm", width = "300px" })
+                </div>
+                <div class="col-sm">
+                    <label for="Division" class="mb-0">Division</label>
+                    @Html.DropDownList("ddlDivision", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlDivision", @class = " form-control form-control-sm", width = "300px" })
+                </div>
+            @*</div>
+            <div class="form-group row">*@
+                <div class="col-sm">
+                    <label for="Department" class="mb-0">Department</label>
+                    @Html.DropDownList("ddlDepartment", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlDepartment", @class = " form-control form-control-sm", width = "300px" })
+                </div>
+                <div class="col-sm">
+                    <label for="Section" class="mb-0">Section</label>
+                    @Html.DropDownList("ddlSection", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlSection", @class = " form-control form-control-sm", width = "300px" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label for="Shift" class="mb-0">Shift</label>
+                    @Html.DropDownList("ddlShift", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlShift", @class = " form-control form-control-sm", width = "300px" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm">
+                    <label for="Email" class="mb-0">Email</label>
+                    @Html.TextBox("Email", null, new { @class = "form-control shadow-sm", placeholder = "Search Staff Code..", id = "Email" })
+                </div>
+                <div class="col-sm">
+                    <label for="Rfid" class="mb-0">Password</label>
+                    @Html.TextBox("password", null, new { @class = "form-control shadow-sm", placeholder = "Search Staff Code..", id = "password" }) 
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm">
+                    <label for="datetimepicker1" class="mb-0">Update Date</label>
+                    <input type="text" class="form-control datetimepicker-input" id="datetimepicker1" data-toggle="datetimepicker" data-target="#datetimepicker1" />
+                </div>
+                <div class="col-sm">
+                    <label for="datetimepicker2" class="mb-0">Work Start Date</label>
+                    <input type="text" class="form-control datetimepicker-input" id="datetimepicker2" data-toggle="datetimepicker" data-target="#datetimepicker2" />
+                </div>
+            </div> 
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" onclick="GetuserDetail()">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+
+    function Getinitial() {
+        
+        alert("Hi Userdetail");
+        GetPosition();
+
+    }
+
+  
+        
+
+</script>
