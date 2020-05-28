@@ -165,7 +165,7 @@
                     }
                 }
                 var connection = new window.signalR.HubConnectionBuilder().configureLogging(window.signalR.LogLevel.Debug).withUrl('/DemoSkillTest/CounterHub').build();
-                //var connection = new signalR.HubConnectionBuilder().withUrl("/CounterHub").build();
+                
 
                 bindConnectionMessage(connection);
                 connection.start()

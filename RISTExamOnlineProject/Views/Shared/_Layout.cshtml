@@ -204,40 +204,40 @@
         <!--Header-->
         <!--Main Content-->
 
-        <div class="row main-content">
+    <div class="row main-content">
+        
+        <!--Sidebar left-->
+        <div class="col-sm-3 col-xs-6 sidebar pl-0">
+            <div class="inner-sidebar mr-3">
+                <!--Image Avatar-->
+                <div class="avatar text-center">
+                    <img src="~/lib/img/avatar1.png" alt="" class="rounded-circle"/>
+                    <p><strong>Mr.Wittaya S.</strong></p>
+                    <span class="text-primary small"><strong>System Dev.</strong></span>
+                </div>
+                <!--Image Avatar-->
+                <!--Sidebar Navigation Menu-->
+                <div class="sidebar-menu-container">
+                    <ul class="sidebar-menu mt-4 mb-4">
+                        <li class="parent">
+                            <a href="#" class="">
+                                <i class="fa fa-qrcode mr-3"> </i>
+                                <span class="none">Dashboard </span>
+                            </a>
+                        </li>
+                        <li class="parent">
+                            <a href="#" onclick="toggle_menu('Shortcuts');return false;" class="">
+                                <i class="fas fa-link mr-3"></i>
+                                <span class="none">Shortcuts <i class="fa fa-angle-down pull-right align-bottom"></i></span>
+                            </a>
 
-            <!--Sidebar left-->
-            <div class="col-sm-3 col-xs-6 sidebar pl-0">
-                <div class="inner-sidebar mr-3">
-                    <!--Image Avatar-->
-                    <div class="avatar text-center">
-                        <img src="~/lib/img/avatar1.png" alt="" class="rounded-circle" />
-                        <p><strong>Mr.Wittaya S.</strong></p>
-                        <span class="text-primary small"><strong>System Dev.</strong></span>
-                    </div>
-                    <!--Image Avatar-->
-                    <!--Sidebar Navigation Menu-->
-                    <div class="sidebar-menu-container">
-                        <ul class="sidebar-menu mt-4 mb-4">
-                            <li class="parent">
-                                <a href="#" class="">
-                                    <i class="fa fa-qrcode mr-3"> </i>
-                                    <span class="none">Dashboard </span>
-                                </a>
-                            </li>
-                            <li class="parent">
-                                <a href="#" onclick="toggle_menu('Shortcuts');return false;" class="">
-                                    <i class="fas fa-link mr-3"></i>
-                                    <span class="none">Shortcuts <i class="fa fa-angle-down pull-right align-bottom"></i></span>
-                                </a>
-
-                                <ul class="children" id="Shortcuts">
-                                    <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam1</a></li>
-                                    <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam2</a></li>
-                                    <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam3</a></li>
-                                    <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam4</a></li>
-                                </ul>
-                            </li>
+                            <ul class="children" id="Shortcuts">
+                                <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam1</a></li>
+                                <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam2</a></li>
+                                <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam3</a></li>
+                                <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam4</a></li>
+                            </ul>
+                        </li>
 
                             <li class="parent">
                                 <a href="#">
@@ -246,68 +246,52 @@
                                 </a>
                             </li>
 
-                            <li class="parent">
-                                <a href="#">
-                                    <i class="fas fa-question-circle mr-3"></i>
-                                    <span class="none">About</span>
-                                </a>
-                            </li>
-                            @if (User.Identity.IsAuthenticated)
-                            {
-                                var userRoles = "";  
-                                @if (User.IsInRole("Admin"))  
-                                {  
-                                    userRoles = "Admin";
-                                }  
-                                else  
-                                {  
-                                    userRoles = "User";  
-                                } 
-
-                                @if (userRoles == "Admin")
-                                {
-                                    <li class="parent">
-                                        <a href="@Url.Action("ManagementUser", "Management")">
-                                            <i class="fas fa-sliders-h mr-3"></i>
-                                            <span class="none">Management User</span>
-                                        </a>
-                                    </li>
-                                }
-                            }
-                               
-                            <li class="parent">
-                                <a href="#">
-                                    <i class="fas fa-envelope mr-3"></i>
-                                    <span class="none">Contact</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <!--Sidebar Naigation Menu-->
+                        <li class="parent">
+                            <a href="#">
+                                <i class="fas fa-question-circle mr-3"></i>
+                                <span class="none">About</span>
+                            </a>
+                        </li>
+                        <li class="parent">
+                            <a href="@Url.Action("ManagementUser", "Management")">
+                                <i class="fas fa-sliders-h mr-3"></i>
+                                <span class="none">Management User</span>
+                            </a>
+                        </li>
+                        <li class="parent">
+                            <a href="#">
+                                <i class="fas fa-envelope mr-3"></i>
+                                <span class="none">Contact</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
+                <!--Sidebar Naigation Menu-->
             </div>
-            <!--Sidebar left-->
-            <!--Content right-->
-            <div class="col-sm-9 col-12 content pt-3 pl-0">
-                <partial name="_CookieConsentPartial"></partial>
+        </div>
+        <!--Sidebar left-->
+
+        <!--Content right-->
+        <div class="col-sm-9 col-12 content pt-3 pl-0">
+            <partial name="_CookieConsentPartial"></partial>
 
 
 
                 @RenderBody()
 
-                <!--Footer-->
-                <div class="row mt-5 mb-4 footer">
-                    <div class="col-sm-8">
-                        <span>&copy; All rights reserved 2020 designed by <a class="text-theme" href="#">IS-SYSTEM</a></span>
-                    </div>
-                    <div class="col-sm-4 text-right">
-                        <a href="#" class="ml-2">Contact Us</a>
-                        <a href="#" class="ml-2">Support</a>
-                    </div>
+            <!--Footer-->
+            <div class="row mt-5 mb-4 footer">
+                <div class="col-sm-8">
+                    <span>&copy; All rights reserved 2020 designed by <a class="text-theme" href="#">IS-SYSTEM</a></span>
                 </div>
-                <!--Footer-->
+                <div class="col-sm-4 text-right">
+                    <a href="#" class="ml-2">Contact Us</a>
+                    <a href="#" class="ml-2">Support</a>
+                </div>
             </div>
+            <!--Footer-->
         </div>
+    </div>
 
         <!--Main Content-->
 
