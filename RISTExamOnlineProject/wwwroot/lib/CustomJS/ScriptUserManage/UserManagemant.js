@@ -103,3 +103,22 @@ function showdata(OPID) {
 
 
 }
+
+function GetPosition() {
+    $.ajax({
+        type: 'POST',
+        url: '/Management/GetPosition',
+        dataType: 'json',
+        success: function (citys) {
+            if (citys.length != 0) {
+                $.each(citys, function (i, city) {
+                     
+                    $("#ddlPosition").append('<option value="' + city.value + '">' + city.text + '</option>');
+                });
+            }
+        },
+        error: function (ex) {
+            alert('Failed to retrieve states.' + ex);
+        }
+    });
+}

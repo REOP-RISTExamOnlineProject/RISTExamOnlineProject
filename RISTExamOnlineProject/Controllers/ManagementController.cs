@@ -1,29 +1,26 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
-using System.Linq.Expressions;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Routing;
-using RISTExamOnlineProject.Models.db; 
-
-
+using Microsoft.Extensions.Configuration;
+using RISTExamOnlineProject.Models.db;
+using RISTExamOnlineProject.Models.TSQL;
 
 namespace RISTExamOnlineProject.Controllers
 {
     public class ManagementController : Controller
     {
         private readonly SPTODbContext _sptoDbContext;
-
-        public ManagementController(SPTODbContext context)
+        private readonly IConfiguration _configuration;
+        public ManagementController(SPTODbContext context, IConfiguration configuration)
         {
             _sptoDbContext = context;
+            this._configuration = configuration;
         }
 
-
+        
         public IActionResult ManagementUser(string opno)
         {
 
@@ -142,17 +139,30 @@ namespace RISTExamOnlineProject.Controllers
 
         public JsonResult GetPosition()
         {
-
-            //var queryPosition = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
-            //   Select(c => new { c.OperatorID, c.JobTitle });
-            //ViewBag.CategoryPosition = new SelectList(queryPosition.AsEnumerable(), "OperatorID", "JobTitle");
-
-
             List<SelectListItem> listItems = new List<SelectListItem>();
 
+            DataTable dt = new DataTable();
+            mgrSQLcommand ObjRun= new mgrSQLcommand(_configuration);
+            dt = ObjRun.GetPosition_();
 
+            if (dt.Rows.Count != 0)
+            {
+                listItems.Add(new SelectListItem()
+                {
+                    Text = "Choose Position",
+                    Value = ""
+                });
 
+                foreach (DataRow row in dt.Rows)
+                {
+                    listItems.Add(new SelectListItem()
+                    {
+                        Text = row["Position"].ToString().Trim() ,
+                        Value = row["Position"].ToString().Trim(),
 
+                    });
+                }
+            } 
             return Json(new MultiSelectList(listItems, "Value", "Text"));
         }
         
