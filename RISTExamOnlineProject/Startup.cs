@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,15 +40,6 @@ namespace RISTExamOnlineProject
             }));
 
             services.AddSignalR();
-
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
             // Add framework services.
             services.AddMvc();
         }
@@ -67,13 +56,12 @@ namespace RISTExamOnlineProject
             app.UseStaticFiles();
             //app.UseMvcWithDefaultRoute();
             app.UseCookiePolicy();
-            app.UseAuthentication();
             app.UseCors("CorsPolicy");
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     "default",
-                    "{controller=Account}/{action=Login}");
+                    "{controller=Home}/{action=Login}");
             });
             app.UseSignalR(routes => { routes.MapHub<CounterHub>("/CounterHub"); });
         }

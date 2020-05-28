@@ -1,92 +1,93 @@
 ﻿@{
     Layout = null;
 }
-@using Microsoft.AspNetCore.Mvc.TagHelpers
+
 <!DOCTYPE html>
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width"/>
     <title>_partsAdditional</title>
 
-    <link href="~/lib/DataTables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
-    <link href="~/lib/DataTables/css/colReorder.bootstrap4.min.css" rel="stylesheet" />
-    <link href="~/lib/DataTables/css/fixedColumns.bootstrap4.min.css" rel="stylesheet" />
-    <link href="~/lib/DataTables/css/fixedHeader.bootstrap4.min.css" rel="stylesheet" />
-    <link href="~/lib/DataTables/css/keyTable.bootstrap4.min.css" rel="stylesheet" />
-    <link href="~/lib/DataTables/css/responsive.bootstrap4.min.css" rel="stylesheet" />
-    <link href="~/lib/DataTables/css/rowGroup.bootstrap4.min.css" rel="stylesheet" />
-    <link href="~/lib/DataTables/css/rowReorder.bootstrap4.min.css" rel="stylesheet" />
-    <link href="~/lib/DataTables/css/scroller.bootstrap4.min.css" rel="stylesheet" />
-    <link href="~/lib/DataTables/css/select.bootstrap4.min.css" rel="stylesheet" />
-    <link href="~/lib/DataTables/css/buttons.bootstrap4.min.css" rel="stylesheet" />
-    <link href="~/lib/DataTables/css/buttons.dataTables.min.css" rel="stylesheet" />
+    <link href="~/lib/DataTables/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
+    <link href="~/lib/DataTables/css/colReorder.bootstrap4.min.css" rel="stylesheet"/>
+    <link href="~/lib/DataTables/css/fixedColumns.bootstrap4.min.css" rel="stylesheet"/>
+    <link href="~/lib/DataTables/css/fixedHeader.bootstrap4.min.css" rel="stylesheet"/>
+    <link href="~/lib/DataTables/css/keyTable.bootstrap4.min.css" rel="stylesheet"/>
+    <link href="~/lib/DataTables/css/responsive.bootstrap4.min.css" rel="stylesheet"/>
+    <link href="~/lib/DataTables/css/rowGroup.bootstrap4.min.css" rel="stylesheet"/>
+    <link href="~/lib/DataTables/css/rowReorder.bootstrap4.min.css" rel="stylesheet"/>
+    <link href="~/lib/DataTables/css/scroller.bootstrap4.min.css" rel="stylesheet"/>
+    <link href="~/lib/DataTables/css/select.bootstrap4.min.css" rel="stylesheet"/>
+    <link href="~/lib/DataTables/css/buttons.bootstrap4.min.css" rel="stylesheet"/>
+    <link href="~/lib/DataTables/css/buttons.dataTables.min.css" rel="stylesheet"/>
 
 </head>
 <body>
 
-    <div class="container-fluid p-2">
-        <br />
-        <h1>
-            <b> Addition Department </b>
-        </h1>
-        <br />
-        <div class="row" id="Gridview">
+<div class="container-fluid p-2">
+    <br/>
+    <h1>
+        <b> Addition Department </b>
+    </h1>
+    <br/>
+    <div class="row" id="Gridview">
 
 
-            <table class="table table-sm table-bordered table-striped  " style="background-color: #fff; color: black; font-size: small; width: 100%;" id="MyTable">
-                <thead>
-                    <tr>
-                        <th style="text-align: center;" class="text-wrap">OperatorID</th>
-                        <th style="text-align: center;" class="text-wrap">SectionCode</th>
-                        <th style="text-align: center;" class="text-wrap">SectionCode2</th>
-                        <th style="text-align: center;" class="text-wrap">Division</th>
-                        <th style="text-align: center;" class="text-wrap">Department</th>
-                        <th style="text-align: center;" class="text-wrap">Section</th>
-                        <th style="text-align: center;" class="text-wrap">StatusC</th>
+        <table class="table table-sm table-bordered table-striped  " style="background-color: #fff; color: black; font-size: small; width: 100%;" id="MyTable">
+            <thead>
+            <tr>
+                <th style="text-align: center;" class="text-wrap">OperatorID</th>
+                <th style="text-align: center;" class="text-wrap">SectionCode</th>
+                <th style="text-align: center;" class="text-wrap">SectionCode2</th>
+                <th style="text-align: center;" class="text-wrap">Division</th>
+                <th style="text-align: center;" class="text-wrap">Department</th>
+                <th style="text-align: center;" class="text-wrap">Section</th>
+                <th style="text-align: center;" class="text-wrap">StatusC</th>
 
 
-                    </tr>
-                </thead>
-                <tbody></tbody>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
 
-            </table>
-
-
-        </div>
-
-
-        <div class="form-group">
-            <button type="button" class="btn btn-primary" onclick="LoadData('0007027')">Submit</button>
-        </div>
+        </table>
 
 
     </div>
 
-    @section scripts{
+
+    <div class="form-group">
+        <button type="button" class="btn btn-primary" onclick="LoadData('0007027')">Submit</button>
+    </div>
 
 
-        <script src="~/lib/DataTable/js/jquery.dataTables.min.js"></script>
-        <script src="~/lib/DataTables/js/dataTables.bootstrap4.min.js"></script>
-        <script src="~/lib/DataTables/js/dataTables.colReorder.min.js"></script>
-        <script src="~/lib/DataTables/js/dataTables.fixedColumns.min.js"></script>
-        <script src="~/lib/DataTables/js/dataTables.fixedHeader.min.js"></script>
-        <script src="~/lib/DataTables/js/dataTables.keyTable.min.js"></script>
-        <script src="~/lib/DataTables/js/dataTables.responsive.min.js"></script>
-        <script src="~/lib/DataTables/js/responsive.bootstrap4.min.js"></script>
-        <script src="~/lib/DataTables/js/dataTables.rowGroup.min.js"></script>
-        <script src="~/lib/DataTables/js/dataTables.rowReorder.min.js"></script>
-        <script src="~/lib/DataTables/js/dataTables.scroller.min.js"></script>
-        <script src="~/lib/DataTables/js/dataTables.select.min.js"></script>
-        <script src="~/lib/DataTables/js/dataTables.buttons.min.js"></script>
-        <script src="~/lib/DataTables/js/buttons.bootstrap.min.js"></script>
-        <script src="~/lib/DataTables/js/buttons.flash.min.js"></script>
-        <script src="~/lib/DataTables/js/buttons.html5.min.js"></script>
-        <script src="~/lib/DataTables/js/buttons.print.min.js"></script>
+</div>
 
-        <script src="~/lib/CustomJS/ScriptUserManage/UserManagemant.js"></script>
+@section Scripts{
 
-        <script type="text/javascript">
+
+    <script src="~/lib/DataTables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/DataTables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/lib/DataTables/js/dataTables.colReorder.min.js"></script>
+    <script src="~/lib/DataTables/js/dataTables.fixedColumns.min.js"></script>
+    <script src="~/lib/DataTables/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/lib/DataTables/js/dataTables.keyTable.min.js"></script>
+    <script src="~/lib/DataTables/js/dataTables.responsive.min.js"></script>
+    <script src="~/lib/DataTables/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/lib/DataTables/js/dataTables.rowGroup.min.js"></script>
+    <script src="~/lib/DataTables/js/dataTables.rowReorder.min.js"></script>
+    <script src="~/lib/DataTables/js/dataTables.scroller.min.js"></script>
+    <script src="~/lib/DataTables/js/dataTables.select.min.js"></script>
+    <script src="~/lib/DataTables/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/DataTables/js/buttons.bootstrap.min.js"></script>
+    <script src="~/lib/DataTables/js/buttons.flash.min.js"></script>
+    <script src="~/lib/DataTables/js/buttons.html5.min.js"></script>
+    <script src="~/lib/DataTables/js/buttons.print.min.js"></script>
+
+    <script src="~/lib/CustomJS/ScriptUserManage/UserManagemant.js"></script>
+
+    <script type="text/javascript">
 
         var TableTarget;
 
@@ -103,7 +104,7 @@
 
         @*function showdata(OPID) {
 
-
+            
                 debugger
                 if (TableTarget != null) {
                     TableTarget.destroy();
@@ -122,7 +123,7 @@
                         dataSrc: "data",
                         data: { OPID: OPID },
                         dataType: "json",
-                    }),
+                    }),                                
 
                     dom: '<"top">rt<"bottom"ip>l<"clear">',
                     columns: [
@@ -132,7 +133,7 @@
                         { data: "Division", name: "Division", class: "text-wrap text-center" },
                         { data: "Department", name: "Department", class: "text-wrap text-center" },
                         { data: "Section", name: "Section", class: "text-wrap text-center" },
-                        { data: "StatusC", name: "StatusC", class: "text-wrap text-center" },
+                        { data: "StatusC", name: "StatusC", class: "text-wrap text-center" },                    
                     ],
                     order: [1, "asc"],
 
@@ -143,10 +144,10 @@
 
             }*@
 
-        </script>
+    </script>
 
 
-    }
+}
 
 </body>
 </html>

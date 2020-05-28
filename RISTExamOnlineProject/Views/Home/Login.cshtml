@@ -1,7 +1,6 @@
 ﻿@{
     Layout = null;
 }
-@model RISTExamOnlineProject.Models.db.vewOperatorAlls
 
 <!DOCTYPE html>
 
@@ -34,28 +33,21 @@
                     <img src="~/lib/img/img-01.png" alt="IMG">
                 </div>
 
-                <form class="login100-form validate-form" asp-action="login" method="post">
+                <form class="login100-form validate-form">
                     <span class="login100-form-title">
                         Member Login
                     </span>
 
                     <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
-                        @Html.TextBoxFor(m => m.OperatorID, new {@class = "input100", placeholder = "Operator No."})
-                        @Html.ValidationMessageFor(m => m.OperatorID, "", new {@class = "text-danger"})
-                        @*<input class="input100" type="text" name="operatorno" placeholder="Operator No.">*@
+                        <input class="input100" type="text" name="email" placeholder="Operator No.">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-user" aria-hidden="true"></i>
                         </span>
-
-
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Password is required">
-
-                        @*<input class="input100" type="password" name="pass" placeholder="Password">*@
-                        @Html.PasswordFor(m => m.Password, new {@class = "input100", placeholder = "Password"})
-                        @Html.ValidationMessageFor(m => m.Password, "", new {@class = "text-danger"})
+                        <input class="input100" type="password" name="pass" placeholder="Password">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-lock" aria-hidden="true"></i>
@@ -63,7 +55,7 @@
                     </div>
 
                     <div class="container-login100-form-btn">
-                        <button class="login100-form-btn" type="submit">
+                        <button class="login100-form-btn" type="button" onclick="location.href = '@Url.Action("Index", "Home")'">
                             Login
                         </button>
                     </div>
@@ -88,7 +80,5 @@
 <!--FOR IE9-->
 <script src="~/lib/html5shiv/html5shiv.js"></script>
 <script src="~/lib/respond.js/respond.js"></script>
-
-
 </body>
 </html>
