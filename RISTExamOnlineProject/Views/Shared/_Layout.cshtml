@@ -239,49 +239,62 @@
                         </li>
 
 
-                    <li class="parent">
-                        <a href="#">
-                            <i class="fas fa-stream mr-3"></i>
-                            <span class="none">Overview</span>
-                        </a>
-                    </li>
+                        <li class="parent">
+                            <a href="#">
+                                <i class="fas fa-stream mr-3"></i>
+                                <span class="none">Overview</span>
+                            </a>
+                        </li>
 
-                    <li class="parent">
-                        <a href="#">
-                            <i class="fas fa-question-circle mr-3"></i>
-                            <span class="none">About</span>
-                        </a>
-                    </li>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        var userRoles = "";
-                        @if (User.IsInRole("Admin"))
+                        <li class="parent">
+                            <a href="#">
+                                <i class="fas fa-question-circle mr-3"></i>
+                                <span class="none">About</span>
+                            </a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
                         {
-                            userRoles = "Admin";
-                        }
-                        else
-                        {
-                            userRoles = "User";
+                            var userRoles = "";
+                            @if (User.IsInRole("Admin"))
+                            {
+                                userRoles = "Admin";
+                            }
+                            else
+                            {
+                                userRoles = "User";
+                            }
+
+                            @if (userRoles == "Admin")
+                            {
+                                @*<li class="parent">
+                    <a href="@Url.Action("ManagementUser", "Management")">
+                        <i class="fas fa-sliders-h mr-3"></i>
+                        <span class="none">Management User</span>
+                    </a>
+                </li>*@
+                                <li class="parent">
+                                    <a href="#" onclick="toggle_menu('Shortcuts');return false;">
+                                        <i class="fas fa-link mr-3"></i>
+                                        <span class="none">User Managemant <i class="fa fa-angle-down pull-right align-bottom"></i></span>
+                                    </a>
+
+                                    <ul class="children" id="Shortcuts">
+                                        <li class="child"><a href="@Url.Action("UserDetailMaintenance","Management")" class="ml-4"><i class="fa fa-angle-right mr-2 "></i><i class="fa fa-font-awesome"></i> Edit User detail</a></li>
+                                        <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i><i class="fa fa-font-awesome"></i> Request Change</a></li>
+                                        <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i><i class="fa fa-font-awesome"></i> TEC Approved</a></li>
+                                        <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i><i class="fa fa-font-awesome"></i> Request Inquiry</a></li>
+                                    </ul>
+                                </li>
+                            }
                         }
 
-                        @if (userRoles == "Admin")
-                        {
-                            <li class="parent">
-                                <a href="@Url.Action("ManagementUser", "Management")">
-                                    <i class="fas fa-sliders-h mr-3"></i>
-                                    <span class="none">Management User</span>
-                                </a>
-                            </li>
-                        }
-                    }
-
-                    <li class="parent">
-                        <a href="#">
-                            <i class="fas fa-envelope mr-3"></i>
-                            <span class="none">Contact</span>
-                        </a>
-                    </li>
-                </ul>
+                        <li class="parent">
+                            <a href="#">
+                                <i class="fas fa-envelope mr-3"></i>
+                                <span class="none">Contact</span>
+                            </a>
+                        </li>
+                    </ul>
             </div>
             <!--Sidebar Naigation Menu-->
         </div>
