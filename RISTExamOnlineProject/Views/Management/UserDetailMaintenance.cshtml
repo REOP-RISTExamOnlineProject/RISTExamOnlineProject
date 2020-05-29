@@ -56,7 +56,7 @@
             </a>
         </li>
         <li class="nav-item mr-1">
-            <a href="@Url.Action("UserDetailMaintenance")?Event=Info" class="btn btn-dark  nav-link">
+            <a href="@Url.Action("UserDetailMaintenance")?Event=Userdetail" class="btn btn-dark  nav-link">
                 <i class="fa fa-user-alt mr-3"></i>
                 <span class=" ">User detail</span>
             </a>
@@ -87,7 +87,7 @@
 
 
         @{
-            if (ViewBag.Event == "CancelInquiry")
+            if (@ViewBag.Event == "Userdetail")
             {
                 @await Html.PartialAsync("/Views/Shared/_partsUserManage/_partsUserDetail.cshtml")
             }
@@ -97,7 +97,7 @@
             }
             else
             {
-                @await Html.PartialAsync("/Views/Shared/_partsUserManage/_partsUserDetail.cshtml")
+                @await Html.PartialAsync("/Views/Shared/_partsUserManage/_partsUserInfo.cshtml")
             }
         }
     </div>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
@@ -59,56 +60,30 @@ namespace RISTExamOnlineProject.Controllers
 
 
             return View(data);
-        }
 
-
-        //public IActionResult UserDetailMaintenance(string opno)
-        //{
-
-
-        //    ViewBag.opno = opno;
-        //    var data = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == opno);
-
-        //    //Get Position to Dropdown
-        //    var queryPosition = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
-        //        Select(c => new { c.OperatorID, c.JobTitle });
-        //    ViewBag.CategoryPosition = new SelectList(queryPosition.AsEnumerable(), "OperatorID", "JobTitle");
-
-        //    //Get Division to Dropdown
-        //    var queryDivision = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
-        //        Select(c => new { c.OperatorID, c.Division });
-        //    ViewBag.CategoryDivision = new SelectList(queryDivision.AsEnumerable(), "OperatorID", "Division");
-
-        //    //Get Department to Dropdown
-        //    var queryDepartment = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
-        //        Select(c => new { c.OperatorID, c.Department });
-        //    ViewBag.CategoryDepartment = new SelectList(queryDepartment.AsEnumerable(), "OperatorID", "Department");
-
-        //    //Get Section to Dropdown
-        //    var querySection = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
-        //        Select(c => new { c.OperatorID, c.Section });
-        //    ViewBag.CategorySection = new SelectList(querySection.AsEnumerable(), "OperatorID", "Section");
-
-        //    //Get Shift to Dropdown
-        //    var queryShift = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno).
-        //        Select(c => new { c.OperatorID, c.GroupName });
-        //    ViewBag.CategoryShift = new SelectList(queryShift.AsEnumerable(), "OperatorID", "GroupName");
-
-        //    //Get License to Dropdown
-        //    var queryLicense = _sptoDbContext.vewOperatorLicense.Where(x => x.OperatorID == opno).
-        //        Select(c => new { c.OperatorID, c.License });
-        //    ViewBag.CategoryLicense = new MultiSelectList(queryLicense.AsEnumerable(), "OperatorID", "License");
-
-        //    return View(data);
-
-        //} 
-
-
-        public IActionResult UserDetailMaintenance(string Event)
+        } 
+        public IActionResult UserDetailMaintenance(string Event) 
         {
             var Event_ = Event == null ? "info" : Event;
 
             ViewBag.Event = Event_;
+            string IPAddress = "";
+
+            IPHostEntry Host = default(IPHostEntry);
+            string Hostname = null;
+            Hostname = System.Environment.MachineName;
+            Host = Dns.GetHostEntry(Hostname);
+            foreach (IPAddress IP in Host.AddressList)
+            {
+                if (IP.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                {
+                    IPAddress = Convert.ToString(IP);
+                }
+            }
+
+
+            ViewBag.IPAddress = IPAddress;
+
 
             return View();
         }
@@ -134,36 +109,132 @@ namespace RISTExamOnlineProject.Controllers
         }
 
 
-        public JsonResult GetPosition()
+
+        public JsonResult GetSectionCode(string strDivision,string strDepartment)
         {
             var listItems = new List<SelectListItem>();
 
-            var dt = new DataTable();
-            var ObjRun = new mgrSQLcommand(_configuration);
-            dt = ObjRun.GetPosition_();
+            DataTable dt = new DataTable();
+            mgrSQLcommand ObjRun= new mgrSQLcommand(_configuration);
+            dt = ObjRun.GetSectionCode(strDivision, strDepartment);
+
+            if (dt.Rows.Count != 0)
+            {
+                listItems.Add(new SelectListItem()
+                {
+                    Text = "Choose Section",
+                    Value = ""
+                }); 
+                foreach (DataRow row in dt.Rows)
+                {
+                    string strText = row["SectionCode"].ToString().Trim() + " : " + row["Section"].ToString().Trim(); 
+                     
+                    listItems.Add(new SelectListItem()
+                    {
+                        Text = strText,
+                        Value = row["SectionCode"].ToString().Trim(),
+
+                    });
+                }
+            } 
+            return Json(new MultiSelectList(listItems, "Value", "Text"));
+        }
+
+        public JsonResult GetDepartment(string strDivision)
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>();
+
+            DataTable dt = new DataTable();
+            mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
+            dt = ObjRun.GetDepartment(strDivision);
+
+            if (dt.Rows.Count != 0)
+            {
+                listItems.Add(new SelectListItem()
+                {
+                    Text = "Choose Department",
+                    Value = ""
+                });
+                foreach (DataRow row in dt.Rows)
+                {
+                     
+
+                    listItems.Add(new SelectListItem()
+                    {
+                        Text = row["Department"].ToString().Trim(),
+                        Value = row["Department"].ToString().Trim(),
+
+                    });
+                }
+            }
+            return Json(new MultiSelectList(listItems, "Value", "Text"));
+        }
+
+        public JsonResult GetDivision()
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>();
+
+            DataTable dt = new DataTable();
+            mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
+            dt = ObjRun.GetDivision();
 
             if (dt.Rows.Count != 0)
             {
                 listItems.Add(new SelectListItem
                 {
-                    Text = "Choose Position",
+                    Text = "Choose Division",
                     Value = ""
                 });
-
                 foreach (DataRow row in dt.Rows)
-                    listItems.Add(new SelectListItem
+                { 
+                    listItems.Add(new SelectListItem()
                     {
-                        Text = row["Position"].ToString().Trim(),
-                        Value = row["Position"].ToString().Trim()
-                    });
-            }
+                        Text = row["Division"].ToString().Trim(),
+                        Value = row["Division"].ToString().Trim(),
 
+                    });
+                }
+            }
             return Json(new MultiSelectList(listItems, "Value", "Text"));
         }
 
 
-        public IActionResult Load_OperatorAdditional_Detail(string OPID)
+        public JsonResult GetGroupName()
         {
+            List<SelectListItem> listItems = new List<SelectListItem>();
+
+            DataTable dt = new DataTable();
+            mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
+            dt = ObjRun.GetGroupName();
+
+            if (dt.Rows.Count != 0)
+            {
+                listItems.Add(new SelectListItem()
+                {
+                    Text = "Choose GroupName",
+                    Value = ""
+                });
+                foreach (DataRow row in dt.Rows)
+                {
+
+
+                    listItems.Add(new SelectListItem()
+                    {
+                        Text = row["GroupName"].ToString().Trim(),
+                        Value = row["OperatorGroup"].ToString().Trim(),
+
+                    });
+                }
+            }
+            return Json(new MultiSelectList(listItems, "Value", "Text"));
+        }
+
+
+
+        public IActionResult Load_OperatorAdditional_Detail(string OPID) {
+
+
+
             var draw = HttpContext.Request.Form["draw"].FirstOrDefault();
             var start = Request.Form["start"].FirstOrDefault();
             var length = Request.Form["length"].FirstOrDefault();
