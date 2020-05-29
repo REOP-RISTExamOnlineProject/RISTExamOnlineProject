@@ -34,7 +34,12 @@
     justify-content: space-between;
     padding: 80px 130px 33px 95px;
   }
-  
+
+
+.error-font {
+    font-family: 'JetBrainsMono';
+    font-size: 12px;
+}
   /*------------------------------------------------------------------
   [  ]*/
   .login100-pic {

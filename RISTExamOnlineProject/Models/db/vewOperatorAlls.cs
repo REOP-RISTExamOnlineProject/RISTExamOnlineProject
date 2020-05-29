@@ -5,8 +5,15 @@ namespace RISTExamOnlineProject.Models.db
 {
     public class vewOperatorAlls
     {
-        [Key] [Display(Name = "OPNO.")] public string OperatorID { get; set; }
 
+
+
+        [Key]
+        [Required(ErrorMessage = "Please enter Operator No.")]
+        [Display(Name = "Operator No.")]
+        public string OperatorID { get; set; }
+        [Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Display(Name = "Name Eng")] public string NameEng { get; set; }

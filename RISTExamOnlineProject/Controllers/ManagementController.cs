@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +23,7 @@ namespace RISTExamOnlineProject.Controllers
             _configuration = configuration;
         }
 
-
+        
         public IActionResult ManagementUser(string opno)
         {
             ViewBag.opno = opno;
@@ -61,7 +62,8 @@ namespace RISTExamOnlineProject.Controllers
 
             return View(data);
 
-        } 
+        }
+        [Authorize]
         public IActionResult UserDetailMaintenance(string Event) 
         {
             var Event_ = Event == null ? "info" : Event;
