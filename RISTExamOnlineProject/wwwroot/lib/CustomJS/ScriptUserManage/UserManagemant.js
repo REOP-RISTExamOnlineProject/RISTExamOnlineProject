@@ -149,24 +149,7 @@ function GetDepartment() {
     
 }
 
-function GetDivision() {
-    $.ajax({
-        type: 'POST',
-        url: '../Management/GetDivision', 
-        dataType: 'json',
-        success: function (citys) {
-            if (citys.length != 0) {
-                $.each(citys, function (i, city) {
-                    $("#ddlDivision").append('<option value="' + city.value + '">' + city.text + '</option>');
-                });
-            }
-        },
-        error: function (ex) {
-            alert('Failed to retrieve states.' + ex);
-        }
-    });
-     
-}
+
 
 function GetGroupName() {
     $.ajax({

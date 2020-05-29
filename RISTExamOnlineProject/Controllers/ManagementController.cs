@@ -30,39 +30,39 @@ namespace RISTExamOnlineProject.Controllers
 
             //Get Position to Dropdown
             var queryPosition = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno)
-                .Select(c => new {c.OperatorID, c.JobTitle});
+                .Select(c => new { c.OperatorID, c.JobTitle });
             ViewBag.CategoryPosition = new SelectList(queryPosition.AsEnumerable(), "OperatorID", "JobTitle");
 
             //Get Division to Dropdown
             var queryDivision = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno)
-                .Select(c => new {c.OperatorID, c.Division});
+                .Select(c => new { c.OperatorID, c.Division });
             ViewBag.CategoryDivision = new SelectList(queryDivision.AsEnumerable(), "OperatorID", "Division");
 
             //Get Department to Dropdown
             var queryDepartment = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno)
-                .Select(c => new {c.OperatorID, c.Department});
+                .Select(c => new { c.OperatorID, c.Department });
             ViewBag.CategoryDepartment = new SelectList(queryDepartment.AsEnumerable(), "OperatorID", "Department");
 
             //Get Section to Dropdown
             var querySection = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno)
-                .Select(c => new {c.OperatorID, c.Section});
+                .Select(c => new { c.OperatorID, c.Section });
             ViewBag.CategorySection = new SelectList(querySection.AsEnumerable(), "OperatorID", "Section");
 
             //Get Shift to Dropdown
             var queryShift = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno)
-                .Select(c => new {c.OperatorID, c.GroupName});
+                .Select(c => new { c.OperatorID, c.GroupName });
             ViewBag.CategoryShift = new SelectList(queryShift.AsEnumerable(), "OperatorID", "GroupName");
 
             //Get License to Dropdown
             var queryLicense = _sptoDbContext.vewOperatorLicense.Where(x => x.OperatorID == opno)
-                .Select(c => new {c.OperatorID, c.License});
+                .Select(c => new { c.OperatorID, c.License });
             ViewBag.CategoryLicense = new MultiSelectList(queryLicense.AsEnumerable(), "OperatorID", "License");
 
 
             return View(data);
 
-        } 
-        public IActionResult UserDetailMaintenance(string Event) 
+        }
+        public IActionResult UserDetailMaintenance(string Event)
         {
             var Event_ = Event == null ? "info" : Event;
 
@@ -103,19 +103,19 @@ namespace RISTExamOnlineProject.Controllers
 
 
             var jsonResult = Json(new
-                {strResult = _Result, dataLabel = _DataResult, strboolbel = _ResultLabel, data = data_});
+            { strResult = _Result, dataLabel = _DataResult, strboolbel = _ResultLabel, data = data_ });
 
             return jsonResult;
         }
 
 
 
-        public JsonResult GetSectionCode(string strDivision,string strDepartment)
+        public JsonResult GetSectionCode(string strDivision, string strDepartment)
         {
             var listItems = new List<SelectListItem>();
 
             DataTable dt = new DataTable();
-            mgrSQLcommand ObjRun= new mgrSQLcommand(_configuration);
+            mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
             dt = ObjRun.GetSectionCode(strDivision, strDepartment);
 
             if (dt.Rows.Count != 0)
@@ -124,11 +124,11 @@ namespace RISTExamOnlineProject.Controllers
                 {
                     Text = "Choose Section",
                     Value = ""
-                }); 
+                });
                 foreach (DataRow row in dt.Rows)
                 {
-                    string strText = row["SectionCode"].ToString().Trim() + " : " + row["Section"].ToString().Trim(); 
-                     
+                    string strText = row["SectionCode"].ToString().Trim() + " : " + row["Section"].ToString().Trim();
+
                     listItems.Add(new SelectListItem()
                     {
                         Text = strText,
@@ -136,7 +136,7 @@ namespace RISTExamOnlineProject.Controllers
 
                     });
                 }
-            } 
+            }
             return Json(new MultiSelectList(listItems, "Value", "Text"));
         }
 
@@ -157,7 +157,6 @@ namespace RISTExamOnlineProject.Controllers
                 });
                 foreach (DataRow row in dt.Rows)
                 {
-                     
 
                     listItems.Add(new SelectListItem()
                     {
@@ -186,7 +185,7 @@ namespace RISTExamOnlineProject.Controllers
                     Value = ""
                 });
                 foreach (DataRow row in dt.Rows)
-                { 
+                {
                     listItems.Add(new SelectListItem()
                     {
                         Text = row["Division"].ToString().Trim(),
@@ -231,7 +230,8 @@ namespace RISTExamOnlineProject.Controllers
 
 
 
-        public IActionResult Load_OperatorAdditional_Detail(string OPID) {
+        public IActionResult Load_OperatorAdditional_Detail(string OPID)
+        {
 
 
 
@@ -269,7 +269,107 @@ namespace RISTExamOnlineProject.Controllers
             //Paging     
             var data = dataShow.Skip(skip).Take(pageSize).ToList();
             //Returning Json Data    
-            return Json(new {draw, recordsFiltered = recordsTotal, recordsTotal, data});
+            return Json(new { draw, recordsFiltered = recordsTotal, recordsTotal, data });
         }
+
+
+
+        public JsonResult GetDivision_Addition()
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>();
+
+            DataTable dt = new DataTable();
+            mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
+            dt = ObjRun.GetDivision();
+
+            if (dt.Rows.Count != 0)
+            {
+                listItems.Add(new SelectListItem()
+                {
+                    Text = "Choose Division",
+                    Value = "0"
+                });
+                foreach (DataRow row in dt.Rows)
+                {
+
+
+                    listItems.Add(new SelectListItem()
+                    {
+                        Text = row["Division"].ToString().Trim(),
+                        Value = row["Division"].ToString().Trim(),
+
+                    });
+                }
+            }
+            return Json(new MultiSelectList(listItems, "Value", "Text"));
+
+        }
+
+        public JsonResult GetDepartment_Addition(string DIV)
+        {
+
+            List<SelectListItem> listItems = new List<SelectListItem>();
+
+            DataTable dt = new DataTable();
+            mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
+            dt = ObjRun.GetDepartment(DIV);
+
+            if (dt.Rows.Count != 0)
+            {
+                listItems.Add(new SelectListItem()
+                {
+                    Text = "Choose Department",
+                    Value = "0"
+                });
+                foreach (DataRow row in dt.Rows)
+                {
+
+
+                    listItems.Add(new SelectListItem()
+                    {
+                        Text = row["Department"].ToString().Trim(),
+                        Value = row["Department"].ToString().Trim(),
+
+                    });
+                }
+            }
+            return Json(new MultiSelectList(listItems, "Value", "Text"));
+
+        }
+
+        public JsonResult GetSection_Addition(string DIV, string DEP)
+        {
+
+            List<SelectListItem> listItems = new List<SelectListItem>();
+
+            DataTable dt = new DataTable();
+            mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
+            dt = ObjRun.GetSection(DIV, DEP);
+
+            if (dt.Rows.Count != 0)
+            {
+                listItems.Add(new SelectListItem()
+                {
+                    Text = "Choose Section",
+                    Value = "0"
+                });
+                foreach (DataRow row in dt.Rows)
+                {
+
+                    listItems.Add(new SelectListItem()
+                    {
+                        Text = row["Section"].ToString().Trim(),
+                        Value = row["SectionCode"].ToString().Trim(),
+
+                    });
+                }
+            }
+            return Json(new MultiSelectList(listItems, "Value", "Text"));
+
+        }
+
+
+
+
     }
 }
