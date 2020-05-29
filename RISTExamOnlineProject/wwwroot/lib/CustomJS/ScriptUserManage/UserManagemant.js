@@ -3,7 +3,7 @@
 function GetuserDetail() { 
     $.ajax({
         type: 'POST',
-        url: "/Management/GetDataUserdetail",
+        url: "../Management/GetDataUserdetail",
         data: { opno: $("#strOPNo").val() },
         dataType: 'json',
         success: function (Data) { 
@@ -110,7 +110,7 @@ function showdata(OPID) {
 function GetSectionCode() {
     $.ajax({        
         type: 'POST',
-        url: '/Management/GetSectionCode',
+        url: '../Management/GetSectionCode',
         dataType: 'json',
        data: { strDivision : $("#ddlDivision").val(), strDepartment : $("#ddlDepartment").val() },
         success: function (citys) {
@@ -131,7 +131,7 @@ function GetSectionCode() {
 function GetDepartment() {
     $.ajax({
         type: 'POST',
-        url: '/Management/GetDepartment',
+        url: '../Management/GetDepartment',
         data: { strDivision : $("#ddlDivision").val() },
         dataType: 'json',
         success: function (citys) {
@@ -152,7 +152,7 @@ function GetDepartment() {
 function GetDivision() {
     $.ajax({
         type: 'POST',
-        url: '/Management/GetDivision', 
+        url: '../Management/GetDivision', 
         dataType: 'json',
         success: function (citys) {
             if (citys.length != 0) {
@@ -171,7 +171,7 @@ function GetDivision() {
 function GetGroupName() {
     $.ajax({
         type: 'POST',
-        url: '/Management/GetGroupName',
+        url: '../Management/GetGroupName',
         dataType: 'json',
         success: function (citys) {
             if (citys.length != 0) {
