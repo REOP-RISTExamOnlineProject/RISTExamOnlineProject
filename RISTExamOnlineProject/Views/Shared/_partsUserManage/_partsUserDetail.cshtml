@@ -9,7 +9,7 @@
     </div>
     <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
         <form class="container">
-            <div class="form-group form-row">
+            <div class="form-group form-row mb-4">
                 <div class="col-sm">
                     <label for="NameEng" class="mb-0">Name - Surname</label>
                     @Html.TextBox("NameEn", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Name English..", id = "NameEn" })
@@ -19,48 +19,65 @@
                     @Html.TextBox("NameTh", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Name Thai..", id = "NameTh" })
                 </div>
             </div>
+           @* <hr />*@
+            @*<h5 class="font-weight-bold">Position</h5>*@
             <div class="form-group row">
                 <div class="col-sm">
-                    <label for="txtEmail" class="mb-0">Email</label>
+                    <label for="txtEmail" class="mb-0">Job Title</label>
                     @Html.TextBox("txtjobtitle", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Email..", id = "txtjobtitle" })
                 </div>
                 <div class="col-sm">
                     <label for="txtPosition" class="mb-0">Position</label>
                     @Html.TextBox("txtPosition", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Position..", id = "txtPosition" })
                 </div>
-             
-                    <div class="col-sm">
-                        <label for="Section" class="mb-0">Shift Group</label>
-                        @Html.DropDownList("ddlShift", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlShift", @class = "form-control form-control-sm shadow-sm", width = "300px" })
-                    </div>
-                 
+
+                <div class="col-sm">
+                    <label for="Section" class="mb-0">Shift Group</label>
+                    @Html.DropDownList("ddlShift", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlShift", @class = "form-control form-control-sm shadow-sm", width = "300px" })
+                </div>
+
             </div>
-            <hr />
-            <div class="form-group row">
-                <div class="col-sm-6">
+
+            <div class="form-group row mb-4">
+                <div class="col-sm-4">
                     <label for="Division" class="mb-0">Division</label>
                     @Html.DropDownList("ddlDivision", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlDivision", @class = "form-control form-control-sm shadow-sm", @width = "300px" })
                 </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-sm-6">
+                @*</div>
+            <div class="form-group row">*@
+                <div class="col-sm-4">
                     <label for="Department" class="mb-0">Department</label>
                     @Html.DropDownList("ddlDepartment", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlDepartment", @class = "form-control form-control-sm shadow-sm", @width = "300px" })
                 </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-sm-6">
+                @*</div>
+            <div class="form-group row">*@
+                <div class="col-sm-4">
                     <label for="Section" class="mb-0">Section</label>
                     @Html.DropDownList("ddlSection", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlSection", @class = "form-control form-control-sm shadow-sm", width = "300px" })
                 </div>
             </div>
 
-            <hr />
+            
             <div class="form-group row">
-                <div class="col-sm">
-                    <label for="txtEmail" class="mb-0">Email</label>
+                <div class="col-sm-4">
+                    <label for="txtEmail" class="mb-0">Primary email</label>
                     @Html.TextBox("txtEmail", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Email..", id = "txtEmail" })
                 </div>
+                <div class="col-sm-4">
+                    <label for="txtEmail" class="mb-0">Secondary email</label>
+                    @Html.TextBox("txtEmail2", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Email..", id = "txtEmail2" })
+                </div>
+                <div class="col-sm-2">
+                    <label for="Section" class="mb-0">Authority</label>
+                    @Html.DropDownList("ddlAuthority", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlAuthority", @class = "form-control form-control-sm shadow-sm", width = "300px" })
+                </div>
+                <div class="col-sm-2">
+                    <label for="Section" class="mb-0">Active</label>
+                    @Html.DropDownList("ddlActive", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlActive", @class = "form-control form-control-sm shadow-sm", width = "300px" })
+                </div>
+            </div>
+            <div class="form-group row">
+
                 <div class="col-sm">
                     <label for="Rfid" class="mb-0">RFID</label>
                     @Html.TextBox("txtRfid", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Rfid..", id = "txtRfid" })
@@ -78,11 +95,7 @@
                         <button type="button" class="btn btn-secondary" id="btnClr"><i class="fas fa-sync-alt"></i> Clear</button>
                     </div>
                 </div>
-
             }
-
-
-             
 
         </form>
     </div>  
@@ -96,17 +109,26 @@
         GetDepartment();
         GetSectionCode();
         GetGroupName();
-
-
-        if ($("#strOPNo").val()!= ""){
-        GetuserDetail();
-        }
-
+        GetAuthority();
+        GetActive();
     }
-
+    onReady(function () {
+        if ($("#strOPNo").val() != "") {
+            GetuserDetail();
+        }
+        return false;
+    });
+    function onReady(callback) {
+        var intervalId = window.setInterval(function () {
+            if (document.getElementsByTagName('body')[0] !== undefined) {
+                window.clearInterval(intervalId);
+                callback.call(this);
+            }
+        }, 1000);
+    };
 
     $("#btnUpd").on("click", function () {
-        
+
         //alert("Update");
         UpdateUserDetail();
 
@@ -117,7 +139,7 @@
         $("#ddlSection option").remove();
         GetSectionCode();
     });
-    $("#ddlDivision").on("change", function () { 
+    $("#ddlDivision").on("change", function () {
         $("#ddlDepartment option").remove();
         GetDepartment();
         $("#ddlSection option").remove();
@@ -135,6 +157,7 @@
             success: function (Data) {
 
                 if (Data.strboolbel == true && Data.strResult == "OK") {
+                   
                     var _Data = Data.data;
                     $("#NameEn").val(_Data.nameEng);
                     $("#NameTh").val(_Data.nameThai);
@@ -144,18 +167,21 @@
                     $("#ddlSection").val(_Data.sectionCode);
                     $("#ddlShift").val(_Data.operatorGroup);
                     $("#txtEmail").val(_Data.email1);
+                    $("#txtEmail2").val(_Data.email2);
                     $("#txtPassword").val($.trim(_Data.password));
                     $("#txtRfid").val(_Data.rfid);
                     $("#txtUpdDate").val(_Data.updDate);
                     $("#txtAddDate").val(_Data.addDate);
                     $("#txtjobtitle").val(_Data.jobTitle);
+                    $("#ddlAuthority").val(_Data.authority);
+                    $("#ddlActive").val(_Data.active.toString());
                 } else {
                     Swal.fire({
                         icon: 'warning',
                         title: Data.strResult,
                         text: Data.dataLabel,
                         type: 'error',
-                        timer: 1700,
+                        
                     }).then(function () {
                         return false;
                     });
@@ -167,6 +193,66 @@
             },
         });
 
+
+    }
+
+
+
+
+    function UpdateUserDetail() {
+        var arryItem = [];
+        arryItem = [{
+            OperatorID: $("#strOPNo").val(),
+            Password: $("#txtPassword").val(),
+            NameEng: $("#NameEn").val(),
+            NameThai: $("#NameTh").val(),
+            SectionCode: $("#ddlSection").val(),
+            OperatorGroup: $("#ddlShift").val(),
+            Position: $("#txtPosition").val(),
+            JobTitle: $("#txtjobtitle").val(),
+            Email1: $("#txtEmail").val(),
+            Email2: $("#txtEmail2").val(),
+            RFID: $("#txtRfid").val(),
+            Authority: $("#ddlAuthority").val(),
+            Active: $("#ddlActive").val(),
+        }];
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetUpdateUserdetail")',
+            data: { dataDetail: arryItem[0], OpNo: ' @User.Identity.Name' },
+            dataType: 'json',
+            success: function (Data)
+            {
+                if (Data.strboolbel == true && Data.strResult == "OK")
+                {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!!',
+                        text: 'Update Success',
+                        type: 'success',
+                         
+                    }).then(function () {
+                        return false;
+                    });
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: Data.strResult+" !",
+                        text: Data.dataLabel,
+                        type: 'error',
+                        
+                    }).then(function () {
+                        return false;
+                    });
+                }
+            },
+            error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+
+
+            }
+            });
 
     }
 </script>

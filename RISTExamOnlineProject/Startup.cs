@@ -59,6 +59,7 @@ namespace RISTExamOnlineProject
                 options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time   
             });
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddMvc();
         }

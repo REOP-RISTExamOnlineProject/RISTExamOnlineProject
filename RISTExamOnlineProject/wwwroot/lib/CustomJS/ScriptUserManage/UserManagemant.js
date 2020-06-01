@@ -88,12 +88,7 @@ function GetSectionCode() {
 }
 
 
-function GetDepartment() {
-
-
-
-
-
+function GetDepartment() { 
     $.ajax({
         type: 'POST',
         url: '../Management/GetDepartment',
@@ -132,6 +127,42 @@ function GetDivision() {
     });
      
 }
+function GetAuthority() {
+    $.ajax({
+        type: 'POST',
+        url: '../Management/GetAuthority',
+        dataType: 'json',
+        success: function (citys) {
+            if (citys.length != 0) {
+                $.each(citys, function (i, city) {
+                    $("#ddlAuthority").append('<option value="' + city.value + '">' + city.text + '</option>');
+                });
+            }
+        },
+        error: function (ex) {
+            alert('Failed to retrieve states.' + ex);
+        }
+    });
+
+}
+function GetActive() {
+    $.ajax({
+        type: 'POST',
+        url: '../Management/GetActive',
+        dataType: 'json',
+        success: function (citys) {
+           
+            if (citys.length != 0) {
+                $.each(citys, function (i, city) { 
+                    $("#ddlActive").append('<option value="' + city.value + '">' + city.text + '</option>');
+                });
+            }
+        },
+        error: function (ex) {
+            alert('Failed to retrieve states.' + ex);
+        }
+    }); 
+}
 
 function GetGroupName() {
     $.ajax({
@@ -152,24 +183,3 @@ function GetGroupName() {
 
 }
 
-
-
-
-function UpdateUserDetail() {
- debugger
-        var arryItem = [];
-   debugger
-    arryItem = [{
-        OperatorID: $("#NameEn").val(),
-
-
-        NameEng :$("#NameEn").val(),
-        NameThai :$("#NameTh").val(),
-
-
-
-    }];
-
-    debugger
-
-}

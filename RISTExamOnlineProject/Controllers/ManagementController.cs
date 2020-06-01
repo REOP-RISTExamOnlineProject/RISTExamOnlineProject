@@ -19,11 +19,13 @@ namespace RISTExamOnlineProject.Controllers
        
         private readonly IConfiguration _configuration;
         private readonly SPTODbContext _sptoDbContext;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public ManagementController(SPTODbContext context, IConfiguration configuration)
+        public ManagementController(SPTODbContext context, IConfiguration configuration,IHttpContextAccessor httpContextAccessor)
         {
             _sptoDbContext = context;
             _configuration = configuration;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         #region UserDetail
@@ -218,6 +220,67 @@ namespace RISTExamOnlineProject.Controllers
             return Json(new MultiSelectList(listItems, "Value", "Text"));
         }
 
+        public JsonResult GetAuthority()
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>();
+
+            DataTable dt = new DataTable();
+            mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
+            // dt = ObjRun.GetDivision();
+
+           // if (dt.Rows.Count != 0)
+           // {
+                listItems.Add(new SelectListItem
+                {
+                    Text = "Choose Authority",
+                    Value = ""
+                });
+                listItems.Add(new SelectListItem
+                {
+                    Text = "Administrator",
+                    Value = "9"
+                });
+                listItems.Add(new SelectListItem
+                {
+                    Text = "Employee",
+                    Value = "0"
+                });
+
+
+            //}
+            return Json(new MultiSelectList(listItems, "Value", "Text"));
+        }
+
+        public JsonResult GetActive()
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>();
+
+            DataTable dt = new DataTable();
+            mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
+            // dt = ObjRun.GetDivision();
+
+            //if (dt.Rows.Count != 0)
+            //{
+                listItems.Add(new SelectListItem
+                {
+                    Text = "Choose Active",
+                    Value = ""
+                });
+                listItems.Add(new SelectListItem
+                {
+                    Text = "Active job",
+                    Value = "true"
+                });
+                listItems.Add(new SelectListItem
+                {
+                    Text = "Resign",
+                    Value = "false"
+                });
+
+
+            //}
+            return Json(new MultiSelectList(listItems, "Value", "Text"));
+        }
 
 
 
@@ -233,6 +296,41 @@ namespace RISTExamOnlineProject.Controllers
             var asdas = param;
             return PartialView("_partsUserManage/"+ param);
         }
+
+
+        public JsonResult GetUpdateUserdetail(vewOperatorAlls dataDetail,string OpNo)
+        {
+            var _Result = "OK";
+            var _DataResult = "";
+            var _ResultLabel = true;
+
+            //string strIPAddress = httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            //var data_ = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == opno);
+            String hostName = string.Empty;
+            hostName = Dns.GetHostName();
+            IPHostEntry myIP = Dns.GetHostEntry(hostName);
+            IPAddress[] address = myIP.AddressList;
+
+
+
+
+            var dataOperator = new vewOperatorAlls();
+             
+            mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
+            string[] Result = ObjRun.GetUpdUserdetail(dataDetail, OpNo, address[2].ToString());
+
+            _ResultLabel = Convert.ToBoolean(Result[0]);
+            _Result = Result[1];
+            _DataResult = _Result != "OK" ? _Result : "";
+
+            var jsonResult = Json(new
+            { strResult = _Result, dataLabel = _DataResult, strboolbel = _ResultLabel, data = "" });
+
+            return jsonResult;
+
+
+        }
+
 
         #endregion
 
