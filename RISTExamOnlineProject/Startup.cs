@@ -52,6 +52,7 @@ namespace RISTExamOnlineProject
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
             // Add framework services.
             services.AddMvc();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,12 +63,13 @@ namespace RISTExamOnlineProject
             else
                 app.UseExceptionHandler("/Error");
 
-
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             //app.UseMvcWithDefaultRoute();
            
             app.UseCookiePolicy();
             app.UseAuthentication();
+            
             app.UseCors("CorsPolicy");
             app.UseMvc(routes =>
             {

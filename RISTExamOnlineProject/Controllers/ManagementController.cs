@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RISTExamOnlineProject.Models.db;
 using RISTExamOnlineProject.Models.TSQL;
@@ -63,6 +65,7 @@ namespace RISTExamOnlineProject.Controllers
             return View(data);
 
         }
+
         [Authorize]
         public IActionResult UserDetailMaintenance(string Event) 
         {
@@ -272,6 +275,28 @@ namespace RISTExamOnlineProject.Controllers
             var data = dataShow.Skip(skip).Take(pageSize).ToList();
             //Returning Json Data    
             return Json(new {draw, recordsFiltered = recordsTotal, recordsTotal, data});
+        }
+
+        public IActionResult UserInCharge(string opno)
+        {
+            ViewBag.opno = opno;
+          
+            var queryuser = _sptoDbContext.sprOperatorShowListInChang.FromSql($"sprOperatorShowListInChang {opno}").ToList();
+            return View(queryuser);
+        }
+        public async Task<IActionResult> EditUserInCharge(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            //var suppliers = await _context.Suppliers.FindAsync(id);
+            //if (suppliers == null)
+            //{
+            //    return NotFound();
+            //}
+            return View();
         }
     }
 }
