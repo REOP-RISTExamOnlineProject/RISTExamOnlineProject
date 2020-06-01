@@ -155,6 +155,7 @@ namespace RISTExamOnlineProject.Controllers
                 {
 
 
+
                     listItems.Add(new SelectListItem()
                     {
                         Text = row["Department"].ToString().Trim(),
@@ -336,7 +337,8 @@ namespace RISTExamOnlineProject.Controllers
 
         #endregion
 
-        public IActionResult Load_OperatorAdditional_Detail(string OPID) {
+        public IActionResult Load_OperatorAdditional_Detail(string OPID)
+        {
 
 
 
@@ -374,7 +376,103 @@ namespace RISTExamOnlineProject.Controllers
             //Paging     
             var data = dataShow.Skip(skip).Take(pageSize).ToList();
             //Returning Json Data    
-            return Json(new {draw, recordsFiltered = recordsTotal, recordsTotal, data});
+            return Json(new { draw, recordsFiltered = recordsTotal, recordsTotal, data });
+        }
+
+
+
+        public JsonResult GetDivision_Addition()
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>();
+
+            DataTable dt = new DataTable();
+            mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
+            dt = ObjRun.GetDivision_Additional();
+
+            if (dt.Rows.Count != 0)
+            {
+                listItems.Add(new SelectListItem()
+                {
+                    Text = "Choose Division",
+                    Value = "0"
+                });
+                foreach (DataRow row in dt.Rows)
+                {
+
+
+                    listItems.Add(new SelectListItem()
+                    {
+                        Text = row["Division"].ToString().Trim(),
+                        Value = row["Division"].ToString().Trim(),
+
+                    });
+                }
+            }
+            return Json(new MultiSelectList(listItems, "Value", "Text"));
+
+        }
+
+        public JsonResult GetDepartment_Addition(string DIV)
+        {
+
+            List<SelectListItem> listItems = new List<SelectListItem>();
+
+            DataTable dt = new DataTable();
+            mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
+            dt = ObjRun.GetDepartment_Additional(DIV);
+
+            if (dt.Rows.Count != 0)
+            {
+                listItems.Add(new SelectListItem()
+                {
+                    Text = "Choose Department",
+                    Value = "0"
+                });
+                foreach (DataRow row in dt.Rows)
+                {
+
+
+                    listItems.Add(new SelectListItem()
+                    {
+                        Text = row["Department"].ToString().Trim(),
+                        Value = row["Department"].ToString().Trim(),
+
+                    });
+                }
+            }
+            return Json(new MultiSelectList(listItems, "Value", "Text"));
+
+        }
+
+        public JsonResult GetSection_Addition(string DIV, string DEP)
+        {
+
+            List<SelectListItem> listItems = new List<SelectListItem>();
+
+            DataTable dt = new DataTable();
+            mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
+            dt = ObjRun.GetSection_Additional(DIV, DEP);
+
+            if (dt.Rows.Count != 0)
+            {
+                listItems.Add(new SelectListItem()
+                {
+                    Text = "Choose Section",
+                    Value = "0"
+                });
+                foreach (DataRow row in dt.Rows)
+                {
+
+                    listItems.Add(new SelectListItem()
+                    {
+                        Text = row["Section"].ToString().Trim(),
+                        Value = row["SectionCode"].ToString().Trim(),
+
+                    });
+                }
+            }
+            return Json(new MultiSelectList(listItems, "Value", "Text"));
+
         }
 
         public IActionResult UserInCharge(string opno)
