@@ -65,9 +65,8 @@
 </div>
 
 @section Scripts{
-
-
-    <script src="~/lib/DataTables/js/jquery.dataTables.min.js"></script>
+     
+    @*<script src="~/lib/DataTables/js/jquery.dataTables.min.js"></script>
     <script src="~/lib/DataTables/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/lib/DataTables/js/dataTables.colReorder.min.js"></script>
     <script src="~/lib/DataTables/js/dataTables.fixedColumns.min.js"></script>
@@ -85,64 +84,13 @@
     <script src="~/lib/DataTables/js/buttons.html5.min.js"></script>
     <script src="~/lib/DataTables/js/buttons.print.min.js"></script>
 
-    <script src="~/lib/CustomJS/ScriptUserManage/UserManagemant.js"></script>
+    <script src="~/lib/CustomJS/ScriptUserManage/UserManagemant.js"></script>*@
 
     <script type="text/javascript">
 
         var TableTarget;
-
-        $(document).ready(function() {
-            debugger;
-
-
-            showdata('007027');
-        });
-
-
-
-
-
-        @*function showdata(OPID) {
-
-            
-                debugger
-                if (TableTarget != null) {
-                    TableTarget.destroy();
-                }
-
-                TableTarget = $("#MyTable").DataTable({
-                  //  data: Datatable_Data,
-                    ordering: true,
-                    serverSide: true,
-                    paging: true,
-                    processing: true,
-                    cache: true,
-                    ajax: ({
-                        type: "post",
-                        url: '@Url.Action("Load_OperatorAdditional_Detail", "Management")',
-                        dataSrc: "data",
-                        data: { OPID: OPID },
-                        dataType: "json",
-                    }),                                
-
-                    dom: '<"top">rt<"bottom"ip>l<"clear">',
-                    columns: [
-                        { data: "OperatorID", name: "OperatorID", class: "text-wrap text-center" },
-                        { data: "SectionCode", name: "SectionCode", class: "text-wrap text-center" },
-                        { data: "SectionCode2", name: "SectionCode2", class: "text-wrap text-center" },
-                        { data: "Division", name: "Division", class: "text-wrap text-center" },
-                        { data: "Department", name: "Department", class: "text-wrap text-center" },
-                        { data: "Section", name: "Section", class: "text-wrap text-center" },
-                        { data: "StatusC", name: "StatusC", class: "text-wrap text-center" },                    
-                    ],
-                    order: [1, "asc"],
-
-                });
-
-
-
-
-            }*@
+ 
+ 
 
     </script>
 

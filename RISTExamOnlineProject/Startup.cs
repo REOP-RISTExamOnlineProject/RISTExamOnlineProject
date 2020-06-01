@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RISTExamOnlineProject.Hubs;
 using RISTExamOnlineProject.Models.db;
+using System;
 
 namespace RISTExamOnlineProject
 {
@@ -21,6 +22,8 @@ namespace RISTExamOnlineProject
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
+
+         
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
@@ -51,6 +54,12 @@ namespace RISTExamOnlineProject
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
             // Add framework services.
+            services.AddDistributedMemoryCache();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time   
+            });
+
+
             services.AddMvc();
         }
 
