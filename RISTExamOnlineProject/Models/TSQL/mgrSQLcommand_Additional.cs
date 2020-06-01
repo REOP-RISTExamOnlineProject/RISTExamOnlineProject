@@ -16,14 +16,14 @@ namespace RISTExamOnlineProject.Models.TSQL
         {
             _configuration = configuration;
         }
-        public DataTable GetDivision() {
+        public DataTable GetDivision_Additional() {
             var ObjRun = new mgrSQLConnect(_configuration);
             strSQL = "SELECT [Division]  FROM[SPTOSystem].[dbo].[vewT_Section_Master] with(nolock) group by[Division] order by[Division] asc";
             dt = ObjRun.GetDatatables(strSQL);
             return dt;
         }
 
-        public DataTable GetDepartment(string DIV)
+        public DataTable GetDepartment_Additional(string DIV)
         {
             var ObjRun = new mgrSQLConnect(_configuration);
             strSQL = "SELECT [Department] FROM[SPTOSystem].[dbo].[vewT_Section_Master] with(nolock) ";
@@ -33,7 +33,7 @@ namespace RISTExamOnlineProject.Models.TSQL
             dt = ObjRun.GetDatatables(strSQL);
             return dt;
         }
-        public DataTable GetSection(string DIV,string DEP)
+        public DataTable GetSection_Additional(string DIV,string DEP)
         {
             var ObjRun = new mgrSQLConnect(_configuration);
             strSQL = "SELECT [Section],SectionCode FROM [SPTOSystem].[dbo].[vewT_Section_Master] with(nolock) ";

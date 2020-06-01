@@ -1,14 +1,15 @@
 ﻿
-function Getdata() {
+var TableTarget;
+
+function Getdata(OPID) {
     debugger
 
-    var OPID = $("#strOPNo").val();
-
-   
-          
-
+   // var OPID = $("#strOPNo").val();   
 
     debugger
+    if (TableTarget != null) {
+        TableTarget.destroy();
+    }
 
             TableTarget = $("#MyTable").DataTable({               
                 ordering: true,
@@ -33,27 +34,148 @@ function Getdata() {
                         { data: "department", name: "department", class: "text-wrap text-center" },
                         { data: "section", name: "section", class: "text-wrap text-center" },
                         { data: "statusC", name: "statusC", class: "text-wrap text-center" },
+                        //{
+                        //    "render": function (data, type, row) {
+                        //        return "<a href='#' class='btn btn-danger text-white' onclick=Delete_Data('" + row.operatorID + "','" + row.sectionCode + "'); >Delete</a>";
+
+                        //    }
+                        //},
                         {
-                            "render": function (data, type, row) {
-                                return "<a href='#' class='btn btn-danger text-white' onclick=Delete_Data('" + row.operatorID + "','" + row.sectionCode + "'); >Delete</a>";
+                            //data: "Delete",
+                            //render: function (data, type, row)
+                            data:null,
+                            className: "center",
+                            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                                var Target = oData.sectionCode
 
-                            }
+                                $(nTd).html('<input type="checkbox"   class="editor-active" id="CB_Delete"  name="CB_Delete" value="' + Target + '"  />');
+
+                            }, className: "dt-body-center"
                         },
-
-
 
                     ],
                         order: [1, "asc"],
 
                 });
 
+    debugger
+    var x = document.getElementById("display_grid");
+    x.style.display = "block";
+    var a = document.getElementById("Form_Add");
+    a.style.display = "block";
+    var t = document.getElementById("Display_tableAdd");
+    t.style.display = "none";
 
+   // CheckData()
     
 }
 
-function Delete_Data(operatorID, sectionCode) {
 
 
+
+function CheckData() {
+
+debugger
+   // var arrdata = TableTarget.$('input, select').serializeArray();
+
+    var TableTarget = $('#MyTable').DataTable();
+
+    var rowCount = TableTarget.data().count() 
+
+    if (rowCount != 0) {
+        var x = document.getElementById("display_grid");
+        x.style.display = "block";
+        var a = document.getElementById("Form_Add");
+        a.style.display = "block";
+        var t = document.getElementById("Display_tableAdd");
+        t.style.display = "none";
+    }
+    else {
+        var x = document.getElementById("display_grid");
+        x.style.display = "none";
+        var a = document.getElementById("Form_Add");
+        a.style.display = "none";
+        var t = document.getElementById("Display_tableAdd");
+        t.style.display = "none";
+    }
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+function GetuserDetail(){
+
+
+    var OPID = $("#strOPNo").val();
+    Getdata(OPID)
+
+}
+
+
+
+
+
+
+
+function Delete_Data() {
+
+    debugger
+
+ 
+
+
+    var arrdata = TableTarget.$('input:checkbox false').serializeArray();
+
+    
+
+    var Lotcount = 0;
+    var sectionCode = new Array();
+    var WFLotCount = arrdata.length
+
+
+    if (arrdata.length != 0) {
+
+
+
+        for (i = 0; i < arrdata.length; i++) {
+            debugger
+
+            arrtemp = arrdata[i].value.split(',');
+            Lotcount = parseInt(arrtemp[1]) + parseInt(Lotcount);
+            sectionCode.push(arrtemp[1]);
+            arrtemp = [];
+        }
+    }
+    else {
+        Swal.fire({
+          
+            title: 'Please select checkbox',
+            text: '',
+            type: 'error',
+            timer: 1700,
+        }).then(function () {
+            return false;
+        });
+
+
+    }
+
+
+
+    var i;
 
 }
 
@@ -171,3 +293,12 @@ $("#DDL_Division").on("change", function () {
 
 
 });
+
+
+//$('#BTN_Delete').on('click', function () {
+
+
+//    Delete_Data();
+
+
+//});

@@ -287,7 +287,7 @@ namespace RISTExamOnlineProject.Controllers
 
             DataTable dt = new DataTable();
             mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
-            dt = ObjRun.GetDivision();
+            dt = ObjRun.GetDivision_Additional();
 
             if (dt.Rows.Count != 0)
             {
@@ -319,7 +319,7 @@ namespace RISTExamOnlineProject.Controllers
 
             DataTable dt = new DataTable();
             mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
-            dt = ObjRun.GetDepartment(DIV);
+            dt = ObjRun.GetDepartment_Additional(DIV);
 
             if (dt.Rows.Count != 0)
             {
@@ -351,7 +351,7 @@ namespace RISTExamOnlineProject.Controllers
 
             DataTable dt = new DataTable();
             mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
-            dt = ObjRun.GetSection(DIV, DEP);
+            dt = ObjRun.GetSection_Additional(DIV, DEP);
 
             if (dt.Rows.Count != 0)
             {
