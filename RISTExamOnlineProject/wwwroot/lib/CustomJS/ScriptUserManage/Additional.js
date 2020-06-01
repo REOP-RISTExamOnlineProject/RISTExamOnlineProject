@@ -46,14 +46,11 @@ function Getdata() {
     
 }
 
-
 function Delete_Data(operatorID, sectionCode) {
 
 
 
 }
-
-
 
 function GetDepartment_Addition(DIV) {
     $.ajax({
