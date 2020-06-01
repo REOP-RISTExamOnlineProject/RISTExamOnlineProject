@@ -1,46 +1,5 @@
 ﻿  
 
-function GetuserDetail() { 
-    $.ajax({
-        type: 'POST',
-        url: "../Management/GetDataUserdetail",
-        data: { opno: $("#strOPNo").val() },
-        dataType: 'json',
-        success: function (Data) { 
-            if (Data.strboolbel == true && Data.strResult == "OK") {
-                var _Data = Data.data; 
-               
-                $("#NameEn").val(_Data.nameEng);
-                $("#NameTh").val(_Data.nameThai);
-                $("#txtPosition").val(_Data.position);  
-                $("#ddlDivision").val(_Data.division);
-                $("#ddlDepartment").val(_Data.department);
-                $("#ddlSection").val(_Data.sectionCode);
-                $("#ddlShift").val(_Data.operatorGroup);
-                $("#txtEmail").val(_Data.email1);
-                $("#password").val(_Data.rfid); 
-                $("#txtUpdDate").val(_Data.updDate); 
-                $("#txtAddDate").val(_Data.addDate); 
-            } else {
-                Swal.fire({
-                    icon: 'warning',
-                    title: Data.dataLabel,
-                    type: 'error',
-                    timer: 1700,
-                }).then(function () {
-                    return false;
-                });
-
-            };
-        },
-        error: function (ex) {
-            debugger
-            alert('Failed to retrieve states.' + ex.statusText);
-        },
-    });
-
-
-}
 
 
 function LoadData(OPID) {
@@ -108,6 +67,7 @@ function showdata(OPID) {
 }
 
 function GetSectionCode() {
+     
     $.ajax({        
         type: 'POST',
         url: '../Management/GetSectionCode',
@@ -128,7 +88,7 @@ function GetSectionCode() {
 }
 
 
-function GetDepartment() {
+function GetDepartment() { 
     $.ajax({
         type: 'POST',
         url: '../Management/GetDepartment',
@@ -167,6 +127,42 @@ function GetDivision() {
     });
      
 }
+function GetAuthority() {
+    $.ajax({
+        type: 'POST',
+        url: '../Management/GetAuthority',
+        dataType: 'json',
+        success: function (citys) {
+            if (citys.length != 0) {
+                $.each(citys, function (i, city) {
+                    $("#ddlAuthority").append('<option value="' + city.value + '">' + city.text + '</option>');
+                });
+            }
+        },
+        error: function (ex) {
+            alert('Failed to retrieve states.' + ex);
+        }
+    });
+
+}
+function GetActive() {
+    $.ajax({
+        type: 'POST',
+        url: '../Management/GetActive',
+        dataType: 'json',
+        success: function (citys) {
+           
+            if (citys.length != 0) {
+                $.each(citys, function (i, city) { 
+                    $("#ddlActive").append('<option value="' + city.value + '">' + city.text + '</option>');
+                });
+            }
+        },
+        error: function (ex) {
+            alert('Failed to retrieve states.' + ex);
+        }
+    }); 
+}
 
 function GetGroupName() {
     $.ajax({
@@ -187,17 +183,3 @@ function GetGroupName() {
 
 }
 
-
-$("#ddlDepartment").on("change", function () {
-
-    $("#ddlSection option").remove();
-    GetSectionCode();
-});
-$("#ddlDivision").on("change", function () {
-    $("#ddlDepartment option").remove();
-    GetDepartment();
-    $("#ddlSection option").remove();
-    GetSectionCode();
-
-
-});

@@ -31,6 +31,7 @@ namespace RISTExamOnlineProject.Models.db
         public string OperatorGroup { get; set; }
         public string GroupName { get; set; }
         public string Email1 { get; set; }
+        public string Email2 { get; set; }
         public string RFID { get; set; }
         public string Authority { get; set; }
         public bool Active { get; set; }

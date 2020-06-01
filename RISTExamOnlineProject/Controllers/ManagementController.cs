@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,16 +15,20 @@ namespace RISTExamOnlineProject.Controllers
 {
     public class ManagementController : Controller
     {
+       
         private readonly IConfiguration _configuration;
         private readonly SPTODbContext _sptoDbContext;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public ManagementController(SPTODbContext context, IConfiguration configuration)
+        public ManagementController(SPTODbContext context, IConfiguration configuration,IHttpContextAccessor httpContextAccessor)
         {
             _sptoDbContext = context;
             _configuration = configuration;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
-        
+        #region UserDetail
+
         public IActionResult ManagementUser(string opno)
         {
             ViewBag.opno = opno;
@@ -33,94 +36,81 @@ namespace RISTExamOnlineProject.Controllers
 
             //Get Position to Dropdown
             var queryPosition = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno)
-                .Select(c => new {c.OperatorID, c.JobTitle});
+                .Select(c => new { c.OperatorID, c.JobTitle });
             ViewBag.CategoryPosition = new SelectList(queryPosition.AsEnumerable(), "OperatorID", "JobTitle");
 
             //Get Division to Dropdown
             var queryDivision = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno)
-                .Select(c => new {c.OperatorID, c.Division});
+                .Select(c => new { c.OperatorID, c.Division });
             ViewBag.CategoryDivision = new SelectList(queryDivision.AsEnumerable(), "OperatorID", "Division");
 
             //Get Department to Dropdown
             var queryDepartment = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno)
-                .Select(c => new {c.OperatorID, c.Department});
+                .Select(c => new { c.OperatorID, c.Department });
             ViewBag.CategoryDepartment = new SelectList(queryDepartment.AsEnumerable(), "OperatorID", "Department");
 
             //Get Section to Dropdown
             var querySection = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno)
-                .Select(c => new {c.OperatorID, c.Section});
+                .Select(c => new { c.OperatorID, c.Section });
             ViewBag.CategorySection = new SelectList(querySection.AsEnumerable(), "OperatorID", "Section");
 
             //Get Shift to Dropdown
             var queryShift = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno)
-                .Select(c => new {c.OperatorID, c.GroupName});
+                .Select(c => new { c.OperatorID, c.GroupName });
             ViewBag.CategoryShift = new SelectList(queryShift.AsEnumerable(), "OperatorID", "GroupName");
 
             //Get License to Dropdown
             var queryLicense = _sptoDbContext.vewOperatorLicense.Where(x => x.OperatorID == opno)
-                .Select(c => new {c.OperatorID, c.License});
+                .Select(c => new { c.OperatorID, c.License });
             ViewBag.CategoryLicense = new MultiSelectList(queryLicense.AsEnumerable(), "OperatorID", "License");
 
 
             return View(data);
 
         }
-
         [Authorize]
         public IActionResult UserDetailMaintenance(string Event) 
         {
-            var Event_ = Event == null ? "info" : Event;
-
+            var Event_ = Event == null ? "_partsUserInfo" : Event;
+             
             ViewBag.Event = Event_;
             string IPAddress = "";
-
-            IPHostEntry Host = default(IPHostEntry);
-            string Hostname = null;
-            Hostname = System.Environment.MachineName;
-            Host = Dns.GetHostEntry(Hostname);
-            foreach (IPAddress IP in Host.AddressList)
-            {
-                if (IP.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                {
-                    IPAddress = Convert.ToString(IP);
-                }
-            }
-
-
             ViewBag.IPAddress = IPAddress;
+             
 
 
+         //   var Test = Request.Cookies["opid"].ToString();
             return View();
         }
-
-
         public JsonResult GetDataUserdetail(string opno)
         {
             var _Result = "OK";
             var _DataResult = "";
             var _ResultLabel = true;
             ViewBag.opno = opno;
+           
+
+
             var data_ = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == opno);
 
             var dataOperator = new vewOperatorAlls();
 
             dataOperator = data_;
 
+            _Result = dataOperator != null ? "OK" : "error";
+            _DataResult = _Result != "OK" ? "Data not found" : "";
 
             var jsonResult = Json(new
-                {strResult = _Result, dataLabel = _DataResult, strboolbel = _ResultLabel, data = data_});
+            { strResult = _Result, dataLabel = _DataResult, strboolbel = _ResultLabel, data = data_ });
 
             return jsonResult;
         }
-
-
-
-        public JsonResult GetSectionCode(string strDivision,string strDepartment)
+        public JsonResult GetSectionCode(string strDivision, string strDepartment)
         {
             var listItems = new List<SelectListItem>();
 
             DataTable dt = new DataTable();
-            mgrSQLcommand ObjRun= new mgrSQLcommand(_configuration);
+            mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
             dt = ObjRun.GetSectionCode(strDivision, strDepartment);
 
             if (dt.Rows.Count != 0)
@@ -129,11 +119,11 @@ namespace RISTExamOnlineProject.Controllers
                 {
                     Text = "Choose Section",
                     Value = ""
-                }); 
+                });
                 foreach (DataRow row in dt.Rows)
                 {
-                    string strText = row["SectionCode"].ToString().Trim() + " : " + row["Section"].ToString().Trim(); 
-                     
+                    string strText = row["SectionCode"].ToString().Trim() + " : " + row["Section"].ToString().Trim();
+
                     listItems.Add(new SelectListItem()
                     {
                         Text = strText,
@@ -141,10 +131,9 @@ namespace RISTExamOnlineProject.Controllers
 
                     });
                 }
-            } 
+            }
             return Json(new MultiSelectList(listItems, "Value", "Text"));
         }
-
         public JsonResult GetDepartment(string strDivision)
         {
             List<SelectListItem> listItems = new List<SelectListItem>();
@@ -162,7 +151,7 @@ namespace RISTExamOnlineProject.Controllers
                 });
                 foreach (DataRow row in dt.Rows)
                 {
-                     
+
 
                     listItems.Add(new SelectListItem()
                     {
@@ -174,7 +163,6 @@ namespace RISTExamOnlineProject.Controllers
             }
             return Json(new MultiSelectList(listItems, "Value", "Text"));
         }
-
         public JsonResult GetDivision()
         {
             List<SelectListItem> listItems = new List<SelectListItem>();
@@ -191,7 +179,7 @@ namespace RISTExamOnlineProject.Controllers
                     Value = ""
                 });
                 foreach (DataRow row in dt.Rows)
-                { 
+                {
                     listItems.Add(new SelectListItem()
                     {
                         Text = row["Division"].ToString().Trim(),
@@ -202,8 +190,6 @@ namespace RISTExamOnlineProject.Controllers
             }
             return Json(new MultiSelectList(listItems, "Value", "Text"));
         }
-
-
         public JsonResult GetGroupName()
         {
             List<SelectListItem> listItems = new List<SelectListItem>();
@@ -234,7 +220,119 @@ namespace RISTExamOnlineProject.Controllers
             return Json(new MultiSelectList(listItems, "Value", "Text"));
         }
 
+        public JsonResult GetAuthority()
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>();
 
+            DataTable dt = new DataTable();
+            mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
+            // dt = ObjRun.GetDivision();
+
+           // if (dt.Rows.Count != 0)
+           // {
+                listItems.Add(new SelectListItem
+                {
+                    Text = "Choose Authority",
+                    Value = ""
+                });
+                listItems.Add(new SelectListItem
+                {
+                    Text = "Administrator",
+                    Value = "9"
+                });
+                listItems.Add(new SelectListItem
+                {
+                    Text = "Employee",
+                    Value = "0"
+                });
+
+
+            //}
+            return Json(new MultiSelectList(listItems, "Value", "Text"));
+        }
+
+        public JsonResult GetActive()
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>();
+
+            DataTable dt = new DataTable();
+            mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
+            // dt = ObjRun.GetDivision();
+
+            //if (dt.Rows.Count != 0)
+            //{
+                listItems.Add(new SelectListItem
+                {
+                    Text = "Choose Active",
+                    Value = ""
+                });
+                listItems.Add(new SelectListItem
+                {
+                    Text = "Active job",
+                    Value = "true"
+                });
+                listItems.Add(new SelectListItem
+                {
+                    Text = "Resign",
+                    Value = "false"
+                });
+
+
+            //}
+            return Json(new MultiSelectList(listItems, "Value", "Text"));
+        }
+
+
+
+        [HttpGet]
+        public ActionResult switchMenu(string param)
+        {
+            //Your logic, switch or some and return :
+
+            ViewBag.Event = param;
+
+
+
+            var asdas = param;
+            return PartialView("_partsUserManage/"+ param);
+        }
+
+
+        public JsonResult GetUpdateUserdetail(vewOperatorAlls dataDetail,string OpNo)
+        {
+            var _Result = "OK";
+            var _DataResult = "";
+            var _ResultLabel = true;
+
+            //string strIPAddress = httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
+            //var data_ = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == opno);
+            String hostName = string.Empty;
+            hostName = Dns.GetHostName();
+            IPHostEntry myIP = Dns.GetHostEntry(hostName);
+            IPAddress[] address = myIP.AddressList;
+
+
+
+
+            var dataOperator = new vewOperatorAlls();
+             
+            mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
+            string[] Result = ObjRun.GetUpdUserdetail(dataDetail, OpNo, address[2].ToString());
+
+            _ResultLabel = Convert.ToBoolean(Result[0]);
+            _Result = Result[1];
+            _DataResult = _Result != "OK" ? _Result : "";
+
+            var jsonResult = Json(new
+            { strResult = _Result, dataLabel = _DataResult, strboolbel = _ResultLabel, data = "" });
+
+            return jsonResult;
+
+
+        }
+
+
+        #endregion
 
         public IActionResult Load_OperatorAdditional_Detail(string OPID) {
 

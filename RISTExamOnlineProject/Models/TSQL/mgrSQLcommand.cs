@@ -1,5 +1,7 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using Microsoft.Extensions.Configuration;
+using RISTExamOnlineProject.Models.db;
 
 namespace RISTExamOnlineProject.Models.TSQL
 {
@@ -84,6 +86,7 @@ namespace RISTExamOnlineProject.Models.TSQL
 
         public DataTable GetGroupName()
         {
+         
             mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
             dt = new DataTable();
             strSQL = "";
@@ -93,6 +96,63 @@ namespace RISTExamOnlineProject.Models.TSQL
             dt = ObjRun.GetDatatables(strSQL);
 
             return dt;
+        }
+
+        public string[] GetUpdUserdetail(vewOperatorAlls _Data,string OpNo,string strIpAddress)
+        {
+            mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
+            dt = new DataTable();
+            string DataMgs,strFlag;
+            var results = true;
+            strSQL = "";
+            string[] Result;
+            strFlag = "UPD";
+            try
+            {
+                strSQL += "Exec [sprOperator]";
+                strSQL += "'" + strFlag + "',";                                              //flag
+                strSQL += "'" + _Data.OperatorID + "',";
+                strSQL += "'" + _Data.Password + "',";
+                strSQL += "'" + _Data.NameEng + "',";
+                strSQL += "N'" + _Data.NameThai + "',";
+                strSQL += "'" + _Data.SectionCode + "',";
+                strSQL += "'" + _Data.OperatorGroup + "',";
+                strSQL += "'" + _Data.Position + "',";
+                strSQL += "'" + _Data.JobTitle + "',";
+                strSQL += "'" + _Data.Email1 + "',";
+                strSQL += "'" + _Data.Email2 + "',";
+                strSQL += "'" + _Data.RFID + "',";
+                strSQL += "'" + _Data.Authority + "',";
+                strSQL += "'" + _Data.Active + "',";
+                strSQL += "'" + OpNo + "',";
+                strSQL += "'" + strIpAddress + "'";
+
+
+                dt = ObjRun.GetDatatables(strSQL);
+                if(dt.Rows.Count > 0)
+                {
+                    Result = new[] { dt.Rows[0][0].ToString(), dt.Rows[0][1].ToString() };
+                }
+                else
+                {
+                    results = false;
+                    Result = new[] { results.ToString(), "Error " };
+                }
+
+
+            } 
+            catch (Exception e)
+            {
+                DataMgs = e.Message + ":" + strSQL;
+                results = false;
+                Result = new[] { results.ToString(), DataMgs };
+            }
+
+
+
+           
+
+            return Result;
         }
     }
 }
