@@ -1,7 +1,15 @@
 ﻿
 function Getdata() {
     debugger
- 
+
+    var OPID = $("#strOPNo").val();
+
+   
+          
+
+
+    debugger
+
             TableTarget = $("#MyTable").DataTable({               
                 ordering: true,
                 serverSide: true,
@@ -12,7 +20,7 @@ function Getdata() {
                 type: "post",              
                 url: "/Management/Load_OperatorAdditional_Detail",
                 dataSrc: "data",
-                     data: { OPID: '000702'},
+                     data: { OPID: OPID },
                 dataType: "json",
             }) ,
       
@@ -27,9 +35,7 @@ function Getdata() {
                         { data: "statusC", name: "statusC", class: "text-wrap text-center" },
                         {
                             "render": function (data, type, row) {
-
                                 return "<a href='#' class='btn btn-danger text-white' onclick=Delete_Data('" + row.operatorID + "','" + row.sectionCode + "'); >Delete</a>";
-
 
                             }
                         },
@@ -40,7 +46,6 @@ function Getdata() {
                         order: [1, "asc"],
 
                 });
-
 
 
     

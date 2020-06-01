@@ -6,6 +6,11 @@
 <br/>
 
 
+
+
+
+
+
 <div id="Form_Add">
 
     <div class="row justify-content-center">
@@ -40,14 +45,26 @@
     </div>
 </div>
 
+<div id="Display_tableAdd">
+
+
+
+
+</div>
+
+
 
 
 <br/>
 
 
+
+
+
+
+
+
 <div id="display_grid">
-
-
 
 
 
@@ -82,10 +99,40 @@
 
 
     function Getinitial() {
+        var OPID = $("#strOPNo").val();
 
-        Getdata();
-        GetDivision_Addition() 
+        if (OPID != '') {
+            Getdata();
+            GetDivision_Addition()
 
+
+            var x = document.getElementById("display_grid");
+            x.style.display = "block";
+            var a = document.getElementById("Form_Add");
+            a.style.display = "block";
+
+
+            var t = document.getElementById("Display_tableAdd");
+            t.style.display = "none";
+
+       
+            
+
+           
+        } else {
+
+            var x = document.getElementById("display_grid");
+            x.style.display = "none";
+
+            var a = document.getElementById("Form_Add");
+            a.style.display = "none";
+           
+
+
+            var t = document.getElementById("Display_tableAdd");
+            t.style.display = "none";
+
+        }
 
        
 
