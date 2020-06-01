@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +16,7 @@ namespace RISTExamOnlineProject.Controllers
 {
     public class ManagementController : Controller
     {
+       
         private readonly IConfiguration _configuration;
         private readonly SPTODbContext _sptoDbContext;
 
@@ -22,6 +26,7 @@ namespace RISTExamOnlineProject.Controllers
             _configuration = configuration;
         }
 
+        #region UserDetail
 
         public IActionResult ManagementUser(string opno)
         {
@@ -62,39 +67,28 @@ namespace RISTExamOnlineProject.Controllers
             return View(data);
 
         }
-        public IActionResult UserDetailMaintenance(string Event)
+        public IActionResult UserDetailMaintenance(string Event )
         {
-            var Event_ = Event == null ? "info" : Event;
-
+            var Event_ = Event == null ? "_partsUserInfo" : Event;
+             
             ViewBag.Event = Event_;
             string IPAddress = "";
-
-            IPHostEntry Host = default(IPHostEntry);
-            string Hostname = null;
-            Hostname = System.Environment.MachineName;
-            Host = Dns.GetHostEntry(Hostname);
-            foreach (IPAddress IP in Host.AddressList)
-            {
-                if (IP.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                {
-                    IPAddress = Convert.ToString(IP);
-                }
-            }
-
-
             ViewBag.IPAddress = IPAddress;
+             
 
 
+         //   var Test = Request.Cookies["opid"].ToString();
             return View();
         }
-
-
         public JsonResult GetDataUserdetail(string opno)
         {
             var _Result = "OK";
             var _DataResult = "";
             var _ResultLabel = true;
             ViewBag.opno = opno;
+           
+
+
             var data_ = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == opno);
 
             var dataOperator = new vewOperatorAlls();
@@ -102,14 +96,13 @@ namespace RISTExamOnlineProject.Controllers
             dataOperator = data_;
 
 
+
+
             var jsonResult = Json(new
             { strResult = _Result, dataLabel = _DataResult, strboolbel = _ResultLabel, data = data_ });
 
             return jsonResult;
         }
-
-
-
         public JsonResult GetSectionCode(string strDivision, string strDepartment)
         {
             var listItems = new List<SelectListItem>();
@@ -139,7 +132,6 @@ namespace RISTExamOnlineProject.Controllers
             }
             return Json(new MultiSelectList(listItems, "Value", "Text"));
         }
-
         public JsonResult GetDepartment(string strDivision)
         {
             List<SelectListItem> listItems = new List<SelectListItem>();
@@ -158,6 +150,8 @@ namespace RISTExamOnlineProject.Controllers
                 foreach (DataRow row in dt.Rows)
                 {
 
+
+
                     listItems.Add(new SelectListItem()
                     {
                         Text = row["Department"].ToString().Trim(),
@@ -168,7 +162,6 @@ namespace RISTExamOnlineProject.Controllers
             }
             return Json(new MultiSelectList(listItems, "Value", "Text"));
         }
-
         public JsonResult GetDivision()
         {
             List<SelectListItem> listItems = new List<SelectListItem>();
@@ -196,8 +189,6 @@ namespace RISTExamOnlineProject.Controllers
             }
             return Json(new MultiSelectList(listItems, "Value", "Text"));
         }
-
-
         public JsonResult GetGroupName()
         {
             List<SelectListItem> listItems = new List<SelectListItem>();
@@ -229,6 +220,22 @@ namespace RISTExamOnlineProject.Controllers
         }
 
 
+
+
+        [HttpGet]
+        public ActionResult switchMenu(string param)
+        {
+            //Your logic, switch or some and return :
+
+            ViewBag.Event = param;
+
+
+
+            var asdas = param;
+            return PartialView("_partsUserManage/"+ param);
+        }
+
+        #endregion
 
         public IActionResult Load_OperatorAdditional_Detail(string OPID)
         {

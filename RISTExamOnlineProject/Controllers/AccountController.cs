@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -16,14 +17,47 @@ namespace RISTExamOnlineProject.Controllers
             _sptoDbContext = context;
         }
 
-        public IActionResult Login()
+        [HttpGet]
+        public IActionResult Login(string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
+        private IActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+                return Redirect(returnUrl);
+            else
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Login(UserLoginModel userModel, string returnUrl = null)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(userModel);
+        //    }
+
+        //    var result = await _signInManager.PasswordSignInAsync(userModel.Email, userModel.Password, userModel.RememberMe, false);
+        //    if (result.Succeeded)
+        //    {
+        //        return RedirectToLocal(returnUrl);
+        //    }
+        //    else
+        //    {
+        //        ModelState.AddModelError("", "Invalid UserName or Password");
+        //        return View();
+        //    }
+        //}
 
         [HttpPost]
-        public IActionResult Login(string OperatorID, string Password)
+       public IActionResult Login(string OperatorID, string Password, vewOperatorAlls model, string returnUrl = null)
         {
+            if (!ModelState.IsValid) return View();
+
             if (!string.IsNullOrEmpty(OperatorID) && string.IsNullOrEmpty(Password)) return RedirectToAction("Login");
 
             //Check the user name and password
@@ -34,7 +68,7 @@ namespace RISTExamOnlineProject.Controllers
             var active = false;
             var querylogin = _sptoDbContext.vewOperatorAll
                 .Where(x => x.OperatorID == OperatorID && x.Password == Password)
-                .Select(c => new {c.OperatorID, c.Active, c.Authority});
+                .Select(c => new { c.OperatorID, c.Active, c.Authority });
 
 
             if (querylogin.Any())
@@ -47,43 +81,44 @@ namespace RISTExamOnlineProject.Controllers
 
                 if (active == false) return RedirectToAction("Login");
 
-                if (authority == "9")
+                switch (authority)
                 {
-                    //Create the identity for the Admin
-                    identity = new ClaimsIdentity(new[]
-                    {
-                        new Claim(ClaimTypes.Name, OperatorID),
-                        new Claim(ClaimTypes.Role, "Admin")
-                    }, CookieAuthenticationDefaults.AuthenticationScheme);
+                    case "9":
+                        //Create the identity for the Admin
+                        identity = new ClaimsIdentity(new[]
+                        {
+                            new Claim(ClaimTypes.Name, model.OperatorID),
+                            new Claim(ClaimTypes.Role, "Admin")
+                        }, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                    isAuthenticated = true;
-                }
+                        isAuthenticated = true;
+                        break;
+                    case "0":
+                        //Create the identity for the user
+                        identity = new ClaimsIdentity(new[]
+                        {
+                            new Claim(ClaimTypes.Name, model.OperatorID),
+                            new Claim(ClaimTypes.Role, "User")
+                        }, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                if (authority == "0")
-                {
-                    //Create the identity for the user
-                    identity = new ClaimsIdentity(new[]
-                    {
-                        new Claim(ClaimTypes.Name, OperatorID),
-                        new Claim(ClaimTypes.Role, "User")
-                    }, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                    isAuthenticated = true;
+                        isAuthenticated = true;
+                        break;
                 }
             }
-
-           
-
-            if (isAuthenticated)
+            else
             {
-                var principal = new ClaimsPrincipal(identity);
-
-                var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
-                return RedirectToAction("Index", "Home");
+                ModelState.AddModelError("", "Invalid UserName or Password");
+                return View();
             }
 
-            return View();
+
+            if (!isAuthenticated) return View();
+            var principal = new ClaimsPrincipal(identity);
+
+            var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+            return RedirectToLocal(returnUrl);
+            //return RedirectToAction("Index", "Home");
+
         }
 
         public IActionResult Logout()

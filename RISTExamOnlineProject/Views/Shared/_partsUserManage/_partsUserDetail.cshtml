@@ -1,4 +1,5 @@
-﻿<div class="col-sm-12  ">
+﻿ 
+<div class="col-sm-12  ">
     <div class=" row">
         <div class="col-7">
             <h5 class=" mb-0"><strong> User Details</strong></h5>
@@ -7,88 +8,119 @@
 
     </div>
     <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
-        <form action="">
+        <form class="container">
             <div class="form-group form-row">
-
                 <div class="col-sm">
                     <label for="NameEng" class="mb-0">Name - Surname</label>
-                    @Html.TextBox("NameEn", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Search Staff Code..", id = "NameEn" })
-
+                    @Html.TextBox("NameEn", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Name English..", id = "NameEn" })
                 </div>
                 <div class="col-sm">
                     <label for="NameTh" class="mb-0">ชื่อ - นามสกุล</label>
-                    @Html.TextBox("NameTh", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Search Staff Code..", id = "NameTh" })
+                    @Html.TextBox("NameTh", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Name Thai..", id = "NameTh" })
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-sm">
-                    <label for="Position" class="mb-0">Position</label>
-                    @Html.TextBox("txtPosition", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Search Staff Code..", id = "txtPosition" })
+                    <label for="txtEmail" class="mb-0">Email</label>
+                    @Html.TextBox("txtjobtitle", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Email..", id = "txtjobtitle" })
                 </div>
                 <div class="col-sm">
+                    <label for="txtPosition" class="mb-0">Position</label>
+                    @Html.TextBox("txtPosition", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Position..", id = "txtPosition" })
+                </div>
+             
+                    <div class="col-sm">
+                        <label for="Section" class="mb-0">Shift Group</label>
+                        @Html.DropDownList("ddlShift", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlShift", @class = "form-control form-control-sm shadow-sm", width = "300px" })
+                    </div>
+                 
+            </div>
+            <hr />
+            <div class="form-group row">
+                <div class="col-sm-6">
                     <label for="Division" class="mb-0">Division</label>
-                    @Html.DropDownList("ddlDivision", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlDivision", @class = " custom-select custom-select-sm", width = "300px" })
+                    @Html.DropDownList("ddlDivision", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlDivision", @class = "form-control form-control-sm shadow-sm", @width = "300px" })
                 </div>
-                <div class="col-sm">
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
                     <label for="Department" class="mb-0">Department</label>
-                    @Html.DropDownList("ddlDepartment", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlDepartment", @class = "custom-select custom-select-sm", width = "300px" })
+                    @Html.DropDownList("ddlDepartment", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlDepartment", @class = "form-control form-control-sm shadow-sm", @width = "300px" })
                 </div>
-                <div class="col-sm">
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
                     <label for="Section" class="mb-0">Section</label>
-                    @Html.DropDownList("ddlSection", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlSection", @class = " custom-select custom-select-sm", width = "300px" })
+                    @Html.DropDownList("ddlSection", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlSection", @class = "form-control form-control-sm shadow-sm", width = "300px" })
                 </div>
             </div>
-            <div class="form-group row">
-                <div class="col-sm-3">
-                    <label for="Shift" class="mb-0">Shift</label>
-                    @Html.DropDownList("ddlShift", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlShift", @class = " custom-select custom-select-sm", width = "300px" })
-                </div>
-            </div>
+
+            <hr />
             <div class="form-group row">
                 <div class="col-sm">
-                    <label for="Email" class="mb-0">Email</label>
-                    @Html.TextBox("txtEmail", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Search Staff Code..", id = "txtEmail" })
+                    <label for="txtEmail" class="mb-0">Email</label>
+                    @Html.TextBox("txtEmail", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Email..", id = "txtEmail" })
+                </div>
+                <div class="col-sm">
+                    <label for="Rfid" class="mb-0">RFID</label>
+                    @Html.TextBox("txtRfid", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Rfid..", id = "txtRfid" })
                 </div>
                 <div class="col-sm">
                     <label for="Rfid" class="mb-0">Password</label>
-                    @Html.TextBox("password", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Search Staff Code..", id = "password" })
+                    @Html.TextBox("txtPassword", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Password..", id = "txtPassword", @type = "password" })
                 </div>
             </div>
-            <div class="form-group row">
+            @if (ViewBag.Event != "_partsUserInfo")
+            {
+                <div class="form-group row ">
+                    <div class="  col-auto center">
+                        <button type="button" class="btn btn-warning" id="btnUpd"><i class="fas fa-user-edit"></i> Update</button>
+                        <button type="button" class="btn btn-secondary" id="btnClr"><i class="fas fa-sync-alt"></i> Clear</button>
+                    </div>
+                </div>
 
-                <div class="col-sm">
-                    <label for="txtAddDate" class="mb-0">Work Start Date</label>
-                    <input type="text" class="form-control  form-control-sm  datetimepicker-input" id="txtAddDate" data-toggle="datetimepicker" data-target="#txtAddDate" />
-                </div>
-                <div class="col-sm">
-                    <label for="txtupdDate" class="mb-0">Update Date</label>
-                    <input type="text" class="form-control form-control-sm datetimepicker-input" id="txtUpdDate" data-toggle="datetimepicker" data-target="#txtUpdDate" />
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class=" offset-9   col-auto fa-pull-right">
-                    <button type="button" class="btn btn-warning" id="btnUpd"><i class="fas fa-user-edit"></i> Update</button>
-                    <button type="button" class="btn btn-secondary" id="btnClr"><i class="fas fa-sync-alt"></i> Clare</button>
-                </div>
-            </div>
+            }
+
+
+             
+
         </form>
-    </div>
-    @ViewBag.IPAddress
+    </div>  
 </div>
 
 <script>
 
     function Getinitial() {
+        //alert("user detail");
         GetDivision();
         GetDepartment();
         GetSectionCode();
-        GetGroupName(); 
-    } 
+        GetGroupName();
+
+
+
+        GetuserDetail();
+
+
+    }
 
 
     $("#btnUpd").on("click", function () {
-
-        alert("Update");
+        
+        //alert("Update");
+        UpdateUserDetail();
 
     })
+
+
+    $("#ddlDepartment").on("change", function () {
+        $("#ddlSection option").remove();
+        GetSectionCode();
+    });
+    $("#ddlDivision").on("change", function () { 
+        $("#ddlDepartment option").remove();
+        GetDepartment();
+        $("#ddlSection option").remove();
+        GetSectionCode();
+    });
 </script>
