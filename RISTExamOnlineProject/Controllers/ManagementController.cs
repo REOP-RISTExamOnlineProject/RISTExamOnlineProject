@@ -95,8 +95,8 @@ namespace RISTExamOnlineProject.Controllers
 
             dataOperator = data_;
 
-
-
+            _Result = dataOperator != null ? "OK" : "error";
+            _DataResult = _Result != "OK" ? "Data not found" : "";
 
             var jsonResult = Json(new
             { strResult = _Result, dataLabel = _DataResult, strboolbel = _ResultLabel, data = data_ });

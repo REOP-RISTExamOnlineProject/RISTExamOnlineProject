@@ -98,9 +98,9 @@
         GetGroupName();
 
 
-
+        if ($("#strOPNo").val()!= ""){
         GetuserDetail();
-
+        }
 
     }
 
@@ -123,4 +123,50 @@
         $("#ddlSection option").remove();
         GetSectionCode();
     });
+
+
+
+    function GetuserDetail() {
+        $.ajax({
+            type: 'POST',
+            url: "../Management/GetDataUserdetail",
+            data: { opno: $("#strOPNo").val() },
+            dataType: 'json',
+            success: function (Data) {
+
+                if (Data.strboolbel == true && Data.strResult == "OK") {
+                    var _Data = Data.data;
+                    $("#NameEn").val(_Data.nameEng);
+                    $("#NameTh").val(_Data.nameThai);
+                    $("#txtPosition").val(_Data.position);
+                    $("#ddlDivision").val(_Data.division);
+                    $("#ddlDepartment").val(_Data.department);
+                    $("#ddlSection").val(_Data.sectionCode);
+                    $("#ddlShift").val(_Data.operatorGroup);
+                    $("#txtEmail").val(_Data.email1);
+                    $("#txtPassword").val($.trim(_Data.password));
+                    $("#txtRfid").val(_Data.rfid);
+                    $("#txtUpdDate").val(_Data.updDate);
+                    $("#txtAddDate").val(_Data.addDate);
+                    $("#txtjobtitle").val(_Data.jobTitle);
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: Data.strResult,
+                        text: Data.dataLabel,
+                        type: 'error',
+                        timer: 1700,
+                    }).then(function () {
+                        return false;
+                    });
+
+                };
+            },
+            error: function (ex) {
+                alert('Failed to retrieve states.' + ex.statusText);
+            },
+        });
+
+
+    }
 </script>
