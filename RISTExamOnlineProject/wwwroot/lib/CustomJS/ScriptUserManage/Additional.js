@@ -107,29 +107,6 @@ debugger
 
 }
 
-
-
-
-
-
-
-
-
-
-function GetuserDetail(){
-
-
-    var OPID = $("#strOPNo").val();
-    Getdata(OPID)
-
-}
-
-
-
-
-
-
-
 function Delete_Data() {
 
     debugger
@@ -137,7 +114,7 @@ function Delete_Data() {
  
 
 
-    var arrdata = TableTarget.$('input:checkbox false').serializeArray();
+    var arrdata = TableTarget.$('input,deselect').serializeArray();
 
     
 
@@ -155,7 +132,7 @@ function Delete_Data() {
 
             arrtemp = arrdata[i].value.split(',');
             Lotcount = parseInt(arrtemp[1]) + parseInt(Lotcount);
-            sectionCode.push(arrtemp[1]);
+            sectionCode.push(arrtemp[1])+';';
             arrtemp = [];
         }
     }
@@ -180,9 +157,12 @@ function Delete_Data() {
 }
 
 function GetDepartment_Addition(DIV) {
+
+    debugger
+
     $.ajax({
         type: 'POST',
-        url: '../Management/GetDepartment_Addition',
+        url: '/Management/GetDepartment_Addition',
         dataType: 'json',
         data: {DIV:DIV},
         success: function (Departments) {
@@ -204,9 +184,10 @@ function GetDepartment_Addition(DIV) {
 
 
 function GetDivision_Addition() {
+    debugger
     $.ajax({
         type: 'POST',
-        url: '../Management/GetDivision_Addition',
+        url: '/Management/GetDivision_Addition',
         dataType: 'json',
         success: function (Divisions) {
             if (Divisions.length != 0) {
@@ -224,13 +205,11 @@ function GetDivision_Addition() {
 
 
 
+function GetSection_Addition(DIV, DEP) {
 
-
-
-function GetSection_Addition(DIV,DEP) {
     $.ajax({
         type: 'POST',
-        url: '../Management/GetSection_Addition',
+        url: '/Management/GetSection_Addition',
         dataType: 'json',
         data: { DIV: DIV ,DEP: DEP},
         success: function (Sections) {
@@ -250,49 +229,6 @@ function GetSection_Addition(DIV,DEP) {
 }
 
 
-
-
-
-$("#DDL_Department").on("change", function () {
-
-    var DIV = $("#DDL_Division").val() 
-    var DEP = $("#DDL_Department").val() 
-    debugger
-    if ($("#DDL_Department").val != 0) {
-     
-        $("#DDL_Section option").remove();     
-
-        GetSection_Addition(DIV, DEP)
-    } else {             
-        $("#DDL_Section option").remove();
-
-    }
-
-
-});
-
-
-$("#DDL_Division").on("change", function () {
-
-
-    var DIV = $("#DDL_Division").val() 
-    debugger
-    if (DIV != 0) {
-        debugger
-        $("#DDL_Department option").remove();
-        $("#DDL_Section option").remove();
-        GetDepartment_Addition(DIV)
-
-    } else {
-
-        $("#DDL_Department option").remove();
-        $("#DDL_Section option").remove();
-
-    }   
-
-
-
-});
 
 
 //$('#BTN_Delete').on('click', function () {

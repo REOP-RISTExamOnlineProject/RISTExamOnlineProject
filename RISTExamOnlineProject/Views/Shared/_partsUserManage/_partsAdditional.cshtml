@@ -19,7 +19,7 @@
             Division
         </div>
         <div class="col-2">
-            @Html.DropDownList("DDL_Division", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "DDL_Division", @class = " custom-select custom-select-sm" })
+            @Html.DropDownList("DDL_Division", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "DDL_Division", @class = " custom-select custom-select-sm"})
 
         </div>
         <div class="col-1">
@@ -111,27 +111,11 @@
 
     function Getinitial() {
 
-
-       // GetuserDetail();
-       
-
-
-
-
-
-
-
+        GetDivision_Addition()
         var OPID = $("#strOPNo").val();
 
         if (OPID != '') {
-
-
-
-            Getdata(OPID);
-
-
-            GetDivision_Addition()
-
+            Getdata(OPID);       
 
             var x = document.getElementById("display_grid");
             x.style.display = "block";
@@ -141,10 +125,7 @@
 
             var t = document.getElementById("Display_tableAdd");
             t.style.display = "none";
-
-       
-            
-
+                
            
         } else {
 
@@ -164,19 +145,62 @@
        
 
     }
-    onReady(function () {
-        if ($("#strOPNo").val() != "") {
-            GetuserDetail();
+
+
+    $("#DDL_Department").on("change", function () {
+
+        var DIV = $("#DDL_Division").val()
+        var DEP = $("#DDL_Department").val()   
+        if ($("#DDL_Department").val != 0) {
+            $("#DDL_Section option").remove();
+            GetSection_Addition(DIV, DEP)
+        } else {
+            $("#DDL_Section option").remove();
         }
-        return false;
     });
-    function onReady(callback) {
-        var intervalId = window.setInterval(function () {
-            if (document.getElementsByTagName('body')[0] !== undefined) {
-                window.clearInterval(intervalId);
-                callback.call(this);
-            }
-        }, 1000);
-    };
+
+
+
+    $("#DDL_Division").on("change", function () {
+
+
+        var DIV = $("#DDL_Division").val()
+      
+        if (DIV != 0) {
+         
+            $("#DDL_Department option").remove();
+            $("#DDL_Section option").remove();
+            GetDepartment_Addition(DIV)
+
+        } else {
+
+            $("#DDL_Department option").remove();
+            $("#DDL_Section option").remove();
+
+        }
+
+
+
+    });
+
+
+
+    function GetuserDetail() {
+        debugger
+
+        var OPID = $("#strOPNo").val();
+        if (OPID != "") {
+            Getdata(OPID)
+        } else {
+
+return false
+        }
+
+   
+
+    }
+
+
+
 
 </script>
