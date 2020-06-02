@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Session;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,7 +45,8 @@ namespace RISTExamOnlineProject
                     .AllowAnyOrigin()
                     .AllowCredentials().Build();
             }));
-
+            services.AddMvc();
+            services.AddSession(); // add session
             services.AddSignalR();
             services.Configure<CookiePolicyOptions>(options =>
             {
