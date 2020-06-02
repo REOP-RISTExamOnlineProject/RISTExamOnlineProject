@@ -263,7 +263,7 @@
     function SetDataToTable() {
         $.ajax({
             type: 'POST',
-            url: "/Management/Load_OperatorAdditional_Detail",
+            url: "../Management/Load_OperatorAdditional_Detail",
             data: { OPID: $("#strOPNo").val() },
             dataType: 'json',
             success: function (Data) { 
