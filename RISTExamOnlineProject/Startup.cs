@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Session;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,7 +44,8 @@ namespace RISTExamOnlineProject
                     .AllowAnyOrigin()
                     .AllowCredentials().Build();
             }));
-
+            services.AddMvc();
+            services.AddSession(); // add session
             services.AddSignalR();
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -55,13 +57,18 @@ namespace RISTExamOnlineProject
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
             // Add framework services.
             services.AddDistributedMemoryCache();
-            services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time   
-            });
+             services.AddSession();
+            //services.AddSession(options =>
+            //{
+            //    options.IdleTimeout = TimeSpan.FromMinutes(99999);//You can set Time  
+            //    options.Cookie.IsEssential = true;
+            //});
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            services.AddMvc();
+             
+
+            
 
         }
 
@@ -79,8 +86,9 @@ namespace RISTExamOnlineProject
            
             app.UseCookiePolicy();
             app.UseAuthentication();
-            
+            app.UseSession();
             app.UseCors("CorsPolicy");
+           
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
