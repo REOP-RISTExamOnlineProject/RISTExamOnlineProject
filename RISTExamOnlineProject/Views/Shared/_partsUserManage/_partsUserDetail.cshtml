@@ -187,13 +187,7 @@
             confirmButtonText: 'Yes, Do it!'
         }).then(function (result) {
 
-            if (result.value) {
-
-
-
-
-
-
+            if (result.value) { 
                 UpdateUserDetail();
             }
         });
@@ -282,9 +276,7 @@
 
     }
 
-
-
-
+     
     function UpdateUserDetail() {
         var arryItem = [];
         var yourArray = [];
@@ -303,16 +295,14 @@
             Authority: $("#ddlAuthority").val(),
             Active: $("#ddlActive").val(),
         }];
-
-
+         
         $("input:checkbox[name=cbLicense]:checked").each(function () {
             yourArray.push({ OperatorID: $("#strOPNo").val(), License: $(this).val() });
-        });
-        alert(yourArray[0].License);
+        }); 
         $.ajax({
             type: 'POST',
-            url: '../Management/GetUpdateUserdetail',
-            data: { dataDetail: arryItem[0], OpNo: ' @User.Identity.Name', dataLicenses: yourArray },
+            url: '@Url.Action("GetUpdateUserdetail","Management")',
+            data: { dataDetail: arryItem[0], dataLicenses: yourArray, OpNo: '@User.Identity.Name' },
             dataType: 'json',
             success: function (Data)
             {
@@ -341,9 +331,16 @@
                 }
             },
             error: function (ex) {
-                    alert('Failed to retrieve states.' + ex.statusText);
+                alert('Failed to retrieve states.' + ex.statusText); 
+                Swal.fire({
+                    icon: 'error',
+                    title: ex.text + " !",
+                    text: ex.statusText + ': @Url.Action("GetUpdateUserdetail","Management")',
+                    type: 'error',
 
-
+                }).then(function () {
+                    return false;
+                });
             }
             });
 

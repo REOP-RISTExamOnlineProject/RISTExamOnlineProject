@@ -305,27 +305,37 @@ namespace RISTExamOnlineProject.Controllers
 
         public JsonResult GetUpdateUserdetail(vewOperatorAlls dataDetail, List<vewOperatorLicense> dataLicenses, string OpNo)
         {
+            
             var _Result = "OK";
             var _DataResult = "";
             var _ResultLabel = true;
 
             //string strIPAddress = httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
             //var data_ = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == opno);
-            String hostName = string.Empty;
-            hostName = Dns.GetHostName();
-            IPHostEntry myIP = Dns.GetHostEntry(hostName);
-            IPAddress[] address = myIP.AddressList;
+            try
+            {
+            //    String hostName = string.Empty;
+            //hostName = Dns.GetHostName();
+            //IPHostEntry myIP = Dns.GetHostEntry(hostName);
+            //IPAddress[] address = myIP.AddressList;
              
 
             var dataOperator = new vewOperatorAlls();
              
             mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
-            string[] Result = ObjRun.GetUpdUserdetail(dataDetail, dataLicenses, OpNo, address[2].ToString());
+            string[] Result = ObjRun.GetUpdUserdetail(dataDetail, dataLicenses, OpNo, "");
 
             _ResultLabel = Convert.ToBoolean(Result[0]);
             _Result = Result[1];
             _DataResult = _Result != "OK" ? _Result : "";
 
+            }
+            catch(Exception e )
+            {
+                _ResultLabel = false;
+                _Result = "Error";
+                _DataResult = e.Message;
+            }
             var jsonResult = Json(new
             { strResult = _Result, dataLabel = _DataResult, strboolbel = _ResultLabel, data = "" });
 
