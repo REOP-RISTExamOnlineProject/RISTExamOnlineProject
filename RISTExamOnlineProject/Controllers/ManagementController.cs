@@ -76,7 +76,7 @@ namespace RISTExamOnlineProject.Controllers
         public IActionResult UserDetailMaintenance(string Event) 
         {
             var Event_ = Event == null ? "_partsUserInfo" : Event;
-             
+            var etest = User.Identity.Name;
             ViewBag.Event = Event_;
             string IPAddress = "";
             ViewBag.IPAddress = IPAddress;
