@@ -187,14 +187,11 @@
         }).then(function (result) {
             
             if (result.value) {
-                var yourArray = [];
+                
+                 
+               
 
-                debugger
-                $("input:checkbox[name=cbLicense]:checked").each(function () {
-                    yourArray.push({ OperatorID: $("#strOPNo").val(), License: $(this).val()});
-                });
-
-                debugger
+                 
 
                 UpdateUserDetail();
             }
@@ -241,10 +238,16 @@
                     $("#txtjobtitle").val(_Data.jobTitle);
                     $("#ddlAuthority").val(_Data.authority);
                     $("#ddlActive").val(_Data.active.toString());
-                     
+
+
+
+
+
+                    $("input:checkbox[name=cbLicense]").prop("checked", false);
                     $.each(Data.dataLicense, function (i, dataLicenses) { 
                         var strLicenses = $.trim(dataLicenses.license) 
-                        $("input[value=" + strLicenses +"]").attr("checked", "checked");
+                         
+                        $("input[value=" + strLicenses + "]").prop("checked", true);
                     });
 
 
@@ -274,6 +277,7 @@
 
     function UpdateUserDetail() {
         var arryItem = [];
+        var yourArray = [];
         arryItem = [{
             OperatorID: $("#strOPNo").val(),
             Password: $("#txtPassword").val(),
@@ -289,10 +293,16 @@
             Authority: $("#ddlAuthority").val(),
             Active: $("#ddlActive").val(),
         }];
+        
+
+        $("input:checkbox[name=cbLicense]:checked").each(function () {
+            yourArray.push({ OperatorID: $("#strOPNo").val(), License: $(this).val() });
+        });
+
         $.ajax({
             type: 'POST',
             url: '@Url.Action("GetUpdateUserdetail")',
-            data: { dataDetail: arryItem[0], OpNo: ' @User.Identity.Name' },
+            data: { dataDetail: arryItem[0], OpNo: ' @User.Identity.Name', dataLicenses: yourArray },
             dataType: 'json',
             success: function (Data)
             {

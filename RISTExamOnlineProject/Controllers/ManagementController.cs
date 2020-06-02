@@ -97,9 +97,9 @@ namespace RISTExamOnlineProject.Controllers
             var data_ = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == opno); 
             
             dataOperator = data_;
+            mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
 
-            var dataLicense = _sptoDbContext.vewOperatorLicense.Where(x=>x.OperatorID == opno).ToList();
-            dataLicenses = dataLicense.ToList();
+            dataLicenses = ObjRun.GetUserLicense(opno);
 
             _Result = dataOperator != null ? "OK" : "error";
             _DataResult = _Result != "OK" ? "Data not found" : "";
@@ -303,7 +303,7 @@ namespace RISTExamOnlineProject.Controllers
         }
 
 
-        public JsonResult GetUpdateUserdetail(vewOperatorAlls dataDetail,string OpNo)
+        public JsonResult GetUpdateUserdetail(vewOperatorAlls dataDetail, List<vewOperatorLicense> dataLicenses, string OpNo)
         {
             var _Result = "OK";
             var _DataResult = "";
@@ -320,7 +320,7 @@ namespace RISTExamOnlineProject.Controllers
             var dataOperator = new vewOperatorAlls();
              
             mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
-            string[] Result = ObjRun.GetUpdUserdetail(dataDetail, OpNo, address[2].ToString());
+            string[] Result = ObjRun.GetUpdUserdetail(dataDetail, dataLicenses, OpNo, address[2].ToString());
 
             _ResultLabel = Convert.ToBoolean(Result[0]);
             _Result = Result[1];

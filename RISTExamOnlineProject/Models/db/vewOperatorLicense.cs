@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace RISTExamOnlineProject.Models.db
 {
@@ -7,5 +8,10 @@ namespace RISTExamOnlineProject.Models.db
         [Key] [Display(Name = "OPNO.")] public string OperatorID { get; set; }
 
         public string License { get; set; }
+    }
+
+    public class ListOperatorLicense
+    {
+        List<vewOperatorLicense> ListOPLicense { get; set; }
     }
 }

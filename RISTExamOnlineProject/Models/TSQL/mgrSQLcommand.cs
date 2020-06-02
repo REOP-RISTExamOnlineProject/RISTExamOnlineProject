@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using Microsoft.Extensions.Configuration;
 using RISTExamOnlineProject.Models.db;
@@ -15,8 +16,7 @@ namespace RISTExamOnlineProject.Models.TSQL
         public mgrSQLcommand(IConfiguration configuration)
         {
             _configuration = configuration;
-        }
-
+        } 
         public DataTable GetSectionCode(string strDivision, string strDepartment)
         {
             var ObjRun = new mgrSQLConnect(_configuration);
@@ -38,13 +38,9 @@ namespace RISTExamOnlineProject.Models.TSQL
 
                 strSQL += "Department = '" + strDepartment + "'";
                 Chk++;
-            }
-
-
-            strSQL += "group by  [SectionCode],[Section],[Department],[Division]  ";
-
-            dt = ObjRun.GetDatatables(strSQL);
-
+            } 
+            strSQL += "group by  [SectionCode],[Section],[Department],[Division]  "; 
+            dt = ObjRun.GetDatatables(strSQL); 
             return dt;
         }
 
@@ -98,7 +94,32 @@ namespace RISTExamOnlineProject.Models.TSQL
             return dt;
         }
 
-        public string[] GetUpdUserdetail(vewOperatorAlls _Data,string OpNo,string strIpAddress)
+
+        public List<vewOperatorLicense> GetUserLicense(string Opid)
+        {
+            
+            mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
+            List<vewOperatorLicense> dataList = new List<vewOperatorLicense>();
+            dt = new DataTable();
+            strSQL = "";
+            strSQL += "SELECT * FROM [SPTOSystem].[dbo].vewOperatorLicense  where OperatorID ='"+ Opid + "'";
+            dt = ObjRun.GetDatatables(strSQL); 
+            if (dt.Rows.Count != 0)
+            { 
+                foreach (DataRow row in dt.Rows)
+                {
+                    dataList.Add(new vewOperatorLicense()
+                    {
+                        OperatorID = row["OperatorID"].ToString().Trim(),
+                        License = row["License"].ToString().Trim(), 
+                    });
+                }
+            }
+            return dataList;
+
+        }
+
+        public string[] GetUpdUserdetail(vewOperatorAlls _Data, List<vewOperatorLicense> _DataLicense,string OpNo,string strIpAddress)
         {
             mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
             dt = new DataTable();
@@ -109,6 +130,14 @@ namespace RISTExamOnlineProject.Models.TSQL
             strFlag = "UPD";
             try
             {
+                string DataLicense = "";
+                foreach(vewOperatorLicense i in _DataLicense)
+                {
+                    DataLicense += ";" + i.License;
+                   
+                }
+
+
                 strSQL += "Exec [sprOperator]";
                 strSQL += "'" + strFlag + "',";                                              //flag
                 strSQL += "'" + _Data.OperatorID + "',";
@@ -125,7 +154,18 @@ namespace RISTExamOnlineProject.Models.TSQL
                 strSQL += "'" + _Data.Authority + "',";
                 strSQL += "'" + _Data.Active + "',";
                 strSQL += "'" + OpNo + "',";
-                strSQL += "'" + strIpAddress + "'";
+                strSQL += "'" + strIpAddress + "';";
+
+                
+               
+
+
+                strSQL += "   Exec [sprOperatorLicense]";
+                strSQL += "'"+_Data.OperatorID+"'";
+                strSQL += ",'" + DataLicense.Substring(1) + "'";
+                strSQL += ",'" + OpNo + "'";
+                strSQL += ",'" + strIpAddress + "';";
+
 
 
                 dt = ObjRun.GetDatatables(strSQL);
@@ -137,21 +177,14 @@ namespace RISTExamOnlineProject.Models.TSQL
                 {
                     results = false;
                     Result = new[] { results.ToString(), "Error " };
-                }
-
-
+                } 
             } 
             catch (Exception e)
             {
                 DataMgs = e.Message + ":" + strSQL;
                 results = false;
                 Result = new[] { results.ToString(), DataMgs };
-            }
-
-
-
-           
-
+            } 
             return Result;
         }
     }
