@@ -1,0 +1,94 @@
+﻿@model RISTExamOnlineProject.Models.db.OperatorReqChange
+
+@{
+    ViewData["Title"] = "EditUserInCharge";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>EditUserInCharge</h1>
+
+<h4>OperatorReqChange</h4>
+<hr />
+
+<div class="row mt-3">
+    <div class="col-sm-12">
+        <div class="mt-1 mb-3  bg-white border shadow-sm">
+            <div class="col-md-4">
+                <form asp-action="EditUserInCharge">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Nbr" />
+                    <div class="form-group">
+                        <label asp-for="DocNo" class="control-label"></label>
+                        <input asp-for="DocNo" class="form-control" />
+                        <span asp-validation-for="DocNo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Seq" class="control-label"></label>
+                        <input asp-for="Seq" class="form-control" />
+                        <span asp-validation-for="Seq" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OperatorID" class="control-label"></label>
+                        <input asp-for="OperatorID" class="form-control" />
+                        <span asp-validation-for="OperatorID" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SectionCode" class="control-label"></label>
+                        <input asp-for="SectionCode" class="form-control" />
+                        <span asp-validation-for="SectionCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SectionAttribute" class="control-label"></label>
+                        <input asp-for="SectionAttribute" class="form-control" />
+                        <span asp-validation-for="SectionAttribute" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OperatorGroup" class="control-label"></label>
+                        <input asp-for="OperatorGroup" class="form-control" />
+                        <span asp-validation-for="OperatorGroup" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="License" class="control-label"></label>
+                        <input asp-for="License" class="form-control" />
+                        <span asp-validation-for="License" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RequestOperatorID" class="control-label"></label>
+                        <input asp-for="RequestOperatorID" class="form-control" />
+                        <span asp-validation-for="RequestOperatorID" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ReqDate" class="control-label"></label>
+                        <input asp-for="ReqDate" class="form-control" />
+                        <span asp-validation-for="ReqDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ChangeOperatorID" class="control-label"></label>
+                        <input asp-for="ChangeOperatorID" class="form-control" />
+                        <span asp-validation-for="ChangeOperatorID" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ChangeDate" class="control-label"></label>
+                        <input asp-for="ChangeDate" class="form-control" />
+                        <span asp-validation-for="ChangeDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

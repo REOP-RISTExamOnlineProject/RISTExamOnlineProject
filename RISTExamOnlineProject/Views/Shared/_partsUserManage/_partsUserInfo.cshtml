@@ -1,15 +1,258 @@
-﻿@await Html.PartialAsync("/Views/Shared/_partsUserManage/_partsUserDetail.cshtml")
-@await Html.PartialAsync("/Views/Shared/_partsUserManage/_partsAdditional.cshtml")
-@await Html.PartialAsync("/Views/Shared/_partsUserManage/_partsTrainning.cshtml")
+﻿
+<div class="container-fluid">
+    <div class=" row">
+        <div class="col-lg">
+            <h5 class=" mb-0"><strong> User Info</strong></h5>
+            <span class="text-secondary">Employee Management <i class="fa fa-angle-right"></i> User Info</span>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="mt-3 bg-white border shadow-sm col-lg">
+            <div class="container-fluid">
+                <div class="form-group form-row mb-4">
+                    <div class="col-sm">
+                        <label for="NameEng" class="mb-0">Name - Surname</label>
+                        @Html.TextBox("NameEn", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Name English..", id = "NameEn", @readonly = "readonly" })
+                    </div>
+                    <div class="col-sm">
+                        <label for="NameTh" class="mb-0">ชื่อ - นามสกุล</label>
+                        @Html.TextBox("NameTh", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Name Thai..", id = "NameTh", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm">
+                        <label for="txtjobtitle" class="mb-0">Job Title</label>
+                        @Html.TextBox("txtjobtitle", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "job Title..", id = "txtjobtitle", @readonly = "readonly" })
+                    </div>
+                    <div class="col-sm">
+                        <label for="txtPosition" class="mb-0">Position</label>
+                        @Html.TextBox("txtPosition", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Position..", id = "txtPosition", @readonly = "readonly" })
+                    </div>
+
+                    <div class="col-sm">
+                        <label for="Shift" class="mb-0">Shift Group</label>
+                        @Html.TextBox("txtShiftGroup", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "ShiftGroup..", id = "txtShiftGroup", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="form-group row mb-4">
+                    <div class="col-sm-4">
+                        <label for="txtDivision" class="mb-0">Division</label>
+                        @Html.TextBox("txtDivision", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Division..", id = "txtDivision", @readonly = "readonly" })
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="txtDepartment" class="mb-0">Department</label>
+                        @Html.TextBox("txtDepartment", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Department..", id = "txtDepartment", @readonly = "readonly" })
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="txtSection" class="mb-0">Section</label>
+                        @Html.TextBox("txtSection", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Section..", id = "txtSection", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-4">
+                        <label for="txtEmail" class="mb-0">Primary email</label>
+                        @Html.TextBox("txtEmail", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Email..", id = "txtEmail", @readonly = "readonly" })
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="txtEmail2" class="mb-0">Secondary email</label>
+                        @Html.TextBox("txtEmail2", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Email..", id = "txtEmail2", @readonly = "readonly" })
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="txtAuthority" class="mb-0">Authority</label>
+                        @Html.TextBox("txtAuthority", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Authority..", id = "txtAuthority", @readonly = "readonly" })
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="txtActive" class="mb-0">Active</label>
+                        @Html.TextBox("txtActive", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Active..", id = "txtActive", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class=" row mb-1">
+                    <h6 class="m-3">User license</h6>
+                    <div class=" ml-3 w-100">
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="" checked disabled>OP
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="" checked disabled>INS
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="" checked disabled>ST
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="" disabled>MK
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="" disabled>ETG
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="" disabled>MGR
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class=" row mb-1">
+                    <div class="table-responsive ">
+                        <h6 class="m-3">Additional Department</h6>
+                        <table class="table table-bordered table-striped table-sm nowrap " id="tbSections">
+                            <thead class="bg-dark text-white">
+                                <tr>
+                                    <th>SectionCode</th>
+                                    <th>SectionName</th>
+                                    <th>Department</th>
+                                    <th>Division</th>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size:xx-small"></tbody>
+                            <tfoot  >
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-3 col-4" id="divChart" style="display:none;">
+            <div class=" row mb-1" >
+                <div class=" ml-2 w-100 button-container  bg-white shadow-sm border">
+                    <h6 class="m-3">Radar Chart</h6>
+                    <canvas id="radarChart_G" height="100vh" width="100%" ></canvas>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+
+
 
 <script>
+    var tbSection;
+ 
+        
+    
+    onReady(function () {
+        SettbSecion();
+       
+        if ($("#strOPNo").val() != "") {
+            GetuserDetail();
+           
 
-    function Getinitial() {
-        GetDivision();
-        GetDepartment();
-        GetSectionCode();
-        GetGroupName();
-        GetAuthority();
-        GetActive();
+        }
+       
+        return false;
+    });
+    function onReady(callback) {
+        var intervalId = window.setInterval(function () {
+            if (document.getElementsByTagName('body')[0] !== undefined) {
+                window.clearInterval(intervalId);
+                callback.call(this);
+            }
+        }, 1000);
+    };
+    function GetuserDetail() {
+
+        $.ajax({
+            type: 'POST',
+            url: "../Management/GetDataUserdetail",
+            data: { opno: $("#strOPNo").val() },
+            dataType: 'json',
+            success: function (Data) {
+
+                if (Data.strboolbel == true && Data.strResult == "OK") {
+                    var _Data = Data.data;
+                    $("#NameEn").val(_Data.nameEng);
+                    $("#NameTh").val(_Data.nameThai);
+                    $("#txtPosition").val(_Data.position);
+                    $("#txtDivision").val(_Data.division);
+                    $("#txtDepartment").val(_Data.department);
+                    $("#txtSection").val(_Data.section);
+                    $("#txtShiftGroup").val(_Data.groupName);
+                    $("#txtEmail").val(_Data.email1);
+                    $("#txtEmail2").val(_Data.email2);
+                    $("#txtPassword").val($.trim(_Data.password));
+                    $("#txtRfid").val(_Data.rfid);
+                    $("#txtUpdDate").val(_Data.updDate);
+                    $("#txtAddDate").val(_Data.addDate);
+                    $("#txtjobtitle").val(_Data.jobTitle);
+                    $("#txtAuthority").val((_Data.authority == 9 ? "Admin" : "Employee"));
+                    $("#txtActive").val((_Data.active.toString() == "true" ? "Active job" : "Resign"));
+
+                    SetDataToTable();
+                    $("#divChart").css("display","block")
+                    GetChart();
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: Data.strResult,
+                        text: Data.dataLabel,
+                        type: 'error',
+
+                    }).then(function () {
+                        return false;
+                    });
+                };
+            },
+            error: function (ex) {
+                alert('Failed to retrieve states.' + ex.statusText);
+            },
+        });
     }
+
+    function SettbSecion() { 
+        
+        tbSection = $("#tbSections").DataTable({
+            paging: false,
+            ordering: false,
+            processing: true,
+            
+            dom: '<"top"l>rt<"bottom"ip><"clear">',
+            columns: [
+                { data: "sectionCode" },
+                { data: "section" },
+                { data: "department" },
+                { data: "division" },
+            ],
+            order: [1, "asc"],
+            fnInitComplete: function (oSettings, json, sData) {  
+                return true;
+            },
+        });
+    }
+
+    function SetDataToTable() {
+        $.ajax({
+            type: 'POST',
+            url: "/Management/Load_OperatorAdditional_Detail",
+            data: { OPID: $("#strOPNo").val() },
+            dataType: 'json',
+            success: function (Data) { 
+               
+                tbSection.clear().draw();
+                if (Data.count != 0) {
+                    tbSection.rows.add(Data.data).draw();
+                }
+            },
+            error: function (ex) {
+                alert('Failed to retrieve states.' + ex);
+            },
+        });
+    }
+   
 </script>

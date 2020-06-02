@@ -19,5 +19,8 @@ namespace RISTExamOnlineProject.Models.db
             modelBuilder.Entity<vewOperatorAdditionalDep>()
                 .HasKey(k => new {k.OperatorID, k.SectionCode});
         }
+        public virtual DbSet<sprOperatorShowListInCharge> sprOperatorShowListInChang { get; set; }
+
+        public virtual DbSet<OperatorReqChange> OperatorReqChange { get; set; }
     }
 }

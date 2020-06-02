@@ -39,7 +39,7 @@
 <!--Page Wrapper-->
 
 <div class="container-fluid">
-
+<partial name="_CookieConsentPartial" />
 <!--Header-->
 <div class="row header shadow-sm">
 
@@ -215,6 +215,7 @@
     <!--Header Menu-->
 </div>
 <!--Header-->
+
 <!--Main Content-->
 
     <div class="row main-content">
@@ -267,25 +268,26 @@
 
                             @if (userRoles == "Admin")
                             {
-                                @*<li class="parent">
-                    <a href="@Url.Action("ManagementUser", "Management")">
-                        <i class="fas fa-sliders-h mr-3"></i>
-                        <span class="none">Management User</span>
-                    </a>
-                </li>*@
-                                <li class="parent">
-                                    <a href="#" onclick="toggle_menu('Shortcuts');return false;">
-                                        <i class="fas fa-link mr-3"></i>
-                                        <span class="none">User Managemant <i class="fa fa-angle-down pull-right align-bottom"></i></span>
-                                    </a>
 
-                                    <ul class="children" id="Shortcuts">
-                                        <li class="child"><a href="@Url.Action("UserDetailMaintenance","Management")" class="ml-4"><i class="fa fa-angle-right mr-2 "></i><i class="fa fa-font-awesome"></i> Edit User detail</a></li>
-                                        <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i><i class="fa fa-font-awesome"></i> Request Change</a></li>
-                                        <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i><i class="fa fa-font-awesome"></i> TEC Approved</a></li>
-                                        <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i><i class="fa fa-font-awesome"></i> Request Inquiry</a></li>
-                                    </ul>
-                                </li>
+                        <li class="parent">
+                            <a href="#" onclick="toggle_menu('Shortcuts');return false;">
+                                <i class="fas fa-link mr-3"></i>
+                                <span class="none">User Managemant <i class="fa fa-angle-down pull-right align-bottom"></i></span>
+                            </a>
+                          
+                            @{
+                                var opno = @User.Identity.Name;
+                               
+                                //var positionlist = ViewBag.Positionlist;
+
+                            }
+                            <ul class="children" id="Shortcuts">
+                                <li class="child"><a href="@Url.Action("UserDetailMaintenance","Management")" class="ml-4"><i class="fa fa-angle-right mr-2 "></i><i class="fa fa-font-awesome"></i> Edit User detail</a></li>
+                                <li class="child"><a href="@Url.Action("UserInCharge", "Management", new { opno = $"{opno}"})" class="ml-4"><i class="fa fa-angle-right mr-2"></i><i class="fa fa-font-awesome"></i> Request Change</a></li>
+                                <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i><i class="fa fa-font-awesome"></i> TEC Approved</a></li>
+                                <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i><i class="fa fa-font-awesome"></i> Request Inquiry</a></li>
+                            </ul>
+                        </li>
                             }
                         }
 
@@ -300,10 +302,11 @@
             <!--Sidebar Naigation Menu-->
         </div>
     </div>
-    <!--Sidebar left-->
+        <!--Sidebar left-->
+        
     <!--Content right-->
     <div class="col-sm-9 col-12 content pt-3 pl-0">
-        <partial name="_CookieConsentPartial"></partial>
+        
 
 
         @RenderBody()

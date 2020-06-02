@@ -1,13 +1,15 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace RISTExamOnlineProject.Models.db
 {
+    [ValidateAntiForgeryToken]
     public class vewOperatorAlls
     {
 
 
-
+        
         [Key]
         [Required(ErrorMessage = "Please enter Operator No.")]
         [Display(Name = "Operator No.")]

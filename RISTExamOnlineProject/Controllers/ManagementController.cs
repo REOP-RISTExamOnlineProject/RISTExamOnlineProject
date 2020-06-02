@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RISTExamOnlineProject.Models.db;
 using RISTExamOnlineProject.Models.TSQL;
@@ -20,9 +21,11 @@ namespace RISTExamOnlineProject.Controllers
         private readonly IConfiguration _configuration;
         private readonly SPTODbContext _sptoDbContext;
         private readonly IHttpContextAccessor httpContextAccessor;
+         
 
-        public ManagementController(SPTODbContext context, IConfiguration configuration,IHttpContextAccessor httpContextAccessor)
+        public ManagementController(SPTODbContext context, IConfiguration configuration,IHttpContextAccessor httpContextAccessor )
         {
+            
             _sptoDbContext = context;
             _configuration = configuration;
             this.httpContextAccessor = httpContextAccessor;
@@ -69,7 +72,8 @@ namespace RISTExamOnlineProject.Controllers
             return View(data);
 
         }
-        public IActionResult UserDetailMaintenance(string Event )
+        [Authorize]
+        public IActionResult UserDetailMaintenance(string Event) 
         {
             var Event_ = Event == null ? "_partsUserInfo" : Event;
              
@@ -88,8 +92,8 @@ namespace RISTExamOnlineProject.Controllers
             var _DataResult = "";
             var _ResultLabel = true;
             ViewBag.opno = opno;
-           
 
+         
 
             var data_ = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == opno);
 
@@ -311,9 +315,7 @@ namespace RISTExamOnlineProject.Controllers
             hostName = Dns.GetHostName();
             IPHostEntry myIP = Dns.GetHostEntry(hostName);
             IPAddress[] address = myIP.AddressList;
-
-
-
+             
 
             var dataOperator = new vewOperatorAlls();
              
@@ -372,12 +374,13 @@ namespace RISTExamOnlineProject.Controllers
             //total number of rows count     
             recordsTotal = dataShow.Count();
             //Paging     
-            var data = dataShow.Skip(skip).Take(pageSize).ToList();
+            // var data = dataShow.Skip(skip).Take(pageSize).ToList();
+            ISession sese;
+            var data = dataShow.ToList(); 
             //Returning Json Data    
             return Json(new { draw, recordsFiltered = recordsTotal, recordsTotal, data });
         }
-
-
+ 
 
         public JsonResult GetDivision_Addition()
         {
@@ -473,8 +476,40 @@ namespace RISTExamOnlineProject.Controllers
 
         }
 
+       
 
+        public IActionResult UserInCharge(string opno)
+        {
+            ViewBag.opno = opno;
+          
+            var queryuser = _sptoDbContext.sprOperatorShowListInChang.FromSql($"sprOperatorShowListInChang {opno}").ToList();
+            return View(queryuser);
+        }
+        public async Task<IActionResult> EditUserInCharge(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            //var suppliers = await _context.Suppliers.FindAsync(id);
+            //if (suppliers == null)
+            //{
+            //    return NotFound();
+            //}
+            return View();
+        }
 
+        public IActionResult TempDataExample()
+        {
+            List<string> mobileList = new List<string>();
+            mobileList.Add("Oneplus 8 Pro");
+            mobileList.Add("Xperia 1 II");
+            mobileList.Add("POCO F2");
+            mobileList.Add("Xperia X 10");
+
+            TempData["MobileList"] = mobileList;
+            return View();
+        }
     }
 }

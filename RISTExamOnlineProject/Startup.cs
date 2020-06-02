@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using RISTExamOnlineProject.Hubs;
 using RISTExamOnlineProject.Models.db;
 using System;
+using Microsoft.AspNetCore.Mvc;
 
 namespace RISTExamOnlineProject
 {
@@ -61,7 +62,8 @@ namespace RISTExamOnlineProject
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            services.AddMvc();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,13 +74,15 @@ namespace RISTExamOnlineProject
             else
                 app.UseExceptionHandler("/Error");
 
-
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             //app.UseMvcWithDefaultRoute();
            
             app.UseCookiePolicy();
             app.UseAuthentication();
+            app.UseSession();
             app.UseCors("CorsPolicy");
+           
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

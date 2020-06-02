@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RISTExamOnlineProject.Models.db;
 
 namespace RISTExamOnlineProject.Controllers
@@ -18,6 +19,7 @@ namespace RISTExamOnlineProject.Controllers
         }
 
         [HttpGet]
+
         public IActionResult Login(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -27,8 +29,7 @@ namespace RISTExamOnlineProject.Controllers
         {
             if (Url.IsLocalUrl(returnUrl))
                 return Redirect(returnUrl);
-            else
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
 
         }
 
@@ -54,7 +55,7 @@ namespace RISTExamOnlineProject.Controllers
         //}
 
         [HttpPost]
-       public IActionResult Login(string OperatorID, string Password, vewOperatorAlls model, string returnUrl = null)
+        public async Task<IActionResult> Login(string OperatorID, string Password, vewOperatorAlls model, string returnUrl = null)
         {
             if (!ModelState.IsValid) return View();
 
@@ -66,18 +67,21 @@ namespace RISTExamOnlineProject.Controllers
             var isAuthenticated = false;
             string authority = null;
             var active = false;
-            var querylogin = _sptoDbContext.vewOperatorAll
+            var querylogin = await _sptoDbContext.vewOperatorAll
                 .Where(x => x.OperatorID == OperatorID && x.Password == Password)
-                .Select(c => new { c.OperatorID, c.Active, c.Authority });
+                .Select(c => new {c.OperatorID, c.Active, c.Authority}).FirstOrDefaultAsync();
 
 
-            if (querylogin.Any())
+            if (querylogin != null)
             {
-                foreach (var item in querylogin)
-                {
-                    authority = item.Authority;
-                    active = item.Active;
-                }
+                //foreach (var item in querylogin)
+                //{
+                //    authority = item.Authority;
+                //    active = item.Active;
+                //}
+
+                authority = querylogin.Authority;
+                active = querylogin.Active;
 
                 if (active == false) return RedirectToAction("Login");
 
@@ -107,7 +111,7 @@ namespace RISTExamOnlineProject.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Invalid UserName or Password");
+                ModelState.AddModelError("", "Invalid Operator No. or Password");
                 return View();
             }
 
