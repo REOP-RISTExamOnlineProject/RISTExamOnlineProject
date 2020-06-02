@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<RISTExamOnlineProject.Models.db.sprOperatorShowListInCharge>
-@using Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 @{
     ViewData["Title"] = "UserInCharge";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,56 +14,56 @@
 <div class="row mt-3">
     <div class="col-sm-12">
         <div class="mt-1 mb-3  bg-white border shadow-sm">
-        <table class="table table-striped ">
-            <thead class="table-dark">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.NameEng)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NameThai)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SectionCode)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Position)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.JobTitle)
-                </th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
+            <table class="table table-striped ">
+                <thead class="table-dark">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NameEng)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NameThai)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SectionName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Position)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.JobTitle)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
 
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NameEng)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NameThai)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SectionCode)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Position)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.JobTitle)
-                    </td>
-                    <td>
-
-                        <a asp-route-id="@item.OperatorID" href="@Url.Action("EditUserInCharge", "Management")">Edit</a>
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NameEng)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NameThai)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SectionName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Position)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.JobTitle)
+                            </td>
+                            <td>
+                                <a asp-action="EditUserInCharge" asp-route-id="@item.OperatorID">Edit_</a> 
+                                
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
         </div>
 

@@ -39,7 +39,7 @@
 <!--Page Wrapper-->
 
 <div class="container-fluid">
-
+<partial name="_CookieConsentPartial" />
 <!--Header-->
 <div class="row header shadow-sm">
 
@@ -215,6 +215,7 @@
     <!--Header Menu-->
 </div>
 <!--Header-->
+
 <!--Main Content-->
 
     <div class="row main-content">
@@ -301,10 +302,11 @@
             <!--Sidebar Naigation Menu-->
         </div>
     </div>
-    <!--Sidebar left-->
+        <!--Sidebar left-->
+        
     <!--Content right-->
     <div class="col-sm-9 col-12 content pt-3 pl-0">
-        <partial name="_CookieConsentPartial"></partial>
+        
 
 
         @RenderBody()

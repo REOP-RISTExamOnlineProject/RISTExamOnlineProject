@@ -496,5 +496,17 @@ namespace RISTExamOnlineProject.Controllers
             //}
             return View();
         }
+
+        public IActionResult TempDataExample()
+        {
+            List<string> mobileList = new List<string>();
+            mobileList.Add("Oneplus 8 Pro");
+            mobileList.Add("Xperia 1 II");
+            mobileList.Add("POCO F2");
+            mobileList.Add("Xperia X 10");
+
+            TempData["MobileList"] = mobileList;
+            return View();
+        }
     }
 }

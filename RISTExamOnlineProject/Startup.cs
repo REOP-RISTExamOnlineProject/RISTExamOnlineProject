@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using RISTExamOnlineProject.Hubs;
 using RISTExamOnlineProject.Models.db;
 using System;
+using Microsoft.AspNetCore.Mvc;
 
 namespace RISTExamOnlineProject
 {
@@ -61,7 +62,7 @@ namespace RISTExamOnlineProject
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            services.AddMvc();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
         }
 

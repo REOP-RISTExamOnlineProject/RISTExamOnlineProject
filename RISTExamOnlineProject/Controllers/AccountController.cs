@@ -29,8 +29,7 @@ namespace RISTExamOnlineProject.Controllers
         {
             if (Url.IsLocalUrl(returnUrl))
                 return Redirect(returnUrl);
-            else
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
 
         }
 
@@ -112,7 +111,7 @@ namespace RISTExamOnlineProject.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Invalid UserName or Password");
+                ModelState.AddModelError("", "Invalid Operator No. or Password");
                 return View();
             }
 

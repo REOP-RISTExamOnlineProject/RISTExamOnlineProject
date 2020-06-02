@@ -14,7 +14,9 @@ namespace RISTExamOnlineProject.Models.db
 
         [Display(Name = "Name Th")] public string NameThai { get; set; }
         public string SectionCode { get; set; }
+        public string SectionName { get; set; }
         public string Position { get; set; }
+       
         public string JobTitle { get; set; }
        
         
