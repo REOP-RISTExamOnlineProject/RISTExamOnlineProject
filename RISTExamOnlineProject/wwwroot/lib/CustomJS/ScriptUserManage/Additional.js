@@ -116,18 +116,6 @@ debugger
 
 
 
-function GetuserDetail(){
-
-
-    var OPID = $("#strOPNo").val();
-    Getdata(OPID)
-
-}
-
-
-
-
-
 
 
 function Delete_Data() {

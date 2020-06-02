@@ -80,8 +80,9 @@ namespace RISTExamOnlineProject
            
             app.UseCookiePolicy();
             app.UseAuthentication();
-            
+            app.UseSession();
             app.UseCors("CorsPolicy");
+           
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

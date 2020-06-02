@@ -21,9 +21,11 @@ namespace RISTExamOnlineProject.Controllers
         private readonly IConfiguration _configuration;
         private readonly SPTODbContext _sptoDbContext;
         private readonly IHttpContextAccessor httpContextAccessor;
+         
 
-        public ManagementController(SPTODbContext context, IConfiguration configuration,IHttpContextAccessor httpContextAccessor)
+        public ManagementController(SPTODbContext context, IConfiguration configuration,IHttpContextAccessor httpContextAccessor )
         {
+            
             _sptoDbContext = context;
             _configuration = configuration;
             this.httpContextAccessor = httpContextAccessor;
@@ -90,8 +92,8 @@ namespace RISTExamOnlineProject.Controllers
             var _DataResult = "";
             var _ResultLabel = true;
             ViewBag.opno = opno;
-           
 
+         
 
             var data_ = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == opno);
 
@@ -313,9 +315,7 @@ namespace RISTExamOnlineProject.Controllers
             hostName = Dns.GetHostName();
             IPHostEntry myIP = Dns.GetHostEntry(hostName);
             IPAddress[] address = myIP.AddressList;
-
-
-
+             
 
             var dataOperator = new vewOperatorAlls();
              
@@ -374,12 +374,13 @@ namespace RISTExamOnlineProject.Controllers
             //total number of rows count     
             recordsTotal = dataShow.Count();
             //Paging     
-            var data = dataShow.Skip(skip).Take(pageSize).ToList();
+            // var data = dataShow.Skip(skip).Take(pageSize).ToList();
+            ISession sese;
+            var data = dataShow.ToList(); 
             //Returning Json Data    
             return Json(new { draw, recordsFiltered = recordsTotal, recordsTotal, data });
         }
-
-
+ 
 
         public JsonResult GetDivision_Addition()
         {
@@ -474,6 +475,8 @@ namespace RISTExamOnlineProject.Controllers
             return Json(new MultiSelectList(listItems, "Value", "Text"));
 
         }
+
+       
 
         public IActionResult UserInCharge(string opno)
         {
