@@ -66,18 +66,21 @@ function showdata(OPID) {
 
 }
 
-function GetSectionCode() {
+function GetSectionCode(strDiv,strDepart,strsection) {
      
+    var teste11s = $("#ddlDivision").val();
+    var testes = $("#ddlDepartment").val();
     $.ajax({        
         type: 'POST',
         url: '../Management/GetSectionCode',
         dataType: 'json',
-       data: { strDivision : $("#ddlDivision").val(), strDepartment : $("#ddlDepartment").val() },
+        data: { strDivision: strDiv, strDepartment: strDepart },
         success: function (citys) {
             if (citys.length != 0) {
                 $.each(citys, function (i, city) { 
                     $("#ddlSection").append('<option value="' + city.value + '">' + city.text + '</option>');
                 });
+                $("#ddlSection").val((strsection != null ? strsection:""));
             }
         },
         error: function (ex) {
@@ -88,17 +91,20 @@ function GetSectionCode() {
 }
 
 
-function GetDepartment() { 
+function GetDepartment(strDiv, strDepart) { 
+    var testes = $("#ddlDivision").val();
     $.ajax({
         type: 'POST',
         url: '../Management/GetDepartment',
-        data: { strDivision : $("#ddlDivision").val() },
+        data: { strDivision: strDiv },
         dataType: 'json',
         success: function (citys) {
             if (citys.length != 0) {
                 $.each(citys, function (i, city) {
                     $("#ddlDepartment").append('<option value="' + city.value + '">' + city.text + '</option>');
                 });
+                $("#ddlDepartment").val((strDepart != null ? strDepart : ""));
+               
             }
         },
         error: function (ex) {
