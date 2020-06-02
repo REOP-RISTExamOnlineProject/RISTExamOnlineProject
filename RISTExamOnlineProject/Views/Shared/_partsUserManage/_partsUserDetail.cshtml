@@ -149,7 +149,7 @@
         </div>
     </div>
 </div>
-    <script>
+<script>
 
     function Getinitial() {
         //alert("user detail");
@@ -225,7 +225,7 @@
                     var _Data = Data.data;
                     $("#NameEn").val(_Data.nameEng);
                     $("#NameTh").val(_Data.nameThai);
-                    $("#txtPosition").val(_Data.position); 
+                    $("#txtPosition").val(_Data.position);
                     $("#ddlShift").val(_Data.operatorGroup);
                     $("#txtEmail").val(_Data.email1);
                     $("#txtEmail2").val(_Data.email2);
@@ -241,13 +241,13 @@
 
                     $("#ddlDepartment option").remove();
                     GetDepartment(_Data.division, _Data.department);
-                   
+
 
                     $("#ddlSection option").remove();
                     GetSectionCode(_Data.division, _Data.department, _Data.sectionCode);
 
 
-                  
+
 
 
 
@@ -311,7 +311,7 @@
 
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("GetUpdateUserdetail")',
+            url: '../Management/GetUpdateUserdetail',
             data: { dataDetail: arryItem[0], OpNo: ' @User.Identity.Name', dataLicenses: yourArray },
             dataType: 'json',
             success: function (Data)
@@ -348,4 +348,4 @@
             });
 
     }
-    </script>
+</script>
