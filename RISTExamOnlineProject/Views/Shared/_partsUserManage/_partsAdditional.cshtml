@@ -3,7 +3,7 @@
 
 <h1>Additional Department</h1>
 
-<br/>
+<br />
 
 
 
@@ -19,7 +19,7 @@
             Division
         </div>
         <div class="col-2">
-            @Html.DropDownList("DDL_Division", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "DDL_Division", @class = " custom-select custom-select-sm"})
+            @Html.DropDownList("DDL_Division", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "DDL_Division", @class = " custom-select custom-select-sm" })
 
         </div>
         <div class="col-1">
@@ -37,7 +37,7 @@
 
         </div>
         <div class="col-1">
-            <button class="btn btn-warning ">
+            <button class="btn btn-warning " id="BTN_ADD" >
                 ADD
             </button>
         </div>
@@ -55,7 +55,7 @@
 
 
 
-<br/>
+<br />
 
 
 
@@ -75,27 +75,48 @@
             </button>
 
         </div>
-   
-    
 
     </div>
-
+    <br />
     <table class="table table-sm table-bordered table-striped  " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable">
         <thead>
             <tr>
                 <th style="text-align:center;" class="text-wrap">OperatorID</th>
                 <th style="text-align:center;" class="text-wrap">SectionCode</th>
-                <th style="text-align:center;" class="text-wrap">SectionCode2</th>
                 <th style="text-align:center;" class="text-wrap">Division</th>
                 <th style="text-align:center;" class="text-wrap">Department</th>
                 <th style="text-align:center;" class="text-wrap">Section</th>
-                <th style="text-align:center;" class="text-wrap">StatusC</th>
                 <th style="text-align:center;" class="text-wrap"> Delete </th>
+
             </tr>
         </thead>
 
-        <tbody>
-        </tbody>
+        @*@if (TempData["MobileList"] != null)
+        {
+            @foreach (var item in (List<string>)TempData["MobileList"])
+            {
+                <tr>
+                    @foreach (var data in item.Split(','))
+                    {
+                        <td class="text-center">
+                            @data
+                        </td>
+                    }
+                    <td class="text-center">
+                        <button type="button" class="btn btn-danger">
+                            Delete
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            }
+
+
+        }*@
+
+       
 
     </table>
 
@@ -108,14 +129,22 @@
 
 <script>
 
+    var MakerID = '@User.Identity.Name';
+    var OPID = $("#strOPNo").val();
+
+    if (TempData["MobileList"] != null) {
+
+  debugger
+    }
 
     function Getinitial() {
 
         GetDivision_Addition()
-        var OPID = $("#strOPNo").val();
 
+     
         if (OPID != '') {
-            Getdata(OPID);       
+            debugger
+            Getdata(OPID, MakerID);
 
             var x = document.getElementById("display_grid");
             x.style.display = "block";
@@ -125,8 +154,8 @@
 
             var t = document.getElementById("Display_tableAdd");
             t.style.display = "none";
-                
-           
+
+
         } else {
 
             var x = document.getElementById("display_grid");
@@ -134,7 +163,7 @@
 
             var a = document.getElementById("Form_Add");
             a.style.display = "none";
-           
+
 
 
             var t = document.getElementById("Display_tableAdd");
@@ -142,15 +171,15 @@
 
         }
 
-       
+
 
     }
 
 
     $("#DDL_Department").on("change", function () {
-
+        debugger
         var DIV = $("#DDL_Division").val()
-        var DEP = $("#DDL_Department").val()   
+        var DEP = $("#DDL_Department").val()
         if ($("#DDL_Department").val != 0) {
             $("#DDL_Section option").remove();
             GetSection_Addition(DIV, DEP)
@@ -162,44 +191,51 @@
 
 
     $("#DDL_Division").on("change", function () {
-
-
+        debugger
         var DIV = $("#DDL_Division").val()
-      
         if (DIV != 0) {
-         
             $("#DDL_Department option").remove();
             $("#DDL_Section option").remove();
             GetDepartment_Addition(DIV)
-
         } else {
-
             $("#DDL_Department option").remove();
             $("#DDL_Section option").remove();
-
         }
 
 
 
     });
 
+    $('#BTN_ADD').click(function (event) {
+
+
+        var Sectioncode = $('#DDL_Section').val();
+
+
+        debugger
+        AddData_Data(OPID, MakerID, Sectioncode);
+
+
+
+
+    });
 
 
     function GetuserDetail() {
         debugger
 
         var OPID = $("#strOPNo").val();
-        if (OPID != "") {
-            Getdata(OPID)
-        } else {
 
-return false
+
+        if (OPID != "") {
+            Getdata(OPID, MakerID)
+        } else {
+            return false
         }
 
-   
+
 
     }
-
 
 
 

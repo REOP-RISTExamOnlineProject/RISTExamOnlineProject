@@ -337,10 +337,21 @@ namespace RISTExamOnlineProject.Controllers
 
         #endregion
 
-        public IActionResult Load_OperatorAdditional_Detail(string OPID)
+        public JsonResult Add_SecstionCode(string OPID, string MakerID,string SecsionCode)
         {
 
 
+            var jsonResult = Json(new
+            { });
+
+            return jsonResult;
+        }
+
+
+
+        public IActionResult Load_OperatorAdditional_Detail(string OPID,string MakerID)
+        {
+            mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
 
             var draw = HttpContext.Request.Form["draw"].FirstOrDefault();
             var start = Request.Form["start"].FirstOrDefault();
@@ -354,33 +365,25 @@ namespace RISTExamOnlineProject.Controllers
             var skip = start != null ? Convert.ToInt32(start) : 0;
             var recordsTotal = 0;
 
-            var dataShow = _sptoDbContext.vewOperatorAdditionalDep.Where(x => x.OperatorID == OPID).ToList();
+            DataTable dt = new DataTable();
+
+            // var dataShow = _sptoDbContext.vewOperatorAdditionalDep.Where(x => x.OperatorID == OPID).ToList();
+            List<vewOperatorAdditionalDepTemp> TempData = new List<vewOperatorAdditionalDepTemp>();
 
 
-            //if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDir)))
-            //{
+            TempData = ObjRun.GetMakeTemp_Additional(OPID, MakerID);
 
-            //     //dataShow =  dataShow.OrderBy(sortColumn).ThenBy(so);
-            //   //Test Commit
-            //}
+            var DataShow = (from tempdata in TempData
+                            select tempdata);
+
+            var data = DataShow.Skip(skip).Take(pageSize).ToList();
 
 
-            //if (!string.IsNullOrEmpty(searchValue))
-            //{
-            //    searchValue = searchValue.ToUpper();
-            //    DataShow = DataShow.Where(m => m.QuotationNo.Contains(searchValue) || m.RequesterName.Contains(searchValue) || m.OPID.Contains(searchValue));
-            //}
-
-            //total number of rows count     
-            recordsTotal = dataShow.Count();
-            //Paging     
-            // var data = dataShow.Skip(skip).Take(pageSize).ToList();
-            ISession sese;
-            var data = dataShow.ToList(); 
-            //Returning Json Data    
             return Json(new { draw, recordsFiltered = recordsTotal, recordsTotal, data });
+
         }
  
+
 
         public JsonResult GetDivision_Addition()
         {
@@ -500,13 +503,63 @@ namespace RISTExamOnlineProject.Controllers
             return View();
         }
 
+
+
+
+
+
+
+
         public IActionResult TempDataExample()
         {
+            mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
+                 
+
+            DataTable dt = new DataTable();
+
+        
+
+
+            dt = ObjRun.GetUserDetail_Additional("000702");
+
             List<string> mobileList = new List<string>();
-            mobileList.Add("Oneplus 8 Pro");
-            mobileList.Add("Xperia 1 II");
-            mobileList.Add("POCO F2");
-            mobileList.Add("Xperia X 10");
+            string Strdata = "";
+
+            if (dt.Rows.Count != 0)
+            {
+
+
+                for (int i = 0; i > dt.Rows.Count; i++) {
+
+                    Strdata += "{[ data:";
+                    if (i != dt.Rows.Count)
+                    {
+
+                        Strdata += "{},";
+
+
+                    }
+                    else {
+                        Strdata += "{}";
+
+                    }
+
+                    Strdata += "]}";
+
+
+
+                }
+
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    mobileList.Add("" + row["OperatorID"].ToString() + "," + row["SectionCode"].ToString() + "," +
+                        " " + row["Division"].ToString() + ", " + row["Department"].ToString() + "," + row["Section"].ToString() + " ");
+
+                }
+
+            }
+
 
             TempData["MobileList"] = mobileList;
             return View();

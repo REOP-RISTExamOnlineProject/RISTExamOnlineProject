@@ -6,7 +6,55 @@
 
 <h1>TempDataExample</h1>
 
-@foreach (var item in (List<string>) TempData["MobileList"])
-{
-    <p>@item</p>
-}
+
+<table class="table table-sm table-bordered table-striped  " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable">
+    <thead>
+        <tr>
+            <th style="text-align:center;" class="text-wrap">OperatorID</th>
+            <th style="text-align:center;" class="text-wrap">SectionCode</th>
+            @*<th style="text-align:center;" class="text-wrap">SectionCode2</th>*@
+            <th style="text-align:center;" class="text-wrap">Division</th>
+            <th style="text-align:center;" class="text-wrap">Department</th>
+            <th style="text-align:center;" class="text-wrap">Section</th>
+            @*<th style="text-align:center;" class="text-wrap">StatusC</th>*@
+            <th style="text-align:center;" class="text-wrap"> Delete </th>
+        </tr>
+    </thead>
+
+    @if (TempData["MobileList"] != null)
+    {
+
+
+
+
+        @foreach (var item in (List<string>)TempData["MobileList"])
+        {
+            <tr>
+                @foreach (var data in item.Split(','))
+                {
+
+                    <td class="text-center">
+                        @data
+                    </td>
+
+                }
+
+                <td class="text-center">
+                    <button  type="button" class="btn btn-danger">
+                        Delete
+
+                    </button>
+
+                </td>
+
+            </tr>
+
+        }
+
+
+    }
+
+    <tbody>
+    </tbody>
+
+</table>
