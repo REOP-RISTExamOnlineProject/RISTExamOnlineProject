@@ -85,14 +85,14 @@
 
         $(document).ready(function () {
             $("#strOPNo").on("keyup", function (event) {
-                if (event.keyCode == 13) { 
+                if (event.keyCode === 13) { 
                     $("#btnSearch").click();
                     return false;
                 }
             });
 
             $("#btnSearch").on("click", function (event) {
-                GetuserDetail();
+                window.GetuserDetail();
             });
         });
 
@@ -105,7 +105,7 @@
                 success: function (data) {
                      
                     $('#DestinationLayoutDiv').html(data);
-                    Getinitial();
+                    window.Getinitial();
                 }
             });
         }

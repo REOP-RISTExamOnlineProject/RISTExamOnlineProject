@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -29,10 +30,16 @@ namespace RISTExamOnlineProject.Controllers
             _sptoDbContext = context;
             _configuration = configuration;
             this.httpContextAccessor = httpContextAccessor;
+
         }
 
         #region UserDetail
-
+        [HttpGet]
+        public string GetIP()
+        {
+            var remoteIpAddress = HttpContext.Connection.RemoteIpAddress;
+            return remoteIpAddress.ToString();
+        }
         public IActionResult ManagementUser(string opno)
         {
             ViewBag.opno = opno;
@@ -311,16 +318,19 @@ namespace RISTExamOnlineProject.Controllers
 
             //string strIPAddress = httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
             //var data_ = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == opno);
-            String hostName = string.Empty;
-            hostName = Dns.GetHostName();
-            IPHostEntry myIP = Dns.GetHostEntry(hostName);
-            IPAddress[] address = myIP.AddressList;
+
+          
+
+            // String hostName = string.Empty;
+            //hostName = Dns.GetHostName();
+            //IPHostEntry myIP = Dns.GetHostEntry(hostName);
+            //IPAddress[] address = myIP.AddressList;
              
 
             var dataOperator = new vewOperatorAlls();
              
             mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
-            string[] Result = ObjRun.GetUpdUserdetail(dataDetail, dataLicenses, OpNo, address[2].ToString());
+            string[] Result = ObjRun.GetUpdUserdetail(dataDetail, dataLicenses, OpNo, GetIP());
 
             _ResultLabel = Convert.ToBoolean(Result[0]);
             _Result = Result[1];
@@ -508,14 +518,19 @@ namespace RISTExamOnlineProject.Controllers
 
 
 
-            CatagoryDiv = (from vewTSectionMaster in _sptoDbContext.vewT_Section_Master select vewTSectionMaster).ToList();
+            CatagoryDiv =  _sptoDbContext.vewDivisionMaster.OrderBy(o=>o.Division).Where(x=>x.Division != "").ToList();
            
+            CatagoryDiv.Insert(0,new vewDivisionMaster{SectionCodeID = "0", Division = "Select"});
+
+
+            ViewBag.listofCatagoryDiv = CatagoryDiv;
+
 
             //Get Section to Dropdown
-            var querySection = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == id)
-                .Select(c => new { c.OperatorID, c.Section });
+            //var querySection = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == id)
+            //    .Select(c => new { c.OperatorID, c.Section });
 
-            ViewBag.CategorySection = new SelectList(querySection.AsEnumerable(), "OperatorID", "Section");
+            //ViewBag.CategorySection = new SelectList(querySection.AsEnumerable(), "OperatorID", "Section");
             //var suppliers = await _context.Suppliers.FindAsync(id);
             //if (suppliers == null)
             //{
