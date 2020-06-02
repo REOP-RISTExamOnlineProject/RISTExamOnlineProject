@@ -1,113 +1,161 @@
-﻿ 
-<div class="col-sm-12  ">
+﻿<style>
+    .form-control {
+        border: 1px solid #C5EECA;
+        background-color: #F4FFF5;
+    }
+
+        .form-control:hover {
+            border: 1px solid #71F77E;
+            background-color: #F4FFF5;
+        }
+
+    .form-check-input {
+        border: 1px solid #C5EECA;
+        background-color: #F4FFF5;
+    }
+        .form-check-input:hover {
+            border: 1px solid #71F77E;
+            background-color: #F4FFF5;
+        }
+</style>
+<div class="container-fluid">
     <div class=" row">
-        <div class="col-7">
-            <h5 class=" mb-0"><strong> User Details</strong></h5>
-            <span class="text-secondary">Employee Management <i class="fa fa-angle-right"></i> User Details</span>
+        <div class="col-lg">
+            <h5 class=" mb-0"><strong> User Detail</strong></h5>
+            <span class="text-secondary">Employee Management <i class="fa fa-angle-right"></i> User Detail</span>
         </div>
-
     </div>
-    <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
-        <form class="container">
-            <div class="form-group form-row mb-4">
-                <div class="col-sm">
-                    <label for="NameEng" class="mb-0">Name - Surname</label>
-                    @Html.TextBox("NameEn", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Name English..", id = "NameEn" })
-                </div>
-                <div class="col-sm">
-                    <label for="NameTh" class="mb-0">ชื่อ - นามสกุล</label>
-                    @Html.TextBox("NameTh", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Name Thai..", id = "NameTh" })
-                </div>
-            </div>
-           @* <hr />*@
-            @*<h5 class="font-weight-bold">Position</h5>*@
-            <div class="form-group row">
-                <div class="col-sm">
-                    <label for="txtEmail" class="mb-0">Job Title</label>
-                    @Html.TextBox("txtjobtitle", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Email..", id = "txtjobtitle" })
-                </div>
-                <div class="col-sm">
-                    <label for="txtPosition" class="mb-0">Position</label>
-                    @Html.TextBox("txtPosition", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Position..", id = "txtPosition" })
-                </div>
-
-                <div class="col-sm">
-                    <label for="Section" class="mb-0">Shift Group</label>
-                    @Html.DropDownList("ddlShift", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlShift", @class = "form-control form-control-sm shadow-sm", width = "300px" })
-                </div>
-
-            </div>
-
-            <div class="form-group row mb-4">
-                <div class="col-sm-4">
-                    <label for="Division" class="mb-0">Division</label>
-                    @Html.DropDownList("ddlDivision", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlDivision", @class = "form-control form-control-sm shadow-sm", @width = "300px" })
-                </div>
-                @*</div>
-            <div class="form-group row">*@
-                <div class="col-sm-4">
-                    <label for="Department" class="mb-0">Department</label>
-                    @Html.DropDownList("ddlDepartment", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlDepartment", @class = "form-control form-control-sm shadow-sm", @width = "300px" })
-                </div>
-                @*</div>
-            <div class="form-group row">*@
-                <div class="col-sm-4">
-                    <label for="Section" class="mb-0">Section</label>
-                    @Html.DropDownList("ddlSection", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlSection", @class = "form-control form-control-sm shadow-sm", width = "300px" })
-                </div>
-            </div>
-
-            
-            <div class="form-group row">
-                <div class="col-sm-4">
-                    <label for="txtEmail" class="mb-0">Primary email</label>
-                    @Html.TextBox("txtEmail", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Email..", id = "txtEmail" })
-                </div>
-                <div class="col-sm-4">
-                    <label for="txtEmail" class="mb-0">Secondary email</label>
-                    @Html.TextBox("txtEmail2", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Email..", id = "txtEmail2" })
-                </div>
-                <div class="col-sm-2">
-                    <label for="Section" class="mb-0">Authority</label>
-                    @Html.DropDownList("ddlAuthority", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlAuthority", @class = "form-control form-control-sm shadow-sm", width = "300px" })
-                </div>
-                <div class="col-sm-2">
-                    <label for="Section" class="mb-0">Active</label>
-                    @Html.DropDownList("ddlActive", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlActive", @class = "form-control form-control-sm shadow-sm", width = "300px" })
-                </div>
-            </div>
-            <div class="form-group row">
-
-                <div class="col-sm">
-                    <label for="Rfid" class="mb-0">RFID</label>
-                    @Html.TextBox("txtRfid", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Rfid..", id = "txtRfid" })
-                </div>
-                <div class="col-sm">
-                    <label for="Rfid" class="mb-0">Password</label>
-                    @Html.TextBox("txtPassword", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Password..", id = "txtPassword", @type = "password" })
-                </div>
-            </div>
-            @if (ViewBag.Event != "_partsUserInfo")
-            {
-                <div class="form-group row ">
-                    <div class="  col-auto center">
-                        <button type="button" class="btn btn-warning" id="btnUpd"><i class="fas fa-user-edit"></i> Update</button>
-                        <button type="button" class="btn btn-secondary" id="btnClr"><i class="fas fa-sync-alt"></i> Clear</button>
+    <div class="row">
+        <div class="mt-3 p-3 bg-white border shadow-sm col-lg">
+            <form class="container">
+                <div class="form-group form-row  ">
+                    <div class="col-sm">
+                        <label for="NameEng" class="mb-0">Name - Surname</label>
+                        @Html.TextBox("NameEn", null, new { @class = "form-control form-control-sm shadow-sm ", placeholder = "Name English..", id = "NameEn" })
+                    </div>
+                    <div class="col-sm">
+                        <label for="NameTh" class="mb-0">ชื่อ - นามสกุล</label>
+                        @Html.TextBox("NameTh", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Name Thai..", id = "NameTh" })
                     </div>
                 </div>
-            }
+                <div class="form-group row">
+                    <div class="col-sm">
+                        <label for="txtEmail" class="mb-0">Job Title</label>
+                        @Html.TextBox("txtjobtitle", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Email..", id = "txtjobtitle" })
+                    </div>
+                    <div class="col-sm">
+                        <label for="txtPosition" class="mb-0">Position</label>
+                        @Html.TextBox("txtPosition", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Position..", id = "txtPosition" })
+                    </div>
 
-        </form>
-    </div>  
+                    <div class="col-sm">
+                        <label for="Section" class="mb-0">Shift Group</label>
+                        @Html.DropDownList("ddlShift", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlShift", @class = "form-control form-control-sm shadow-sm", width = "300px" })
+                    </div>
+                </div>
+                <div class="form-group row mb-4">
+                    <div class="col-sm-4">
+                        <label for="Division" class="mb-0">Division</label>
+                        @Html.DropDownList("ddlDivision", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlDivision", @class = "form-control form-control-sm shadow-sm", @width = "300px" })
+                    </div>
+                    @*</div>
+                        <div class="form-group row">*@
+                    <div class="col-sm-4">
+                        <label for="Department" class="mb-0">Department</label>
+                        @Html.DropDownList("ddlDepartment", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlDepartment", @class = "form-control form-control-sm shadow-sm", @width = "300px" })
+                    </div>
+                    @*</div>
+                        <div class="form-group row">*@
+                    <div class="col-sm-4">
+                        <label for="Section" class="mb-0">Section</label>
+                        @Html.DropDownList("ddlSection", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlSection", @class = "form-control form-control-sm shadow-sm", width = "300px" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-4">
+                        <label for="txtEmail" class="mb-0">Primary email</label>
+                        @Html.TextBox("txtEmail", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Email..", id = "txtEmail" })
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="txtEmail" class="mb-0">Secondary email</label>
+                        @Html.TextBox("txtEmail2", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Email..", id = "txtEmail2" })
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="Section" class="mb-0">Authority</label>
+                        @Html.DropDownList("ddlAuthority", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlAuthority", @class = "form-control form-control-sm shadow-sm", width = "300px" })
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="Section" class="mb-0">Active</label>
+                        @Html.DropDownList("ddlActive", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlActive", @class = "form-control form-control-sm shadow-sm", width = "300px" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm">
+                        <label for="Rfid" class="mb-0">RFID</label>
+                        @Html.TextBox("txtRfid", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Rfid..", id = "txtRfid" })
+                    </div>
+                    <div class="col-sm">
+                        <label for="Rfid" class="mb-0">Password</label>
+                        @Html.TextBox("txtPassword", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Password..", id = "txtPassword", @type = "password" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm">
+                        <label for="Rfid" class="mb-0">License user</label>
+                        <div class=" ml-3 w-100">
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" name="cbLicense" value="OP">OP
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" name="cbLicense" value="INS">INS
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" name="cbLicense" value="ST">ST
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" name="cbLicense" value="MK">MK
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" name="cbLicense" value="ETG">ETG
+                                </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" name="cbLicense" value="MGR">MGR
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (ViewBag.Event != "_partsUserInfo")
+                {
+                    <div class="form-group row ">
+                        <div class="  col-auto center">
+                            <button type="button" class="btn btn-warning" id="btnUpd"><i class="fas fa-user-edit"></i> Update</button>
+                            <button type="button" class="btn btn-secondary" id="btnClr"><i class="fas fa-sync-alt"></i> Clear</button>
+                        </div>
+                    </div>
+                }
+            </form>
+        </div>
+    </div>
 </div>
-
 <script>
 
     function Getinitial() {
         //alert("user detail");
         GetDivision();
-        GetDepartment();
-        GetSectionCode();
+        GetDepartment("");
+        GetSectionCode("","");
         GetGroupName();
         GetAuthority();
         GetActive();
@@ -129,21 +177,31 @@
 
     $("#btnUpd").on("click", function () {
 
-        //alert("Update");
-        UpdateUserDetail();
+        Swal.fire({
+            title: 'Are you sure to update?',
+            //text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Do it!'
+        }).then(function (result) {
 
-    })
+            if (result.value) { 
+                UpdateUserDetail();
+            }
+        });
 
-
+    });
     $("#ddlDepartment").on("change", function () {
         $("#ddlSection option").remove();
-        GetSectionCode();
+        GetSectionCode($("#ddlDivision").val(), $("#ddlDepartment").val());
     });
     $("#ddlDivision").on("change", function () {
         $("#ddlDepartment option").remove();
-        GetDepartment();
+        GetDepartment($("#ddlDivision").val());
         $("#ddlSection option").remove();
-        GetSectionCode();
+        GetSectionCode($("#ddlDivision").val(), $("#ddlDepartment").val());
     });
 
 
@@ -157,14 +215,11 @@
             success: function (Data) {
 
                 if (Data.strboolbel == true && Data.strResult == "OK") {
-                   
+
                     var _Data = Data.data;
                     $("#NameEn").val(_Data.nameEng);
                     $("#NameTh").val(_Data.nameThai);
                     $("#txtPosition").val(_Data.position);
-                    $("#ddlDivision").val(_Data.division);
-                    $("#ddlDepartment").val(_Data.department);
-                    $("#ddlSection").val(_Data.sectionCode);
                     $("#ddlShift").val(_Data.operatorGroup);
                     $("#txtEmail").val(_Data.email1);
                     $("#txtEmail2").val(_Data.email2);
@@ -175,13 +230,40 @@
                     $("#txtjobtitle").val(_Data.jobTitle);
                     $("#ddlAuthority").val(_Data.authority);
                     $("#ddlActive").val(_Data.active.toString());
+                   
+                    
+                    var Div = _Data.sectionCode.substring(0, 1);
+                    $("#ddlDivision").val(Div);
+                    var Dep = _Data.sectionCode.substring(0, 2);
+                    $("#ddlDepartment option").remove();
+                    GetDepartment(Div, _Data.sectionCode.Dep);
+
+
+                    $("#ddlSection option").remove();
+                    GetSectionCode(Div, Dep, _Data.sectionCode);
+
+
+
+
+
+
+
+
+                    $("input:checkbox[name=cbLicense]").prop("checked", false);
+                    $.each(Data.dataLicense, function (i, dataLicenses) {
+                        var strLicenses = $.trim(dataLicenses.license)
+
+                        $("input[value=" + strLicenses + "]").prop("checked", true);
+                    });
+
+
                 } else {
                     Swal.fire({
                         icon: 'warning',
                         title: Data.strResult,
                         text: Data.dataLabel,
                         type: 'error',
-                        
+
                     }).then(function () {
                         return false;
                     });
@@ -196,11 +278,10 @@
 
     }
 
-
-
-
+     
     function UpdateUserDetail() {
         var arryItem = [];
+        var yourArray = [];
         arryItem = [{
             OperatorID: $("#strOPNo").val(),
             Password: $("#txtPassword").val(),
@@ -216,10 +297,14 @@
             Authority: $("#ddlAuthority").val(),
             Active: $("#ddlActive").val(),
         }];
+         
+        $("input:checkbox[name=cbLicense]:checked").each(function () {
+            yourArray.push({ OperatorID: $("#strOPNo").val(), License: $(this).val() });
+        }); 
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("GetUpdateUserdetail")',
-            data: { dataDetail: arryItem[0], OpNo: ' @User.Identity.Name' },
+            url: '@Url.Action("GetUpdateUserdetail","Management")',
+            data: { dataDetail: arryItem[0], dataLicenses: yourArray, OpNo: '@User.Identity.Name' },
             dataType: 'json',
             success: function (Data)
             {
@@ -230,7 +315,7 @@
                         title: 'Success!!',
                         text: 'Update Success',
                         type: 'success'
-                         
+
                     }).then(function () {
                         return false;
                     });
@@ -241,16 +326,23 @@
                         title: Data.strResult+" !",
                         text: Data.dataLabel,
                         type: 'error',
-                        
+
                     }).then(function () {
                         return false;
                     });
                 }
             },
             error: function (ex) {
-                    alert('Failed to retrieve states.' + ex);
+                alert('Failed to retrieve states.' + ex.statusText); 
+                Swal.fire({
+                    icon: 'error',
+                    title: ex.text + " !",
+                    text: ex.statusText + ': @Url.Action("GetUpdateUserdetail","Management")',
+                    type: 'error',
 
-
+                }).then(function () {
+                    return false;
+                });
             }
             });
 

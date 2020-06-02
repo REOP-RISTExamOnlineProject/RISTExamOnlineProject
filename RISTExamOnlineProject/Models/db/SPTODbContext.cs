@@ -22,5 +22,6 @@ namespace RISTExamOnlineProject.Models.db
         public virtual DbSet<sprOperatorShowListInCharge> sprOperatorShowListInChang { get; set; }
 
         public virtual DbSet<OperatorReqChange> OperatorReqChange { get; set; }
+        public virtual DbSet<vewDivisionMaster> vewT_Section_Master { get; set; }
     }
 }

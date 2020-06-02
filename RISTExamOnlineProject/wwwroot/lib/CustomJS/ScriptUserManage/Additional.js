@@ -57,8 +57,7 @@ function Getdata(OPID,MakerID) {
                         order: [1, "asc"],
 
                 });
-
-    debugger
+     
     var x = document.getElementById("display_grid");
     x.style.display = "block";
     var a = document.getElementById("Form_Add");
@@ -74,8 +73,7 @@ function Getdata(OPID,MakerID) {
 
 
 function CheckData() {
-
-debugger
+     
    // var arrdata = TableTarget.$('input, select').serializeArray();
 
     var TableTarget = $('#MyTable').DataTable();
@@ -134,9 +132,7 @@ function AddData_Data(OPID, MakerID, SecsionCode) {
 
 
 function Delete_Data() {
-
-    debugger
-
+     
  
 
 
