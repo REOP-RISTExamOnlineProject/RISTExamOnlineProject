@@ -485,13 +485,39 @@ namespace RISTExamOnlineProject.Controllers
             var queryuser = _sptoDbContext.sprOperatorShowListInChang.FromSql($"sprOperatorShowListInChang {opno}").ToList();
             return View(queryuser);
         }
-        public async Task<IActionResult> EditUserInCharge(int? id)
+        public async Task<IActionResult> EditUserInCharge(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
+            var Getuser = await _sptoDbContext.vewOperatorAll.FirstOrDefaultAsync(x => x.OperatorID == id);
 
+            //if (Getuser == null)
+            //{
+            //    return NotFound();
+            //}
+
+            List<string> userdetail =  new List<string>();
+            userdetail.Add(Getuser.NameEng);
+            userdetail.Add(Getuser.Section);
+            userdetail.Add(Getuser.GroupName);
+            TempData["Userdetail"] = userdetail;
+
+
+
+            List<vewDivisionMaster> CatagoryDiv = new List<vewDivisionMaster>();
+
+
+
+            CatagoryDiv = (from vewTSectionMaster in _sptoDbContext.vewT_Section_Master select vewTSectionMaster).ToList();
+           
+
+            //Get Section to Dropdown
+            var querySection = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == id)
+                .Select(c => new { c.OperatorID, c.Section });
+
+            ViewBag.CategorySection = new SelectList(querySection.AsEnumerable(), "OperatorID", "Section");
             //var suppliers = await _context.Suppliers.FindAsync(id);
             //if (suppliers == null)
             //{
