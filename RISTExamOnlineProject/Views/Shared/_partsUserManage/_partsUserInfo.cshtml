@@ -72,32 +72,32 @@
                     <div class=" ml-3 w-100">
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" value="" checked disabled>OP
+                                <input type="checkbox" class="form-check-input" value="OP" disabled>OP
                             </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" value="" checked disabled>INS
+                                <input type="checkbox" class="form-check-input" value="INS" disabled>INS
                             </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" value="" checked disabled>ST
+                                <input type="checkbox" class="form-check-input" value="ST" disabled>ST
                             </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" value="" disabled>MK
+                                <input type="checkbox" class="form-check-input" value="MK" disabled>MK
                             </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" value="" disabled>ETG
+                                <input type="checkbox" class="form-check-input" value="ETG" disabled>ETG
                             </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" value="" disabled>MGR
+                                <input type="checkbox" class="form-check-input" value="MGR" disabled>MGR
                             </label>
                         </div>
                     </div>
@@ -193,7 +193,10 @@
                     $("#txtjobtitle").val(_Data.jobTitle);
                     $("#txtAuthority").val((_Data.authority == 9 ? "Admin" : "Employee"));
                     $("#txtActive").val((_Data.active.toString() == "true" ? "Active job" : "Resign"));
-
+                    $.each(Data.dataLicense, function (i, dataLicenses) {
+                        var strLicenses = $.trim(dataLicenses.license)
+                        $("input[value=" + strLicenses + "]").attr("checked", "checked");
+                    });
                     SetDataToTable();
                     $("#divChart").css("display","block")
                     GetChart();
@@ -218,10 +221,10 @@
     function SettbSecion() { 
         
         tbSection = $("#tbSections").DataTable({
-            paging: false,
+            paging: true,
             ordering: false,
-            processing: true,
-            
+            processing: true, 
+         
             dom: '<"top"l>rt<"bottom"ip><"clear">',
             columns: [
                 { data: "sectionCode" },

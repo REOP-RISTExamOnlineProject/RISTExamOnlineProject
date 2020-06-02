@@ -104,32 +104,32 @@
                     <div class=" ml-3 w-100">
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" value="OP">OP
+                                <input type="checkbox" class="form-check-input" name="cbLicense" value="OP">OP
                             </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" value="INS">INS
+                                <input type="checkbox" class="form-check-input" name="cbLicense" value="INS">INS
                             </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" value="ST">ST
+                                <input type="checkbox" class="form-check-input" name="cbLicense" value="ST">ST
                             </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" value="MK">MK
+                                <input type="checkbox" class="form-check-input" name="cbLicense" value="MK">MK
                             </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" value="ETG">ETG
+                                <input type="checkbox" class="form-check-input" name="cbLicense" value="ETG">ETG
                             </label>
                         </div>
                         <div class="form-check-inline">
                             <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" value="MGR">MGR
+                                <input type="checkbox" class="form-check-input" name="cbLicense"  value="MGR">MGR
                             </label>
                         </div>
                     </div>
@@ -174,14 +174,33 @@
         }, 1000);
     };
 
-    $("#btnUpd").on("click", function () {
+    $("#btnUpd").on("click", function () { 
 
-        //alert("Update");
-        UpdateUserDetail();
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then(function (result) {
+            
+            if (result.value) {
+                var yourArray = [];
 
-    })
+                debugger
+                $("input:checkbox[name=cbLicense]:checked").each(function () {
+                    yourArray.push({ OperatorID: $("#strOPNo").val(), License: $(this).val()});
+                });
 
+                debugger
 
+                UpdateUserDetail();
+            }
+        });
+
+    });
     $("#ddlDepartment").on("change", function () {
         $("#ddlSection option").remove();
         GetSectionCode();
@@ -222,6 +241,13 @@
                     $("#txtjobtitle").val(_Data.jobTitle);
                     $("#ddlAuthority").val(_Data.authority);
                     $("#ddlActive").val(_Data.active.toString());
+                     
+                    $.each(Data.dataLicense, function (i, dataLicenses) { 
+                        var strLicenses = $.trim(dataLicenses.license) 
+                        $("input[value=" + strLicenses +"]").attr("checked", "checked");
+                    });
+
+
                 } else {
                     Swal.fire({
                         icon: 'warning',

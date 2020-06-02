@@ -91,21 +91,21 @@ namespace RISTExamOnlineProject.Controllers
             var _Result = "OK";
             var _DataResult = "";
             var _ResultLabel = true;
-            ViewBag.opno = opno;
-
-         
-
-            var data_ = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == opno);
-
-            var dataOperator = new vewOperatorAlls();
-
+            vewOperatorAlls dataOperator = new vewOperatorAlls();
+            List<vewOperatorLicense> dataLicenses = new List<vewOperatorLicense>(); 
+             
+            var data_ = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == opno); 
+            
             dataOperator = data_;
+
+            var dataLicense = _sptoDbContext.vewOperatorLicense.Where(x=>x.OperatorID == opno).ToList();
+            dataLicenses = dataLicense.ToList();
 
             _Result = dataOperator != null ? "OK" : "error";
             _DataResult = _Result != "OK" ? "Data not found" : "";
 
             var jsonResult = Json(new
-            { strResult = _Result, dataLabel = _DataResult, strboolbel = _ResultLabel, data = data_ });
+            { strResult = _Result, dataLabel = _DataResult, strboolbel = _ResultLabel, data = dataOperator, dataLicense = dataLicenses });
 
             return jsonResult;
         }
@@ -350,7 +350,7 @@ namespace RISTExamOnlineProject.Controllers
             var sortColumnDir = Request.Form["order[0][dir]"].FirstOrDefault();
             var searchValue = Request.Form["search[value]"].FirstOrDefault();
 
-            var pageSize = length != null ? Convert.ToInt32(length) : 0;
+            var pageSize = length != null ? Convert.ToInt32(length) : 10;
             var skip = start != null ? Convert.ToInt32(start) : 0;
             var recordsTotal = 0;
 
@@ -374,9 +374,7 @@ namespace RISTExamOnlineProject.Controllers
             //total number of rows count     
             recordsTotal = dataShow.Count();
             //Paging     
-            // var data = dataShow.Skip(skip).Take(pageSize).ToList();
-            ISession sese;
-            var data = dataShow.ToList(); 
+            var data = dataShow.Skip(skip).Take(pageSize).ToList();
             //Returning Json Data    
             return Json(new { draw, recordsFiltered = recordsTotal, recordsTotal, data });
         }
