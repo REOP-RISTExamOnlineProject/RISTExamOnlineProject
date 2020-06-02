@@ -230,15 +230,17 @@
                     $("#txtjobtitle").val(_Data.jobTitle);
                     $("#ddlAuthority").val(_Data.authority);
                     $("#ddlActive").val(_Data.active.toString());
-                    $("#ddlDivision").val(_Data.division);
+                   
                     
-
+                    var Div = _Data.sectionCode.substring(0, 1);
+                    $("#ddlDivision").val(Div);
+                    var Dep = _Data.sectionCode.substring(0, 2);
                     $("#ddlDepartment option").remove();
-                    GetDepartment(_Data.division, _Data.department);
+                    GetDepartment(Div, _Data.sectionCode.Dep);
 
 
                     $("#ddlSection option").remove();
-                    GetSectionCode(_Data.division, _Data.department, _Data.sectionCode);
+                    GetSectionCode(Div, Dep, _Data.sectionCode);
 
 
 
