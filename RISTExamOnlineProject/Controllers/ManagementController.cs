@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using RISTExamOnlineProject.Models.db;
 using RISTExamOnlineProject.Models.TSQL;
 
@@ -22,9 +21,9 @@ namespace RISTExamOnlineProject.Controllers
         private readonly IConfiguration _configuration;
         private readonly SPTODbContext _sptoDbContext;
         private readonly IHttpContextAccessor httpContextAccessor;
-        private ISession _session => httpContextAccessor.HttpContext.Session;
+         
 
-        public ManagementController(SPTODbContext context, IConfiguration configuration,IHttpContextAccessor httpContextAccessor,ISession session)
+        public ManagementController(SPTODbContext context, IConfiguration configuration,IHttpContextAccessor httpContextAccessor )
         {
             
             _sptoDbContext = context;
@@ -477,11 +476,7 @@ namespace RISTExamOnlineProject.Controllers
 
         }
 
-        public static void SetObjectAsJson(this ISession session, string key, object value)
-        {
-            session.SetString(key, JsonConvert.SerializeObject(value));
-        }
-
+       
 
         public IActionResult UserInCharge(string opno)
         {
