@@ -1,12 +1,10 @@
 ﻿
 var TableTarget;
 
-function Getdata(OPID) {
-    debugger
+function Getdata(OPID) { 
 
    // var OPID = $("#strOPNo").val();   
-
-    debugger
+     
     if (TableTarget != null) {
         TableTarget.destroy();
     }
@@ -57,8 +55,7 @@ function Getdata(OPID) {
                         order: [1, "asc"],
 
                 });
-
-    debugger
+     
     var x = document.getElementById("display_grid");
     x.style.display = "block";
     var a = document.getElementById("Form_Add");
@@ -74,8 +71,7 @@ function Getdata(OPID) {
 
 
 function CheckData() {
-
-debugger
+     
    // var arrdata = TableTarget.$('input, select').serializeArray();
 
     var TableTarget = $('#MyTable').DataTable();
@@ -119,9 +115,7 @@ debugger
 
 
 function Delete_Data() {
-
-    debugger
-
+     
  
 
 

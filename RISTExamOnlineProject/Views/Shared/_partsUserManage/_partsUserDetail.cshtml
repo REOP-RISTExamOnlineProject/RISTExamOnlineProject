@@ -237,7 +237,7 @@
                     $("#ddlAuthority").val(_Data.authority);
                     $("#ddlActive").val(_Data.active.toString());
                     $("#ddlDivision").val(_Data.division);
-                    debugger
+                    
 
                     $("#ddlDepartment option").remove();
                     GetDepartment(_Data.division, _Data.department);
@@ -308,7 +308,7 @@
         $("input:checkbox[name=cbLicense]:checked").each(function () {
             yourArray.push({ OperatorID: $("#strOPNo").val(), License: $(this).val() });
         });
-
+        alert(yourArray[0].License);
         $.ajax({
             type: 'POST',
             url: '../Management/GetUpdateUserdetail',
@@ -341,7 +341,7 @@
                 }
             },
             error: function (ex) {
-                    alert('Failed to retrieve states.' + ex);
+                    alert('Failed to retrieve states.' + ex.statusText);
 
 
             }
