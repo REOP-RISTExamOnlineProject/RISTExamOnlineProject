@@ -1,26 +1,42 @@
-﻿ 
+﻿<style>
+    .form-control {
+        border: 1px solid #C5EECA;
+        background-color: #F4FFF5;
+    }
+
+        .form-control:hover {
+            border: 1px solid #71F77E;
+            background-color: #F4FFF5;
+        }
+
+    .form-check-input {
+        border: 1px solid #C5EECA;
+        background-color: #F4FFF5;
+    }
+        .form-check-input:hover {
+            border: 1px solid #71F77E;
+            background-color: #F4FFF5;
+        }
+</style>
 <div class="col-sm-12  ">
     <div class=" row">
         <div class="col-7">
             <h5 class=" mb-0"><strong> User Details</strong></h5>
             <span class="text-secondary">Employee Management <i class="fa fa-angle-right"></i> User Details</span>
         </div>
-
     </div>
-    <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
+    <div class="mt-1 mb-3 p-3 button-container bg-white  border shadow-sm">
         <form class="container">
-            <div class="form-group form-row mb-4">
+            <div class="form-group form-row  ">
                 <div class="col-sm">
                     <label for="NameEng" class="mb-0">Name - Surname</label>
-                    @Html.TextBox("NameEn", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Name English..", id = "NameEn" })
+                    @Html.TextBox("NameEn", null, new { @class = "form-control form-control-sm shadow-sm ", placeholder = "Name English..", id = "NameEn" })
                 </div>
                 <div class="col-sm">
                     <label for="NameTh" class="mb-0">ชื่อ - นามสกุล</label>
                     @Html.TextBox("NameTh", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Name Thai..", id = "NameTh" })
                 </div>
             </div>
-           @* <hr />*@
-            @*<h5 class="font-weight-bold">Position</h5>*@
             <div class="form-group row">
                 <div class="col-sm">
                     <label for="txtEmail" class="mb-0">Job Title</label>
@@ -35,9 +51,7 @@
                     <label for="Section" class="mb-0">Shift Group</label>
                     @Html.DropDownList("ddlShift", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlShift", @class = "form-control form-control-sm shadow-sm", width = "300px" })
                 </div>
-
             </div>
-
             <div class="form-group row mb-4">
                 <div class="col-sm-4">
                     <label for="Division" class="mb-0">Division</label>
@@ -56,8 +70,6 @@
                     @Html.DropDownList("ddlSection", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlSection", @class = "form-control form-control-sm shadow-sm", width = "300px" })
                 </div>
             </div>
-
-            
             <div class="form-group row">
                 <div class="col-sm-4">
                     <label for="txtEmail" class="mb-0">Primary email</label>
@@ -77,7 +89,6 @@
                 </div>
             </div>
             <div class="form-group row">
-
                 <div class="col-sm">
                     <label for="Rfid" class="mb-0">RFID</label>
                     @Html.TextBox("txtRfid", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Rfid..", id = "txtRfid" })
@@ -85,6 +96,43 @@
                 <div class="col-sm">
                     <label for="Rfid" class="mb-0">Password</label>
                     @Html.TextBox("txtPassword", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Password..", id = "txtPassword", @type = "password" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm">
+                    <label for="Rfid" class="mb-0">License user</label>
+                    <div class=" ml-3 w-100">
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="OP">OP
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="INS">INS
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="ST">ST
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="MK">MK
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="ETG">ETG
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="MGR">MGR
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
             @if (ViewBag.Event != "_partsUserInfo")
@@ -96,9 +144,8 @@
                     </div>
                 </div>
             }
-
         </form>
-    </div>  
+    </div>
 </div>
 
 <script>
@@ -157,7 +204,7 @@
             success: function (Data) {
 
                 if (Data.strboolbel == true && Data.strResult == "OK") {
-                   
+
                     var _Data = Data.data;
                     $("#NameEn").val(_Data.nameEng);
                     $("#NameTh").val(_Data.nameThai);
@@ -181,7 +228,7 @@
                         title: Data.strResult,
                         text: Data.dataLabel,
                         type: 'error',
-                        
+
                     }).then(function () {
                         return false;
                     });
@@ -230,7 +277,7 @@
                         title: 'Success!!',
                         text: 'Update Success',
                         type: 'success'
-                         
+
                     }).then(function () {
                         return false;
                     });
@@ -241,7 +288,7 @@
                         title: Data.strResult+" !",
                         text: Data.dataLabel,
                         type: 'error',
-                        
+
                     }).then(function () {
                         return false;
                     });
