@@ -315,12 +315,7 @@ namespace RISTExamOnlineProject.Controllers
             { strResult = _Result, dataLabel = _DataResult, strboolbel = _ResultLabel, data = "" }); 
             return jsonResult; 
         }
-        [HttpGet]
-        public string GetIP()
-        {
-            var remoteIpAddress = HttpContext.Connection.RemoteIpAddress;
-            return remoteIpAddress.ToString();
-        }
+        
 
         #endregion
 
