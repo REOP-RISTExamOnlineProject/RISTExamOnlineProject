@@ -26,7 +26,7 @@ function Getdata(OPID) {
                 type: "post",
                 url: "/Management/Load_OperatorAdditional_Detail",
                 dataSrc: "data",
-                data: { OPID: OPID, MakerID: MakerID },
+                data: { OPID: OPID},
                 dataType: "json",
 
             }),
