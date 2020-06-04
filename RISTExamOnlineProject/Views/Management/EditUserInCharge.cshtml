@@ -1,4 +1,4 @@
-﻿@*@model RISTExamOnlineProject.Models.db.vewDivisionMaster*@
+﻿@model RISTExamOnlineProject.Models.db.vewDivisionMaster
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "EditUserInCharge";
@@ -20,32 +20,25 @@
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="Division" class="mb-0">Current-Division</label>
-                        @Html.DropDownList("Division", (IEnumerable<SelectListItem>) ViewBag.CategoryDivision, new {@class = "form-control border-success"})
-                    </div>                   
-                    <div class="col-sm-6">
-                        <label for="Division" class="mb-0">New-Division</label>
-
-                        @* @Html.DropDownListFor(m => m.DivisionID, Model.DivisionName, "Please select", new {@class = "form-control"})*@
-                        @*<label asp-for="DivisionName" class="mb-0">Division</label>
-        <select asp-for="DivisionID"
-                class="form-control"
-                asp-items="@(new SelectList(@ViewBag.listofCatagoryDiv, "DivisionID", "DivisionName"))">
-
-        </select>*@
+                        @Html.DropDownList("Division", (IEnumerable<SelectListItem>)ViewBag.CategoryDivision, new { @class = "form-control border-success" })
                     </div>
-                </div>
-                @*<div class="form-group row">
-                    <div class="col-sm-12">
-                        <label for="Section" class="mb-0">Shift</label>
-                        @Html.DropDownList("Section", (IEnumerable<SelectListItem>)ViewBag.CategorySection, new { @class = Model?.Section == null ? "form-control" : "form-control border-success" })
+                    <div class="col-sm-6">
+                        <label asp-for="DivisionName" class="mb-0">Division</label>
+                        <select asp-for="row_num" class="form-control"
+                                asp-items="@(new SelectList(@ViewBag.listofCatagoryDiv, "row_num", "DivisionName"))"></select>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <div class="col-sm-12">
-                        <label for="Section" class="mb-0">License</label>
-                        @Html.DropDownList("Section", (IEnumerable<SelectListItem>)ViewBag.CategorySection, new { @class = Model?.Section == null ? "form-control" : "form-control border-success" })
+                    <div class="col-sm-6">
+                        <label for="Department" class="mb-0">Current-Department</label>
+                        @Html.DropDownList("Department", (IEnumerable<SelectListItem>)ViewBag.CategoryDepartment, new { @class = "form-control border-success" })
                     </div>
-                </div>*@
+                    <div class="col-sm-6">
+                        <label for="DepartmentID" class="mb-0">New-Department</label>
+                        <select class="form-control" id="DepartmentID" name="DepartmentID" asp-for="DepartmentID"
+                                  asp-items="@(new SelectList(string.Empty,"DepartmentID", "Department"))"></select>
+                    </div>
+                </div>
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary" />
                 </div>
@@ -134,6 +127,48 @@
 <div>
     @*<a asp-controller="Management" asp-action="UserInCharge" asp-route-id=op > ProductName</a>*@
     <a href="@Url.Action("UserInCharge", "Management", new {opno = $"{opno}"})" class=""><i class="fa fa-angle-right mr-2"></i><i class="fa fa-font-awesome"></i> Back to List</a>
-   @* <a asp-action="UserInCharge" id="">Back to List</a>*@
+    @* <a asp-action="UserInCharge" id="">Back to List</a>*@
 </div>
+
+
+@section scripts{
+@*<script src="~/lib/jquery/jquery.js"></script>*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var items = "<option value='0'>Select</option>";
+            $('#DepartmentID').html(items);
+            //$('#ProductID').html(items);
+        });
+    </script>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#row_num').change(function () {
+                var url = '@Url.Content("~/")' + "Management/GetDepartmentCategory";
+                var ddlsource = "#row_num";
+                $.getJSON(url, { row_num: $(ddlsource).val() }, function (data) {
+                    var items = '';
+                    $("#DepartmentID").empty();
+                    $.each(data, function (i, subcategory) {
+                        items += "<option value='" + subcategory.value + "'>" + subcategory.text + "</option>";
+                    });
+                    $('#DepartmentID').html(items);
+                });
+            });
+
+            @*$('#SubCategoryID').change(function () {
+                var url = '@Url.Content("~/")' + "Demo/GetProducts";
+                var ddlsource = "#SubCategoryID";
+                $.getJSON(url, { SubCategoryID: $(ddlsource).val() }, function (data) {
+                    var items = '';
+                    $('#ProductID').empty();
+                    $.each(data, function (i, product) {
+                        items += "<option value='" + product.value + "'>" + product.text + "</option>";
+                    });
+                    $('#ProductID').html(items);
+                });
+            });*@
+        });
+    </script>
+}
 

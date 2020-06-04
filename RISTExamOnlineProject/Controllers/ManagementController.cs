@@ -602,71 +602,50 @@ namespace RISTExamOnlineProject.Controllers
                 .Select(c => new { c.OperatorID, c.Division });
             ViewBag.CategoryDivision = new SelectList(queryDivision.AsEnumerable(), "OperatorID", "Division");
 
+            //Get Department to Dropdown
+            var queryDepartment = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == id)
+                .Select(c => new { c.OperatorID, c.Department });
+            ViewBag.CategoryDepartment = new SelectList(queryDepartment.AsEnumerable(), "OperatorID", "Department");
+
+
+            List<vewDivisionMaster> catagorylist = new List<vewDivisionMaster>();
+
+
+            //catagorylist = (from vewDivisionMaster in _sptoDbContext.vewDivisionMaster
+            //    select vewDivisionMaster).ToList();
+            catagorylist = _sptoDbContext.vewDivisionMaster.ToList();
+
+
+
+            //catagorylist.Insert(0, new vewDivisionMaster() { DivisionID = 0, DivisionName = "Select" });
+            ViewBag.listofCatagoryDiv = catagorylist;
+
+
+
+
             return View();
 
-            // List<vewDivisionMaster> CatagoryDivlist = new List<vewDivisionMaster>();
-
-
-            //CatagoryDivlist = _sptoDbContext.vewDivisionMaster.OrderBy(o => o.DivisionName).ToList();
-
-
-
-            // CatagoryDivlist.Insert(0, new vewDivisionMaster() { DivisionID = 0, DivisionName = "Select" });
-            // ViewBag.listofCatagoryDiv = CatagoryDivlist;
-
-
-            //vewDivisionMaster entities = new vewDivisionMaster();
-            //vewDivisionMaster model = new vewDivisionMaster();
-
-            //foreach (var divitem in _sptoDbContext.vewDivisionMaster)
-            //{
-            //    model.DivisionName.Add(new SelectListItem { Text = divitem.DivisionName.ToString(), Value = divitem.DivisionID.ToString() });
-            //}
-
-            //List<string> userdetail =  new List<string>();
-            //userdetail.Add(Getuser.NameEng);
-            //userdetail.Add(Getuser.Section);
-            //userdetail.Add(Getuser.GroupName);
-            //TempData["Userdetail"] = userdetail;
-
-            //IList<Filter_IDs> filterIds = ef.filterline
-            //    .Select(fl => fl.objectType).Distinct()
-            //    .Select(ot => new Filter_IDs
-            //    {
-            //        type = ot,
-            //        objects = ef.filterline
-            //            .Where(fl => fl.objectType == ot)
-            //            .Select(fl => objectType)
-            //            .ToList()
-            //    }).ToList();
-
-            //CatagoryDiv = _sptoDbContext.vewT_Section_Master
-            //    .GroupBy(gb => new { gb.SectionCode, gb.Division }).ToList()
-
-            //    .OrderBy(o => o.Key.Division)
-            //    .Select(o => new { standardkey = o.Key.Division, agekey = o.Key.SectionCode });
-            //.ToList();
-
-            //CatagoryDiv = ef.filterLine.Select(o => new { objectType = o.objectType, object_id = o.object_id })
-            //     .GroupBy(fl => fl.objectType).ToList()
-            //     .Select(fl => new Filter_IDs { type = fl.Key, objects = fl.Select(x => x.object_id).ToList() })
-            //     .ToList();
-
-
-           // CatagoryDiv = (from vewTSectionMaster in _sptoDbContext.vewT_Section_Master select vewTSectionMaster).ToList();
            
 
-            //Get Section to Dropdown
-            //var querySection = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == id)
-            //    .Select(c => new { c.OperatorID, c.Section });
 
-            //ViewBag.CategorySection = new SelectList(querySection.AsEnumerable(), "OperatorID", "Section");
-            //var suppliers = await _context.Suppliers.FindAsync(id);
-            //if (suppliers == null)
-            //{
-            //    return NotFound();
-            //}
+        }
 
+        public JsonResult GetDepartmentCategory(long row_num)
+        {
+            List<vewDepartmentMaster> subCategorylist = new List<vewDepartmentMaster>();
+
+            // ------- Getting Data from Database Using EntityFrameworkCore -------
+            //subCategorylist = (from subcategory in _sptoDbContext.vewDepartmentMaster
+            //    where subcategory.DivisionID == DivisionID
+            //    select subcategory).ToList();
+
+            subCategorylist = _sptoDbContext.vewDepartmentMaster.Where(x => x.row_num == row_num).ToList();
+
+            // ------- Inserting Select Item in List -------
+            //subCategorylist.Insert(0, new SubCategory { SubCategoryID = 0, SubCategoryName = "Select" });
+
+
+            return Json(new SelectList(subCategorylist, "DepartmentID", "Department"));
         }
 
 
@@ -676,59 +655,59 @@ namespace RISTExamOnlineProject.Controllers
 
 
 
-    //    public IActionResult TempDataExample()
-    //    {
-    //        mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
-                 
-
-    //        DataTable dt = new DataTable();
-
-        
+        //    public IActionResult TempDataExample()
+        //    {
+        //        mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
 
 
-    //        dt = ObjRun.GetUserDetail_Additional("000702");
-
-    //        List<string> mobileList = new List<string>();
-    //        string Strdata = "";
-
-    //        if (dt.Rows.Count != 0)
-    //        {
-
-
-    //            for (int i = 0; i > dt.Rows.Count; i++) {
-
-    //                Strdata += "{[ data:";
-    //                if (i != dt.Rows.Count)
-    //                {
-
-    //                    Strdata += "{},";
-
-
-    //                }
-    //                else {
-    //                    Strdata += "{}";
-
-    //                }
-
-    //                Strdata += "]}";
+        //        DataTable dt = new DataTable();
 
 
 
-    //            }
+
+        //        dt = ObjRun.GetUserDetail_Additional("000702");
+
+        //        List<string> mobileList = new List<string>();
+        //        string Strdata = "";
+
+        //        if (dt.Rows.Count != 0)
+        //        {
 
 
-    //            foreach (DataRow row in dt.Rows)
-    //            {
-    //                mobileList.Add("" + row["OperatorID"].ToString() + "," + row["SectionCode"].ToString() + "," +
-    //                    " " + row["Division"].ToString() + ", " + row["Department"].ToString() + "," + row["Section"].ToString() + " ");
+        //            for (int i = 0; i > dt.Rows.Count; i++) {
 
-    //            }
+        //                Strdata += "{[ data:";
+        //                if (i != dt.Rows.Count)
+        //                {
 
-    //        }
+        //                    Strdata += "{},";
 
 
-    //        TempData["MobileList"] = mobileList;
-    //        return View();
-    //    }
+        //                }
+        //                else {
+        //                    Strdata += "{}";
+
+        //                }
+
+        //                Strdata += "]}";
+
+
+
+        //            }
+
+
+        //            foreach (DataRow row in dt.Rows)
+        //            {
+        //                mobileList.Add("" + row["OperatorID"].ToString() + "," + row["SectionCode"].ToString() + "," +
+        //                    " " + row["Division"].ToString() + ", " + row["Department"].ToString() + "," + row["Section"].ToString() + " ");
+
+        //            }
+
+        //        }
+
+
+        //        TempData["MobileList"] = mobileList;
+        //        return View();
+        //    }
     }
 }
