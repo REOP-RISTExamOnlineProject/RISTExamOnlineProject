@@ -24,7 +24,7 @@ function Getdata(OPID) {
             cache: true,
             ajax: ({
                 type: "post",
-                url: "/Management/Load_OperatorAdditional_Detail",
+                url: "../Management/Load_OperatorAdditional_Detail",
                 dataSrc: "data",
                 data: { OPID: OPID},
                 dataType: "json",
@@ -59,7 +59,7 @@ function Getdata(OPID) {
 
     } catch (e) {
         Swal.fire({
-            type: 'error',
+            icon: 'error',           
             title: 'Oops...',
             text: ("table:"+e)
         })
@@ -93,18 +93,20 @@ function MakeDataTemp(OPID_, MakerID_) {
     debugger   
     $.ajax({
         type: 'post',
-        url: "/Management/GetMakeTemp_Additional",
+        url: "../Management/GetMakeTemp_Additional",
         dataSrc: "data",
         data: { OPID: OPID_, MakerID: MakerID_ },
         dataType: 'json',
         success: function (response) {
             if (response.success == true) {
                 debugger
+                alert(response.text)
                 Getdata(OPID_)
             } else {
                 Swal.fire({
                     text: ('Make Temp Data Error'),
-                    type: 'error',
+                    icon: 'error',
+                    title: 'Oops...',
                     //     timer: 1700,
                 }).then(function () {
                     return false;
@@ -114,7 +116,7 @@ function MakeDataTemp(OPID_, MakerID_) {
         },
         error: function (ex) {
             Swal.fire({
-                text: ('MakeDataTemp :' + ex),
+                text: ('MakeDataTemp :' + ex.statusText),
                 type: 'error',
            //     timer: 1700,
             }).then(function () {
@@ -128,11 +130,15 @@ function MakeDataTemp(OPID_, MakerID_) {
 
 }
 
+
+
+
+
 function SaveData(OPID, MakerID) {
 
     $.ajax({
         type: 'POST',
-        url: "/Management/Save_Additional",
+        url: "../Management/Save_Additional",
         dataSrc: "data",
         data: { OPID: OPID, MakerID: MakerID },
         dataType: 'json',
@@ -141,10 +147,10 @@ function SaveData(OPID, MakerID) {
 
                 Swal.fire({
                     position: 'top-mid',
-                    type: 'success',
+                    icon: 'success',
                     title: (response.responseText),
                     showConfirmButton: true,
-                    timer: 1700
+                 //   timer: 1700
                 }).then(function (result) {
                     // if (result.value) {
                     debugger
@@ -192,7 +198,7 @@ function AddData_Data(OPID, MakerID, SectionCode) {
 
     $.ajax({
         type: 'POST',
-        url: "/Management/AddNewSectionCode_Additional",
+        url: "../Management/AddNewSectionCode_Additional",
         dataSrc: "data",
         data: { OPID: OPID, MakerID: MakerID, SectionCode: SectionCode},
         dataType: 'json',
@@ -201,10 +207,10 @@ function AddData_Data(OPID, MakerID, SectionCode) {
 
                 Swal.fire({
                     position: 'top-mid',
-                    type: 'success',
+                    icon: 'success',
                     title: (response.responseText),
                     showConfirmButton: true,
-                    timer: 1700
+                   // timer: 1700
                 }).then(function (result) {
                    // if (result.value) {
                     debugger
@@ -218,7 +224,7 @@ function AddData_Data(OPID, MakerID, SectionCode) {
             } else {
 
                 Swal.fire({
-                    type: 'error',
+                    icon: 'error',
                     title: 'Oops...',
                     text: (response.responseText)
                 }).then(function (result) {
@@ -267,7 +273,7 @@ function Delete_Data(OPID,MakerID) {
         debugger
         $.ajax({
             type: 'POST',
-            url: "/Management/DeleteSectionCode_Additional",
+            url: "../Management/DeleteSectionCode_Additional",
             dataSrc: "data",
             data: { OPID: OPID, MakerID: MakerID, SectionCode: SectionCode},
             dataType: 'json',
@@ -275,7 +281,7 @@ function Delete_Data(OPID,MakerID) {
                 if (response.success == true) {                                                        
                     Swal.fire({
                         position: 'top-mid',
-                        type: 'success',
+                        icon: 'success',
                         title: (response.responseText),
                         showConfirmButton: true,
                         timer: 1700
@@ -307,8 +313,8 @@ function Delete_Data(OPID,MakerID) {
 
                 Swal.fire({                  
                     text: ('Failed to retrieve states.' + ex) ,
-                    type: 'error',
-                    timer: 1700,
+                    icon: 'error',
+                    //timer: 1700,
                 }).then(function () {
                     return false;
                 });
@@ -348,7 +354,7 @@ function GetDepartment_Addition(DIV) {
 
     $.ajax({
         type: 'POST',
-        url: '/Management/GetDepartment_Addition',
+        url: '../Management/GetDepartment_Addition',
         dataType: 'json',
         data: {DIV:DIV},
         success: function (Departments) {
@@ -373,7 +379,7 @@ function GetDivision_Addition() {
     debugger
     $.ajax({
         type: 'POST',
-        url: '/Management/GetDivision_Addition',
+        url: '../Management/GetDivision_Addition',
         dataType: 'json',
         success: function (Divisions) {
             if (Divisions.length != 0) {
@@ -395,7 +401,7 @@ function GetSection_Addition(DIV, DEP) {
 
     $.ajax({
         type: 'POST',
-        url: '/Management/GetSection_Addition',
+        url: '../Management/GetSection_Addition',
         dataType: 'json',
         data: { DIV: DIV ,DEP: DEP},
         success: function (Sections) {

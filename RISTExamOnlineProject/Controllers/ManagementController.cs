@@ -333,8 +333,8 @@ namespace RISTExamOnlineProject.Controllers
 
 
 
-        [HttpPost]
-        public IActionResult GetMakeTemp_Additional(string OPID, string MakerID) {
+      //  [HttpPost]
+        public JsonResult GetMakeTemp_Additional(string OPID, string MakerID) {
             mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
 
             string Message;
@@ -346,7 +346,7 @@ namespace RISTExamOnlineProject.Controllers
 
                 return Json(new { success = true });
             } else {
-                return Json(new { success = false });
+                return Json(new { success = false});
             }
 
             
