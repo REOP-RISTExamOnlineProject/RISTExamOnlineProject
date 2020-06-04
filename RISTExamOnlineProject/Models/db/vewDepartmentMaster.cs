@@ -11,10 +11,13 @@ namespace RISTExamOnlineProject.Models.db
     {
         
         public string DivisionID { get; set; }
-        [Key]
+        
         public string DepartmentID { get; set; }
         public string Department { get; set; }
+       
         public long row_num { get; set; }
+        [Key]
+        public long row_dept_id { get; set; }
 
     }
 }

@@ -9,7 +9,7 @@ namespace RISTExamOnlineProject.Models.db
 {
     public class vewDivisionMaster
     {
-        
+       
         public string DivisionID { get; set; }
         public string DivisionName { get; set; }
         [Key]

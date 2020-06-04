@@ -639,7 +639,35 @@ namespace RISTExamOnlineProject.Controllers
             //    where subcategory.DivisionID == DivisionID
             //    select subcategory).ToList();
 
-            subCategorylist = _sptoDbContext.vewDepartmentMaster.Where(x => x.row_num == row_num).ToList();
+            subCategorylist = _sptoDbContext.vewDepartmentMaster
+                .Where(x => x.row_num == row_num)
+                .GroupBy(g => new
+                {
+                    department = g.Department,
+                    divisionid = g.DivisionID
+                })
+                .Select(s => new vewDepartmentMaster()
+                {
+                    Department = s.Key.department,
+                    DepartmentID = s.Key.divisionid
+                }).ToList();
+               
+
+            //subCategorylist = (from VewDepartmentMaster in _sptoDbContext.vewDepartmentMaster
+            //    where
+            //        VewDepartmentMaster.row_num == row_num
+            //    group VewDepartmentMaster by new
+            //    {
+            //        VewDepartmentMaster.Department,
+            //        VewDepartmentMaster.DivisionID
+            //    }
+            //    into g
+            //    select new
+            //    {
+            //        g.Key.Department,
+            //        g.Key.DivisionID
+            //    });
+               
 
             // ------- Inserting Select Item in List -------
             //subCategorylist.Insert(0, new SubCategory { SubCategoryID = 0, SubCategoryName = "Select" });
