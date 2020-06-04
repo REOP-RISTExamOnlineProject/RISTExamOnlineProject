@@ -70,7 +70,7 @@
     <div class="row justify-content-lg-start">
         <div class="col-1">
 
-            <button type="button" class="btn btn-danger text-white" id="BTN_Delete" onclick="Delete_Data()">
+            <button type="button" class="btn btn-danger text-white" id="BTN_Delete">
                 DELETE
             </button>
 
@@ -92,36 +92,46 @@
         </thead>
 
         @*@if (TempData["MobileList"] != null)
-        {
-            @foreach (var item in (List<string>)TempData["MobileList"])
             {
-                <tr>
-                    @foreach (var data in item.Split(','))
-                    {
+                @foreach (var item in (List<string>)TempData["MobileList"])
+                {
+                    <tr>
+                        @foreach (var data in item.Split(','))
+                        {
+                            <td class="text-center">
+                                @data
+                            </td>
+                        }
                         <td class="text-center">
-                            @data
+                            <button type="button" class="btn btn-danger">
+                                Delete
+                            </button>
+
                         </td>
-                    }
-                    <td class="text-center">
-                        <button type="button" class="btn btn-danger">
-                            Delete
-                        </button>
 
-                    </td>
+                    </tr>
 
-                </tr>
-
-            }
+                }
 
 
-        }*@
+            }*@
 
-       
+
 
     </table>
 
+    <br />
 
+    <div class="row justify-content-lg-center">
+        <div class="col-2">
 
+            <button type="button" class="btn btn-success w-100" id="BTN_Save">
+                SAVE
+            </button>
+
+        </div>
+
+    </div>
 </div>
 
 
@@ -132,10 +142,7 @@
     var MakerID = '@User.Identity.Name';
     var OPID = $("#strOPNo").val();
 
-    if (TempData["MobileList"] != null) {
-
-  debugger
-    }
+ 
 
     function Getinitial() {
 
@@ -144,7 +151,9 @@
      
         if (OPID != '') {
             debugger
-            Getdata(OPID, MakerID);
+
+            MakeDataTemp(OPID, MakerID);
+            Getdata(OPID);
 
             var x = document.getElementById("display_grid");
             x.style.display = "block";
@@ -206,19 +215,119 @@
 
     });
 
+    $('#BTN_Save').click(function (event) {
+
+        var OPID = $("#strOPNo").val();
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Are you sure you want to save Data ?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Do it!'
+
+        }).then(function (result) {
+            if (result.value) {         
+
+                SaveData(OPID, MakerID)
+                   
+            }
+
+        })
+
+
+    });
+
+
+
+
+
+
     $('#BTN_ADD').click(function (event) {
 
 
         var Sectioncode = $('#DDL_Section').val();
+        var OPID = $("#strOPNo").val();
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Are you sure you want to Insert new Section ?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Do it!'
+
+        }).then(function (result) {
+            if (result.value) {
+
+                if (Sectioncode != "" && Sectioncode != "0") {
 
 
-        debugger
-        AddData_Data(OPID, MakerID, Sectioncode);
+                    AddData_Data(OPID, MakerID, Sectioncode);
+
+
+                }
+                else {
+
+                    Swal.fire({
+                        text: ('Please select section '),
+                        type: 'error',
+                        timer: 1700,
+                    }).then(function () {
+                        return false;
+                    });
+
+                }
+
+            }
+
+        })
+
+
+
+
+    
+
 
 
 
 
     });
+
+
+
+    $('#BTN_Delete').click(function (event) {
+        var OPID = $("#strOPNo").val();
+
+        debugger
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Are you sure you want to Delete Section ?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Do it!'
+
+        }).then(function (result) {
+            if (result.value) {
+
+                Delete_Data(OPID, MakerID)
+            }
+
+        })
+
+
+       
+
+
+
+
+    });
+
 
 
     function GetuserDetail() {
@@ -228,7 +337,10 @@
 
 
         if (OPID != "") {
-            Getdata(OPID, MakerID)
+
+            
+            MakeDataTemp(OPID, MakerID);
+            Getdata(OPID)
         } else {
             return false
         }

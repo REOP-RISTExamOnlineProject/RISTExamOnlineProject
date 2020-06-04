@@ -1,7 +1,9 @@
 ﻿
 var TableTarget;
 
-function Getdata(OPID,MakerID) {
+
+
+function Getdata(OPID) {
     debugger
 
    // var OPID = $("#strOPNo").val();   
@@ -72,6 +74,96 @@ function Getdata(OPID,MakerID) {
 
 
 
+
+function MakeDataTemp(OPID, MakerID) {
+
+    debugger
+
+   
+    $.ajax({
+        type: 'post',
+        url: "/Management/GetMakeTemp_Additional",
+        dataSrc: "data",
+        data: { OPID: OPID, MakerID: MakerID },
+        dataType: 'json',
+        success: function (response) {
+            if (response.success == true) {
+                r
+            }
+
+        },
+        error: function (ex) {
+            Swal.fire({
+                text: ('Failed to retrieve states.' + ex),
+                type: 'error',
+                timer: 1700,
+            }).then(function () {
+                return false;
+            });
+        },
+
+
+    });
+
+
+}
+
+function SaveData(OPID, MakerID) {
+
+    $.ajax({
+        type: 'POST',
+        url: "/Management/Save_Additional",
+        dataSrc: "data",
+        data: { OPID: OPID, MakerID: MakerID },
+        dataType: 'json',
+        success: function (response) {
+            if (response.success == true) {
+
+                Swal.fire({
+                    position: 'top-mid',
+                    type: 'success',
+                    title: (response.responseText),
+                    showConfirmButton: true,
+                    timer: 1700
+                }).then(function (result) {
+                    // if (result.value) {
+                    debugger
+                 //   Getdata(OPID)
+                    // }
+                    $("#strOPNo").val('');
+                    var x = document.getElementById("display_grid");
+                    x.style.display = "none";
+
+                    var a = document.getElementById("Form_Add");
+                    a.style.display = "none";
+
+                });
+
+
+            } else {
+
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: (response.responseText)
+                }).then(function (result) {
+                    //   if (result.value) {
+                    Getdata(OPID)
+                    // }
+                });
+
+
+            }
+
+        }
+    });
+
+
+}
+
+
+
+
 function CheckData() {
      
    // var arrdata = TableTarget.$('input, select').serializeArray();
@@ -106,19 +198,48 @@ function CheckData() {
 }
 
 
-function AddData_Data(OPID, MakerID, SecsionCode) {
+function AddData_Data(OPID, MakerID, SectionCode) {
 
-    //var SecsionCode = $('#DDL_Section').val();
-    debugger
+
+    
 
     $.ajax({
         type: 'POST',
-        url: "/Management/Load_OperatorAdditional_Detail",
+        url: "/Management/AddNewSectionCode_Additional",
         dataSrc: "data",
-        data: { OPID: OPID, MakerID: MakerID, SecsionCode: SecsionCode},
+        data: { OPID: OPID, MakerID: MakerID, SectionCode: SectionCode},
         dataType: 'json',
         success: function (response) {
             if (response.success == true) {
+
+                Swal.fire({
+                    position: 'top-mid',
+                    type: 'success',
+                    title: (response.responseText),
+                    showConfirmButton: true,
+                    timer: 1700
+                }).then(function (result) {
+                   // if (result.value) {
+                    debugger
+                        Getdata(OPID)
+                   // }
+        
+
+                });
+
+
+            } else {
+
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: (response.responseText)
+                }).then(function (result) {
+                 //   if (result.value) {
+                        Getdata(OPID)
+                   // }
+                });
+
 
             }
 
@@ -131,7 +252,7 @@ function AddData_Data(OPID, MakerID, SecsionCode) {
 
 
 
-function Delete_Data() {
+function Delete_Data(OPID,MakerID) {
      
  
 
@@ -139,11 +260,9 @@ function Delete_Data() {
     var arrdata = TableTarget.$('input,deselect').serializeArray();
 
     
+    var SectionCode = new Array();
 
-    var Lotcount = 0;
-    var sectionCode = new Array();
-    var WFLotCount = arrdata.length
-
+    debugger
 
     if (arrdata.length != 0) {
 
@@ -152,11 +271,66 @@ function Delete_Data() {
         for (i = 0; i < arrdata.length; i++) {
             debugger
 
-            arrtemp = arrdata[i].value.split(',');
-            Lotcount = parseInt(arrtemp[1]) + parseInt(Lotcount);
-            sectionCode.push(arrtemp[1])+';';
+            arrtemp = arrdata[i].value.split(',');            
+            SectionCode.push(arrtemp[0])+';';
             arrtemp = [];
         }
+
+
+        debugger
+        $.ajax({
+            type: 'POST',
+            url: "/Management/DeleteSectionCode_Additional",
+            dataSrc: "data",
+            data: { OPID: OPID, MakerID: MakerID, SectionCode: SectionCode},
+            dataType: 'json',
+            success: function (response) {
+                if (response.success == true) {                                                        
+                    Swal.fire({
+                        position: 'top-mid',
+                        type: 'success',
+                        title: (response.responseText),
+                        showConfirmButton: true,
+                        timer: 1700
+                    }).then(function (result) {
+                      //  if (result.value) {
+                            Getdata(OPID)
+                        //}
+                    });
+
+                } else {
+
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: (response.responseText)
+                    }).then(function (result) {
+                       // if (result.value) {
+                            Getdata(OPID)
+                        //}
+                    });
+
+                  
+
+
+                }
+
+            },
+            error: function (ex) {              
+
+                Swal.fire({                  
+                    text: ('Failed to retrieve states.' + ex) ,
+                    type: 'error',
+                    timer: 1700,
+                }).then(function () {
+                    return false;
+                });
+            },
+
+
+        });
+
+
     }
     else {
         Swal.fire({

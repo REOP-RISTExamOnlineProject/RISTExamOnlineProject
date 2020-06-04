@@ -30,44 +30,18 @@ namespace RISTExamOnlineProject.Models.TSQL
 
 
 
-        public List<vewOperatorAdditionalDepTemp> GetMakeTemp_Additional(string OPID,string MakerID) {
+        public string GetStroeTemp_Additional(string OPID,string MakerID, string SectionCode, string Job)
+        {
 
             var ObjRun = new mgrSQLConnect(_configuration);
-            string secsioncode = "";
+
             strSQL = "EXEC [dbo].[sprOperatorSectionAttributeTemp] ";
-            strSQL += " 'VEW', '" + MakerID + "','" + OPID + "','"+ secsioncode + "'   ";
+            strSQL += " '"+ Job + "', '" + MakerID + "','" + OPID + "','"+ SectionCode.Trim() + "'   ";
           
-           DataTable dt2 = ObjRun.GetDatatables(strSQL);
-            string check = dt2.Rows[0][0].ToString();
+           DataTable dt = ObjRun.GetDatatables(strSQL);
+            string check = dt.Rows[0][0].ToString();
 
-            DataTable dt = new DataTable();
-
-          
-                       
-            dt = GetUserDetail_Additional(OPID);
-            List<vewOperatorAdditionalDepTemp> Temp = new List<vewOperatorAdditionalDepTemp>();
-            if (check == "OK")
-            {
-
-                foreach (DataRow row in dt.Rows)
-            {
-                Temp.Add(new vewOperatorAdditionalDepTemp()
-                {
-                    OperatorID = row["OperatorID"].ToString(),
-                    SectionCode = row["SectionCode"].ToString(),
-                    Section = row["Section"].ToString(),
-                    Department = row["Department"].ToString(),
-                    Division = row["Division"].ToString(),
-                });
-
-            }
-
-
-
-            }
-
-
-            return Temp;
+            return check;
         }
 
 
@@ -75,14 +49,36 @@ namespace RISTExamOnlineProject.Models.TSQL
 
 
 
-
-
-        public DataTable GetUserDetail_Additional(string OPID)
+        public List<vewOperatorAdditionalDepTemp> GetUserDetail_Additional(string OPID)
         {
             var ObjRun = new mgrSQLConnect(_configuration);
             strSQL = "SELECT * FROM [SPTOSystem].[dbo].[vewOperatorAdditionalDepTemp] where [OperatorID] = '"+ OPID + "'  order by  [SectionCode] asc ";
             dt = ObjRun.GetDatatables(strSQL);
-            return dt;
+
+            List<vewOperatorAdditionalDepTemp> Temp = new List<vewOperatorAdditionalDepTemp>();
+            if (dt.Rows.Count > 0)
+            {
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    Temp.Add(new vewOperatorAdditionalDepTemp()
+                    {
+                        OperatorID = row["OperatorID"].ToString(),
+                        SectionCode = row["SectionCode"].ToString(),
+                        Section = row["Section"].ToString(),
+                        Department = row["Department"].ToString(),
+                        Division = row["Division"].ToString(),
+                    });
+
+                }
+
+
+
+            }
+
+
+            return Temp;
+            
         }
 
         public DataTable GetDepartment_Additional(string DIV)

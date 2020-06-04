@@ -329,7 +329,107 @@ namespace RISTExamOnlineProject.Controllers
 
 
 
-        public IActionResult Load_OperatorAdditional_Detail(string OPID,string MakerID)
+
+
+        [HttpPost]
+        public IActionResult GetMakeTemp_Additional(string OPID, string MakerID) {
+            mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
+
+            string Message;
+
+            Message = ObjRun.GetStroeTemp_Additional(OPID, MakerID,"","VEW");
+
+
+            if (Message == "OK") {
+
+                return Json(new { success = true });
+            } else {
+                return Json(new { success = false });
+            }
+
+            
+        }
+
+        [HttpPost]
+        public IActionResult DeleteSectionCode_Additional(string OPID, string MakerID, string[] SectionCode)
+        {
+            mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
+
+            try
+            {
+                foreach (string Code in SectionCode)
+                {
+
+                    ObjRun.GetStroeTemp_Additional(OPID, MakerID, Code, "DEL");
+                }
+                              
+            }
+            catch (Exception ex)
+            {
+
+                return Json(new { success = false, responseText = ex.Message.ToString() });
+            }
+
+
+            return Json(new { success = true, responseText = "Delete Data success" });
+
+
+        }
+
+
+        public IActionResult AddNewSectionCode_Additional(string OPID, string MakerID, string SectionCode) {
+
+            mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
+            string Message_ = "";
+            try
+            {
+                Message_ = ObjRun.GetStroeTemp_Additional(OPID, MakerID, SectionCode, "ADD");
+
+                if (Message_ == "OK")
+                {
+                    return Json(new { success = true, responseText = "Add new Section success" });
+                }
+                else {
+                    return Json(new { success = false, responseText = Message_ });
+                }                
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, responseText = ex.Message.ToString() });
+            }
+            
+
+        }
+
+        public IActionResult Save_Additional(string OPID, string MakerID)
+        {
+
+            mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
+            string Message_ = "";
+            try
+            {
+                Message_ = ObjRun.GetStroeTemp_Additional(OPID, MakerID, "", "SVE");
+
+                if (Message_ == "OK")
+                {
+                    return Json(new { success = true, responseText = "Save data success" });
+                }
+                else
+                {
+                    return Json(new { success = false, responseText = Message_ });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, responseText = ex.Message.ToString() });
+            }
+
+        }
+
+
+            public IActionResult Load_OperatorAdditional_Detail(string OPID)
         {
             mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
 
@@ -351,7 +451,7 @@ namespace RISTExamOnlineProject.Controllers
             List<vewOperatorAdditionalDepTemp> TempData = new List<vewOperatorAdditionalDepTemp>();
 
 
-            TempData = ObjRun.GetMakeTemp_Additional(OPID, MakerID);
+            TempData = ObjRun.GetUserDetail_Additional(OPID);
 
             var DataShow = (from tempdata in TempData
                             select tempdata);
@@ -516,59 +616,59 @@ namespace RISTExamOnlineProject.Controllers
 
 
 
-        public IActionResult TempDataExample()
-        {
-            mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
+    //    public IActionResult TempDataExample()
+    //    {
+    //        mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
                  
 
-            DataTable dt = new DataTable();
+    //        DataTable dt = new DataTable();
 
         
 
 
-            dt = ObjRun.GetUserDetail_Additional("000702");
+    //        dt = ObjRun.GetUserDetail_Additional("000702");
 
-            List<string> mobileList = new List<string>();
-            string Strdata = "";
+    //        List<string> mobileList = new List<string>();
+    //        string Strdata = "";
 
-            if (dt.Rows.Count != 0)
-            {
-
-
-                for (int i = 0; i > dt.Rows.Count; i++) {
-
-                    Strdata += "{[ data:";
-                    if (i != dt.Rows.Count)
-                    {
-
-                        Strdata += "{},";
+    //        if (dt.Rows.Count != 0)
+    //        {
 
 
-                    }
-                    else {
-                        Strdata += "{}";
+    //            for (int i = 0; i > dt.Rows.Count; i++) {
 
-                    }
+    //                Strdata += "{[ data:";
+    //                if (i != dt.Rows.Count)
+    //                {
 
-                    Strdata += "]}";
-
-
-
-                }
+    //                    Strdata += "{},";
 
 
-                foreach (DataRow row in dt.Rows)
-                {
-                    mobileList.Add("" + row["OperatorID"].ToString() + "," + row["SectionCode"].ToString() + "," +
-                        " " + row["Division"].ToString() + ", " + row["Department"].ToString() + "," + row["Section"].ToString() + " ");
+    //                }
+    //                else {
+    //                    Strdata += "{}";
 
-                }
+    //                }
 
-            }
+    //                Strdata += "]}";
 
 
-            TempData["MobileList"] = mobileList;
-            return View();
-        }
+
+    //            }
+
+
+    //            foreach (DataRow row in dt.Rows)
+    //            {
+    //                mobileList.Add("" + row["OperatorID"].ToString() + "," + row["SectionCode"].ToString() + "," +
+    //                    " " + row["Division"].ToString() + ", " + row["Department"].ToString() + "," + row["Section"].ToString() + " ");
+
+    //            }
+
+    //        }
+
+
+    //        TempData["MobileList"] = mobileList;
+    //        return View();
+    //    }
     }
 }
