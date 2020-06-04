@@ -607,6 +607,11 @@ namespace RISTExamOnlineProject.Controllers
                 .Select(c => new { c.OperatorID, c.Department });
             ViewBag.CategoryDepartment = new SelectList(queryDepartment.AsEnumerable(), "OperatorID", "Department");
 
+            //Get Section to Dropdown
+            var querySection = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == id)
+                .Select(c => new { c.OperatorID, c.Section });
+            ViewBag.CategorySection = new SelectList(querySection.AsEnumerable(), "OperatorID", "Section");
+
 
             List<vewDivisionMaster> catagorylist = new List<vewDivisionMaster>();
 
@@ -617,7 +622,7 @@ namespace RISTExamOnlineProject.Controllers
 
 
 
-            //catagorylist.Insert(0, new vewDivisionMaster() { DivisionID = 0, DivisionName = "Select" });
+            catagorylist.Insert(0, new vewDivisionMaster() { row_num = 0, DivisionName = "Select" });
             ViewBag.listofCatagoryDiv = catagorylist;
 
 
@@ -644,40 +649,44 @@ namespace RISTExamOnlineProject.Controllers
                 .GroupBy(g => new
                 {
                     department = g.Department,
-                    divisionid = g.DivisionID
+                    Row_num = g.row_num,
+                    Row_dept_id = g.row_dept_id
                 })
                 .Select(s => new vewDepartmentMaster()
                 {
                     Department = s.Key.department,
-                    DepartmentID = s.Key.divisionid
+                    row_num = s.Key.Row_num,
+                    row_dept_id = s.Key.Row_dept_id
                 }).ToList();
                
 
-            //subCategorylist = (from VewDepartmentMaster in _sptoDbContext.vewDepartmentMaster
-            //    where
-            //        VewDepartmentMaster.row_num == row_num
-            //    group VewDepartmentMaster by new
-            //    {
-            //        VewDepartmentMaster.Department,
-            //        VewDepartmentMaster.DivisionID
-            //    }
-            //    into g
-            //    select new
-            //    {
-            //        g.Key.Department,
-            //        g.Key.DivisionID
-            //    });
-               
+           
 
             // ------- Inserting Select Item in List -------
             //subCategorylist.Insert(0, new SubCategory { SubCategoryID = 0, SubCategoryName = "Select" });
 
 
-            return Json(new SelectList(subCategorylist, "DepartmentID", "Department"));
+            return Json(new SelectList(subCategorylist, "row_dept_id", "Department"));
         }
 
 
+        public JsonResult GetSectionCategory(long row_dept_id)
+        {
+            List<vewSectionMaster> sectionList = new List<vewSectionMaster>();
 
+            // ------- Getting Data from Database Using EntityFrameworkCore -------
+
+            sectionList = _sptoDbContext.vewSectionMaster
+                .Where(x => x.row_dept_id == row_dept_id).ToList();
+            //productList = (from product in _context.MainProduct
+            //    where product.SubCategoryID == SubCategoryID
+            //    select product).ToList();
+
+            // ------- Inserting Select Item in List -------
+            //productList.Insert(0, new MainProduct { ProductID = 0, ProductName = "Select" });
+
+            return Json(new SelectList(sectionList, "SectionCodeID", "Section"));
+        }
 
 
 

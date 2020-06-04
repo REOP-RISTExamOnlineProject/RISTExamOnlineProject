@@ -25,6 +25,7 @@ namespace RISTExamOnlineProject.Models.db
         public virtual DbSet<vewT_Section_Master> vewT_Section_Master { get; set; }
         public DbSet<vewDivisionMaster> vewDivisionMaster { get; set; }
         public DbSet<vewDepartmentMaster> vewDepartmentMaster { get; set; }
+        public DbSet<vewSectionMaster> vewSectionMaster { get; set; }
 
 
     }

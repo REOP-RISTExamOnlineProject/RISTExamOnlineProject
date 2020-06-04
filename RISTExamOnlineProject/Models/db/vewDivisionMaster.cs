@@ -17,7 +17,9 @@ namespace RISTExamOnlineProject.Models.db
 
         [NotMapped]
         public string DepartmentID { get; set; }
-       // [NotMapped]
-       // public int SubCategoryID { get; set; }
+        [NotMapped]
+        public string row_dept_id { get; set; }
+        [NotMapped]
+        public string SectionCodeID { get; set; }
     }
 }

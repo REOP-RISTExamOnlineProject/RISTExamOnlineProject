@@ -28,88 +28,36 @@
                                 asp-items="@(new SelectList(@ViewBag.listofCatagoryDiv, "row_num", "DivisionName"))"></select>
                     </div>
                 </div>
+
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="Department" class="mb-0">Current-Department</label>
                         @Html.DropDownList("Department", (IEnumerable<SelectListItem>)ViewBag.CategoryDepartment, new { @class = "form-control border-success" })
                     </div>
+
                     <div class="col-sm-6">
-                        <label for="DepartmentID" class="mb-0">New-Department</label>
-                        <select class="form-control" id="DepartmentID" name="DepartmentID" asp-for="DepartmentID"
-                                  asp-items="@(new SelectList(string.Empty,"DepartmentID", "Department"))"></select>
+                        <label for="row_dept_id" class="mb-0">New-Department</label>
+                        <select class="form-control" id="row_dept_id" name="row_dept_id" asp-for="row_dept_id"
+                                asp-items="@(new SelectList(string.Empty,"row_dept_id", "Department"))"></select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="Section" class="mb-0">Current-Section</label>
+                        @Html.DropDownList("Section", (IEnumerable<SelectListItem>)ViewBag.CategorySection, new { @class = "form-control border-success" })
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="SectionCodeID" class="mb-0">New-Section</label>
+                        <select class="form-control" id="SectionCodeID" name="SectionCodeID" asp-for="SectionCodeID"
+                                asp-items="@(new SelectList(string.Empty,"SectionCodeID", "Section"))"></select>
                     </div>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary" />
                 </div>
             </form>
-            @*<form asp-action="EditUserInCharge">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="Nbr"/>
-                    <div class="form-group">
-                        <label asp-for="DocNo" class="control-label"></label>
-                        <input asp-for="DocNo" class="form-control"/>
-                        <span asp-validation-for="DocNo" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Seq" class="control-label"></label>
-                        <input asp-for="Seq" class="form-control"/>
-                        <span asp-validation-for="Seq" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="OperatorID" class="control-label"></label>
-                        <input asp-for="OperatorID" class="form-control"/>
-                        <span asp-validation-for="OperatorID" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="SectionCode" class="control-label"></label>
-                        <input asp-for="SectionCode" class="form-control"/>
-                        <span asp-validation-for="SectionCode" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="SectionAttribute" class="control-label"></label>
-                        <input asp-for="SectionAttribute" class="form-control"/>
-                        <span asp-validation-for="SectionAttribute" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="OperatorGroup" class="control-label"></label>
-                        <input asp-for="OperatorGroup" class="form-control"/>
-                        <span asp-validation-for="OperatorGroup" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="License" class="control-label"></label>
-                        <input asp-for="License" class="form-control"/>
-                        <span asp-validation-for="License" class="text-danger"></span>
-                    </div>
-                    <div class="form-group form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" asp-for="Active"/> @Html.DisplayNameFor(model => model.Active)
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="RequestOperatorID" class="control-label"></label>
-                        <input asp-for="RequestOperatorID" class="form-control"/>
-                        <span asp-validation-for="RequestOperatorID" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ReqDate" class="control-label"></label>
-                        <input asp-for="ReqDate" class="form-control"/>
-                        <span asp-validation-for="ReqDate" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ChangeOperatorID" class="control-label"></label>
-                        <input asp-for="ChangeOperatorID" class="form-control"/>
-                        <span asp-validation-for="ChangeOperatorID" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ChangeDate" class="control-label"></label>
-                        <input asp-for="ChangeDate" class="form-control"/>
-                        <span asp-validation-for="ChangeDate" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-primary"/>
-                    </div>
-                </form>*@
+         
 
 
         </div>
@@ -136,8 +84,9 @@
     <script type="text/javascript">
         $(document).ready(function () {
             var items = "<option value='0'>Select</option>";
-            $('#DepartmentID').html(items);
-            //$('#ProductID').html(items);
+           
+            $('#row_dept_id').html(items);
+            $('#SectionCodeID').html(items);
         });
     </script>
     
@@ -148,26 +97,26 @@
                 var ddlsource = "#row_num";
                 $.getJSON(url, { row_num: $(ddlsource).val() }, function (data) {
                     var items = '';
-                    $("#DepartmentID").empty();
+                    $("#row_dept_id").empty();
                     $.each(data, function (i, subcategory) {
                         items += "<option value='" + subcategory.value + "'>" + subcategory.text + "</option>";
                     });
-                    $('#DepartmentID').html(items);
+                    $('#row_dept_id').html(items);
                 });
             });
 
-            @*$('#SubCategoryID').change(function () {
-                var url = '@Url.Content("~/")' + "Demo/GetProducts";
-                var ddlsource = "#SubCategoryID";
-                $.getJSON(url, { SubCategoryID: $(ddlsource).val() }, function (data) {
+            $('#row_dept_id').change(function () {
+                var url = '@Url.Content("~/")' + "Management/GetSectionCategory";
+                var ddlsource = "#row_dept_id";
+                $.getJSON(url, { row_dept_id: $(ddlsource).val() }, function (data) {
                     var items = '';
-                    $('#ProductID').empty();
-                    $.each(data, function (i, product) {
-                        items += "<option value='" + product.value + "'>" + product.text + "</option>";
+                    $('#SectionCodeID').empty();
+                    $.each(data, function (i, section) {
+                        items += "<option value='" + section.value + "'>" + section.text + "</option>";
                     });
-                    $('#ProductID').html(items);
+                    $('#SectionCodeID').html(items);
                 });
-            });*@
+            });
         });
     </script>
 }
