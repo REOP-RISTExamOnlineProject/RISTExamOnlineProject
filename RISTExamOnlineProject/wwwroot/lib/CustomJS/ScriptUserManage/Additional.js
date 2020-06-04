@@ -9,10 +9,12 @@ function Getdata(OPID) {
    // var OPID = $("#strOPNo").val();   
   
     debugger
-    if (TableTarget != null) {
-        TableTarget.destroy();
-    }
+
+
     try {
+        if (TableTarget != null) {
+            TableTarget.destroy();
+        }
 
         TableTarget = $("#MyTable").DataTable({
             ordering: true,
@@ -26,13 +28,13 @@ function Getdata(OPID) {
                 dataSrc: "data",
                 data: { OPID: OPID, MakerID: MakerID },
                 dataType: "json",
+      
             }),
 
             dom: '<"top"l>rt<"bottom">ip<"clear">',
             columns: [
                 { data: "operatorID", name: "operatorID", class: "text-wrap text-center" },
                 { data: "sectionCode", name: "sectionCode", class: "text-wrap text-center" },
-
                 { data: "division", name: "division", class: "text-wrap text-center" },
                 { data: "department", name: "department", class: "text-wrap text-center" },
                 { data: "section", name: "section", class: "text-wrap text-center" },
@@ -48,7 +50,7 @@ function Getdata(OPID) {
                     //render: function (data, type, row)
                     data: null,
                     className: "center",
-                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    "fnCreatedCell": function (nTd, oData,)  {
                         var Target = oData.sectionCode
 
                         $(nTd).html('<input type="checkbox"   class="editor-active" id="CB_Delete"  name="CB_Delete" value="' + Target + '"  />');
@@ -89,9 +91,7 @@ function Getdata(OPID) {
 
 function MakeDataTemp(OPID, MakerID) {
 
-    debugger
-
-   
+    debugger   
     $.ajax({
         type: 'post',
         url: "/Management/GetMakeTemp_Additional",
@@ -100,8 +100,8 @@ function MakeDataTemp(OPID, MakerID) {
         dataType: 'json',
         success: function (response) {
             if (response.success == true) {
-                r
-            }
+                Getdata(OPID)
+             }
 
         },
         error: function (ex) {
@@ -175,39 +175,6 @@ function SaveData(OPID, MakerID) {
 
 
 
-
-function CheckData() {
-     
-   // var arrdata = TableTarget.$('input, select').serializeArray();
-
-    var TableTarget = $('#MyTable').DataTable();
-
-    var rowCount = TableTarget.data().count() 
-
-    if (rowCount != 0) {
-        var x = document.getElementById("display_grid");
-        x.style.display = "block";
-        var a = document.getElementById("Form_Add");
-        a.style.display = "block";
-        var t = document.getElementById("Display_tableAdd");
-        t.style.display = "none";
-    }
-    else {
-        var x = document.getElementById("display_grid");
-        x.style.display = "none";
-        var a = document.getElementById("Form_Add");
-        a.style.display = "none";
-        var t = document.getElementById("Display_tableAdd");
-        t.style.display = "none";
-    }
-
-
-
-
-
-
-
-}
 
 
 function AddData_Data(OPID, MakerID, SectionCode) {
@@ -365,54 +332,6 @@ function Delete_Data(OPID,MakerID) {
 }
 
 
-function Getdata_(OPID) {
-
-    debugger
-
-    $.ajax({
-        type: 'POST',
-        url: "/Management/Load_OperatorAdditional_Detail",
-        dataSrc: "data",
-        data: { OPID: OPID },
-        dataType: 'json',       
-        success: function (response) {
-            if (response.success == true) {
-
-                var Dataarray = response.data
-                debugger
-            }
-                 
-                           
-
-            //$.each(data, function (index, value) {
-            //    /*console.log(value);*/
-            //    event_data += '<tr>';
-            //    event_data += '<td>' + value.name + '</td>';
-            //    event_data += '<td>' + value.id + '</td>';
-            //    event_data += '<tr>';
-            //});
-            //$("#list_table_json").append(event_data);
-     
-           
-            //var x = document.getElementById("display_grid");
-            //x.style.display = "block";
-            //var a = document.getElementById("Form_Add");
-            //a.style.display = "block";
-            //var t = document.getElementById("Display_tableAdd");
-            //t.style.display = "none";
-
-        },
-        error: function (ex) {
-            alert('Failed to retrieve states.' + ex);
-        },
-     
-
-    });
-
-
-
-}
-
 
 
 function GetDepartment_Addition(DIV) {
@@ -489,11 +408,3 @@ function GetSection_Addition(DIV, DEP) {
 
 
 
-
-//$('#BTN_Delete').on('click', function () {
-
-
-//    Delete_Data();
-
-
-//});
