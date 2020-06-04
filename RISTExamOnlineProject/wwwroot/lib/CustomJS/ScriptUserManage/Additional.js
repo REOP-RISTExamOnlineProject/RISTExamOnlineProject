@@ -28,7 +28,7 @@ function Getdata(OPID) {
                 dataSrc: "data",
                 data: { OPID: OPID, MakerID: MakerID },
                 dataType: "json",
-      
+
             }),
 
             dom: '<"top"l>rt<"bottom">ip<"clear">',
@@ -37,14 +37,14 @@ function Getdata(OPID) {
                 { data: "sectionCode", name: "sectionCode", class: "text-wrap text-center" },
                 { data: "division", name: "division", class: "text-wrap text-center" },
                 { data: "department", name: "department", class: "text-wrap text-center" },
-                { data: "section", name: "section", class: "text-wrap text-center" },                       
+                { data: "section", name: "section", class: "text-wrap text-center" },
                 {
-                 //   data: "Delete",
-                  //  render: function (data, type, row),
+                    //   data: "Delete",
+                    //  render: function (data, type, row),
                     data: null,
-                    name:null,
+                    name: null,
                     className: "center",
-                    "fnCreatedCell": function (nTd, oData,)  {
+                    "fnCreatedCell": function (nTd, oData, ) {
                         var Target = oData.sectionCode
 
                         $(nTd).html('<input type="checkbox"   class="editor-active" id="CB_Delete"  name="CB_Delete" value="' + Target + '"  />');
@@ -66,14 +66,19 @@ function Getdata(OPID) {
 
 
     }
-          
-     
-    var x = document.getElementById("display_grid");
-    x.style.display = "block";
-    var a = document.getElementById("Form_Add");
-    a.style.display = "block";
-    var t = document.getElementById("Display_tableAdd");
-    t.style.display = "none";
+    finally {
+
+        GetDivision_Addition()
+
+        var x = document.getElementById("display_grid");
+        x.style.display = "block";
+        var a = document.getElementById("Form_Add");
+        a.style.display = "block";
+        var t = document.getElementById("Display_tableAdd");
+        t.style.display = "none";
+
+    }
+
 
    // CheckData()
     

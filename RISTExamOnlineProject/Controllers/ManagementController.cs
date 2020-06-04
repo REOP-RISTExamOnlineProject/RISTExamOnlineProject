@@ -434,9 +434,7 @@ namespace RISTExamOnlineProject.Controllers
 
 
             try
-            {
-
-         
+            {        
 
 
             mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
@@ -465,7 +463,6 @@ namespace RISTExamOnlineProject.Controllers
                             select tempdata);
 
             var data = DataShow.ToList();
-
 
             return Json(new { success = true, draw, recordsFiltered = recordsTotal, recordsTotal, data });
             }
