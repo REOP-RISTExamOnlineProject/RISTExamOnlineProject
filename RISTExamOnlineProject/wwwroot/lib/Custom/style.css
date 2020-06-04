@@ -9,14 +9,16 @@ Version: 1.0
 /*@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700,900');*/
 
 /* ======= General Rules ======== */
-@font-face{
+@font-face {
     font-family: 'JetBrainsMono';
-    src: url('https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2') format('woff2'),
-      url('https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono/web/woff/JetBrainsMono-Regular.woff') format('woff'),
-      url('https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono/ttf/JetBrainsMono-Regular.ttf') format('truetype');
+    src: url('../Custom/fonts/JetBrainsMono-Regular.woff2') format('woff2'),
+         url('../Custom/fonts/JetBrainsMono-Regular.woff') format('woff'),
+         url('../Custom/fonts/JetBrainsMono-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
-  }
+}
+
+
 html {
     width: 100%;
     margin: 0;
