@@ -433,8 +433,8 @@ namespace RISTExamOnlineProject.Controllers
         {
 
 
-            try
-            {        
+  //          try
+//            {        
 
 
             mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
@@ -464,13 +464,14 @@ namespace RISTExamOnlineProject.Controllers
 
             var data = DataShow.ToList();
 
-            return Json(new { success = true, draw, recordsFiltered = recordsTotal, recordsTotal, data });
-            }
-            catch (Exception ex)
-            {
+            return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
+         //   return Json(new {draw, recordsFiltered = recordsTotal, recordsTotal, data });
+            //}
+            //catch (Exception ex)
+            //{
 
-                return Json(new { success = false, responseText = ex.Message.ToString() });
-            }
+            //    return Json(new { success = false, responseText = ex.Message.ToString() });
+            //}
 
 
         }
