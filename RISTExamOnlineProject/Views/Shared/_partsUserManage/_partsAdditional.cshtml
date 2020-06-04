@@ -116,16 +116,17 @@
 
 <script>
 
-    var MakerID = '@User.Identity.Name';
-    var OPID = $("#strOPNo").val();
+ //   var MakerID = '@User.Identity.Name';
+   // var OPID = $("#strOPNo").val();
 
- 
+
 
     function Getinitial() {
 
       //  GetDivision_Addition()
+         var MakerID = '@User.Identity.Name';
+         var OPID = $("#strOPNo").val();
 
-     
         if (OPID != '') {
             debugger
 
@@ -194,9 +195,11 @@
 
     $('#BTN_Save').click(function (event) {
 
-        var OPID = $("#strOPNo").val();
+         var MakerID = '@User.Identity.Name';
+         var OPID = $("#strOPNo").val();
 
         Swal.fire({
+            icon: 'warning',
             title: 'Are you sure?',
             text: "Are you sure you want to save Data ?",
             type: 'warning',
@@ -206,10 +209,10 @@
             confirmButtonText: 'Yes, Do it!'
 
         }).then(function (result) {
-            if (result.value) {         
+            if (result.value) {
 
                 SaveData(OPID, MakerID)
-                   
+
             }
 
         })
@@ -226,9 +229,12 @@
 
 
         var Sectioncode = $('#DDL_Section').val();
-        var OPID = $("#strOPNo").val();
+
+        var MakerID = '@User.Identity.Name';
+         var OPID = $("#strOPNo").val();
 
         Swal.fire({
+            icon: 'warning',
             title: 'Are you sure?',
             text: "Are you sure you want to Insert new Section ?",
             type: 'warning',
@@ -266,7 +272,7 @@
 
 
 
-    
+
 
 
 
@@ -277,10 +283,12 @@
 
 
     $('#BTN_Delete').click(function (event) {
-        var OPID = $("#strOPNo").val();
+         var MakerID = '@User.Identity.Name';
+         var OPID = $("#strOPNo").val();
 
         debugger
         Swal.fire({
+            icon: 'warning',
             title: 'Are you sure?',
             text: "Are you sure you want to Delete Section ?",
             type: 'warning',
@@ -298,7 +306,7 @@
         })
 
 
-       
+
 
 
 
@@ -310,12 +318,13 @@
     function GetuserDetail() {
         debugger
 
-        var OPID = $("#strOPNo").val();
+        var MakerID = '@User.Identity.Name';
+         var OPID = $("#strOPNo").val();
 
 
         if (OPID != "") {
 
-            
+
             MakeDataTemp(OPID, MakerID);
         //    Getdata(OPID)
         } else {
