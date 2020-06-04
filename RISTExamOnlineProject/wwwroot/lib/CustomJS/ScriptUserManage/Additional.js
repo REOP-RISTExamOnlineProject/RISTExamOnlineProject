@@ -4,12 +4,7 @@ var TableTarget;
 
 
 function Getdata(OPID) {
-    debugger
-
-   // var OPID = $("#strOPNo").val();   
-  
-    debugger
-
+    var TableTarget;
 
     try {
         if (TableTarget != null) {
@@ -78,9 +73,7 @@ function Getdata(OPID) {
         t.style.display = "none";
 
     }
-
-
-   // CheckData()
+          
     
 }
 
@@ -88,20 +81,20 @@ function Getdata(OPID) {
 
 
 
-function MakeDataTemp(OPID_, MakerID_) {
+function MakeDataTemp(OPID, MakerID) {
 
     debugger   
     $.ajax({
         type: 'post',
         url: "../Management/GetMakeTemp_Additional",
         dataSrc: "data",
-        data: { OPID: OPID_, MakerID: MakerID_ },
+        data: { OPID: OPID, MakerID: MakerID },
         dataType: 'json',
         success: function (response) {
             if (response.success == true) {
                 debugger
-                alert(response.text)
-                Getdata(OPID_)
+          
+                Getdata(OPID)
             } else {
                 Swal.fire({
                     text: ('Make Temp Data Error'),
@@ -191,10 +184,7 @@ function SaveData(OPID, MakerID) {
 
 
 
-function AddData_Data(OPID, MakerID, SectionCode) {
-
-
-    
+function AddData_Data(OPID, MakerID, SectionCode) {   
 
     $.ajax({
         type: 'POST',
