@@ -37,18 +37,12 @@ function Getdata(OPID) {
                 { data: "sectionCode", name: "sectionCode", class: "text-wrap text-center" },
                 { data: "division", name: "division", class: "text-wrap text-center" },
                 { data: "department", name: "department", class: "text-wrap text-center" },
-                { data: "section", name: "section", class: "text-wrap text-center" },
-
-                //{
-                //    "render": function (data, type, row) {
-                //        return "<a href='#' class='btn btn-danger text-white' onclick=Delete_Data('" + row.operatorID + "','" + row.sectionCode + "'); >Delete</a>";
-
-                //    }
-                //},
+                { data: "section", name: "section", class: "text-wrap text-center" },                       
                 {
-                    //data: "Delete",
-                    //render: function (data, type, row)
+                 //   data: "Delete",
+                  //  render: function (data, type, row),
                     data: null,
+                    name:null,
                     className: "center",
                     "fnCreatedCell": function (nTd, oData,)  {
                         var Target = oData.sectionCode
@@ -108,7 +102,7 @@ function MakeDataTemp(OPID, MakerID) {
             Swal.fire({
                 text: ('Failed to retrieve states.' + ex),
                 type: 'error',
-                timer: 1700,
+           //     timer: 1700,
             }).then(function () {
                 return false;
             });
