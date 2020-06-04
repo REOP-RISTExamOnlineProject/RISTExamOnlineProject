@@ -33,11 +33,12 @@
             Section
         </div>
         <div class="col-2">
+
             @Html.DropDownList("DDL_Section", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "DDL_Section", @class = " custom-select custom-select-sm" })
 
         </div>
         <div class="col-1">
-            <button class="btn btn-warning " id="BTN_ADD" >
+            <button class="btn btn-warning w-100 " id="BTN_ADD" >
                 ADD
             </button>
         </div>
@@ -90,6 +91,9 @@
 
             </tr>
         </thead>
+        <tbody>
+
+        </tbody>
 
     </table>
 
@@ -119,7 +123,7 @@
 
     function Getinitial() {
 
-        GetDivision_Addition()
+      //  GetDivision_Addition()
 
      
         if (OPID != '') {
