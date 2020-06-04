@@ -376,7 +376,7 @@ namespace RISTExamOnlineProject.Controllers
 
         }
 
-
+        [HttpPost]
         public IActionResult AddNewSectionCode_Additional(string OPID, string MakerID, string SectionCode) {
 
             mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
@@ -401,7 +401,7 @@ namespace RISTExamOnlineProject.Controllers
             
 
         }
-
+        [HttpPost]
         public IActionResult Save_Additional(string OPID, string MakerID)
         {
 
@@ -428,9 +428,17 @@ namespace RISTExamOnlineProject.Controllers
 
         }
 
-
-            public IActionResult Load_OperatorAdditional_Detail(string OPID)
+        [HttpPost]
+        public IActionResult Load_OperatorAdditional_Detail(string OPID)
         {
+
+
+            try
+            {
+
+         
+
+
             mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
 
             var draw = HttpContext.Request.Form["draw"].FirstOrDefault();
@@ -459,7 +467,14 @@ namespace RISTExamOnlineProject.Controllers
             var data = DataShow.Skip(skip).Take(pageSize).ToList();
 
 
-            return Json(new { draw, recordsFiltered = recordsTotal, recordsTotal, data });
+            return Json(new { success = true, draw, recordsFiltered = recordsTotal, recordsTotal, data=data });
+            }
+            catch (Exception ex)
+            {
+
+                return Json(new { success = false, responseText = ex.Message.ToString() });
+            }
+
 
         }
 
