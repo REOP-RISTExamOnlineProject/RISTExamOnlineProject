@@ -506,24 +506,75 @@ namespace RISTExamOnlineProject.Controllers
             //    return NotFound();
             //}
 
-            List<string> userdetail =  new List<string>();
-            userdetail.Add(Getuser.NameEng);
-            userdetail.Add(Getuser.Section);
-            userdetail.Add(Getuser.GroupName);
-            TempData["Userdetail"] = userdetail;
+
+            //Get Division to Dropdown
+            var queryDivision = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == id)
+                .Select(c => new { c.OperatorID, c.Division });
+            ViewBag.CategoryDivision = new SelectList(queryDivision.AsEnumerable(), "OperatorID", "Division");
+
+            return View();
+
+            // List<vewDivisionMaster> CatagoryDivlist = new List<vewDivisionMaster>();
+
+
+            //CatagoryDivlist = _sptoDbContext.vewDivisionMaster.OrderBy(o => o.DivisionName).ToList();
 
 
 
-            List<vewDivisionMaster> CatagoryDiv = new List<vewDivisionMaster>();
+            // CatagoryDivlist.Insert(0, new vewDivisionMaster() { DivisionID = 0, DivisionName = "Select" });
+            // ViewBag.listofCatagoryDiv = CatagoryDivlist;
+
+
+            //vewDivisionMaster entities = new vewDivisionMaster();
+            //vewDivisionMaster model = new vewDivisionMaster();
+
+            //foreach (var divitem in _sptoDbContext.vewDivisionMaster)
+            //{
+            //    model.DivisionName.Add(new SelectListItem { Text = divitem.DivisionName.ToString(), Value = divitem.DivisionID.ToString() });
+            //}
+
+
+            //List<vewT_Section_Master> CatagoryDiv = new List<vewT_Section_Master>();
 
 
 
-            CatagoryDiv =  _sptoDbContext.vewDivisionMaster.OrderBy(o=>o.Division).Where(x=>x.Division != "").ToList();
-           
-            CatagoryDiv.Insert(0,new vewDivisionMaster{SectionCodeID = "0", Division = "Select"});
+
+            //CatagoryDiv = _sptoDbContext.vewT_Section_Master
+            //    .Select(o => new { SectionCode = o.SectionCode.Substring(1,1), Division = o.Division })
+            //    .GroupBy(gb => new { gb.SectionCode. , gb.Division }).ToList()
+            //    .Select(gb => new vewT_Section_Master
+            //    { SectionCode = gb.Key.SectionCode.Substring(1,1), Division = gb.Key.Division})
+            //    .ToList();
+
+            //CatagoryDiv.Insert(0,new vewT_Section_Master{SectionCode = "0", Division = "Select"});
 
 
-            ViewBag.listofCatagoryDiv = CatagoryDiv;
+
+
+            //IList<Filter_IDs> filterIds = ef.filterline
+            //    .Select(fl => fl.objectType).Distinct()
+            //    .Select(ot => new Filter_IDs
+            //    {
+            //        type = ot,
+            //        objects = ef.filterline
+            //            .Where(fl => fl.objectType == ot)
+            //            .Select(fl => objectType)
+            //            .ToList()
+            //    }).ToList();
+
+            //CatagoryDiv = _sptoDbContext.vewT_Section_Master
+            //    .GroupBy(gb => new { gb.SectionCode, gb.Division }).ToList()
+
+            //    .OrderBy(o => o.Key.Division)
+            //    .Select(o => new { standardkey = o.Key.Division, agekey = o.Key.SectionCode });
+            //.ToList();
+
+            //CatagoryDiv = ef.filterLine.Select(o => new { objectType = o.objectType, object_id = o.object_id })
+            //     .GroupBy(fl => fl.objectType).ToList()
+            //     .Select(fl => new Filter_IDs { type = fl.Key, objects = fl.Select(x => x.object_id).ToList() })
+            //     .ToList();
+
+
 
 
             //Get Section to Dropdown
@@ -536,7 +587,7 @@ namespace RISTExamOnlineProject.Controllers
             //{
             //    return NotFound();
             //}
-            return View();
+
         }
 
         public IActionResult TempDataExample()
