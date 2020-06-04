@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -29,10 +30,16 @@ namespace RISTExamOnlineProject.Controllers
             _sptoDbContext = context;
             _configuration = configuration;
             this.httpContextAccessor = httpContextAccessor;
+
         }
 
         #region UserDetail
-
+        [HttpGet]
+        public string GetIP()
+        {
+            var remoteIpAddress = HttpContext.Connection.RemoteIpAddress;
+            return remoteIpAddress.ToString();
+        }
         public IActionResult ManagementUser(string opno)
         {
             ViewBag.opno = opno;
@@ -308,12 +315,7 @@ namespace RISTExamOnlineProject.Controllers
             { strResult = _Result, dataLabel = _DataResult, strboolbel = _ResultLabel, data = "" }); 
             return jsonResult; 
         }
-        [HttpGet]
-        public string GetIP()
-        {
-            var remoteIpAddress = HttpContext.Connection.RemoteIpAddress;
-            return remoteIpAddress.ToString();
-        }
+        
 
         #endregion
 
@@ -594,32 +596,77 @@ namespace RISTExamOnlineProject.Controllers
             //    return NotFound();
             //}
 
-            List<string> userdetail = new List<string>();
-            userdetail.Add(Getuser.NameEng);
-            userdetail.Add(Getuser.Section);
-            userdetail.Add(Getuser.GroupName);
-            TempData["Userdetail"] = userdetail;
+
+            //Get Division to Dropdown
+            var queryDivision = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == id)
+                .Select(c => new { c.OperatorID, c.Division });
+            ViewBag.CategoryDivision = new SelectList(queryDivision.AsEnumerable(), "OperatorID", "Division");
+
+            return View();
+
+            // List<vewDivisionMaster> CatagoryDivlist = new List<vewDivisionMaster>();
+
+
+            //CatagoryDivlist = _sptoDbContext.vewDivisionMaster.OrderBy(o => o.DivisionName).ToList();
 
 
 
-            List<vewDivisionMaster> CatagoryDiv = new List<vewDivisionMaster>();
+            // CatagoryDivlist.Insert(0, new vewDivisionMaster() { DivisionID = 0, DivisionName = "Select" });
+            // ViewBag.listofCatagoryDiv = CatagoryDivlist;
 
 
+            //vewDivisionMaster entities = new vewDivisionMaster();
+            //vewDivisionMaster model = new vewDivisionMaster();
 
-            CatagoryDiv = (from vewTSectionMaster in _sptoDbContext.vewT_Section_Master select vewTSectionMaster).ToList();
+            //foreach (var divitem in _sptoDbContext.vewDivisionMaster)
+            //{
+            //    model.DivisionName.Add(new SelectListItem { Text = divitem.DivisionName.ToString(), Value = divitem.DivisionID.ToString() });
+            //}
 
+            //List<string> userdetail =  new List<string>();
+            //userdetail.Add(Getuser.NameEng);
+            //userdetail.Add(Getuser.Section);
+            //userdetail.Add(Getuser.GroupName);
+            //TempData["Userdetail"] = userdetail;
+
+            //IList<Filter_IDs> filterIds = ef.filterline
+            //    .Select(fl => fl.objectType).Distinct()
+            //    .Select(ot => new Filter_IDs
+            //    {
+            //        type = ot,
+            //        objects = ef.filterline
+            //            .Where(fl => fl.objectType == ot)
+            //            .Select(fl => objectType)
+            //            .ToList()
+            //    }).ToList();
+
+            //CatagoryDiv = _sptoDbContext.vewT_Section_Master
+            //    .GroupBy(gb => new { gb.SectionCode, gb.Division }).ToList()
+
+            //    .OrderBy(o => o.Key.Division)
+            //    .Select(o => new { standardkey = o.Key.Division, agekey = o.Key.SectionCode });
+            //.ToList();
+
+            //CatagoryDiv = ef.filterLine.Select(o => new { objectType = o.objectType, object_id = o.object_id })
+            //     .GroupBy(fl => fl.objectType).ToList()
+            //     .Select(fl => new Filter_IDs { type = fl.Key, objects = fl.Select(x => x.object_id).ToList() })
+            //     .ToList();
+
+
+           // CatagoryDiv = (from vewTSectionMaster in _sptoDbContext.vewT_Section_Master select vewTSectionMaster).ToList();
+           
 
             //Get Section to Dropdown
-            var querySection = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == id)
-                .Select(c => new { c.OperatorID, c.Section });
+            //var querySection = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == id)
+            //    .Select(c => new { c.OperatorID, c.Section });
 
-            ViewBag.CategorySection = new SelectList(querySection.AsEnumerable(), "OperatorID", "Section");
+            //ViewBag.CategorySection = new SelectList(querySection.AsEnumerable(), "OperatorID", "Section");
             //var suppliers = await _context.Suppliers.FindAsync(id);
             //if (suppliers == null)
             //{
             //    return NotFound();
             //}
-            return View();
+
         }
 
 

@@ -1,4 +1,4 @@
-﻿@model RISTExamOnlineProject.Models.db.vewOperatorAlls
+﻿@*@model RISTExamOnlineProject.Models.db.vewDivisionMaster*@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "EditUserInCharge";
@@ -11,19 +11,30 @@
 <hr />
 
 <div class="row mt-3">
-    <div class="col-sm-4">
+    <div class="col-sm-8">
         <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
 
 
             <form action="">
 
                 <div class="form-group row">
-                    <div class="col-sm-12">
-                        <label for="Section" class="mb-0">Section</label>
-                        @Html.DropDownList("Section", (IEnumerable<SelectListItem>)ViewBag.CategorySection, new { @class = Model?.Section == null ? "form-control" : "form-control border-success" })
+                    <div class="col-sm-6">
+                        <label for="Division" class="mb-0">Current-Division</label>
+                        @Html.DropDownList("Division", (IEnumerable<SelectListItem>) ViewBag.CategoryDivision, new {@class = "form-control border-success"})
+                    </div>                   
+                    <div class="col-sm-6">
+                        <label for="Division" class="mb-0">New-Division</label>
+
+                        @* @Html.DropDownListFor(m => m.DivisionID, Model.DivisionName, "Please select", new {@class = "form-control"})*@
+                        @*<label asp-for="DivisionName" class="mb-0">Division</label>
+        <select asp-for="DivisionID"
+                class="form-control"
+                asp-items="@(new SelectList(@ViewBag.listofCatagoryDiv, "DivisionID", "DivisionName"))">
+
+        </select>*@
                     </div>
                 </div>
-                <div class="form-group row">
+                @*<div class="form-group row">
                     <div class="col-sm-12">
                         <label for="Section" class="mb-0">Shift</label>
                         @Html.DropDownList("Section", (IEnumerable<SelectListItem>)ViewBag.CategorySection, new { @class = Model?.Section == null ? "form-control" : "form-control border-success" })
@@ -34,7 +45,7 @@
                         <label for="Section" class="mb-0">License</label>
                         @Html.DropDownList("Section", (IEnumerable<SelectListItem>)ViewBag.CategorySection, new { @class = Model?.Section == null ? "form-control" : "form-control border-success" })
                     </div>
-                </div>
+                </div>*@
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary" />
                 </div>
