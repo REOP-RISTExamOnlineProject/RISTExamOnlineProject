@@ -46,12 +46,6 @@
     </div>
 </div>
 
-<div id="Display_tableAdd">
-
-
-
-
-</div>
 
 
 
@@ -116,22 +110,20 @@
 
 <script>
 
- //   var MakerID = '@User.Identity.Name';
-   // var OPID = $("#strOPNo").val();
 
 
 
     function Getinitial() {
 
-      //  GetDivision_Addition()
+ 
          var MakerID = '@User.Identity.Name';
          var OPID = $("#strOPNo").val();
 
         if (OPID != '') {
-            debugger
+        
 
             MakeDataTemp(OPID, MakerID);
-         //   Getdata(OPID);
+      
 
             var x = document.getElementById("display_grid");
             x.style.display = "block";
@@ -139,9 +131,7 @@
             a.style.display = "block";
 
 
-            var t = document.getElementById("Display_tableAdd");
-            t.style.display = "none";
-
+        
 
         } else {
 
@@ -153,8 +143,6 @@
 
 
 
-            var t = document.getElementById("Display_tableAdd");
-            t.style.display = "none";
 
         }
 
@@ -210,9 +198,7 @@
 
         }).then(function (result) {
             if (result.value) {
-
                 SaveData(OPID, MakerID)
-
             }
 
         })
