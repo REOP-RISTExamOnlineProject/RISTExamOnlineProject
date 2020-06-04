@@ -462,8 +462,8 @@ namespace RISTExamOnlineProject.Controllers
             var DataShow = (from tempdata in TempData
                             select tempdata);
 
-            var data = DataShow.ToList();
-
+           // var data = DataShow.ToList();
+            var data = DataShow.Skip(skip).Take(pageSize).ToList();
             return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
          //   return Json(new {draw, recordsFiltered = recordsTotal, recordsTotal, data });
             //}
