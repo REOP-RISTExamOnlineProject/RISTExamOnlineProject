@@ -1,10 +1,14 @@
 ﻿
 var TableTarget;
 
-function Getdata(OPID) { 
+
+
+function Getdata(OPID) {
+    debugger
 
    // var OPID = $("#strOPNo").val();   
-     
+  
+    debugger
     if (TableTarget != null) {
         TableTarget.destroy();
     }
@@ -19,7 +23,7 @@ function Getdata(OPID) {
                 type: "post",              
                 url: "/Management/Load_OperatorAdditional_Detail",
                 dataSrc: "data",
-                     data: { OPID: OPID },
+                     data: { OPID: OPID, MakerID: MakerID },
                 dataType: "json",
             }) ,
       
@@ -27,11 +31,11 @@ function Getdata(OPID) {
                     columns: [
                         { data: "operatorID", name: "operatorID", class: "text-wrap text-center" },
                         { data: "sectionCode", name: "sectionCode", class: "text-wrap text-center" },
-                        { data: "sectionCode2", name: "sectionCode2", class: "text-wrap text-center" },
+                       
                         { data: "division", name: "division", class: "text-wrap text-center" },
                         { data: "department", name: "department", class: "text-wrap text-center" },
                         { data: "section", name: "section", class: "text-wrap text-center" },
-                        { data: "statusC", name: "statusC", class: "text-wrap text-center" },
+                    
                         //{
                         //    "render": function (data, type, row) {
                         //        return "<a href='#' class='btn btn-danger text-white' onclick=Delete_Data('" + row.operatorID + "','" + row.sectionCode + "'); >Delete</a>";
@@ -65,6 +69,96 @@ function Getdata(OPID) {
 
    // CheckData()
     
+}
+
+
+
+
+
+function MakeDataTemp(OPID, MakerID) {
+
+    debugger
+
+   
+    $.ajax({
+        type: 'post',
+        url: "/Management/GetMakeTemp_Additional",
+        dataSrc: "data",
+        data: { OPID: OPID, MakerID: MakerID },
+        dataType: 'json',
+        success: function (response) {
+            if (response.success == true) {
+                r
+            }
+
+        },
+        error: function (ex) {
+            Swal.fire({
+                text: ('Failed to retrieve states.' + ex),
+                type: 'error',
+                timer: 1700,
+            }).then(function () {
+                return false;
+            });
+        },
+
+
+    });
+
+
+}
+
+function SaveData(OPID, MakerID) {
+
+    $.ajax({
+        type: 'POST',
+        url: "/Management/Save_Additional",
+        dataSrc: "data",
+        data: { OPID: OPID, MakerID: MakerID },
+        dataType: 'json',
+        success: function (response) {
+            if (response.success == true) {
+
+                Swal.fire({
+                    position: 'top-mid',
+                    type: 'success',
+                    title: (response.responseText),
+                    showConfirmButton: true,
+                    timer: 1700
+                }).then(function (result) {
+                    // if (result.value) {
+                    debugger
+                 //   Getdata(OPID)
+                    // }
+                    $("#strOPNo").val('');
+                    var x = document.getElementById("display_grid");
+                    x.style.display = "none";
+
+                    var a = document.getElementById("Form_Add");
+                    a.style.display = "none";
+
+                });
+
+
+            } else {
+
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: (response.responseText)
+                }).then(function (result) {
+                    //   if (result.value) {
+                    Getdata(OPID)
+                    // }
+                });
+
+
+            }
+
+        }
+    });
+
+
 }
 
 
@@ -104,29 +198,71 @@ function CheckData() {
 }
 
 
+function AddData_Data(OPID, MakerID, SectionCode) {
+
+
+    
+
+    $.ajax({
+        type: 'POST',
+        url: "/Management/AddNewSectionCode_Additional",
+        dataSrc: "data",
+        data: { OPID: OPID, MakerID: MakerID, SectionCode: SectionCode},
+        dataType: 'json',
+        success: function (response) {
+            if (response.success == true) {
+
+                Swal.fire({
+                    position: 'top-mid',
+                    type: 'success',
+                    title: (response.responseText),
+                    showConfirmButton: true,
+                    timer: 1700
+                }).then(function (result) {
+                   // if (result.value) {
+                    debugger
+                        Getdata(OPID)
+                   // }
+        
+
+                });
+
+
+            } else {
+
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: (response.responseText)
+                }).then(function (result) {
+                 //   if (result.value) {
+                        Getdata(OPID)
+                   // }
+                });
+
+
+            }
+
+        }
+    });
 
 
 
+}
 
 
 
-
-
-
-
-function Delete_Data() {
+function Delete_Data(OPID,MakerID) {
      
  
 
 
-    var arrdata = TableTarget.$('input:checkbox false').serializeArray();
+    var arrdata = TableTarget.$('input,deselect').serializeArray();
 
     
+    var SectionCode = new Array();
 
-    var Lotcount = 0;
-    var sectionCode = new Array();
-    var WFLotCount = arrdata.length
-
+    debugger
 
     if (arrdata.length != 0) {
 
@@ -135,11 +271,66 @@ function Delete_Data() {
         for (i = 0; i < arrdata.length; i++) {
             debugger
 
-            arrtemp = arrdata[i].value.split(',');
-            Lotcount = parseInt(arrtemp[1]) + parseInt(Lotcount);
-            sectionCode.push(arrtemp[1]);
+            arrtemp = arrdata[i].value.split(',');            
+            SectionCode.push(arrtemp[0])+';';
             arrtemp = [];
         }
+
+
+        debugger
+        $.ajax({
+            type: 'POST',
+            url: "/Management/DeleteSectionCode_Additional",
+            dataSrc: "data",
+            data: { OPID: OPID, MakerID: MakerID, SectionCode: SectionCode},
+            dataType: 'json',
+            success: function (response) {
+                if (response.success == true) {                                                        
+                    Swal.fire({
+                        position: 'top-mid',
+                        type: 'success',
+                        title: (response.responseText),
+                        showConfirmButton: true,
+                        timer: 1700
+                    }).then(function (result) {
+                      //  if (result.value) {
+                            Getdata(OPID)
+                        //}
+                    });
+
+                } else {
+
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: (response.responseText)
+                    }).then(function (result) {
+                       // if (result.value) {
+                            Getdata(OPID)
+                        //}
+                    });
+
+                  
+
+
+                }
+
+            },
+            error: function (ex) {              
+
+                Swal.fire({                  
+                    text: ('Failed to retrieve states.' + ex) ,
+                    type: 'error',
+                    timer: 1700,
+                }).then(function () {
+                    return false;
+                });
+            },
+
+
+        });
+
+
     }
     else {
         Swal.fire({
@@ -161,10 +352,64 @@ function Delete_Data() {
 
 }
 
-function GetDepartment_Addition(DIV) {
+
+function Getdata_(OPID) {
+
+    debugger
+
     $.ajax({
         type: 'POST',
-        url: '../Management/GetDepartment_Addition',
+        url: "/Management/Load_OperatorAdditional_Detail",
+        dataSrc: "data",
+        data: { OPID: OPID },
+        dataType: 'json',       
+        success: function (response) {
+            if (response.success == true) {
+
+                var Dataarray = response.data
+                debugger
+            }
+                 
+                           
+
+            //$.each(data, function (index, value) {
+            //    /*console.log(value);*/
+            //    event_data += '<tr>';
+            //    event_data += '<td>' + value.name + '</td>';
+            //    event_data += '<td>' + value.id + '</td>';
+            //    event_data += '<tr>';
+            //});
+            //$("#list_table_json").append(event_data);
+     
+           
+            //var x = document.getElementById("display_grid");
+            //x.style.display = "block";
+            //var a = document.getElementById("Form_Add");
+            //a.style.display = "block";
+            //var t = document.getElementById("Display_tableAdd");
+            //t.style.display = "none";
+
+        },
+        error: function (ex) {
+            alert('Failed to retrieve states.' + ex);
+        },
+     
+
+    });
+
+
+
+}
+
+
+
+function GetDepartment_Addition(DIV) {
+
+    debugger
+
+    $.ajax({
+        type: 'POST',
+        url: '/Management/GetDepartment_Addition',
         dataType: 'json',
         data: {DIV:DIV},
         success: function (Departments) {
@@ -186,9 +431,10 @@ function GetDepartment_Addition(DIV) {
 
 
 function GetDivision_Addition() {
+    debugger
     $.ajax({
         type: 'POST',
-        url: '../Management/GetDivision_Addition',
+        url: '/Management/GetDivision_Addition',
         dataType: 'json',
         success: function (Divisions) {
             if (Divisions.length != 0) {
@@ -206,13 +452,11 @@ function GetDivision_Addition() {
 
 
 
+function GetSection_Addition(DIV, DEP) {
 
-
-
-function GetSection_Addition(DIV,DEP) {
     $.ajax({
         type: 'POST',
-        url: '../Management/GetSection_Addition',
+        url: '/Management/GetSection_Addition',
         dataType: 'json',
         data: { DIV: DIV ,DEP: DEP},
         success: function (Sections) {
@@ -232,49 +476,6 @@ function GetSection_Addition(DIV,DEP) {
 }
 
 
-
-
-
-$("#DDL_Department").on("change", function () {
-
-    var DIV = $("#DDL_Division").val() 
-    var DEP = $("#DDL_Department").val() 
-    debugger
-    if ($("#DDL_Department").val != 0) {
-     
-        $("#DDL_Section option").remove();     
-
-        GetSection_Addition(DIV, DEP)
-    } else {             
-        $("#DDL_Section option").remove();
-
-    }
-
-
-});
-
-
-$("#DDL_Division").on("change", function () {
-
-
-    var DIV = $("#DDL_Division").val() 
-    debugger
-    if (DIV != 0) {
-        debugger
-        $("#DDL_Department option").remove();
-        $("#DDL_Section option").remove();
-        GetDepartment_Addition(DIV)
-
-    } else {
-
-        $("#DDL_Department option").remove();
-        $("#DDL_Section option").remove();
-
-    }   
-
-
-
-});
 
 
 //$('#BTN_Delete').on('click', function () {

@@ -29,14 +29,14 @@ namespace RISTExamOnlineProject.Models.TSQL
             {
                 strSQL += Chk == 0 ? " Where  " : " and  ";
 
-                strSQL += "Division = '" + strDivision + "'";
+                strSQL += "Substring(sectionCode,1,1) = '" + strDivision + "'";
                 Chk++;
             }
             if (strDepartment != "" && strDepartment != null)
             {
                 strSQL += Chk == 0 ? " Where  " : " and  ";
 
-                strSQL += "Department = '" + strDepartment + "'";
+                strSQL += "Substring(sectionCode,1,2) = '" + strDepartment + "'";
                 Chk++;
             } 
             strSQL += "group by  [SectionCode],[Section],[Department],[Division]  "; 
@@ -50,16 +50,16 @@ namespace RISTExamOnlineProject.Models.TSQL
             dt = new DataTable();
             strSQL = "";
             int Chk = 0;
-            strSQL += "SELECT [Department]" +
+            strSQL += "SELECT Substring(sectionCode,1,2) as sectionCode , [Department]" +
                 "FROM [SPTOSystem].[dbo].[vewT_Section_Master] ";
 
             if (strDivision != "" && strDivision != null)
             {
                 strSQL += Chk == 0 ? " Where  " : " and  "; 
-                strSQL += "Division = '" + strDivision + "'"; 
+                strSQL += "Substring(sectionCode,1,1) = '" + strDivision + "'"; 
                 Chk++;
             }
-            strSQL += "group by [Department] ";
+            strSQL += "group by Substring(sectionCode,1,2),[Department] ";
 
             dt = ObjRun.GetDatatables(strSQL);
 
@@ -71,9 +71,9 @@ namespace RISTExamOnlineProject.Models.TSQL
             dt = new DataTable();
             strSQL = "";
 
-            strSQL += "SELECT [Division]" +
+            strSQL += "SELECT Substring(sectionCode,1,1) as sectionCode  ,[Division] " +
                 "FROM [SPTOSystem].[dbo].[vewT_Section_Master] ";
-            strSQL += "group by [Division] ";
+            strSQL += " group by Substring(sectionCode,1,1) ,[Division]  ";
 
             dt = ObjRun.GetDatatables(strSQL);
 

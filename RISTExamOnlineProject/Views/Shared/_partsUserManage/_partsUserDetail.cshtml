@@ -187,13 +187,7 @@
             confirmButtonText: 'Yes, Do it!'
         }).then(function (result) {
 
-            if (result.value) {
-
-
-
-
-
-
+            if (result.value) { 
                 UpdateUserDetail();
             }
         });
@@ -236,15 +230,17 @@
                     $("#txtjobtitle").val(_Data.jobTitle);
                     $("#ddlAuthority").val(_Data.authority);
                     $("#ddlActive").val(_Data.active.toString());
-                    $("#ddlDivision").val(_Data.division);
+                   
                     
-
+                    var Div = _Data.sectionCode.substring(0, 1);
+                    $("#ddlDivision").val(Div);
+                    var Dep = _Data.sectionCode.substring(0, 2);
                     $("#ddlDepartment option").remove();
-                    GetDepartment(_Data.division, _Data.department);
+                    GetDepartment(Div, Dep);
 
 
                     $("#ddlSection option").remove();
-                    GetSectionCode(_Data.division, _Data.department, _Data.sectionCode);
+                    GetSectionCode(Div, Dep, _Data.sectionCode);
 
 
 
@@ -282,9 +278,7 @@
 
     }
 
-
-
-
+     
     function UpdateUserDetail() {
         var arryItem = [];
         var yourArray = [];
@@ -303,16 +297,14 @@
             Authority: $("#ddlAuthority").val(),
             Active: $("#ddlActive").val(),
         }];
-
-
+         
         $("input:checkbox[name=cbLicense]:checked").each(function () {
             yourArray.push({ OperatorID: $("#strOPNo").val(), License: $(this).val() });
-        });
-        alert(yourArray[0].License);
+        }); 
         $.ajax({
             type: 'POST',
-            url: '../Management/GetUpdateUserdetail',
-            data: { dataDetail: arryItem[0], OpNo: ' @User.Identity.Name', dataLicenses: yourArray },
+            url: '@Url.Action("GetUpdateUserdetail","Management")',
+            data: { dataDetail: arryItem[0], dataLicenses: yourArray, OpNo: '@User.Identity.Name' },
             dataType: 'json',
             success: function (Data)
             {
@@ -341,9 +333,16 @@
                 }
             },
             error: function (ex) {
-                    alert('Failed to retrieve states.' + ex.statusText);
+                alert('Failed to retrieve states.' + ex.statusText); 
+                Swal.fire({
+                    icon: 'error',
+                    title: ex.text + " !",
+                    text: ex.statusText + ': @Url.Action("GetUpdateUserdetail","Management")',
+                    type: 'error',
 
-
+                }).then(function () {
+                    return false;
+                });
             }
             });
 
