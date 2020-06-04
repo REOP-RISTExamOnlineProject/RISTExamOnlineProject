@@ -12,53 +12,65 @@ function Getdata(OPID) {
     if (TableTarget != null) {
         TableTarget.destroy();
     }
+    try {
 
-            TableTarget = $("#MyTable").DataTable({               
-                ordering: true,
-                serverSide: true,
-                paging: true,
-                processing: true,
-                cache: true,
-                 ajax: ({
-                type: "post",              
+        TableTarget = $("#MyTable").DataTable({
+            ordering: true,
+            serverSide: true,
+            paging: true,
+            processing: true,
+            cache: true,
+            ajax: ({
+                type: "post",
                 url: "/Management/Load_OperatorAdditional_Detail",
                 dataSrc: "data",
-                     data: { OPID: OPID, MakerID: MakerID },
+                data: { OPID: OPID, MakerID: MakerID },
                 dataType: "json",
-            }) ,
-      
-                dom: '<"top"l>rt<"bottom">ip<"clear">',
-                    columns: [
-                        { data: "operatorID", name: "operatorID", class: "text-wrap text-center" },
-                        { data: "sectionCode", name: "sectionCode", class: "text-wrap text-center" },
-                       
-                        { data: "division", name: "division", class: "text-wrap text-center" },
-                        { data: "department", name: "department", class: "text-wrap text-center" },
-                        { data: "section", name: "section", class: "text-wrap text-center" },
-                    
-                        //{
-                        //    "render": function (data, type, row) {
-                        //        return "<a href='#' class='btn btn-danger text-white' onclick=Delete_Data('" + row.operatorID + "','" + row.sectionCode + "'); >Delete</a>";
+            }),
 
-                        //    }
-                        //},
-                        {
-                            //data: "Delete",
-                            //render: function (data, type, row)
-                            data:null,
-                            className: "center",
-                            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                                var Target = oData.sectionCode
+            dom: '<"top"l>rt<"bottom">ip<"clear">',
+            columns: [
+                { data: "operatorID", name: "operatorID", class: "text-wrap text-center" },
+                { data: "sectionCode", name: "sectionCode", class: "text-wrap text-center" },
 
-                                $(nTd).html('<input type="checkbox"   class="editor-active" id="CB_Delete"  name="CB_Delete" value="' + Target + '"  />');
+                { data: "division", name: "division", class: "text-wrap text-center" },
+                { data: "department", name: "department", class: "text-wrap text-center" },
+                { data: "section", name: "section", class: "text-wrap text-center" },
 
-                            }, className: "dt-body-center"
-                        },
+                //{
+                //    "render": function (data, type, row) {
+                //        return "<a href='#' class='btn btn-danger text-white' onclick=Delete_Data('" + row.operatorID + "','" + row.sectionCode + "'); >Delete</a>";
 
-                    ],
-                        order: [1, "asc"],
+                //    }
+                //},
+                {
+                    //data: "Delete",
+                    //render: function (data, type, row)
+                    data: null,
+                    className: "center",
+                    "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                        var Target = oData.sectionCode
 
-                });
+                        $(nTd).html('<input type="checkbox"   class="editor-active" id="CB_Delete"  name="CB_Delete" value="' + Target + '"  />');
+
+                    }, className: "dt-body-center"
+                },
+
+            ],
+            order: [1, "asc"],
+
+        });
+
+    } catch (e) {
+        Swal.fire({
+            type: 'error',
+            title: 'Oops...',
+            text: (e)
+        })
+
+
+    }
+          
      
     var x = document.getElementById("display_grid");
     x.style.display = "block";
