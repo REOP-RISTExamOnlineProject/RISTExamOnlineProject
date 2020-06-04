@@ -61,7 +61,7 @@ function Getdata(OPID) {
         Swal.fire({
             type: 'error',
             title: 'Oops...',
-            text: (e)
+            text: ("table:"+e)
         })
 
 
