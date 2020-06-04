@@ -88,24 +88,33 @@ function Getdata(OPID) {
 
 
 
-function MakeDataTemp(OPID, MakerID) {
+function MakeDataTemp(OPID_, MakerID_) {
 
     debugger   
     $.ajax({
         type: 'post',
         url: "/Management/GetMakeTemp_Additional",
         dataSrc: "data",
-        data: { OPID: OPID, MakerID: MakerID },
+        data: { OPID: OPID_, MakerID: MakerID_ },
         dataType: 'json',
         success: function (response) {
             if (response.success == true) {
-                Getdata(OPID)
-             }
+                debugger
+                Getdata(OPID_)
+            } else {
+                Swal.fire({
+                    text: ('Make Temp Data Error'),
+                    type: 'error',
+                    //     timer: 1700,
+                }).then(function () {
+                    return false;
+                });
+            }
 
         },
         error: function (ex) {
             Swal.fire({
-                text: ('Failed to retrieve states.' + ex),
+                text: ('MakeDataTemp :' + ex),
                 type: 'error',
            //     timer: 1700,
             }).then(function () {
