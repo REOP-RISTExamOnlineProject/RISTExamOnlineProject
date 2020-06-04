@@ -561,7 +561,7 @@ namespace RISTExamOnlineProject.Controllers
 
                     listItems.Add(new SelectListItem()
                     {
-                        Text = row["Section"].ToString().Trim(),
+                        Text = row["SectionCode"].ToString().Trim() + "-"   + row["Section"].ToString().Trim(),
                         Value = row["SectionCode"].ToString().Trim(),
 
                     });
