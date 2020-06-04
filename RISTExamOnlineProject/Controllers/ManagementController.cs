@@ -464,10 +464,10 @@ namespace RISTExamOnlineProject.Controllers
             var DataShow = (from tempdata in TempData
                             select tempdata);
 
-            var data = DataShow.Skip(skip).Take(pageSize).ToList();
+            var data = DataShow.ToList();
 
 
-            return Json(new { success = true, draw, recordsFiltered = recordsTotal, recordsTotal, data=data });
+            return Json(new { success = true, draw, recordsFiltered = recordsTotal, recordsTotal, data });
             }
             catch (Exception ex)
             {
