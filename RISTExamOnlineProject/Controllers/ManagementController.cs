@@ -610,11 +610,11 @@ namespace RISTExamOnlineProject.Controllers
             //    model.DivisionName.Add(new SelectListItem { Text = divitem.DivisionName.ToString(), Value = divitem.DivisionID.ToString() });
             //}
 
-            List<string> userdetail =  new List<string>();
-            userdetail.Add(Getuser.NameEng);
-            userdetail.Add(Getuser.Section);
-            userdetail.Add(Getuser.GroupName);
-            TempData["Userdetail"] = userdetail;
+            //List<string> userdetail =  new List<string>();
+            //userdetail.Add(Getuser.NameEng);
+            //userdetail.Add(Getuser.Section);
+            //userdetail.Add(Getuser.GroupName);
+            //TempData["Userdetail"] = userdetail;
 
             //IList<Filter_IDs> filterIds = ef.filterline
             //    .Select(fl => fl.objectType).Distinct()
@@ -640,7 +640,7 @@ namespace RISTExamOnlineProject.Controllers
             //     .ToList();
 
 
-            CatagoryDiv = (from vewTSectionMaster in _sptoDbContext.vewT_Section_Master select vewTSectionMaster).ToList();
+           // CatagoryDiv = (from vewTSectionMaster in _sptoDbContext.vewT_Section_Master select vewTSectionMaster).ToList();
            
 
             //Get Section to Dropdown

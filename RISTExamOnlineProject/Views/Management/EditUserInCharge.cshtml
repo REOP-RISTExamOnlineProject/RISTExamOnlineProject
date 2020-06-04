@@ -19,11 +19,11 @@
 
                 <div class="form-group row">
                     <div class="col-sm-6">
-                        <label for="Division" class="mb-0">Division</label>
+                        <label for="Division" class="mb-0">Current-Division</label>
                         @Html.DropDownList("Division", (IEnumerable<SelectListItem>) ViewBag.CategoryDivision, new {@class = "form-control border-success"})
                     </div>                   
                     <div class="col-sm-6">
-                        <label for="Division" class="mb-0">Division</label>
+                        <label for="Division" class="mb-0">New-Division</label>
 
                         @* @Html.DropDownListFor(m => m.DivisionID, Model.DivisionName, "Please select", new {@class = "form-control"})*@
                         @*<label asp-for="DivisionName" class="mb-0">Division</label>
