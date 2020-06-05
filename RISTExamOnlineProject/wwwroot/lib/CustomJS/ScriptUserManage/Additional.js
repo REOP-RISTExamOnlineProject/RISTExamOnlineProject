@@ -4,12 +4,13 @@ var TableTarget;
 
 
 function Getdata(OPID) {
-    var TableTarget;
+    debugger
+    if (TableTarget != null) {
+        TableTarget.destroy();
+    }
 
     try {
-        if (TableTarget != null) {
-            TableTarget.destroy();
-        }
+       
 
         TableTarget = $("#MyTable").DataTable({
             ordering: true,
