@@ -32,7 +32,9 @@
                         <th>
                             @Html.DisplayNameFor(model => model.JobTitle)
                         </th>
-                        <th></th>
+                        <th>
+
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,7 +59,7 @@
                                 @Html.DisplayFor(modelItem => item.JobTitle)
                             </td>
                             <td>
-                                <a asp-action="EditUserInCharge" asp-route-id="@item.OperatorID">Edit_</a> 
+                                <a asp-action="EditUserInCharge" asp-route-id="@item.OperatorID"><i class="far fa-edit"></i> Edit</a> 
                                 
                             </td>
                         </tr>

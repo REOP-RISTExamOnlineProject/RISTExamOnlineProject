@@ -612,6 +612,56 @@ namespace RISTExamOnlineProject.Controllers
                 .Select(c => new { c.OperatorID, c.Section });
             ViewBag.CategorySection = new SelectList(querySection.AsEnumerable(), "OperatorID", "Section");
 
+            //Get Shift to Dropdown
+            var queryShift = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == id)
+                .Select(c => new { c.OperatorID, c.GroupName });
+            ViewBag.CategoryShift = new SelectList(queryShift.AsEnumerable(), "OperatorID", "GroupName");
+
+            //Get Shiftmaster to Dropdown
+            //var queryShiftmaster = _sptoDbContext.vewOperatorAll
+            //    .Where(x => x.GroupName != null)
+            //    .GroupBy(g => new
+            //    {
+            //        Gshift = g.GroupName
+            //    })
+            //    .SelectMany(g=>
+            //    g.Select((item, i) => new {Item = g.Key.Gshift, Index = i+1})).ToList();
+
+            //var ShiftGroups =
+            //    _sptoDbContext.vewOperatorAll
+            //        .GroupBy(shiftmaster => new { shiftmaster.GroupName})
+            //        .Select(g => new
+            //        {
+            //            g.Key,
+            //            Shifts = g.Select((shiftmaster, i) => new
+            //            {
+            //                RowCount = i + 1,
+            //                shiftmaster = g.Key.GroupName
+            //            })
+            //        });
+
+            //var jobGroups =
+            //    _sptoDbContext.vewOperatorAll
+            //        .GroupBy(job => new {job.GroupName})
+            //        .Select(g => new
+            //        {
+            //            shift = g.Key.GroupName,
+            //            Jobs = g.Select((job, i) => new
+            //            {
+            //                RowCount = i + 1,
+            //                job
+            //            })
+            //        });
+
+            var shiftmaster = _sptoDbContext.vewOperatorGroupMaster
+                .Select(c => new {c.Shift, c.GroupName}).ToList();
+
+
+            // ------- Inserting Select Item in List -------
+            //shiftmaster.Insert(0, new ve { SubCategoryID = 0, SubCategoryName = "Select" });
+            ViewBag.CategoryShiftmaster = new SelectList(shiftmaster.AsEnumerable(), "Shift", "GroupName");
+
+
 
             List<vewDivisionMaster> catagorylist = new List<vewDivisionMaster>();
 
@@ -640,10 +690,7 @@ namespace RISTExamOnlineProject.Controllers
             List<vewDepartmentMaster> subCategorylist = new List<vewDepartmentMaster>();
 
             // ------- Getting Data from Database Using EntityFrameworkCore -------
-            //subCategorylist = (from subcategory in _sptoDbContext.vewDepartmentMaster
-            //    where subcategory.DivisionID == DivisionID
-            //    select subcategory).ToList();
-
+           
             subCategorylist = _sptoDbContext.vewDepartmentMaster
                 .Where(x => x.row_num == row_num)
                 .GroupBy(g => new
