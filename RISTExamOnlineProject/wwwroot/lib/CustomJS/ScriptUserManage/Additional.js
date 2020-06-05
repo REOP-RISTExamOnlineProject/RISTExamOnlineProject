@@ -7,15 +7,20 @@ function Getdata(OPID) {
     debugger
     if (TableTarget != null) {
         TableTarget.destroy();
+        TableTarget.clear();
     }
-
+    debugger
     try {
-       
 
-        TableTarget = $("#MyTable").DataTable({
+    
+
+        TableTarget = $("#MyTable").DataTable({      
+            
+            searching: false,
+           
             ordering: true,
             serverSide: true,
-            paging: true,
+          
             processing: true,
             cache: true,
             ajax: ({
@@ -205,6 +210,10 @@ function AddData_Data(OPID, MakerID, SectionCode) {
                 }).then(function (result) {
                    // if (result.value) {
                     debugger
+
+               //     var table = $('#myTable').DataTable();
+                   
+
                         Getdata(OPID)
                    // }
         
