@@ -170,10 +170,12 @@
         SettbSecion();
        
         if ($("#strOPNo").val() != "") {
+           
             GetuserDetail();
            
 
         }
+
        
         return false;
     });
@@ -195,7 +197,14 @@
             success: function (Data) {
 
                 if (Data.strboolbel == true && Data.strResult == "OK") {
+                  
+                    $("#imgUserProfile").attr('src', Data.dataProfile);
+                   
                     var _Data = Data.data;
+                    $("#NameUserProfile").text(_Data.nameEng);
+                    $("#jobUserProfile").text(_Data.jobTitle);
+
+
                     $("#NameEn").val(_Data.nameEng);
                     $("#NameTh").val(_Data.nameThai);
                     $("#txtPosition").val(_Data.position);

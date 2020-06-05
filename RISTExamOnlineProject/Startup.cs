@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using RISTExamOnlineProject.Hubs;
 using RISTExamOnlineProject.Models.db;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.Extensions.FileProviders;
 
 namespace RISTExamOnlineProject
 {
@@ -75,7 +75,9 @@ namespace RISTExamOnlineProject
             app.UseAuthentication();
            
             app.UseCors("CorsPolicy");
-           
+
+         
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
