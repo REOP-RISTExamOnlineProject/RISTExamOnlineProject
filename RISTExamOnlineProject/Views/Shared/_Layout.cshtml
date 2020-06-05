@@ -200,20 +200,20 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right mt-13" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item" href="@Url.Action("UserDetailMaintenance","Management")"><i class="fa fa-user pr-2"></i> Profile</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="fa fa-th-list pr-2"></i> Tasks</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="fa fa-book pr-2"></i> Projects</a>
+
                                 <div class="dropdown-divider"></div>
 
-                                @User.Identity.Name   @User.FindFirst(claim => claim.Type == ClaimTypes.Role)?.Value
-
-                                <a href="@Url.Action("Logout", "Account")" class="dropdown-item">
-                                    <i class="fa fa-power-off pr-2"></i>Logout
+                                <a href="#" class="dropdown-item">
+                                    <i class="fa fa-user"></i>
+                                    @User.Identity.Name   @User.FindFirst(claim => claim.Type == ClaimTypes.Role)?.Value
                                 </a>
 
-                                @*<a class="dropdown-item" href="@Url.Action("Login","Home")"><i class="fa fa-power-off pr-2"></i> Logout</a>*@
-                            </div>
+                                    <a href="@Url.Action("Logout", "Account")" class="dropdown-item">
+                                        <i class="fa fa-power-off pr-2"></i>Logout
+                                    </a>
+
+                                    @*<a class="dropdown-item" href="@Url.Action("Login","Home")"><i class="fa fa-power-off pr-2"></i> Logout</a>*@
+</div>
                         </div>
                     </div>
                     <!--Search box and avatar-->
