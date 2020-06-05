@@ -26,7 +26,9 @@ namespace RISTExamOnlineProject.Controllers
             dataOperator = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == UserName);
             ViewBag.NameEng = dataOperator.NameEng;
             ViewBag.JobTitle = dataOperator.JobTitle;
-            ViewBag.imgProfile = "";
+            var varsd = "http://10.29.1.12/RAJPTrainingControlSystem/PIC/"+ UserName+".jpg";
+
+            ViewBag.imgProfile = varsd;
             return View();
         }
 
