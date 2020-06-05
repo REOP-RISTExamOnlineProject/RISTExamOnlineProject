@@ -35,7 +35,7 @@
                                         <div class="input-group-append">
                                             @*<button class="btn btn-theme" type="submit" id="button-addon2" formaction="@Url.Action("UserDetailMaintenance")">Search</button>*@
 
-                                            <button class="btn btn-theme" type="button" onclick="" id="btnSearch">Search</button>
+                                            <button class="btn btn-theme" type="button" onclick="" id="btnSearch" style="display:none;"   >Search</button>
                                         </div>
                                     </div>
                                 </div>
@@ -98,13 +98,14 @@
                 GetuserDetail();
             }); 
             if ("@User.FindFirst(claim => claim.Type == ClaimTypes.Role)?.Value" == "User") {
-                
+             
                 $("#strOPNo").attr("readonly", "readonly")
 
                 $("#strOPNo").val("@User.Identity.Name");
                 GetuserDetail();
             } else if ("@User.FindFirst(claim => claim.Type == ClaimTypes.Role)?.Value" == "Admin") {
                 $("#NavAdminBar").css("display", "block")
+                $("#btnSearch").css("display", "block")
             }
         });
 
