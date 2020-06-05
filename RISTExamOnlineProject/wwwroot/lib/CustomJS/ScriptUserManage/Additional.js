@@ -1,87 +1,87 @@
 ﻿
-var TableTarget;
 
 
 
-function Getdata(OPID) {
-    debugger
-    if (TableTarget != null) {
-        TableTarget.destroy();
-        TableTarget.clear();
-    }
-    debugger
-    try {
+
+//function Getdata(OPID) {
+//    debugger
+//    if (TableTarget != null) {
+//        TableTarget.destroy();
+//        TableTarget.clear();
+//    }
+//    debugger
+//    try {
 
     
 
-        TableTarget = $("#MyTable").DataTable({      
+//        TableTarget = $("#MyTable").DataTable({      
             
-            searching: false,
+//            searching: false,
            
-            ordering: true,
-            serverSide: true,
+//            ordering: true,
+//            serverSide: true,
           
-            processing: true,
-            cache: true,
-            ajax: ({
-                type: "post",
-                url: "../Management/Load_OperatorAdditional_Detail",
-                dataSrc: "data",
-                data: { OPID: OPID},
-                dataType: "json",
+//            processing: true,
+//            cache: true,
+//            ajax: ({
+//                type: "post",
+//                url: "../Management/Load_OperatorAdditional_Detail",
+//                dataSrc: "data",
+//                data: { OPID: OPID},
+//                dataType: "json",
 
-            }),
+//            }),
 
-            dom: '<"top"l>rt<"bottom">ip<"clear">',
-            columns: [
-                { data: "operatorID", name: "operatorID", class: "text-wrap text-center" },
-                { data: "sectionCode", name: "sectionCode", class: "text-wrap text-center" },
-                { data: "division", name: "division", class: "text-wrap text-center" },
-                { data: "department", name: "department", class: "text-wrap text-center" },
-                { data: "section", name: "section", class: "text-wrap text-center" },
-                {
-                    //   data: "Delete",
-                    //  render: function (data, type, row),
-                    data: null,
-                    name: null,
-                    className: "center",
-                    "fnCreatedCell": function (nTd, oData, ) {
-                        var Target = oData.sectionCode
+//            dom: '<"top"l>rt<"bottom">ip<"clear">',
+//            columns: [
+//                { data: "operatorID", name: "operatorID", class: "text-wrap text-center" },
+//                { data: "sectionCode", name: "sectionCode", class: "text-wrap text-center" },
+//                { data: "division", name: "division", class: "text-wrap text-center" },
+//                { data: "department", name: "department", class: "text-wrap text-center" },
+//                { data: "section", name: "section", class: "text-wrap text-center" },
+//                {
+//                    //   data: "Delete",
+//                    //  render: function (data, type, row),
+//                    data: null,
+//                    name: null,
+//                    className: "center",
+//                    "fnCreatedCell": function (nTd, oData, ) {
+//                        var Target = oData.sectionCode
 
-                        $(nTd).html('<input type="checkbox"   class="editor-active" id="CB_Delete"  name="CB_Delete" value="' + Target + '"  />');
+//                        $(nTd).html('<input type="checkbox"   class="editor-active" id="CB_Delete"  name="CB_Delete" value="' + Target + '"  />');
 
-                    }, className: "dt-body-center"
-                },
+//                    }, className: "dt-body-center"
+//                },
 
-            ],
-            order: [1, "asc"],
+//            ],
+//            order: [1, "asc"],
 
-        });
+//        });
 
-    } catch (e) {
-        Swal.fire({
-            icon: 'error',           
-            title: 'Oops...',
-            text: ("table:"+e)
-        })
+//    } catch (e) {
+//        Swal.fire({
+//            icon: 'error',           
+//            title: 'Oops...',
+//            text: ("table:"+e)
+//        })
 
 
-    }
-    finally {
+//    }
+//    finally {
 
-        GetDivision_Addition()
+//        GetDivision_Addition()
 
-        var x = document.getElementById("display_grid");
-        x.style.display = "block";
-        var a = document.getElementById("Form_Add");
-        a.style.display = "block";
-        var t = document.getElementById("Display_tableAdd");
-        t.style.display = "none";
+//        var x = document.getElementById("display_grid");
+//        x.style.display = "block";
+//        var a = document.getElementById("Form_Add");
+//        a.style.display = "block";
+//        var t = document.getElementById("Display_tableAdd");
+//        t.style.display = "none";
 
-    }
+//    }
           
     
-}
+//}
 
 
 
