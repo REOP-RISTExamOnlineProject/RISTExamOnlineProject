@@ -85,7 +85,7 @@ namespace RISTExamOnlineProject.Models.TSQL
         {
             var ObjRun = new mgrSQLConnect(_configuration);
             strSQL = "SELECT [Department] FROM[SPTOSystem].[dbo].[vewT_Section_Master] with(nolock) ";
-             strSQL +=  "where Division = '"+ DIV.Trim() + "' group by[Department] order by[Department] asc";         
+            strSQL +=  "where Division = '"+ DIV.Trim() + "' group by[Department] order by[Department] asc";         
             
             
             dt = ObjRun.GetDatatables(strSQL);

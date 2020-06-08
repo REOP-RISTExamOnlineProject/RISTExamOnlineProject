@@ -82,6 +82,7 @@ namespace RISTExamOnlineProject.Controllers
         [Authorize]
         public IActionResult UserDetailMaintenance(string Event)
         {
+
             var Event_ = Event == null ? "_partsUserInfo" : Event;
             var UserName = User.Identity.Name;
             vewOperatorAlls dataOperator = new vewOperatorAlls();
