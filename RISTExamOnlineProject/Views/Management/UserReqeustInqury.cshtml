@@ -1,0 +1,160 @@
+﻿
+@{
+    ViewData["Title"] = "UserReqeustInqury";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class=" row mb-4">
+        <div class="col-7">
+            <h5 class=" mb-0"><strong> Request Inquiry</strong></h5>
+            <span class="text-secondary">User In-Charge <i class="fa fa-angle-right"></i> Request Inquiry</span>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="text-secondary">Search Control</h5>
+            <hr />
+            <div class=" row mb-4">
+                <div class="col-sm">
+                    <label for="NameEng" class="mb-0">Document No.</label>
+                    @Html.TextBox("txtDocNo", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Document No..", id = "txtDocNo" })
+                </div>
+                <div class="col-sm">
+                    <label for="NameEng" class="mb-0">OperatorRequest</label>
+                    @Html.TextBox("txtOpId", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "OperatorNo..", id = "txtOpId" })
+                </div>
+                <div class="col-sm">
+                    <label for="NameEng" class="mb-0">Requester</label>
+                    @Html.TextBox("txtReqID", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Requester..", id = "txtReqID" })
+                </div>
+                <div class="col-sm">
+                    <label for="NameEng" class="mb-0">Name - Surname</label>
+                    @Html.TextBox("NameEn", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Name English..", id = "NameEn" })
+                </div>
+                <div class="col-sm">
+                    <label for="NameEng" class="mb-0">Operator Approved</label>
+                    @Html.TextBox("txtOpAppID", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Operator Approved..", id = "txtOpAppID" })
+                </div>
+            </div>
+            <div class=" row">
+                <div class="col-sm">
+                    <button class="btn bg-info" id="btnSearch"><i class="fa fa-search"></i> Search</button>
+                    <button class="btn bg-warning" id="btnClear"><i class="fa fa-undo"></i> reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="  table-responsive">
+                <h6 class="m-3">Additional Department</h6>
+                <table class="table table-bordered table-striped table-sm nowrap" id="myTables">
+                    <thead class="bg-dark text-white">
+                        <tr>
+                            <th>DocNo</th>
+                            <th>OperatorID</th>
+                            <th>SectionCode</th>
+                            <th>SectionAttribute</th>
+                            <th>OperatorGroup</th>
+                            <th>License</th>
+                            <th>Active</th>
+                            <th>ReqOperatorID</th>
+                            <th>ReqDate</th>
+                            <th>ChangeOperatorID</th>
+                            <th>ChangeDate</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-size:xx-small"></tbody>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    <link href="~/lib/datatables/Css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="~/lib/datatables/Js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/CustomJS/ScriptUserManage/Additional.js"></script>
+    <script src="~/lib/CustomJS/ScriptUserManage/UserManagemant.js"></script>
+
+    <script>
+        var myTables;
+        $(document).ready(function () {
+            SetmyTablesn();
+            $("#btnSearch").on("click", function (event) {
+                Swal.fire({
+                    icon: 'success',
+                    title: "Success~!",
+                    text: "Reset to Default",
+                    type: 'success',
+                });
+            });
+
+            $("#btnClear").on("click", function (event) {
+                Swal.fire({
+                    title: 'Are you sure to reset?',
+                    //text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Do it!'
+                }).then(function (result) {
+
+                    if (result.value) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: "Success~!",
+                            text: "Reset to Default",
+                            type: 'success',
+                        })
+                    }
+                });
+            }); 
+        });
+
+        function SetmyTablesn() {
+
+            myTables = $("#myTables").DataTable({
+                paging: false,
+                ordering: false,
+                processing: true, 
+                dom: '<"top"l>rt<"bottom"ip><"clear">',
+                columns: [
+                    { Data: 'DocNo' },
+                    { Data: 'OperatorID' },
+                    { Data: 'SectionCode' },
+                    { Data: 'SectionAttribute' },
+                    { Data: 'OperatorGroup' },
+                    { Data: 'License' },
+                    { Data: 'Active' },
+                    { Data: 'ReqOperatorID' },
+                    { Data: 'ReqDate' },
+                    { Data: 'ChangeOperatorID' },
+                    { Data: 'ChangeDate' },
+                ],
+                order: [1, "asc"],
+                fnInitComplete: function (oSettings, json, sData) {
+                
+                    return true;
+                },
+            });
+        }
+    </script>
+}

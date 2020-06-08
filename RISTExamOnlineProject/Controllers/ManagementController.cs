@@ -798,62 +798,9 @@ namespace RISTExamOnlineProject.Controllers
         }
 
 
-
-
-
-        //    public IActionResult TempDataExample()
-        //    {
-        //        mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
-
-
-        //        DataTable dt = new DataTable();
-
-
-
-
-        //        dt = ObjRun.GetUserDetail_Additional("000702");
-
-        //        List<string> mobileList = new List<string>();
-        //        string Strdata = "";
-
-        //        if (dt.Rows.Count != 0)
-        //        {
-
-
-        //            for (int i = 0; i > dt.Rows.Count; i++) {
-
-        //                Strdata += "{[ data:";
-        //                if (i != dt.Rows.Count)
-        //                {
-
-        //                    Strdata += "{},";
-
-
-        //                }
-        //                else {
-        //                    Strdata += "{}";
-
-        //                }
-
-        //                Strdata += "]}";
-
-
-
-        //            }
-
-
-        //            foreach (DataRow row in dt.Rows)
-        //            {
-        //                mobileList.Add("" + row["OperatorID"].ToString() + "," + row["SectionCode"].ToString() + "," +
-        //                    " " + row["Division"].ToString() + ", " + row["Department"].ToString() + "," + row["Section"].ToString() + " ");
-
-        //            }
-
-        //        }
-
-
-        //        TempData["MobileList"] = mobileList;
-        //        return View();
-        //    }
+        public IActionResult UserReqeustInqury()
+        {
+            return View();
+        }
     }
 }
