@@ -196,24 +196,24 @@
                         </div>
                         <div class="mr-4">
                             <a class="" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="~/lib/img/avatar1.png" alt="#" class="rounded-circle" width="40px" height="40px">
+                                <img src="@ViewBag.imgProfile" alt="#" class="rounded-circle" width="40px" height="40px">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right mt-13" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" href="#"><i class="fa fa-user pr-2"></i> Profile</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="fa fa-th-list pr-2"></i> Tasks</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="fa fa-book pr-2"></i> Projects</a>
+                                <a class="dropdown-item" href="@Url.Action("UserDetailMaintenance","Management")"><i class="fa fa-user pr-2"></i> Profile</a>
+
                                 <div class="dropdown-divider"></div>
 
-                                @User.Identity.Name Test!, @User.FindFirst(claim => claim.Type == ClaimTypes.Role)?.Value
-
-                                <a href="@Url.Action("Logout", "Account")" class="dropdown-item">
-                                    <i class="fa fa-power-off pr-2"></i>Logout
+                                <a href="#" class="dropdown-item">
+                                    <i class="fa fa-user"></i>
+                                    @User.Identity.Name   @User.FindFirst(claim => claim.Type == ClaimTypes.Role)?.Value
                                 </a>
 
-                                @*<a class="dropdown-item" href="@Url.Action("Login","Home")"><i class="fa fa-power-off pr-2"></i> Logout</a>*@
-                            </div>
+                                    <a href="@Url.Action("Logout", "Account")" class="dropdown-item">
+                                        <i class="fa fa-power-off pr-2"></i>Logout
+                                    </a>
+
+                                    @*<a class="dropdown-item" href="@Url.Action("Login","Home")"><i class="fa fa-power-off pr-2"></i> Logout</a>*@
+</div>
                         </div>
                     </div>
                     <!--Search box and avatar-->
@@ -231,11 +231,12 @@
                 <div class="inner-sidebar mr-3">
                     <!--Image Avatar-->
                     <div class="avatar text-center">
-                        <img src="~/lib/img/avatar1.png" alt="" class="rounded-circle" />
+                        <img src="@ViewBag.imgProfile" alt="" class="rounded-circle" />
+                         
                         <p><strong>@ViewBag.NameEng</strong></p>
                         <span class="text-primary small"><strong>@ViewBag.JobTitle</strong></span>
                         @*<p><strong>Mr.Wittaya S.</strong></p>
-                        <span class="text-primary small"><strong>System Dev.</strong></span>*@
+        <span class="text-primary small"><strong>System Dev.</strong></span>*@
                     </div>
                     <!--Image Avatar-->
                     <!--Sidebar Navigation Menu-->

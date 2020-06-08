@@ -87,10 +87,17 @@ namespace RISTExamOnlineProject.Controllers
             var UserName = User.Identity.Name;
             vewOperatorAlls dataOperator = new vewOperatorAlls();
             dataOperator  = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == UserName);
+
             ViewBag.NameEng = dataOperator.NameEng;
             ViewBag.JobTitle = dataOperator.JobTitle;
 
 
+            ViewBag.NameEngUserDetail = dataOperator.NameEng;
+            ViewBag.JobTitleUserDetail = dataOperator.JobTitle;
+            var varsd = "http://10.29.1.12/RAJPTrainingControlSystem/PIC/" + UserName + ".jpg";
+
+            ViewBag.imgProfileUserDetail = varsd;
+            ViewBag.imgProfile = varsd;
 
             ViewBag.Event = Event_;
             string IPAddress = "";
@@ -115,8 +122,15 @@ namespace RISTExamOnlineProject.Controllers
             _Result = dataOperator != null ? "OK" : "error";
             _DataResult = _Result != "OK" ? "Data not found" : "";
 
+
+
+            ViewBag.NameEngUserDetail = dataOperator.NameEng;
+            ViewBag.JobTitleUserDetail = dataOperator.JobTitle;
+            var varsd = "http://10.29.1.12/RAJPTrainingControlSystem/PIC/" + opno + ".jpg";
+             
+            ViewBag.imgProfileUserDetail = varsd;
             var jsonResult = Json(new
-            { strResult = _Result, dataLabel = _DataResult, strboolbel = _ResultLabel, data = dataOperator, dataLicense = dataLicenses });
+            { strResult = _Result, dataLabel = _DataResult, strboolbel = _ResultLabel, data = dataOperator, dataLicense = dataLicenses,DataProfile = varsd });
 
             return jsonResult;
         }
@@ -582,6 +596,24 @@ namespace RISTExamOnlineProject.Controllers
             ViewBag.opno = opno;
 
             var queryuser = _sptoDbContext.sprOperatorShowListInChang.FromSql($"sprOperatorShowListInChang {opno}").ToList();
+
+            var UserName = User.Identity.Name;
+            vewOperatorAlls dataOperator = new vewOperatorAlls();
+            dataOperator = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == UserName);
+
+            ViewBag.NameEng = dataOperator.NameEng;
+            ViewBag.JobTitle = dataOperator.JobTitle;
+
+
+            ViewBag.NameEngUserDetail = dataOperator.NameEng;
+            ViewBag.JobTitleUserDetail = dataOperator.JobTitle;
+            var varsd = "http://10.29.1.12/RAJPTrainingControlSystem/PIC/" + UserName + ".jpg";
+
+            ViewBag.imgProfileUserDetail = varsd;
+            ViewBag.imgProfile = varsd;
+
+
+
             return View(queryuser);
         }
         public async Task<IActionResult> EditUserInCharge(string id)
@@ -626,7 +658,23 @@ namespace RISTExamOnlineProject.Controllers
             catagorylist.Insert(0, new vewDivisionMaster() { row_num = 0, DivisionName = "Select" });
             ViewBag.listofCatagoryDiv = catagorylist;
 
+            var UserName = User.Identity.Name;
+            vewOperatorAlls dataOperator = new vewOperatorAlls();
+            dataOperator = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == UserName);
 
+            ViewBag.NameEng = dataOperator.NameEng;
+            ViewBag.JobTitle = dataOperator.JobTitle;
+
+
+            ViewBag.NameEngUserDetail = dataOperator.NameEng;
+            ViewBag.JobTitleUserDetail = dataOperator.JobTitle;
+            var varsd = "http://10.29.1.12/RAJPTrainingControlSystem/PIC/" + UserName + ".jpg";
+
+            ViewBag.imgProfileUserDetail = varsd;
+            ViewBag.imgProfile = varsd;
+
+
+           
 
 
             return View();
