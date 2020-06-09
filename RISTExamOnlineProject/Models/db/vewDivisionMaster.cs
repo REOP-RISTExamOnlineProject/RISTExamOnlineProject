@@ -24,4 +24,14 @@ namespace RISTExamOnlineProject.Models.db
 
        
     }
+    public class vewAdditionalDep
+    {
+        [Key]
+        public string OperatorID { get; set; }
+        public string SectionCode { get; set; }
+        public string Section { get; set; }
+        public string Department { get; set; }
+        public string Division { get; set; }
+        
+    }
 }

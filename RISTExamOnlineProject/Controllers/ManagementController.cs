@@ -716,11 +716,32 @@ namespace RISTExamOnlineProject.Controllers
             //Binding for select dropdownlist License
             var licensecatagory = _sptoDbContext.vewLicenseMaster.ToList();
             ViewBag.licensecatagory = new MultiSelectList(licensecatagory.AsEnumerable(), "LicenseID", "License");
+           
+            var queryAdditional = _sptoDbContext.vewOperatorAdditionalDep.Where(x => x.OperatorID == id)
+                .Select(c => new
+                {
+                    c.Division,
+                    c.Department,
+                    c.Section,
+                    c.SectionCode
+                });
 
-          
+           
+           
+            //var employeeModel = new List<EmployeeModel>();
+
+            //employeeModel.Add(new EmployeeModel() { EmpID = 101, EmpFirstName = "Surya", EmpLastName = "Kranthi" });
+            //employeeModel.Add(new EmployeeModel() { EmpID = 102, EmpFirstName = "Aditya", EmpLastName = "Roy" });
+            //employeeModel.Add(new EmployeeModel() { EmpID = 103, EmpFirstName = "Ravi", EmpLastName = "Kanth" });
+            //employeeModel.Add(new EmployeeModel() { EmpID = 104, EmpFirstName = "Anshuman", EmpLastName = "Sagara" });
+            //employeeModel.Add(new EmployeeModel() { EmpID = 105, EmpFirstName = "Jhansi", EmpLastName = "Naari" });
+
+            ////Example 1 Using ViewBag
+            //ViewBag.EmployeeList1 = employeeModel;
+
+            ViewBag.AdditionalCurrent = queryAdditional.AsEnumerable() ;
 
 
-            
             var userName = User.Identity.Name;
             vewOperatorAlls dataOperator = new vewOperatorAlls();
             dataOperator = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == userName);
@@ -736,7 +757,7 @@ namespace RISTExamOnlineProject.Controllers
             ViewBag.imgProfileUserDetail = varsd;
             ViewBag.imgProfile = varsd;
 
-
+            
            
 
 

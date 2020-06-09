@@ -35,5 +35,7 @@ namespace RISTExamOnlineProject.Models.db
         public virtual DbSet<vewOperatorGroupMaster> vewOperatorGroupMaster { get; set; }
         public virtual DbSet<vewLicenseMaster> vewLicenseMaster { get; set; }
 
+      
+
     }
 }

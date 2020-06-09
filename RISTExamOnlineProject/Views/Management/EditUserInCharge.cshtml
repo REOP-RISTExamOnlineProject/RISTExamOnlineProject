@@ -1,10 +1,12 @@
-﻿@model RISTExamOnlineProject.Models.db.vewDivisionMaster
+﻿@using RISTExamOnlineProject.Models.db
+@model RISTExamOnlineProject.Models.db.vewDivisionMaster
+
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "EditUserInCharge";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    
+
 }
 
 <h1>Edit User InCharge</h1>
@@ -24,7 +26,7 @@
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="Division" class="mb-0">Current-Division</label>
-                        @Html.TextBox("Division", (string)ViewBag.CategoryDivision, new {@class = "form-control border-success",disabled = "disabled"})
+                        @Html.TextBox("Division", (string)ViewBag.CategoryDivision, new { @class = "form-control border-success", disabled = "disabled" })
                     </div>
                     <div class="col-sm-6">
                         <label asp-for="DivisionName" class="mb-0 text-danger">New-Division</label>
@@ -36,7 +38,7 @@
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="Department" class="mb-0">Current-Department</label>
-                        @Html.TextBox("Department", (string)ViewBag.CategoryDepartment, new {@class = "form-control border-success", disabled = "disabled"})
+                        @Html.TextBox("Department", (string)ViewBag.CategoryDepartment, new { @class = "form-control border-success", disabled = "disabled" })
                     </div>
 
                     <div class="col-sm-6">
@@ -49,7 +51,7 @@
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="Section" class="mb-0">Current-Section</label>
-                        @Html.TextBox("Section",(string)ViewBag.CategorySection, new{@class="form-control border-success", disabled = "disabled"})
+                        @Html.TextBox("Section", (string)ViewBag.CategorySection, new { @class = "form-control border-success", disabled = "disabled" })
                     </div>
                     <div class="col-sm-6">
                         <label for="SectionCodeID" class="mb-0 text-danger">New-Section</label>
@@ -72,7 +74,7 @@
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="Shift" class="mb-0">Current-Shift</label>
-                        @Html.TextBox("Shift", (string)ViewBag.CategoryShift, new {@class = "form-control border-success", disabled = "disabled"})
+                        @Html.TextBox("Shift", (string)ViewBag.CategoryShift, new { @class = "form-control border-success", disabled = "disabled" })
                     </div>
                     <div class="col-sm-6">
                         <label for="shiftmaster" class="mb-0 text-danger">New-Shift</label>
@@ -95,7 +97,7 @@
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="License" class="mb-0">Current-License</label>
-                        @Html.DropDownList("License", (MultiSelectList)ViewBag.CategoryLicense, new { @class = "form-control border-success", multiple = "multiple", disabled = "disabled"  })
+                        @Html.DropDownList("License", (MultiSelectList)ViewBag.CategoryLicense, new { @class = "form-control border-success", multiple = "multiple", disabled = "disabled" })
                     </div>
                     <div class="col-sm-6">
                         <label for="NewLicense" class="mb-0 text-danger">New-License</label>
@@ -128,19 +130,58 @@
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="Resign" class="mb-0">Current-Resign</label>
-                        @Html.TextBox("Resign", (string) ViewBag.CategoryResign, new {@class = "form-control border-success", disabled = "disabled" })
+                        @Html.TextBox("Resign", (string)ViewBag.CategoryResign, new { @class = "form-control border-success", disabled = "disabled" })
                     </div>
                     <div class="col-sm-6">
                         <label for="NewResign" class="mb-0 text-danger">New-Resign</label>
                         <div>
-                            @Html.DropDownList("ResignMaster", (IEnumerable  
+                            @Html.DropDownList("ResignMaster", (IEnumerable
                                 <SelectListItem>)ViewBag.ResignMaster,"Select", new{@class = "form-control"})
                         </div>
 
                     </div>
                 </div>
             </div>
+            <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
+                <h5 class="mb-0">
+                    <strong>Additional Change</strong>
+                </h5>
+                <hr />
 
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="Resign" class="mb-0">Current-Additional</label>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Division</th>
+                                    <th>Department</th>
+                                    <th>Section</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.AdditionalCurrent)
+                                {
+                                <tr>
+                                    <td>@item</td>
+                                    <td>@item</td>
+                                    <td>@item</td>
+                                </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="NewResign" class="mb-0 text-danger">New-Resign</label>
+                        <div>
+                            @Html.DropDownList("ResignMaster", (IEnumerable
+                                <SelectListItem>)ViewBag.ResignMaster,"Select", new{@class = "form-control"})
+                        </div>
+
+                    </div>
+                </div>
+            </div>
 
             <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
 
@@ -151,17 +192,17 @@
             </div>
             @*Example multiselect*@
             @*<select class="selectpicker form-control" data-live-search="true" data-actions-box="true" multiple title="Choose one of the following..." data-header="Select a condiment" data-style="btn-primary">
-                <optgroup label="Picnic">
-                    <option>Mustard</option>
-                    <option>Ketchup</option>
-                    <option>Relish</option>
-                </optgroup>
-                <optgroup label="Camping">
-                    <option>Tent</option>
-                    <option>Flashlight</option>
-                    <option>Toilet Paper</option>
-                </optgroup>
-            </select>*@
+                    <optgroup label="Picnic">
+                        <option>Mustard</option>
+                        <option>Ketchup</option>
+                        <option>Relish</option>
+                    </optgroup>
+                    <optgroup label="Camping">
+                        <option>Tent</option>
+                        <option>Flashlight</option>
+                        <option>Toilet Paper</option>
+                    </optgroup>
+                </select>*@
         </form>
     </div>
 </div>
@@ -223,7 +264,7 @@
 
     <script src="~/lib/bootstrap-select/js/bootstrap-select.js"></script>
 
-  
+
     <link href="~/lib/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
 
 
@@ -234,7 +275,7 @@
 
             //// Enable multiple select.
             $('#LicenseList').attr('multiple', true);
-           // $('#CountryList').attr('data-selected-text-format', 'count');
+            // $('#CountryList').attr('data-selected-text-format', 'count');
 
             $('.selectlicenselist').selectpicker(
                 {
