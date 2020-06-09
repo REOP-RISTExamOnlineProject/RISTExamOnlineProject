@@ -11,7 +11,7 @@
             <span class="text-secondary">User In-Charge <i class="fa fa-angle-right"></i> Request Inquiry</span>
         </div>
     </div>
-    <div class="card">
+    @*<div class="card">
         <div class="card-body">
             <h5 class="text-secondary">Search Control</h5>
             <hr />
@@ -25,13 +25,14 @@
                     @Html.TextBox("txtOpId", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "OperatorNo..", id = "txtOpId" })
                 </div>
                 <div class="col-sm">
+                    <label for="NameEng" class="mb-0">Name - Surname</label>
+                    @Html.TextBox("txtSectionCode", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "SectionCode..", id = "txtSectionCode" })
+                </div>
+                <div class="col-sm">
                     <label for="NameEng" class="mb-0">Requester</label>
                     @Html.TextBox("txtReqID", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Requester..", id = "txtReqID" })
                 </div>
-                <div class="col-sm">
-                    <label for="NameEng" class="mb-0">Name - Surname</label>
-                    @Html.TextBox("NameEn", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Name English..", id = "NameEn" })
-                </div>
+
                 <div class="col-sm">
                     <label for="NameEng" class="mb-0">Operator Approved</label>
                     @Html.TextBox("txtOpAppID", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Operator Approved..", id = "txtOpAppID" })
@@ -44,7 +45,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
     <div class="row">
         <div class="col">
             <div class="  table-responsive">
@@ -92,7 +93,8 @@
     <script src="~/lib/datatables/Js/jquery.dataTables.min.js"></script>
     <script src="~/lib/CustomJS/ScriptUserManage/Additional.js"></script>
     <script src="~/lib/CustomJS/ScriptUserManage/UserManagemant.js"></script>
-
+    <script src="~/lib/DataTables/js/dataTables.fixedColumns.js"></script>
+    <script src="~/lib/DataTables/js/dataTables.fixedHeader.js"></script>
     <script>
         var myTables;
         $(document).ready(function () {
@@ -126,35 +128,111 @@
                         })
                     }
                 });
-            }); 
+            });
         });
 
         function SetmyTablesn() {
 
             myTables = $("#myTables").DataTable({
-                paging: false,
-                ordering: false,
-                processing: true, 
+                paging: true,
+                ordering: true,
+                processing: true,
+                deferRender: true,
                 dom: '<"top"l>rt<"bottom"ip><"clear">',
                 columns: [
-                    { Data: 'DocNo' },
-                    { Data: 'OperatorID' },
-                    { Data: 'SectionCode' },
-                    { Data: 'SectionAttribute' },
-                    { Data: 'OperatorGroup' },
-                    { Data: 'License' },
-                    { Data: 'Active' },
-                    { Data: 'ReqOperatorID' },
-                    { Data: 'ReqDate' },
-                    { Data: 'ChangeOperatorID' },
-                    { Data: 'ChangeDate' },
+                    { data: "docNo" },
+                    { data: "operatorID" },
+                    { data: "sectionCode" },
+                    { data: "sectionAttribute" },
+                    { data: "operatorGroup" },
+                    { data: "license" },
+                    { data: "active" },
+                    { data: "reqOperatorID" },
+                    { data: "reqDate" },
+                    { data: "changeOperatorID" },
+                    { data: "changeDate" },
                 ],
                 order: [1, "asc"],
                 fnInitComplete: function (oSettings, json, sData) {
-                
+                    addSearchControl(json); 
                     return true;
                 },
             });
+            getDataReqeustList();
         }
+
+        function getDataReqeustList() {
+
+
+
+
+            $.ajax({
+                type: 'POST',
+                url: "../TEC_Management/GetDataInquiry",
+                //   data: { OPID: $("#strOPNo").val() },
+                dataType: 'json',
+                success: function (Data) {
+                    myTables.clear().draw();
+                    if (Data.count != 0) {
+                        myTables.rows.add(Data.data).draw();
+                    }
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                },
+            });
+
+
+        }
+
+        function addSearchControl(event) { 
+            $("#myTables thead").append($("#myTables thead tr:first").clone());
+            $("#myTables thead tr:eq(1) th").each(function (index) {
+                if (index != 100) {
+                    $(this).replaceWith('<th><input type="text" class="form-control form-control-sm input mw-100 "  placeholder="Fill for Search ' + $(this).html() + ' . . ."/></th>');
+                    var searchControl = $("#myTables thead tr:eq(1) th:eq(" + index + ") input");
+
+                    searchControl.on('keyup', function (event) {
+                        var searchController = myTables.column(index).search(searchControl.val());
+                        var keycode = (event.keyCode ? event.keyCode : event.which);
+                        // if (keycode == '13') {
+                        searchController.draw();
+                        // }
+                    });
+                }
+                else {
+                    // $(this).replaceWith('<th><input id="datepicker" data-range="true" data-multiple-dates-separator="-" data-language="en" class="datepicker-here form-control form-control-sm" style="width:250px; text-align:center;"    placeholder="' + $(this).html() + '"/> </th>');
+
+                    $(this).replaceWith('<th><span>Click For Manage</span> </th>');
+                    searchControl = $("#myTables thead tr:eq(1) th:eq(" + index + ") input");
+                    searchControl.datepicker({
+                        format: 'M/dd/yyyy-M/dd/yyyy',
+                    }).val();
+                    searchControl.datepicker({
+                        format: 'M/dd/yyyy',
+                        onSelect: function (dateText) {
+                            var cSting = dateText.length;
+                            if (cSting == 23) {
+                                searchController = myTables.column(index).search(searchControl.val());
+                                $("#myTables thead tr:eq(1) th:eq(0) input").focus();
+                                searchController.draw();
+                            } else if (cSting == 0) {
+                                searchController = myTables.column(index).search(searchControl.val());
+                                searchController.draw();
+                            }
+                        }
+                    })
+                    searchControl.on('keyup', function (event) {
+                        searchController = myTables.column(index).search(searchControl.val());
+                        var keycode = (event.keyCode ? event.keyCode : event.which);
+                        //if (keycode == '13') {
+                        searchController.draw();
+
+                        //}
+                    });
+                }
+            });
+        }
+     
     </script>
 }

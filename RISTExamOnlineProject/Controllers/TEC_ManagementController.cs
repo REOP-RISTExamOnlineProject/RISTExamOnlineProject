@@ -129,6 +129,19 @@ namespace RISTExamOnlineProject.Controllers
         }
 
 
+        public JsonResult GetDataInquiry()
+        {
+            var _Result = "OK";
+            var _DataResult = "";
+            var _ResultLabel = true;
+            List<reqeustInquiry> dataOperator = new List<reqeustInquiry>();
+            mgrSQLcommand_TEC_Approved ObjRun = new mgrSQLcommand_TEC_Approved(_configuration);
+            dataOperator = ObjRun.GetRequestList();  
+            var jsonResult = Json(new
+            { strResult = _Result, dataLabel = _DataResult, strboolbel = _ResultLabel, data = dataOperator});
+
+            return jsonResult;
+        }
 
     }
 }

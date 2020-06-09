@@ -800,6 +800,24 @@ namespace RISTExamOnlineProject.Controllers
 
         public IActionResult UserReqeustInqury()
         {
+
+            var UserName = User.Identity.Name;
+            vewOperatorAlls dataOperator = new vewOperatorAlls();
+            dataOperator = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == UserName);
+
+            ViewBag.NameEng = dataOperator.NameEng;
+            ViewBag.JobTitle = dataOperator.JobTitle;
+
+
+            ViewBag.NameEngUserDetail = dataOperator.NameEng;
+            ViewBag.JobTitleUserDetail = dataOperator.JobTitle;
+            var varsd = "http://10.29.1.12/RAJPTrainingControlSystem/PIC/" + UserName + ".jpg";
+
+            ViewBag.imgProfileUserDetail = varsd;
+            ViewBag.imgProfile = varsd;
+
+
+
             return View();
         }
     }
