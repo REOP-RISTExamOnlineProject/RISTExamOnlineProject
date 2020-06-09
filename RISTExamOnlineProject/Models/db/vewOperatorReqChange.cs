@@ -9,8 +9,6 @@ namespace RISTExamOnlineProject.Models.db
 {
     public class vewOperatorReqChange
     {
-       
-
         [Key]
         public int Nbr { get; set; }
         public string DocNo { get; set; }
@@ -25,6 +23,7 @@ namespace RISTExamOnlineProject.Models.db
         public string ReqDate { get; set; }
         public string ChangeOperatorID { get; set; }
         public string ChangeDate { get; set; }
+    }
 
     public class reqeustInquiry
     {
@@ -43,4 +42,6 @@ namespace RISTExamOnlineProject.Models.db
         public string ChangeOperatorID { get; set; }
         public string ChangeDate { get; set; }
     }
+
+
 }
