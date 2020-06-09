@@ -630,37 +630,121 @@ namespace RISTExamOnlineProject.Controllers
             //}
 
 
-            //Get Division to Dropdown
-            var queryDivision = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == id)
-                .Select(c => new { c.OperatorID, c.Division });
-            ViewBag.CategoryDivision = new SelectList(queryDivision.AsEnumerable(), "OperatorID", "Division");
+            //Get Current Organize
+            var queryOrganize = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == id)
+                .Select(c => new
+                {
+                    division = c.Division,
+                    department = c.Department,
+                    section = c.Section,
+                    shift = c.GroupName,
+                    statusresign = (c.Active ? "Active" : "Not Active")
+                })
+              .ToList();
 
-            //Get Department to Dropdown
-            var queryDepartment = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == id)
-                .Select(c => new { c.OperatorID, c.Department });
-            ViewBag.CategoryDepartment = new SelectList(queryDepartment.AsEnumerable(), "OperatorID", "Department");
+            foreach (var item in queryOrganize)
+            {
+                ViewBag.CategoryDivision = item.division;
+                ViewBag.CategoryDepartment = item.department;
+                ViewBag.CategorySection = item.section;
+                ViewBag.CategoryShift = item.shift;
+                ViewBag.CategoryResign = item.statusresign;
 
-            //Get Section to Dropdown
-            var querySection = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == id)
-                .Select(c => new { c.OperatorID, c.Section });
-            ViewBag.CategorySection = new SelectList(querySection.AsEnumerable(), "OperatorID", "Section");
+            }
+
+            
+            //ViewBag.CategoryDivision = queryDivision;
+
+            //Get Current Department to Dropdown
+            //var queryDepartment = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == id)
+            //    .Select(c => c.Department)
+            //    .FirstOrDefault();
+            //ViewBag.CategoryDepartment = queryDepartment;
+
+            //Get Current Section to Dropdown
+            //var querySection = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == id)
+            //    .Select(c => new { c.OperatorID, c.Section });
+            //ViewBag.CategorySection = new SelectList(querySection.AsEnumerable(), "OperatorID", "Section");
+
+            //Get Current Shift to Dropdown
+            //var queryShift = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == id)
+            //    .Select(c => new { c.OperatorID, c.GroupName });
+            //ViewBag.CategoryShift = new SelectList(queryShift.AsEnumerable(), "OperatorID", "GroupName");
+
+            //Get Current License to Dropdown
+            var queryLicense = _sptoDbContext.vewOperatorLicense.Where(x => x.OperatorID == id)
+                .Select(c => new { c.OperatorID, c.License });
+            ViewBag.CategoryLicense = new MultiSelectList(queryLicense.AsEnumerable(), "OperatorID", "License");
+
+            //Get Current Resign to Dropdown
+            //var queryResign = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == id)
+            //    .Select(s => new {StatusActive = (s.Active ? "Active" : "Not Active")})
+            //    .Select(c=>c.StatusActive)
+            //    .FirstOrDefault();
+
+            //   // .Select(c => new { c.OperatorID, c.Active });
 
 
-            List<vewDivisionMaster> catagorylist = new List<vewDivisionMaster>();
+            //   ViewBag.CategoryResign = queryResign;
+
+            List<SelectListItem> categoryResign = new List<SelectListItem>() {
+                new SelectListItem {
+                    Text = "Active", Value = "True"
+                },
+                new SelectListItem {
+                    Text = "Not Active", Value = "False"
+                }
+            };
+            ViewBag.ResignMaster = categoryResign;
+
+            //Binding for select dropdownlist shift
+            var shiftmaster = _sptoDbContext.vewOperatorGroupMaster
+                .Select(c => new {c.Shift, c.GroupName}).ToList();
+            ViewBag.CategoryShiftmaster = new SelectList(shiftmaster.AsEnumerable(), "Shift", "GroupName");
 
 
-            //catagorylist = (from vewDivisionMaster in _sptoDbContext.vewDivisionMaster
-            //    select vewDivisionMaster).ToList();
-            catagorylist = _sptoDbContext.vewDivisionMaster.ToList();
+            //Binding for select dropdownlist Division
+            List<vewDivisionMaster> catagoryDivlist = new List<vewDivisionMaster>();
+
+            catagoryDivlist = _sptoDbContext.vewDivisionMaster.ToList();
 
 
+            // ------- Inserting Select Item in Division List -------
+            catagoryDivlist.Insert(0, new vewDivisionMaster() { row_num = 0, DivisionName = "Select" });
+            ViewBag.listofCatagoryDiv = catagoryDivlist;
 
-            catagorylist.Insert(0, new vewDivisionMaster() { row_num = 0, DivisionName = "Select" });
-            ViewBag.listofCatagoryDiv = catagorylist;
+            //Binding for select dropdownlist License
+            var licensecatagory = _sptoDbContext.vewLicenseMaster.ToList();
+            ViewBag.licensecatagory = new MultiSelectList(licensecatagory.AsEnumerable(), "LicenseID", "License");
+           
+            var queryAdditional = _sptoDbContext.vewOperatorAdditionalDep.Where(x => x.OperatorID == id)
+                .Select(c => new
+                {
+                    c.Division,
+                    c.Department,
+                    c.Section,
+                    c.SectionCode
+                });
 
-            var UserName = User.Identity.Name;
+           
+           
+            //var employeeModel = new List<EmployeeModel>();
+
+            //employeeModel.Add(new EmployeeModel() { EmpID = 101, EmpFirstName = "Surya", EmpLastName = "Kranthi" });
+            //employeeModel.Add(new EmployeeModel() { EmpID = 102, EmpFirstName = "Aditya", EmpLastName = "Roy" });
+            //employeeModel.Add(new EmployeeModel() { EmpID = 103, EmpFirstName = "Ravi", EmpLastName = "Kanth" });
+            //employeeModel.Add(new EmployeeModel() { EmpID = 104, EmpFirstName = "Anshuman", EmpLastName = "Sagara" });
+            //employeeModel.Add(new EmployeeModel() { EmpID = 105, EmpFirstName = "Jhansi", EmpLastName = "Naari" });
+
+            ////Example 1 Using ViewBag
+            //ViewBag.EmployeeList1 = employeeModel;
+
+            ViewBag.AdditionalCurrent = queryAdditional.AsEnumerable() ;
+
+
+            var userName = User.Identity.Name;
             vewOperatorAlls dataOperator = new vewOperatorAlls();
-            dataOperator = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == UserName);
+            dataOperator = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == userName);
 
             ViewBag.NameEng = dataOperator.NameEng;
             ViewBag.JobTitle = dataOperator.JobTitle;
@@ -668,12 +752,12 @@ namespace RISTExamOnlineProject.Controllers
 
             ViewBag.NameEngUserDetail = dataOperator.NameEng;
             ViewBag.JobTitleUserDetail = dataOperator.JobTitle;
-            var varsd = "http://10.29.1.12/RAJPTrainingControlSystem/PIC/" + UserName + ".jpg";
+            var varsd = "http://10.29.1.12/RAJPTrainingControlSystem/PIC/" + userName + ".jpg";
 
             ViewBag.imgProfileUserDetail = varsd;
             ViewBag.imgProfile = varsd;
 
-
+            
            
 
 
@@ -689,10 +773,7 @@ namespace RISTExamOnlineProject.Controllers
             List<vewDepartmentMaster> subCategorylist = new List<vewDepartmentMaster>();
 
             // ------- Getting Data from Database Using EntityFrameworkCore -------
-            //subCategorylist = (from subcategory in _sptoDbContext.vewDepartmentMaster
-            //    where subcategory.DivisionID == DivisionID
-            //    select subcategory).ToList();
-
+           
             subCategorylist = _sptoDbContext.vewDepartmentMaster
                 .Where(x => x.row_num == row_num)
                 .GroupBy(g => new
@@ -707,13 +788,13 @@ namespace RISTExamOnlineProject.Controllers
                     row_num = s.Key.Row_num,
                     row_dept_id = s.Key.Row_dept_id
                 }).ToList();
-               
 
-           
+
+
 
             // ------- Inserting Select Item in List -------
             //subCategorylist.Insert(0, new SubCategory { SubCategoryID = 0, SubCategoryName = "Select" });
-
+            subCategorylist.Insert(0, new vewDepartmentMaster() { row_dept_id = 0, Department = "Select" });
 
             return Json(new SelectList(subCategorylist, "row_dept_id", "Department"));
         }
@@ -733,67 +814,32 @@ namespace RISTExamOnlineProject.Controllers
 
             // ------- Inserting Select Item in List -------
             //productList.Insert(0, new MainProduct { ProductID = 0, ProductName = "Select" });
-
+            sectionList.Insert(0, new vewSectionMaster() { SectionCodeID = "0", Section = "Select" });
             return Json(new SelectList(sectionList, "SectionCodeID", "Section"));
         }
 
 
+        public IActionResult UserReqeustInqury()
+        {
+
+            var UserName = User.Identity.Name;
+            vewOperatorAlls dataOperator = new vewOperatorAlls();
+            dataOperator = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == UserName);
+
+            ViewBag.NameEng = dataOperator.NameEng;
+            ViewBag.JobTitle = dataOperator.JobTitle;
+
+
+            ViewBag.NameEngUserDetail = dataOperator.NameEng;
+            ViewBag.JobTitleUserDetail = dataOperator.JobTitle;
+            var varsd = "http://10.29.1.12/RAJPTrainingControlSystem/PIC/" + UserName + ".jpg";
+
+            ViewBag.imgProfileUserDetail = varsd;
+            ViewBag.imgProfile = varsd;
 
 
 
-        //    public IActionResult TempDataExample()
-        //    {
-        //        mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
-
-
-        //        DataTable dt = new DataTable();
-
-
-
-
-        //        dt = ObjRun.GetUserDetail_Additional("000702");
-
-        //        List<string> mobileList = new List<string>();
-        //        string Strdata = "";
-
-        //        if (dt.Rows.Count != 0)
-        //        {
-
-
-        //            for (int i = 0; i > dt.Rows.Count; i++) {
-
-        //                Strdata += "{[ data:";
-        //                if (i != dt.Rows.Count)
-        //                {
-
-        //                    Strdata += "{},";
-
-
-        //                }
-        //                else {
-        //                    Strdata += "{}";
-
-        //                }
-
-        //                Strdata += "]}";
-
-
-
-        //            }
-
-
-        //            foreach (DataRow row in dt.Rows)
-        //            {
-        //                mobileList.Add("" + row["OperatorID"].ToString() + "," + row["SectionCode"].ToString() + "," +
-        //                    " " + row["Division"].ToString() + ", " + row["Department"].ToString() + "," + row["Section"].ToString() + " ");
-
-        //            }
-
-        //        }
-
-
-        //        TempData["MobileList"] = mobileList;
-        //        return View();
-        //    }
+            return View();
+        }
     }
 }

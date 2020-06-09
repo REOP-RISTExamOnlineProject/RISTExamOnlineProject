@@ -24,10 +24,12 @@
         @*<link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
         <link href="~/lib/font-awesome/css/fontawesome.css" rel="stylesheet" />*@
         @*<script src="~/lib/font-awesome/js/a4c93cd695.js"></script>*@
-        
+
         <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
         <link href="~/lib/font-awesome/css/fontawesome.css" rel="stylesheet" />
         <link href="~/lib/font-awesome/css/solid.css" rel="stylesheet" />
+        <link href="~/lib/font-awesome/css/regular.css" rel="stylesheet" />
+        <link href="~/lib/font-awesome/css/brands.css" rel="stylesheet" />
         <script src="~/lib/js/sweetalert.min.js"></script>
 
         <!--FOR IE9-->
@@ -37,6 +39,10 @@
         <!-- tempusdominus-bootstrap-4 datetimepicker -->
         <link rel="stylesheet" href="~/lib/datepicker/css/tempusdominus-bootstrap-4.css">
         <!-- tempusdominus-bootstrap-4 -->
+        
+        
+        
+        
     </environment>
     @RenderSection("Styles", false)
 
@@ -290,14 +296,15 @@
                                             //var positionlist = ViewBag.Positionlist;
 
                             }
-                                    <ul class="children" id="Shortcuts">
-                                        <li class="child"><a href="@Url.Action("UserDetailMaintenance","Management")" class="ml-4"><i class="fa fa-angle-right mr-2 "></i><i class="fa fa-font-awesome"></i> Edit User detail</a></li>
-                                        <li class="child"><a href="@Url.Action("UserInCharge", "Management", new { opno = $"{opno}"})" class="ml-4"><i class="fa fa-angle-right mr-2"></i><i class="fa fa-font-awesome"></i> Request Change</a></li>
-                                        <li class="child"><a href="@Url.Action("TEC_Approved","TEC_Management")" class="ml-4"><i class="fa fa-angle-right mr-2"></i><i class="fa fa-font-awesome"></i> TEC Approved</a></li>
-                                        <li class="child"><a href="#" class="ml-4"><i class="fa fa-angle-right mr-2"></i><i class="fa fa-font-awesome"></i> Request Inquiry</a></li>
+                                        <ul class="children" id="Shortcuts">
+                                            <li class="child"><a href="@Url.Action("UserDetailMaintenance","Management")" class="ml-4"><i class="fa fa-angle-right mr-2 "></i><i class="fa fa-font-awesome"></i> Edit User detail</a></li>
+                                            <li class="child"><a href="@Url.Action("UserInCharge", "Management" , new { opno=$"{opno}"})" class="ml-4"><i class="fa fa-angle-right mr-2"></i><i class="fa fa-font-awesome"></i> Request Change</a></li>
+                                            <li class="child"><a href="@Url.Action("TEC_Approved","TEC_Management")" class="ml-4"><i class="fa fa-angle-right mr-2"></i><i class="fa fa-font-awesome"></i> TEC Approved</a></li>
+                                           <li class="child"><a href="@Url.Action("UserReqeustInqury","Management")" class="ml-4"><i class="fa fa-angle-right mr-2"></i><i class="fa fa-font-awesome"></i> Request Inquiry</a></li>
 
-                                       
-                                    </ul>
+
+
+                                        </ul>
                         </li>
                             }
                         }
@@ -382,7 +389,10 @@
         <script src="~/lib/datepicker/momentjs/moment.js"></script>
         <script src="~/lib/datepicker/js/tempusdominus-bootstrap-4.js"></script>
         <!-- tempusdominus-bootstrap-4 -->
-
+        
+        
+        <!--bootstrap-select-->
+        @*<script src="~/lib/bootstrap-select/js/bootstrap-select.js"></script>*@
     </environment>
 
 

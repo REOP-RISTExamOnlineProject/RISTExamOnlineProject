@@ -21,5 +21,17 @@ namespace RISTExamOnlineProject.Models.db
         public string row_dept_id { get; set; }
         [NotMapped]
         public string SectionCodeID { get; set; }
+
+       
+    }
+    public class vewAdditionalDep
+    {
+        [Key]
+        public string OperatorID { get; set; }
+        public string SectionCode { get; set; }
+        public string Section { get; set; }
+        public string Department { get; set; }
+        public string Division { get; set; }
+        
     }
 }

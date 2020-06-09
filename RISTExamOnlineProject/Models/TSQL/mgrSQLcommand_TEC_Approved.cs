@@ -130,5 +130,48 @@ namespace RISTExamOnlineProject.Models.TSQL
 
         }
 
+
+
+        public List<reqeustInquiry> GetRequestList()
+        {
+
+            List<reqeustInquiry> Detail = new List<reqeustInquiry>();
+
+
+            var ObjRun = new mgrSQLConnect(_configuration);
+            strSQL = "SELECT    * FROM[SPTOSystem].[dbo].[vewOperatorReqChange]";
+            strSQL += "  ";
+            dt = ObjRun.GetDatatables(strSQL);
+
+
+            if (dt.Rows.Count > 0)
+            {
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    Detail.Add(new reqeustInquiry()
+                    {
+                        DocNo = row["DocNo"].ToString(),
+                        OperatorID = row["OperatorID"].ToString(),
+                        SectionCode = row["SectionCode"].ToString(),
+                        SectionAttribute = row["SectionAttribute"].ToString(),
+                        OperatorGroup = row["OperatorGroup"].ToString(),
+                        License = row["License"].ToString(),
+                        Active = row["Active"].ToString(),
+                        ReqOperatorID = row["ReqOperatorID"].ToString(),
+                        ReqDate =  row["ReqDate"].ToString() ,
+                        ChangeOperatorID = row["ChangeOperatorID"].ToString(),
+                        ChangeDate = row["ChangeDate"].ToString() ,
+                    });
+
+                }
+
+
+
+            }
+            return Detail;
+
+        }
+
     }
 }

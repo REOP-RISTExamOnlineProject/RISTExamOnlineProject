@@ -1,29 +1,35 @@
-﻿@model RISTExamOnlineProject.Models.db.vewDivisionMaster
+﻿@using RISTExamOnlineProject.Models.db
+@model RISTExamOnlineProject.Models.db.vewDivisionMaster
+
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "EditUserInCharge";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+
 }
 
-<h1>EditUserInCharge</h1>
+<h1>Edit User InCharge</h1>
 
 <h4>OperatorReqChange</h4>
 <hr />
 
 <div class="row mt-3">
     <div class="col-sm-8">
-        <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
-
-
-            <form action="">
+        <form action="">
+            <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
+                <h5 class="mb-0">
+                    <strong>Section Change</strong>
+                </h5>
+                <hr />
 
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="Division" class="mb-0">Current-Division</label>
-                        @Html.DropDownList("Division", (IEnumerable<SelectListItem>)ViewBag.CategoryDivision, new { @class = "form-control border-success" })
+                        @Html.TextBox("Division", (string)ViewBag.CategoryDivision, new { @class = "form-control border-success", disabled = "disabled" })
                     </div>
                     <div class="col-sm-6">
-                        <label asp-for="DivisionName" class="mb-0">Division</label>
+                        <label asp-for="DivisionName" class="mb-0 text-danger">New-Division</label>
                         <select asp-for="row_num" class="form-control"
                                 asp-items="@(new SelectList(@ViewBag.listofCatagoryDiv, "row_num", "DivisionName"))"></select>
                     </div>
@@ -32,11 +38,11 @@
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="Department" class="mb-0">Current-Department</label>
-                        @Html.DropDownList("Department", (IEnumerable<SelectListItem>)ViewBag.CategoryDepartment, new { @class = "form-control border-success" })
+                        @Html.TextBox("Department", (string)ViewBag.CategoryDepartment, new { @class = "form-control border-success", disabled = "disabled" })
                     </div>
 
                     <div class="col-sm-6">
-                        <label for="row_dept_id" class="mb-0">New-Department</label>
+                        <label for="row_dept_id" class="mb-0 text-danger">New-Department</label>
                         <select class="form-control" id="row_dept_id" name="row_dept_id" asp-for="row_dept_id"
                                 asp-items="@(new SelectList(string.Empty,"row_dept_id", "Department"))"></select>
                     </div>
@@ -45,31 +51,165 @@
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="Section" class="mb-0">Current-Section</label>
-                        @Html.DropDownList("Section", (IEnumerable<SelectListItem>)ViewBag.CategorySection, new { @class = "form-control border-success" })
+                        @Html.TextBox("Section", (string)ViewBag.CategorySection, new { @class = "form-control border-success", disabled = "disabled" })
                     </div>
                     <div class="col-sm-6">
-                        <label for="SectionCodeID" class="mb-0">New-Section</label>
+                        <label for="SectionCodeID" class="mb-0 text-danger">New-Section</label>
                         <select class="form-control" id="SectionCodeID" name="SectionCodeID" asp-for="SectionCodeID"
                                 asp-items="@(new SelectList(string.Empty,"SectionCodeID", "Section"))"></select>
                     </div>
                 </div>
+
+
+
+
+
+            </div>
+            <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
+                <h5 class="mb-0">
+                    <strong>Shift Change</strong>
+                </h5>
+                <hr />
+
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="Shift" class="mb-0">Current-Shift</label>
+                        @Html.TextBox("Shift", (string)ViewBag.CategoryShift, new { @class = "form-control border-success", disabled = "disabled" })
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="shiftmaster" class="mb-0 text-danger">New-Shift</label>
+                        @Html.DropDownList("Shift", (IEnumerable<SelectListItem>)ViewBag.CategoryShiftmaster, "Select", new { @class = "form-control" })
+                    </div>
+                </div>
+
+
+
+
+
+
+            </div>
+            <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
+                <h5 class="mb-0">
+                    <strong>License Change</strong>
+                </h5>
+                <hr />
+
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="License" class="mb-0">Current-License</label>
+                        @Html.DropDownList("License", (MultiSelectList)ViewBag.CategoryLicense, new { @class = "form-control border-success", multiple = "multiple", disabled = "disabled" })
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="NewLicense" class="mb-0 text-danger">New-License</label>
+                        <div>
+                            <select id="LicenseList" multiple="multiple" required name="LicenseList" class="selectlicenselist form-control" data-header="Select License">
+                                @if (ViewBag.licensecatagory != null)
+                                {
+                                    foreach (var item in ViewBag.licensecatagory)
+                                    {
+                                        if (item.Text != null)
+                                        {
+                                            <option value="@item.Value">
+                                                @item.Text
+                                            </option>
+                                        }
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
+                <h5 class="mb-0">
+                    <strong>Resign Change</strong>
+                </h5>
+                <hr />
+
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="Resign" class="mb-0">Current-Resign</label>
+                        @Html.TextBox("Resign", (string)ViewBag.CategoryResign, new { @class = "form-control border-success", disabled = "disabled" })
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="NewResign" class="mb-0 text-danger">New-Resign</label>
+                        <div>
+                            @Html.DropDownList("ResignMaster", (IEnumerable
+                                <SelectListItem>)ViewBag.ResignMaster,"Select", new{@class = "form-control"})
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
+                <h5 class="mb-0">
+                    <strong>Additional Change</strong>
+                </h5>
+                <hr />
+
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="Resign" class="mb-0">Current-Additional</label>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Division</th>
+                                    <th>Department</th>
+                                    <th>Section</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.AdditionalCurrent)
+                                {
+                                <tr>
+                                    <td>@item</td>
+                                    <td>@item</td>
+                                    <td>@item</td>
+                                </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="NewResign" class="mb-0 text-danger">New-Resign</label>
+                        <div>
+                            @Html.DropDownList("ResignMaster", (IEnumerable
+                                <SelectListItem>)ViewBag.ResignMaster,"Select", new{@class = "form-control"})
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
+
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary" />
                 </div>
-            </form>
-         
 
-
-        </div>
+            </div>
+            @*Example multiselect*@
+            @*<select class="selectpicker form-control" data-live-search="true" data-actions-box="true" multiple title="Choose one of the following..." data-header="Select a condiment" data-style="btn-primary">
+                    <optgroup label="Picnic">
+                        <option>Mustard</option>
+                        <option>Ketchup</option>
+                        <option>Relish</option>
+                    </optgroup>
+                    <optgroup label="Camping">
+                        <option>Tent</option>
+                        <option>Flashlight</option>
+                        <option>Toilet Paper</option>
+                    </optgroup>
+                </select>*@
+        </form>
     </div>
 </div>
 
 
 @{
     var opno = @User.Identity.Name;
-
-    //var positionlist = ViewBag.Positionlist;
-
 }
 
 <div>
@@ -80,16 +220,16 @@
 
 
 @section scripts{
-@*<script src="~/lib/jquery/jquery.js"></script>*@
+    @*<script src="~/lib/jquery/jquery.js"></script>*@
     <script type="text/javascript">
         $(document).ready(function () {
             var items = "<option value='0'>Select</option>";
-           
+
             $('#row_dept_id').html(items);
             $('#SectionCodeID').html(items);
         });
     </script>
-    
+
     <script type="text/javascript">
         $(document).ready(function () {
             $('#row_num').change(function () {
@@ -117,6 +257,35 @@
                     $('#SectionCodeID').html(items);
                 });
             });
+        });
+    </script>
+
+
+
+    <script src="~/lib/bootstrap-select/js/bootstrap-select.js"></script>
+
+
+    <link href="~/lib/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Enable Live Search.
+            //$('#LicenseList').attr('data-live-search', true);
+
+            //// Enable multiple select.
+            $('#LicenseList').attr('multiple', true);
+            // $('#CountryList').attr('data-selected-text-format', 'count');
+
+            $('.selectlicenselist').selectpicker(
+                {
+                    width: '93%',
+                    title: 'Select',
+                    //style: 'btn-warning',
+                    size: 6
+                    //iconBase: 'fa',
+                    //tickIcon: 'fa-check'
+                });
         });
     </script>
 }
