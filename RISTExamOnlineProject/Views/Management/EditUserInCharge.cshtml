@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "EditUserInCharge";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    
 }
 
 <h1>Edit User InCharge</h1>
@@ -22,7 +24,7 @@
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="Division" class="mb-0">Current-Division</label>
-                        @Html.DropDownList("Division", (IEnumerable<SelectListItem>)ViewBag.CategoryDivision, new { @class = "form-control border-success" })
+                        @Html.TextBox("Division", (string)ViewBag.CategoryDivision, new {@class = "form-control border-success",disabled = "disabled"})
                     </div>
                     <div class="col-sm-6">
                         <label asp-for="DivisionName" class="mb-0 text-danger">New-Division</label>
@@ -34,7 +36,7 @@
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="Department" class="mb-0">Current-Department</label>
-                        @Html.DropDownList("Department", (IEnumerable<SelectListItem>)ViewBag.CategoryDepartment, new { @class = "form-control border-success" })
+                        @Html.TextBox("Department", (string)ViewBag.CategoryDepartment, new {@class = "form-control border-success", disabled = "disabled"})
                     </div>
 
                     <div class="col-sm-6">
@@ -47,7 +49,7 @@
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="Section" class="mb-0">Current-Section</label>
-                        @Html.DropDownList("Section", (IEnumerable<SelectListItem>)ViewBag.CategorySection, new { @class = "form-control border-success" })
+                        @Html.TextBox("Section",(string)ViewBag.CategorySection, new{@class="form-control border-success", disabled = "disabled"})
                     </div>
                     <div class="col-sm-6">
                         <label for="SectionCodeID" class="mb-0 text-danger">New-Section</label>
@@ -70,27 +72,96 @@
                 <div class="form-group row">
                     <div class="col-sm-6">
                         <label for="Shift" class="mb-0">Current-Shift</label>
-                        @Html.DropDownList("Shift", (IEnumerable<SelectListItem>)ViewBag.CategoryShift, new { @class = "form-control border-success" })
+                        @Html.TextBox("Shift", (string)ViewBag.CategoryShift, new {@class = "form-control border-success", disabled = "disabled"})
                     </div>
                     <div class="col-sm-6">
                         <label for="shiftmaster" class="mb-0 text-danger">New-Shift</label>
-                        @Html.DropDownList("Shift", (IEnumerable<SelectListItem>)ViewBag.CategoryShiftmaster, "Select",new { @class = "form-control" })
+                        @Html.DropDownList("Shift", (IEnumerable<SelectListItem>)ViewBag.CategoryShiftmaster, "Select", new { @class = "form-control" })
                     </div>
                 </div>
 
 
 
 
-               
+
 
             </div>
             <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
-               
+                <h5 class="mb-0">
+                    <strong>License Change</strong>
+                </h5>
+                <hr />
+
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="License" class="mb-0">Current-License</label>
+                        @Html.DropDownList("License", (MultiSelectList)ViewBag.CategoryLicense, new { @class = "form-control border-success", multiple = "multiple", disabled = "disabled"  })
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="NewLicense" class="mb-0 text-danger">New-License</label>
+                        <div>
+                            <select id="LicenseList" multiple="multiple" required name="LicenseList" class="selectlicenselist form-control" data-header="Select License">
+                                @if (ViewBag.licensecatagory != null)
+                                {
+                                    foreach (var item in ViewBag.licensecatagory)
+                                    {
+                                        if (item.Text != null)
+                                        {
+                                            <option value="@item.Value">
+                                                @item.Text
+                                            </option>
+                                        }
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
+                <h5 class="mb-0">
+                    <strong>Resign Change</strong>
+                </h5>
+                <hr />
+
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="Resign" class="mb-0">Current-Resign</label>
+                        @Html.TextBox("Resign", (string) ViewBag.CategoryResign, new {@class = "form-control border-success", disabled = "disabled" })
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="NewResign" class="mb-0 text-danger">New-Resign</label>
+                        <div>
+                            @Html.DropDownList("ResignMaster", (IEnumerable  
+                                <SelectListItem>)ViewBag.ResignMaster,"Select", new{@class = "form-control"})
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
+
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary" />
                 </div>
 
             </div>
+            @*Example multiselect*@
+            @*<select class="selectpicker form-control" data-live-search="true" data-actions-box="true" multiple title="Choose one of the following..." data-header="Select a condiment" data-style="btn-primary">
+                <optgroup label="Picnic">
+                    <option>Mustard</option>
+                    <option>Ketchup</option>
+                    <option>Relish</option>
+                </optgroup>
+                <optgroup label="Camping">
+                    <option>Tent</option>
+                    <option>Flashlight</option>
+                    <option>Toilet Paper</option>
+                </optgroup>
+            </select>*@
         </form>
     </div>
 </div>
@@ -98,9 +169,6 @@
 
 @{
     var opno = @User.Identity.Name;
-
-    //var positionlist = ViewBag.Positionlist;
-
 }
 
 <div>
@@ -111,16 +179,16 @@
 
 
 @section scripts{
-@*<script src="~/lib/jquery/jquery.js"></script>*@
+    @*<script src="~/lib/jquery/jquery.js"></script>*@
     <script type="text/javascript">
         $(document).ready(function () {
             var items = "<option value='0'>Select</option>";
-           
+
             $('#row_dept_id').html(items);
             $('#SectionCodeID').html(items);
         });
     </script>
-    
+
     <script type="text/javascript">
         $(document).ready(function () {
             $('#row_num').change(function () {
@@ -148,6 +216,35 @@
                     $('#SectionCodeID').html(items);
                 });
             });
+        });
+    </script>
+
+
+
+    <script src="~/lib/bootstrap-select/js/bootstrap-select.js"></script>
+
+  
+    <link href="~/lib/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Enable Live Search.
+            //$('#LicenseList').attr('data-live-search', true);
+
+            //// Enable multiple select.
+            $('#LicenseList').attr('multiple', true);
+           // $('#CountryList').attr('data-selected-text-format', 'count');
+
+            $('.selectlicenselist').selectpicker(
+                {
+                    width: '93%',
+                    title: 'Select',
+                    //style: 'btn-warning',
+                    size: 6
+                    //iconBase: 'fa',
+                    //tickIcon: 'fa-check'
+                });
         });
     </script>
 }

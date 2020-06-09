@@ -1,0 +1,27 @@
+CREATE VIEW dbo.vewDivisionMaster
+AS
+SELECT        TOP (100) PERCENT SUBSTRING(SectionCode, 1, 1) AS DivisionID, Division AS DivisionName, ROW_NUMBER() OVER (ORDER BY Division) row_num
+FROM            dbo.vewT_Section_Master WITH (nolock)
+WHERE        (Division <> N'') and   (Division <> '-')
+GROUP BY SUBSTRING(SectionCode, 1, 1), Division
+
+go
+
+
+CREATE VIEW dbo.vewDepartmentMaster
+AS
+SELECT        TOP (100) PERCENT SUBSTRING(dbo.vewT_Section_Master.SectionCode, 1, 1) AS DepartmentID, dbo.vewT_Section_Master.Department, SUBSTRING(dbo.vewT_Section_Master.SectionCode, 1, 1) AS DivisionID, 
+                         dbo.vewDivisionMaster.row_num, ROW_NUMBER() OVER (ORDER BY Department) row_dept_id
+FROM            dbo.vewT_Section_Master WITH (nolock) INNER JOIN
+                         dbo.vewDivisionMaster ON dbo.vewT_Section_Master.Division = dbo.vewDivisionMaster.DivisionName
+GROUP BY SUBSTRING(dbo.vewT_Section_Master.SectionCode, 1, 1), dbo.vewT_Section_Master.Department, SUBSTRING(dbo.vewT_Section_Master.SectionCode, 1, 1), dbo.vewDivisionMaster.row_num
+ORDER BY dbo.vewT_Section_Master.Department
+go
+
+CREATE VIEW dbo.vewSectionMaster
+AS
+SELECT        SectionCode AS SectionCodeID, dbo.vewT_Section_Master.Section, dbo.vewDepartmentMaster.row_dept_id,
+ROW_NUMBER() OVER (ORDER BY Section) row_sect_id
+FROM            dbo.vewT_Section_Master WITH (nolock) INNER JOIN
+                         dbo.vewDepartmentMaster ON dbo.vewT_Section_Master.Department = dbo.vewDepartmentMaster.Department
+go

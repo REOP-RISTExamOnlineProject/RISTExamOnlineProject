@@ -21,5 +21,7 @@ namespace RISTExamOnlineProject.Models.db
         public string row_dept_id { get; set; }
         [NotMapped]
         public string SectionCodeID { get; set; }
+
+       
     }
 }
