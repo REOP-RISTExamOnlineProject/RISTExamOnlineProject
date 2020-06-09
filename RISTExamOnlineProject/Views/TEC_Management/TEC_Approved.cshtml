@@ -42,10 +42,10 @@
 
 
         <div class="modal fade mt-5 text-center rounded" id="Modal_Detail" tabindex="-1" role="dialog" aria-labelledby="ModalLabel_Detail" aria-hidden="true">
-            <div class="modal-dialog modal-lg rounded" role="document">
+            <div class="modal-dialog  rounded" role="document" style="max-width:1200px;">
 
 
-                <div class="modal-dialog modal-lg rounded" role="document">
+                <div class="modal-dialog  rounded" role="document" style="max-width:1200px;">
                     <div class="modal-content">
                         <div class="modal-header text-center rounded bg-light " style="background-repeat:no-repeat; background-size:cover; background-position:center center; height:60px;width:100%; border-bottom:2px #e96514 solid ">
 
@@ -60,7 +60,7 @@
                             <div class="card">
                                 <div class="card-header justify-content-center">
 
-                                    <h2>     <label id="LB_DocNO">       </label> </h2>
+                                    <h2> DocNO :     <label id="LB_DocNO" class="text-dark">       </label> </h2>
 
 
                                 </div>
@@ -71,10 +71,30 @@
                                     <div class="col   justify-content-center pl-md-10 pr-md-10 pt-2 pb-2" id="DetailMain">
 
 
+                                        <table class="table table-sm table-bordered table-striped  " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable_Detail">
+                                            <thead>
+                                                <tr>
 
+                                                    @*<th style="text-align:center;" class="text-wrap">nbr</th>
+                                                        <th style="text-align:center;" class="text-wrap"> docNo </th>*@
+                                                    <th style="text-align:center;" class="text-wrap"> seq </th>
+                                                    <th style="text-align:center;" class="text-wrap"> operatorID </th>
+                                                    <th style="text-align:center;" class="text-wrap"> sectionCode </th>
+                                                    <th style="text-align:center;" class="text-wrap">sectionAttribute</th>
+                                                    <th style="text-align:center;" class="text-wrap"> operatorGroup </th>
+                                                    <th style="text-align:center;" class="text-wrap"> license </th>
+                                                    <th style="text-align:center;" class="text-wrap"> active </th>
+                                                    <th style="text-align:center;" class="text-wrap"> reqOperatorID </th>
+                                                    <th style="text-align:center;" class="text-wrap"> reqDate </th>
+                                                    @*<th style="text-align:center;" class="text-wrap"> changeOperatorID </th>
+                                                        <th style="text-align:center;" class="text-wrap"> changeDate </th>*@
 
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
 
-
+                                        </table>
 
 
 
@@ -87,6 +107,26 @@
 
 
                         </div>
+
+                        <div class="modal-footer">
+
+                            @*<div class="row justify-content-end">
+
+                                <div class="col-5 text-center">*@
+
+                            <button class="btn btn-success  " id="BTN_Approved">
+
+                                Approve
+                            </button>
+
+                            @*</div>
+
+
+                                </div>*@
+
+                        </div>
+
+
                     </div>
 
 
@@ -120,17 +160,13 @@
 
 
 
-
-
-        <script src="~/lib/CustomJS/ScriptUserManage/Additional.js"></script>
-
         @*<link href="~/lib/datatables/Css/jquery.dataTables.min.css" rel="stylesheet" />
             <script src="~/lib/datatables/Js/jquery.dataTables.min.js"></script>
                 <script src="~/lib/DataTables/js/dataTables.responsive.js"></script>*@
 
-  
-     
-    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+
+
+        <script src="~/lib/bootstrap/js/bootstrap.js"></script>
 
 
 
@@ -227,7 +263,7 @@
                                     var Target = row.docNo
                                     debugger
 
-                                    return "<a href='#' class='btn btn-info text-white' onclick=showdetail_docno('" + encodeURIComponent(Target) + "'); >Detail</a>";
+                                    return "<a href='#' class='btn btn-info text-white' onclick=showdetail('" + encodeURIComponent(Target) + "'); >Detail</a>";
 
                                 }, class: "text-wrap text-center"
                             },
@@ -258,18 +294,160 @@
 
             }
 
-     
 
-            function showdetail_docno(a) {
+
+
+
+
+            function showdetail(DocNo) {
+
+                DocNo_ = decodeURIComponent(DocNo)
+
+                if (TableTarget != null) {
+                    TableTarget.destroy();
+                }
+
                 debugger
-                var c = decodeURIComponent(a)
-                //alert(c)
-                // $('#Modal_Detail').modal('show');
-                //$('#Modal_Detail').modal(options);
+                try {
+
+                    TableTarget = $("#MyTable_Detail").DataTable({
+                        info: false,
+                        searching: false,
+                        ordering: false,
+                        serverSide: true,
+                        processing: true,
+                         cache: true,
+                        ajax: ({
+                            type: 'POST',
+                            url: '../TEC_Management/GetFullDetail',
+                            dataType: 'json',
+                            dataSrc: "data",
+                            data: { DocNo: DocNo_ },
+                        }),
+
+                        dom: '<"top"><"bottom"><"clear">',
+                        columns: [
+                         //   { data: "nbr", name: "nbr", class: "text-wrap text-center" },
+                        //    { data: "docNo", name: "docNo", class: "text-wrap text-center" },
+                            { data: "seq", name: "seq", class: "text-wrap text-center" },
+                            { data: "operatorID", name: "operatorID", class: "text-wrap text-center" },
+                            { data: "sectionCode", name: "sectionCode", class: "text-wrap text-center" },
+                            { data: "sectionAttribute", name: "sectionAttribute", class: "text-wrap text-center" },
+                            { data: "operatorGroup", name: "operatorGroup", class: "text-wrap text-center" },
+                            { data: "license", name: "license", class: "text-wrap text-center" },
+                            { data: "active", name: "active", class: "text-wrap text-center" },
+                            { data: "reqOperatorID", name: "reqOperatorID", class: "text-wrap text-center" },
+                            { data: "reqDate", name: "reqDate", class: "text-wrap text-center" },
+                         //   { data: "changeOperatorID", name: "changeOperatorID", class: "text-wrap text-center" },
+                           // { data: "changeDate", name: "changeDate", class: "text-wrap text-center" },
+                        ],
+                        order: [0, "asc"],
+
+                    });
+
+                } catch (e) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: ("table:" + e)
+                    })
 
 
-                $('#Modal_Detail').modal('show')
+                }
+                finally {
+
+                    $('#LB_DocNO').text(DocNo_);
+                    $('#Modal_Detail').modal('show')
+
+                }
+
+
+
+
             }
+
+
+        $('#BTN_Approved').click(function (event) {
+
+        var MakerID = '@User.Identity.Name';
+            var DocNO = $('#LB_DocNO').text();
+
+        Swal.fire({
+            icon: 'warning',
+            title: 'Are you sure?',
+            text: "Are you sure you want to Approve Data ?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Do it!'
+
+        }).then(function (result) {
+            if (result.value) {
+
+                ApproveData(DocNO, MakerID)
+            }
+
+        })
+
+            });
+
+
+            function ApproveData(DocNO, MakerID) {
+
+                $.ajax({
+                    type: 'post',
+                    url: "../TEC_Management/ApproveData",
+                    dataSrc: "data",
+                    data: { DocNO: DocNO, MakerID: MakerID },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.success == true) {
+
+                            Swal.fire({
+                                position: 'top-mid',
+                                icon: 'success',
+                                title: (response.responseText),
+                                showConfirmButton: true,
+                                //   timer: 1700
+                            }).then(function (result) {
+                                // if (result.value) {
+
+                                $('#Modal_Detail').modal('hide')
+                                ShowGrid()
+
+                            });
+
+
+
+                        } else {
+                            Swal.fire({
+                                text: (response.responseText),
+                                icon: 'error',
+                                title: 'Oops...',
+                                //     timer: 1700,
+                            }).then(function () {
+                                return false;
+                            });
+                        }
+
+                    },
+                    error: function (ex) {
+                        Swal.fire({
+                            text: ('MakeDataTemp :' + ex.statusText),
+                            type: 'error',
+                            //     timer: 1700,
+                        }).then(function () {
+                            return false;
+                        });
+                    },
+
+
+                });
+            }
+
+
+      
 
 
         </script>
