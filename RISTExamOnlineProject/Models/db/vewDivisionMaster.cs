@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RISTExamOnlineProject.Models.db
 {
@@ -22,16 +18,15 @@ namespace RISTExamOnlineProject.Models.db
         [NotMapped]
         public string SectionCodeID { get; set; }
 
-       
-    }
-    public class vewAdditionalDep
-    {
-        [Key]
-        public string OperatorID { get; set; }
+
+        [NotMapped]
         public string SectionCode { get; set; }
+        [NotMapped]
         public string Section { get; set; }
+        [NotMapped]
         public string Department { get; set; }
+        [NotMapped]
         public string Division { get; set; }
-        
     }
+    
 }

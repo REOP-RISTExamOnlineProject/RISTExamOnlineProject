@@ -1,4 +1,5 @@
-﻿@using RISTExamOnlineProject.Models.db
+﻿@using RISTExamOnlineProject.Controllers
+@using RISTExamOnlineProject.Models.db
 @model RISTExamOnlineProject.Models.db.vewDivisionMaster
 
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
@@ -149,9 +150,9 @@
                 <hr />
 
                 <div class="form-group row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <label for="Resign" class="mb-0">Current-Additional</label>
-                        <table class="table">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>Division</th>
@@ -160,23 +161,31 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in ViewBag.AdditionalCurrent)
-                                {
+                            @*@{
+                                var itemsaAdditional= ViewBag.AdditionalCurrent;
+                            }*@
+                            @foreach (var item in ViewBag.AdditionalCurrent)
+                            {
                                 <tr>
-                                    <td>@item</td>
-                                    <td>@item</td>
-                                    <td>@item</td>
+                                    <td>
+                                        @item.Division
+                                    </td>
+                                    <td>
+                                        @item.Department
+                                    </td>
+                                    <td>
+                                        @item.Section
+                                    </td>
                                 </tr>
-                                }
+                            }
 
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-sm-6">
-                        <label for="NewResign" class="mb-0 text-danger">New-Resign</label>
+                    <div class="col-sm-12">
+                        <label for="NewAdditional" class="mb-0 text-danger">New-Additional</label>
                         <div>
-                            @Html.DropDownList("ResignMaster", (IEnumerable
-                                <SelectListItem>)ViewBag.ResignMaster,"Select", new{@class = "form-control"})
+                            
                         </div>
 
                     </div>

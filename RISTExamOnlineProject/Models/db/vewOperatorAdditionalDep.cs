@@ -1,7 +1,10 @@
-﻿namespace RISTExamOnlineProject.Models.db
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace RISTExamOnlineProject.Models.db
 {
     public class vewOperatorAdditionalDep
     {
+        [Key]
         public string OperatorID { get; set; }
         public string SectionCode { get; set; }
         public string SectionCode2 { get; set; }
