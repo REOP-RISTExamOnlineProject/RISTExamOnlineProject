@@ -22,9 +22,9 @@ namespace RISTExamOnlineProject.Models.db
         public string License { get; set; }
         public string Active { get; set; }
         public string ReqOperatorID { get; set; }
-        public DateTime ReqDate { get; set; }
+        public string ReqDate { get; set; }
         public string ChangeOperatorID { get; set; }
-        public DateTime ChangeDate { get; set; }
+        public string ChangeDate { get; set; }
 
 
 

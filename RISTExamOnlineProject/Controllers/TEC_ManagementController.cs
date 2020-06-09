@@ -73,8 +73,8 @@ namespace RISTExamOnlineProject.Controllers
             // var dataShow = _sptoDbContext.vewOperatorAdditionalDep.Where(x => x.OperatorID == OPID).ToList();
 
             var data = DataShow.Skip(skip).Take(pageSize).ToList();
-            return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
-            //   return Json(new {draw, recordsFiltered = recordsTotal, recordsTotal, data });
+          //  return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
+              return Json(new {draw, recordsFiltered = recordsTotal, recordsTotal, data });
             //}
             //catch (Exception ex)
             //{
@@ -86,7 +86,7 @@ namespace RISTExamOnlineProject.Controllers
         }
 
 
-        [HttpGet]
+
         public IActionResult GetFullDetail(string DocNo) {
 
 
@@ -95,7 +95,7 @@ namespace RISTExamOnlineProject.Controllers
             //            {        
             mgrSQLcommand_TEC_Approved ObjRun = new mgrSQLcommand_TEC_Approved(_configuration);
 
-            List<vewOperatorReqChange_Groupby> DataShow = new List<vewOperatorReqChange_Groupby>();
+            List<vewOperatorReqChange> DataShow = new List<vewOperatorReqChange>();
 
             var draw = HttpContext.Request.Form["draw"].FirstOrDefault();
             var start = Request.Form["start"].FirstOrDefault();
@@ -109,16 +109,16 @@ namespace RISTExamOnlineProject.Controllers
             var recordsTotal = 0;
 
 
-            DataShow = ObjRun.Get_ApprovedDetailGroup();
+            DataShow = ObjRun.Get_ApprovedDetail(DocNo);
 
 
-            // var DataShow = _sptoDbContext.vewOperatorReqChange.Where(x => x.ChangeOperatorID == "").ToList();
+         //   var DataShow = _sptoDbContext.vewOperatorReqChange.Where(x => x.DocNo == DocNo).ToList();
 
             // var dataShow = _sptoDbContext.vewOperatorAdditionalDep.Where(x => x.OperatorID == OPID).ToList();
 
-            var data = DataShow.Skip(skip).Take(pageSize).ToList();
-            return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
-            //   return Json(new {draw, recordsFiltered = recordsTotal, recordsTotal, data });
+            var data = DataShow.ToList();
+          //  return Json(new { success = true, data });
+             return Json(new {draw, recordsFiltered = recordsTotal, recordsTotal, data });
             //}
             //catch (Exception ex)
             //{
@@ -128,6 +128,43 @@ namespace RISTExamOnlineProject.Controllers
 
         }
 
+
+        public IActionResult ApproveData(string DocNO,string MakerID) {
+
+            try
+            {
+
+
+                string Message;
+                mgrSQLcommand_TEC_Approved ObjRun = new mgrSQLcommand_TEC_Approved(_configuration);
+
+                Message = ObjRun.OperatorReqChange("UPD", DocNO.Trim(), "", "", "", "", "", "", MakerID.Trim(), MakerID.Trim());
+
+                if (Message == "OK")
+                {
+
+                    return Json(new { success = true, responseText = "Approved Data Success" });
+                }
+                else {
+
+
+                    return Json(new { success = false, responseText = Message });
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, responseText = ex.Message.ToString() });
+               
+            }
+
+          
+
+
+
+        }
 
 
     }
