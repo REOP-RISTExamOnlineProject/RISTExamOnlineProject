@@ -1,0 +1,238 @@
+﻿
+@{
+    ViewData["Title"] = "UserReqeustInqury";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class=" row mb-4">
+        <div class="col-7">
+            <h5 class=" mb-0"><strong> Request Inquiry</strong></h5>
+            <span class="text-secondary">User In-Charge <i class="fa fa-angle-right"></i> Request Inquiry</span>
+        </div>
+    </div>
+    @*<div class="card">
+        <div class="card-body">
+            <h5 class="text-secondary">Search Control</h5>
+            <hr />
+            <div class=" row mb-4">
+                <div class="col-sm">
+                    <label for="NameEng" class="mb-0">Document No.</label>
+                    @Html.TextBox("txtDocNo", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Document No..", id = "txtDocNo" })
+                </div>
+                <div class="col-sm">
+                    <label for="NameEng" class="mb-0">OperatorRequest</label>
+                    @Html.TextBox("txtOpId", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "OperatorNo..", id = "txtOpId" })
+                </div>
+                <div class="col-sm">
+                    <label for="NameEng" class="mb-0">Name - Surname</label>
+                    @Html.TextBox("txtSectionCode", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "SectionCode..", id = "txtSectionCode" })
+                </div>
+                <div class="col-sm">
+                    <label for="NameEng" class="mb-0">Requester</label>
+                    @Html.TextBox("txtReqID", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Requester..", id = "txtReqID" })
+                </div>
+
+                <div class="col-sm">
+                    <label for="NameEng" class="mb-0">Operator Approved</label>
+                    @Html.TextBox("txtOpAppID", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Operator Approved..", id = "txtOpAppID" })
+                </div>
+            </div>
+            <div class=" row">
+                <div class="col-sm">
+                    <button class="btn bg-info" id="btnSearch"><i class="fa fa-search"></i> Search</button>
+                    <button class="btn bg-warning" id="btnClear"><i class="fa fa-undo"></i> reset</button>
+                </div>
+            </div>
+        </div>
+    </div>*@
+    <div class="row">
+        <div class="col">
+            <div class="  table-responsive">
+                <h6 class="m-3">Additional Department</h6>
+                <table class="table table-bordered table-striped table-sm nowrap" id="myTables">
+                    <thead class="bg-dark text-white">
+                        <tr>
+                            <th>DocNo</th>
+                            <th>OperatorID</th>
+                            <th>SectionCode</th>
+                            <th>SectionAttribute</th>
+                            <th>OperatorGroup</th>
+                            <th>License</th>
+                            <th>Active</th>
+                            <th>ReqOperatorID</th>
+                            <th>ReqDate</th>
+                            <th>ChangeOperatorID</th>
+                            <th>ChangeDate</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-size:xx-small"></tbody>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    <link href="~/lib/datatables/Css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="~/lib/datatables/Js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/CustomJS/ScriptUserManage/Additional.js"></script>
+    <script src="~/lib/CustomJS/ScriptUserManage/UserManagemant.js"></script>
+    <script src="~/lib/DataTables/js/dataTables.fixedColumns.js"></script>
+    <script src="~/lib/DataTables/js/dataTables.fixedHeader.js"></script>
+    <script>
+        var myTables;
+        $(document).ready(function () {
+            SetmyTablesn();
+            $("#btnSearch").on("click", function (event) {
+                Swal.fire({
+                    icon: 'success',
+                    title: "Success~!",
+                    text: "Reset to Default",
+                    type: 'success',
+                });
+            });
+
+            $("#btnClear").on("click", function (event) {
+                Swal.fire({
+                    title: 'Are you sure to reset?',
+                    //text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Do it!'
+                }).then(function (result) {
+
+                    if (result.value) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: "Success~!",
+                            text: "Reset to Default",
+                            type: 'success',
+                        })
+                    }
+                });
+            });
+        });
+
+        function SetmyTablesn() {
+
+            myTables = $("#myTables").DataTable({
+                paging: true,
+                ordering: true,
+                processing: true,
+                deferRender: true,
+                dom: '<"top"l>rt<"bottom"ip><"clear">',
+                columns: [
+                    { data: "docNo" },
+                    { data: "operatorID" },
+                    { data: "sectionCode" },
+                    { data: "sectionAttribute" },
+                    { data: "operatorGroup" },
+                    { data: "license" },
+                    { data: "active" },
+                    { data: "reqOperatorID" },
+                    { data: "reqDate" },
+                    { data: "changeOperatorID" },
+                    { data: "changeDate" },
+                ],
+                order: [1, "asc"],
+                fnInitComplete: function (oSettings, json, sData) {
+                    addSearchControl(json); 
+                    return true;
+                },
+            });
+            getDataReqeustList();
+        }
+
+        function getDataReqeustList() {
+
+
+
+
+            $.ajax({
+                type: 'POST',
+                url: "../TEC_Management/GetDataInquiry",
+                //   data: { OPID: $("#strOPNo").val() },
+                dataType: 'json',
+                success: function (Data) {
+                    myTables.clear().draw();
+                    if (Data.count != 0) {
+                        myTables.rows.add(Data.data).draw();
+                    }
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                },
+            });
+
+
+        }
+
+        function addSearchControl(event) { 
+            $("#myTables thead").append($("#myTables thead tr:first").clone());
+            $("#myTables thead tr:eq(1) th").each(function (index) {
+                if (index != 100) {
+                    $(this).replaceWith('<th><input type="text" class="form-control form-control-sm input mw-100 "  placeholder="Fill for Search ' + $(this).html() + ' . . ."/></th>');
+                    var searchControl = $("#myTables thead tr:eq(1) th:eq(" + index + ") input");
+
+                    searchControl.on('keyup', function (event) {
+                        var searchController = myTables.column(index).search(searchControl.val());
+                        var keycode = (event.keyCode ? event.keyCode : event.which);
+                        // if (keycode == '13') {
+                        searchController.draw();
+                        // }
+                    });
+                }
+                else {
+                    // $(this).replaceWith('<th><input id="datepicker" data-range="true" data-multiple-dates-separator="-" data-language="en" class="datepicker-here form-control form-control-sm" style="width:250px; text-align:center;"    placeholder="' + $(this).html() + '"/> </th>');
+
+                    $(this).replaceWith('<th><span>Click For Manage</span> </th>');
+                    searchControl = $("#myTables thead tr:eq(1) th:eq(" + index + ") input");
+                    searchControl.datepicker({
+                        format: 'M/dd/yyyy-M/dd/yyyy',
+                    }).val();
+                    searchControl.datepicker({
+                        format: 'M/dd/yyyy',
+                        onSelect: function (dateText) {
+                            var cSting = dateText.length;
+                            if (cSting == 23) {
+                                searchController = myTables.column(index).search(searchControl.val());
+                                $("#myTables thead tr:eq(1) th:eq(0) input").focus();
+                                searchController.draw();
+                            } else if (cSting == 0) {
+                                searchController = myTables.column(index).search(searchControl.val());
+                                searchController.draw();
+                            }
+                        }
+                    })
+                    searchControl.on('keyup', function (event) {
+                        searchController = myTables.column(index).search(searchControl.val());
+                        var keycode = (event.keyCode ? event.keyCode : event.which);
+                        //if (keycode == '13') {
+                        searchController.draw();
+
+                        //}
+                    });
+                }
+            });
+        }
+     
+    </script>
+}

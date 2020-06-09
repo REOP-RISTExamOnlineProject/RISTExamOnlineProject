@@ -819,62 +819,27 @@ namespace RISTExamOnlineProject.Controllers
         }
 
 
+        public IActionResult UserReqeustInqury()
+        {
+
+            var UserName = User.Identity.Name;
+            vewOperatorAlls dataOperator = new vewOperatorAlls();
+            dataOperator = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == UserName);
+
+            ViewBag.NameEng = dataOperator.NameEng;
+            ViewBag.JobTitle = dataOperator.JobTitle;
+
+
+            ViewBag.NameEngUserDetail = dataOperator.NameEng;
+            ViewBag.JobTitleUserDetail = dataOperator.JobTitle;
+            var varsd = "http://10.29.1.12/RAJPTrainingControlSystem/PIC/" + UserName + ".jpg";
+
+            ViewBag.imgProfileUserDetail = varsd;
+            ViewBag.imgProfile = varsd;
 
 
 
-        //    public IActionResult TempDataExample()
-        //    {
-        //        mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
-
-
-        //        DataTable dt = new DataTable();
-
-
-
-
-        //        dt = ObjRun.GetUserDetail_Additional("000702");
-
-        //        List<string> mobileList = new List<string>();
-        //        string Strdata = "";
-
-        //        if (dt.Rows.Count != 0)
-        //        {
-
-
-        //            for (int i = 0; i > dt.Rows.Count; i++) {
-
-        //                Strdata += "{[ data:";
-        //                if (i != dt.Rows.Count)
-        //                {
-
-        //                    Strdata += "{},";
-
-
-        //                }
-        //                else {
-        //                    Strdata += "{}";
-
-        //                }
-
-        //                Strdata += "]}";
-
-
-
-        //            }
-
-
-        //            foreach (DataRow row in dt.Rows)
-        //            {
-        //                mobileList.Add("" + row["OperatorID"].ToString() + "," + row["SectionCode"].ToString() + "," +
-        //                    " " + row["Division"].ToString() + ", " + row["Department"].ToString() + "," + row["Section"].ToString() + " ");
-
-        //            }
-
-        //        }
-
-
-        //        TempData["MobileList"] = mobileList;
-        //        return View();
-        //    }
+            return View();
+        }
     }
 }

@@ -24,14 +24,24 @@ namespace RISTExamOnlineProject.Models.db
         public string ReqOperatorID { get; set; }
         public DateTime ReqDate { get; set; }
         public string ChangeOperatorID { get; set; }
-        public DateTime ChangeDate { get; set; }
+        public DateTime ChangeDate { get; set; } 
+    }
 
-
-
-
-
-
-
-
+    public class reqeustInquiry
+    {
+        [Key]
+        public string Nbr { get; set; }
+        public string DocNo { get; set; }
+        public string Seq { get; set; }
+        public string OperatorID { get; set; }
+        public string SectionCode { get; set; }
+        public string SectionAttribute { get; set; }
+        public string OperatorGroup { get; set; }
+        public string License { get; set; }
+        public string Active { get; set; }
+        public string ReqOperatorID { get; set; }
+        public string ReqDate { get; set; }
+        public string ChangeOperatorID { get; set; }
+        public string ChangeDate { get; set; }
     }
 }
