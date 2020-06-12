@@ -10,14 +10,17 @@
 
 }
 
-<h1>Edit User InCharge</h1>
-
-<h4>OperatorReqChange</h4>
+@*<h1>Edit User InCharge</h1>*@
+<h5 class="mb-0">
+    <strong>Edit User InCharge</strong>
+</h5>
+<span class="text-secondary">OperatorReqChange </span>
+@*<h4>OperatorReqChange</h4>*@
 <hr />
 
 <div class="row mt-3">
     <div class="col-sm-8">
-        <form action="">
+        <form  asp-action="EditUserInCharge" method="post">
             <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
                 <h5 class="mb-0">
                     <strong>Section Change</strong>
@@ -26,32 +29,32 @@
 
                 <div class="form-group row">
                     <div class="col-sm-6">
-                        <label for="Division" class="mb-0">Current-Division</label>
+                        <label class="mb-0">Current-Division</label>
                         @Html.TextBox("Division", (string)ViewBag.CategoryDivision, new { @class = "form-control border-success", disabled = "disabled" })
                     </div>
                     <div class="col-sm-6">
-                        <label asp-for="DivisionName" class="mb-0 text-danger">New-Division</label>
-                        <select asp-for="row_num" class="form-control"
-                                asp-items="@(new SelectList(@ViewBag.listofCatagoryDiv, "row_num", "DivisionName"))"></select>
+                        <label class="mb-0 text-danger">New-Division</label>
+                        @*@Html.DropDownList("ProcedureID", ViewBag.ProcedureSubCategoryID as SelectList, new { @class = "form-data" })*@
+                        @Html.DropDownList("DivisionList",ViewBag.listofCatagoryDiv as SelectList, "Select", new { @class = "form-control" })
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-sm-6">
-                        <label for="Department" class="mb-0">Current-Department</label>
+                        <label class="mb-0">Current-Department</label>
                         @Html.TextBox("Department", (string)ViewBag.CategoryDepartment, new { @class = "form-control border-success", disabled = "disabled" })
                     </div>
 
                     <div class="col-sm-6">
-                        <label for="row_dept_id" class="mb-0 text-danger">New-Department</label>
-                        <select class="form-control" id="row_dept_id" name="row_dept_id" asp-for="row_dept_id"
-                                asp-items="@(new SelectList(string.Empty,"row_dept_id", "Department"))"></select>
+                        <label for="DepartmentList" class="mb-0 text-danger">New-Department</label>
+                        <select class="form-control" id="DepartmentList" name="DepartmentList" asp-for="DepartmentID"
+                                asp-items="@(new SelectList(string.Empty,"DepartmentID", "Department"))"></select>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-sm-6">
-                        <label for="Section" class="mb-0">Current-Section</label>
+                        <label class="mb-0">Current-Section</label>
                         @Html.TextBox("Section", (string)ViewBag.CategorySection, new { @class = "form-control border-success", disabled = "disabled" })
                     </div>
                     <div class="col-sm-6">
@@ -74,7 +77,7 @@
 
                 <div class="form-group row">
                     <div class="col-sm-6">
-                        <label for="Shift" class="mb-0">Current-Shift</label>
+                        <label class="mb-0">Current-Shift</label>
                         @Html.TextBox("Shift", (string)ViewBag.CategoryShift, new { @class = "form-control border-success", disabled = "disabled" })
                     </div>
                     <div class="col-sm-6">
@@ -97,11 +100,11 @@
 
                 <div class="form-group row">
                     <div class="col-sm-6">
-                        <label for="License" class="mb-0">Current-License</label>
+                        <label class="mb-0">Current-License</label>
                         @Html.DropDownList("License", (MultiSelectList)ViewBag.CategoryLicense, new { @class = "form-control border-success", multiple = "multiple", disabled = "disabled" })
                     </div>
                     <div class="col-sm-6">
-                        <label for="NewLicense" class="mb-0 text-danger">New-License</label>
+                        <label class="mb-0 text-danger">New-License</label>
                         <div>
                             <select id="LicenseList" multiple="multiple" required name="LicenseList" class="selectlicenselist form-control" data-header="Select License">
                                 @if (ViewBag.licensecatagory != null)
@@ -130,11 +133,11 @@
 
                 <div class="form-group row">
                     <div class="col-sm-6">
-                        <label for="Resign" class="mb-0">Current-Resign</label>
+                        <label class="mb-0">Current-Resign</label>
                         @Html.TextBox("Resign", (string)ViewBag.CategoryResign, new { @class = "form-control border-success", disabled = "disabled" })
                     </div>
                     <div class="col-sm-6">
-                        <label for="NewResign" class="mb-0 text-danger">New-Resign</label>
+                        <label class="mb-0 text-danger">New-Resign</label>
                         <div>
                             @Html.DropDownList("ResignMaster", (IEnumerable
                                 <SelectListItem>)ViewBag.ResignMaster,"Select", new{@class = "form-control"})
@@ -151,7 +154,7 @@
 
                 <div class="form-group row">
                     <div class="col-sm-12">
-                        <label for="Resign" class="mb-0">Current-Additional</label>
+                        <label class="mb-0">Current-Additional</label>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -161,10 +164,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            @*@{
-                                var itemsaAdditional= ViewBag.AdditionalCurrent;
-                            }*@
+                           
                             @foreach (var item in ViewBag.AdditionalCurrent)
+                            
                             {
                                 <tr>
                                     <td>
@@ -176,6 +178,7 @@
                                     <td>
                                         @item.Section
                                     </td>
+                                    
                                 </tr>
                             }
 
@@ -183,7 +186,7 @@
                         </table>
                     </div>
                     <div class="col-sm-12">
-                        <label for="NewAdditional" class="mb-0 text-danger">New-Additional</label>
+                        <label class="mb-0 text-danger">New-Additional</label>
                         <div>
                             
                         </div>
@@ -234,30 +237,30 @@
         $(document).ready(function () {
             var items = "<option value='0'>Select</option>";
 
-            $('#row_dept_id').html(items);
+            $('#DepartmentList').html(items);
             $('#SectionCodeID').html(items);
         });
     </script>
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#row_num').change(function () {
+            $('#DivisionList').change(function () {
                 var url = '@Url.Content("~/")' + "Management/GetDepartmentCategory";
-                var ddlsource = "#row_num";
-                $.getJSON(url, { row_num: $(ddlsource).val() }, function (data) {
+                var ddlsource = "#DivisionList";
+                $.getJSON(url, { DivisionList: $(ddlsource).val() }, function (data) {
                     var items = '';
-                    $("#row_dept_id").empty();
-                    $.each(data, function (i, subcategory) {
-                        items += "<option value='" + subcategory.value + "'>" + subcategory.text + "</option>";
+                    $("#DepartmentList").empty();
+                    $.each(data, function (i, department) {
+                        items += "<option value='" + department.value + "'>" + department.text + "</option>";
                     });
-                    $('#row_dept_id').html(items);
+                    $('#DepartmentList').html(items);
                 });
             });
 
-            $('#row_dept_id').change(function () {
+            $('#DepartmentList').change(function () {
                 var url = '@Url.Content("~/")' + "Management/GetSectionCategory";
-                var ddlsource = "#row_dept_id";
-                $.getJSON(url, { row_dept_id: $(ddlsource).val() }, function (data) {
+                var ddlsource = "#DepartmentList";
+                $.getJSON(url, { DepartmentList: $(ddlsource).val() }, function (data) {
                     var items = '';
                     $('#SectionCodeID').empty();
                     $.each(data, function (i, section) {

@@ -5,11 +5,11 @@ namespace RISTExamOnlineProject.Models.db
 {
     public class vewDivisionMaster
     {
-       
-        public string DivisionID { get; set; }
-        public string DivisionName { get; set; }
         [Key]
         public long row_num { get; set; }
+        public string DivisionID { get; set; }
+        public string DivisionName { get; set; }
+        
 
         [NotMapped]
         public string DepartmentID { get; set; }
@@ -19,6 +19,16 @@ namespace RISTExamOnlineProject.Models.db
         public string SectionCodeID { get; set; }
 
 
+        
+    }
+
+    //public class categorydivision
+    //{
+
+    //}
+
+    public class additionalist
+    {
         [NotMapped]
         public string SectionCode { get; set; }
         [NotMapped]
