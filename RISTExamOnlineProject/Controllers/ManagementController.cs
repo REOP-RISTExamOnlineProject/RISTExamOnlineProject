@@ -1011,11 +1011,8 @@ namespace RISTExamOnlineProject.Controllers
 
                 var sql = "EXEC sprRunningNo @Progdesc,@RunningNo = @RunningNo OUTPUT SELECT @RunningNo as 'RunningNo'";
                 var queryRunningNo = await _sptoDbContext.sprRunningNo.FromSql(sql,progdesc, runningNo).FirstOrDefaultAsync();
-                //if (queryRunningNo.RunningNo.Trim() != string.Empty)
-                //{
-                //    runningno = queryRunningNo.RunningNo.Trim();
-                //}
-                string resultDocNo = queryRunningNo.RunningNo.Trim();
+               
+                var resultDocNo = queryRunningNo.RunningNo.Trim();
                 // Initialization.  
                
                 foreach (var item in queryvalue)
