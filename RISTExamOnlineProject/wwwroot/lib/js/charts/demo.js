@@ -230,15 +230,37 @@
             }
         }
       
-        // Get reference to the canvas element with jQuery.
-        if ($("#barChart").length) {
-          var barChartCanvas = $("#barChart").get(0).getContext("2d");
-          var barChart = new Chart(barChartCanvas, {
-            type: 'bar',
-            data: data,
-            options: options
-          });
-        }
+     // Get reference to the canvas element with jQuery.
+     if ($("#barChart").length) {
+         var barChartCanvas = $("#barChart").get(0).getContext("2d");
+         var barChart = new Chart(barChartCanvas, {
+             type: 'horizontalBar',
+             data: data,
+             options: options
+         });
+     }
+
+     if ($("#barChart1").length) {
+         var barChartCanvas = $("#barChart1").get(0).getContext("2d");
+         var barChart = new Chart(barChartCanvas, {
+             type: 'horizontalBar',
+             data: data,
+             options: options
+         });
+     }
+
+     if ($("#barChart2").length) {
+         var barChartCanvas = $("#barChart2").get(0).getContext("2d");
+         var barChart = new Chart(barChartCanvas, {
+             type: 'horizontalBar',
+             data: data,
+             options: options
+         });
+     }
+
+
+
+
       
         if ($("#lineChart").length) {
           var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
@@ -272,7 +294,8 @@
           var doughnutChart = new Chart(doughnutChartCanvas, {
             type: 'doughnut',
             data: doughnutPieData,
-            options: doughnutPieOptions
+              options: doughnutPieOptions,
+              responsive:true,
           });
         }
       
@@ -281,7 +304,8 @@
           var pieChart = new Chart(pieChartCanvas, {
             type: 'pie',
             data: doughnutPieData,
-            options: doughnutPieOptions
+              options: doughnutPieOptions,
+              responsive: true,
           });
         }
       
