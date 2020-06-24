@@ -382,6 +382,8 @@
                 DeleteHTML('Display_Modal')
                 var HTMLText = document.getElementById(DisplayID).innerHTML
                 InputHTML('Display_Modal', HTMLText)
+                $('#BTN_Edit').attr('disabled', false);
+                $('#BTN_Save').attr('disabled', false);
                 $('#Modal_Summernote').modal('show')
             }
 
