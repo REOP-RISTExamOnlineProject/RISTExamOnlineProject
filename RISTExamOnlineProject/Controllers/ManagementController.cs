@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RISTExamOnlineProject.Models.db;
 using RISTExamOnlineProject.Models.TSQL;
-
+using X.PagedList;
 namespace RISTExamOnlineProject.Controllers
 {
     public class ManagementController : Controller
@@ -471,11 +474,6 @@ namespace RISTExamOnlineProject.Controllers
         public IActionResult Load_OperatorAdditional_Detail(string OPID)
         {
 
-
-            //          try
-//            {        
-
-
             mgrSQLcommand_Additional ObjRun = new mgrSQLcommand_Additional(_configuration);
 
             var draw = HttpContext.Request.Form["draw"].FirstOrDefault();
@@ -616,12 +614,33 @@ namespace RISTExamOnlineProject.Controllers
 
 
 
-        public IActionResult UserInCharge(string opno)
+        public async Task<IActionResult> UserInCharge(int? page,string opno)
         {
             ViewBag.opno = opno;
 
-            var queryuser = _sptoDbContext.sprOperatorShowListInChang.FromSql($"sprOperatorShowListInChang {opno}")
-                .ToList();
+            if (ViewBag.opno == null)
+            {
+                opno = TempData["opno"].ToString();
+            }
+
+            const int padgeSize = 5;
+           
+            var queryuser =  _sptoDbContext.sprOperatorShowListInChang.FromSql($"sprOperatorShowListInChang {opno}").ToList().ToPagedList(page ?? 1, padgeSize);
+            //var tempval = TempData.Peek<TempReqChange>("datareqchange");
+
+
+            // Get data list user request
+            var queryvalue = await _sptoDbContext.TempReqChange.Where(x => x.ReqOperatorID == opno & x.SendReqFlag == false).ToListAsync();
+
+
+            if (queryvalue.Count != 0)
+            {
+               
+                ViewBag.Collection = queryvalue;
+
+            }
+
+            
 
             var UserName = User.Identity.Name;
             vewOperatorAlls dataOperator = new vewOperatorAlls();
@@ -642,24 +661,30 @@ namespace RISTExamOnlineProject.Controllers
 
             return View(queryuser);
         }
-
-        public async Task<IActionResult> EditUserInCharge(string opno)
+        
+        public async Task<IActionResult> EditUserInCharge(int? pageaddition, string opnoedit)
         {
-            if (opno == null)
-            {
-                return NotFound();
-            }
-
-            var Getuser = await _sptoDbContext.vewOperatorAll.FirstOrDefaultAsync(x => x.OperatorID == opno);
-
-            //if (Getuser == null)
+            //if (opnoedit == null)
             //{
             //    return NotFound();
             //}
 
+            //var sectadditionid = HttpContext.Request.Form["sectListAdditional"].ToString();
+
+
+
+            var Getuser = await _sptoDbContext.vewOperatorAll.FirstOrDefaultAsync(x => x.OperatorID == opnoedit);
+
+            if (Getuser != null)
+            {
+                ViewBag.opnoreq = Getuser.OperatorID;
+                ViewBag.namereq = Getuser.NameEng;
+
+            }
+           
 
             //Get Current Organize
-            var queryOrganize = _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opno)
+            var queryOrganize = await _sptoDbContext.vewOperatorAll.Where(x => x.OperatorID == opnoedit)
                 .Select(c => new
                 {
                     division = c.Division,
@@ -668,7 +693,7 @@ namespace RISTExamOnlineProject.Controllers
                     shift = c.GroupName,
                     statusresign = (c.Active ? "Active" : "Not Active")
                 })
-                .ToList();
+                .ToListAsync();
 
             foreach (var item in queryOrganize)
             {
@@ -683,8 +708,8 @@ namespace RISTExamOnlineProject.Controllers
 
 
             //Get Current License to Dropdown
-            var queryLicense = _sptoDbContext.vewOperatorLicense.Where(x => x.OperatorID == opno)
-                .Select(c => new {c.OperatorID, c.License});
+            var queryLicense = await _sptoDbContext.vewOperatorLicense.Where(x => x.OperatorID == opnoedit)
+                .Select(c => new {c.OperatorID, c.License}).ToListAsync();
             ViewBag.CategoryLicense = new MultiSelectList(queryLicense.AsEnumerable(), "OperatorID", "License");
 
 
@@ -703,59 +728,64 @@ namespace RISTExamOnlineProject.Controllers
             ViewBag.ResignMaster = categoryResign;
 
             //Binding for select dropdownlist shift
-            var shiftmaster = _sptoDbContext.vewOperatorGroupMaster
-                .Select(c => new {c.OperatorGroup, c.GroupName}).ToList();
+            var shiftmaster = await _sptoDbContext.vewOperatorGroupMaster
+                .Select(c => new {c.OperatorGroup, c.GroupName}).ToListAsync();
 
             ViewBag.CategoryShiftmaster = new SelectList(shiftmaster.AsEnumerable(), "OperatorGroup", "GroupName");
 
 
             //Binding for select dropdownlist Division
 
-            // var catagoryDivlist = _sptoDbContext.vewDivisionMaster
-            //     .Select(v => new {v.row_num, v.DivisionName}).ToList();
 
-
-            // // ------- Inserting Select Item in Division List -------
-            //// catagoryDivlist.Insert(0, new vewDivisionMaster() { row_num = 0, DivisionName = "Select" });
-            // ViewBag.listofCatagoryDiv = new SelectList(catagoryDivlist.AsEnumerable(), "row_num", "DivisionName");
-
-            //Binding for select dropdownlist Division
-            //List<vewDivisionMaster> catagoryDivlist = new List<vewDivisionMaster>();
-
-            var catagoryDivlist = _sptoDbContext.vewDivisionMaster
+            var catagoryDivlist = await _sptoDbContext.vewDivisionMaster
                 .Select(v => new
                 {
                     DivisionID = v.row_num,
                     Divisionname = v.DivisionName
-                }).ToList();
+                }).ToListAsync();
 
 
 
             // ------- Inserting Select Item in Division List -------
-            //catagoryDivlist.Insert(0, new vewDivisionMaster() { row_num = 0, DivisionName = "Select" });
-            //ViewBag.listofCatagoryDiv = new SelectList(catagoryDivlist.AsEnumerable(), "DivisionID", "Divisionname");
+            
             ViewBag.listofCatagoryDiv = new SelectList(catagoryDivlist, "DivisionID", "Divisionname");
 
 
             //Binding for select dropdownlist License
-            var licensecatagory = _sptoDbContext.vewLicenseMaster
-                .Select(v => new {License = v.License.ToString().Trim(), v.LicenseID}).ToList();
+            var licensecatagory = await _sptoDbContext.vewLicenseMaster
+                .Select(v => new {License = v.License.ToString().Trim(), v.LicenseID}).ToListAsync();
 
             ViewBag.licensecatagory = new MultiSelectList(licensecatagory.AsEnumerable(), "License", "License");
 
-
-
-            var listadditional = _sptoDbContext.vewOperatorAdditionalDep
-                .Where(x => x.OperatorID == opno)
+            
+            const int padgeSizeAddition = 5;
+            var listadditional = await _sptoDbContext.vewOperatorAdditionalDep
+                .Where(x => x.OperatorID == opnoedit)
                 .Select(s => new additionalist()
                 {
                     Division = s.Division,
                     Department = s.Department,
                     Section = s.Section,
                     SectionCode = s.SectionCode
-                }).ToList();
-
+                }).ToPagedListAsync(pageaddition ?? 1, padgeSizeAddition);
+            ViewBag.opnoedit = opnoedit;
             ViewBag.AdditionalCurrent = listadditional;
+
+
+            // Div. Additional 
+            var divlistAdditional = await _sptoDbContext.vewDivisionMaster
+                .Select(v => new
+                {
+                    DivisionID = v.row_num,
+                    Divisionname = v.DivisionName
+                }).ToListAsync();
+
+
+
+            // ------- Inserting Select Item in Division List -------
+
+            ViewBag.listofDivAdditional = new SelectList(divlistAdditional, "DivisionID", "Divisionname");
+
 
 
             var userName = User.Identity.Name;
@@ -785,48 +815,107 @@ namespace RISTExamOnlineProject.Controllers
         }
 
         //GetDepartment Category
-        public JsonResult GetDepartmentCategory(long DivisionList)
+        public async Task<JsonResult> GetDepartmentCategory(long divisionList)
         {
             // ------- Getting Data from Database Using EntityFrameworkCore -------
 
-            var DepartmentCategory = _sptoDbContext.vewDepartmentMaster
-                .Where(x => x.row_num == DivisionList)
-                .GroupBy(g => new
-                {
-                    department = g.Department,
-                    Row_num = g.row_num,
-                    Row_dept_id = g.row_dept_id
-                })
-                .Select(s => new
-                {
-                    Department = s.Key.department,
-                    DivisionID = s.Key.Row_num,
-                    DepartmentID = s.Key.Row_dept_id
-                }).ToList();
-
-
-
-
-            // ------- Inserting Select Item in List -------
-            //Departmentlist.Insert(0, new vewDepartmentMaster() { row_dept_id = 0, Department = "Select" });
-
-            return Json(new SelectList(DepartmentCategory, "DepartmentID", "Department"));
+            
+           List<vewDepartmentMaster> departmentCategory = await _sptoDbContext.vewDepartmentMaster
+                 .Where(x => x.row_num == divisionList)
+                 .GroupBy(g => new { g.row_dept_id, g.Department })
+                 .Select(g => new vewDepartmentMaster()
+                 {
+                     DepartmentID = g.Key.row_dept_id,
+                     Departmentname = g.Key.Department
+                 })
+                 .ToListAsync();
+           // ------- Inserting Select Item in List -------
+           departmentCategory.Insert(0, new vewDepartmentMaster() {row_dept_id = 0, Departmentname = "Select" });
+           
+            return Json(new SelectList(departmentCategory, "DepartmentID", "Departmentname"));
         }
 
 
-        public JsonResult GetSectionCategory(long DepartmentList)
+        public async Task<JsonResult> GetSectionCategory(long departmentList)
         {
             // ------- Getting Data from Database Using EntityFrameworkCore -------
 
-            var sectionList = _sptoDbContext.vewSectionMaster
-                .Where(x => x.row_dept_id == DepartmentList).ToList();
+            var sectionList = await _sptoDbContext.vewSectionMaster
+                .Where(x => x.row_dept_id == departmentList).ToListAsync();
 
             // ------- Inserting Select Item in List -------
-            sectionList.Insert(0, new vewSectionMaster() {SectionCodeID = "0", Section = "Select"});
+            sectionList.Insert(0, new vewSectionMaster {SectionCodeID = "-", Section = "Select"});
             return Json(new SelectList(sectionList, "SectionCodeID", "Section"));
         }
 
 
+        //GetDepartment Category additional
+        public async Task<JsonResult> GetDeptlistadditional(long divListAddition)
+        {
+            // ------- Getting Data from Database Using EntityFrameworkCore -------
+            List<vewDepartmentMaster> deptlistqurey = await _sptoDbContext.vewDepartmentMaster
+                .Where(x => x.row_num == divListAddition)
+                .GroupBy(g => new { g.row_dept_id, g.Department })
+                .Select(g => new vewDepartmentMaster
+                {
+                    DepartmentID = g.Key.row_dept_id,
+                    Departmentname = g.Key.Department
+                })
+                .ToListAsync();
+            // ------- Inserting Select Item in List -------
+            deptlistqurey.Insert(0, new vewDepartmentMaster() { row_dept_id = 0, Departmentname = "Select" });
+
+            return Json(new SelectList(deptlistqurey, "DepartmentID", "Departmentname"));
+        }
+        //GetSection Category additional
+        public async Task<JsonResult> GetSectlistadditional(long deptListAdditional)
+        {
+            // ------- Getting Data from Database Using EntityFrameworkCore -------
+
+            var sectlistquery = await _sptoDbContext.vewSectionMaster
+                .Where(x => x.row_dept_id == deptListAdditional).ToListAsync();
+
+            // ------- Inserting Select Item in List -------
+            sectlistquery.Insert(0, new vewSectionMaster { SectionCodeID = "-", Section = "Select" });
+            return Json(new SelectList(sectlistquery, "SectionCodeID", "Section"));
+        }
+
+
+       
+        public async Task<JsonResult> GetAdditionValue(string sectListAdditional,string opnovalue)
+        {
+            //string[] additionList = { };
+            if (sectListAdditional != null)
+            {
+                var listAddition = new TempListAddition()
+                {
+
+                    OPNO = opnovalue, //opno for change
+                    SectionSelect = sectListAdditional, //sectioncode change
+                    FlagSend = false // Senq Req Flag
+                };
+                _sptoDbContext.TempListAddition.Add(listAddition);
+                _sptoDbContext.SaveChanges();
+            }
+            //else
+            //{
+
+            //}
+            //var opnovalue = HttpContext.Request.Form["opnoreq"].ToString();
+
+
+
+            var listAdditionSelect = await _sptoDbContext.TempListAddition
+                .Where(x => x.OPNO == opnovalue && x.FlagSend == false).ToListAsync();
+
+            if (listAdditionSelect.Count != 0)
+            {
+                ViewBag.AdditionValue = listAdditionSelect;
+            }
+
+            // return Json(new SelectList(listAdditionSelect, "SectionCodeID", "Section"));
+            return Json( ViewBag.AdditionValue);
+        }
         public IActionResult UserReqeustInqury()
         {
 
@@ -851,32 +940,124 @@ namespace RISTExamOnlineProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditUserInCharge()
+        public IActionResult EditUserInChargeSubmit()
         {
             var sectioncodeid = HttpContext.Request.Form["SectionCodeID"].ToString();
-            var shift = HttpContext.Request.Form["Shift"].ToString();
+            var shiftchange = HttpContext.Request.Form["Shift"].ToString();
             var licenselist = HttpContext.Request.Form["LicenseList"].ToString().Replace(",", ";");
-            var resign = HttpContext.Request.Form["ResignMaster"].ToString();
+            var resignstatus = HttpContext.Request.Form["ResignMaster"].ToString();
+            var opnoreq = HttpContext.Request.Form["opnoreq"].ToString().Trim();
+            var selectAddition = HttpContext.Request.Form["ValueSect1"].ToString();
 
 
-            List<TempReqChange> reqchange = new List<TempReqChange>
+           
+
+            var datareqchange = new TempReqChange()
             {
-               
-                new TempReqChange()
-                {
-                    OperatorID = "005610",
-                    SectionCode = sectioncodeid,
-                    Shift = shift,
-                    License = licenselist,
-                    active = resign
-                }
+                
+                OperatorID = opnoreq, //opno for change
+                SectionCode = sectioncodeid, //sectioncode change
+                Shift = shiftchange, // shift for change
+                License = licenselist, // license list for change
+                ReqOperatorID = User.Identity.Name, // opno request
+                ResignStatus = resignstatus,  // resign status
+                SectionAttribute = selectAddition,
+                DateReq = DateTime.Now, // date request
+                SendReqFlag = false // Send Req Flag
             };
+            _sptoDbContext.TempReqChange.Add(datareqchange);
+            _sptoDbContext.SaveChanges();
 
-            TempData["tempreqchange"] = reqchange;
-
-            var opno = User.Identity.Name;
-            return RedirectToAction("UserInCharge", "Management", new {opno});
+            
+            
+            TempData["opno"] = User.Identity.Name;
+           
+            return RedirectToAction("UserInCharge", "Management", new { opno = TempData["opno"] });
             
         }
+
+        public IActionResult TestTempdata()
+        {
+            if (TempData["CurrTime"] != null)
+            {
+                string tempkeep = TempData["CurrTime"].ToString();
+          
+                TempData["CurrTime"] = DateTime.Now;
+            }
+            
+            return View();
+        }
+
+       
+        public async Task<ActionResult> SaveForm( string opno)
+        {
+            // Get data list user request
+            var queryvalue = await _sptoDbContext.TempReqChange.Where(x => x.ReqOperatorID == opno & x.SendReqFlag == false).ToListAsync();
+
+
+            if (queryvalue.Count != 0)
+            {
+
+
+                //Get Running No.
+                string runningno;
+                var progdesc = new SqlParameter("Progdesc", "OPUPD");
+                var runningNo = new SqlParameter("RunningNo", "")
+                {
+                    Direction = ParameterDirection.Output,
+                    SqlDbType = SqlDbType.NChar
+                };
+
+
+                var sql = "EXEC sprRunningNo @Progdesc,@RunningNo = @RunningNo OUTPUT SELECT @RunningNo as 'RunningNo'";
+                var queryRunningNo = await _sptoDbContext.sprRunningNo.FromSql(sql,progdesc, runningNo).FirstOrDefaultAsync();
+                //if (queryRunningNo.RunningNo.Trim() != string.Empty)
+                //{
+                //    runningno = queryRunningNo.RunningNo.Trim();
+                //}
+                string resultDocNo = queryRunningNo.RunningNo.Trim();
+                // Initialization.  
+               
+                foreach (var item in queryvalue)
+                {
+
+
+
+
+                    // Settings.  
+                    var flag = new SqlParameter("@Flag", "Add");
+                    var docNo = new SqlParameter("@DocNo", resultDocNo);
+                    //var flag = new SqlParameter("@Flag", "ADD"){}
+                    //var docNo = new SqlParameter("@DocNo", "TE-XXXX65");
+                    var operatorId = new SqlParameter("@OperatorID",item.OperatorID.Trim());
+                    var sectionCode = new SqlParameter("@SectionCode", item.SectionCode.Trim());
+                    var sectionAttribute = new SqlParameter("@SectionAttribute",item.SectionAttribute.Trim());
+                    var operatorGroup = new SqlParameter("@OperatorGroup",item.Shift.Trim());
+                    var license = new SqlParameter("@License", item.License.Trim());
+                    var active = new SqlParameter("@Active",item.ResignStatus.Trim());
+                    var reqOperatorId = new SqlParameter("@ReqOperatorID",item.ReqOperatorID.Trim());
+                    var changeOperatorId = new SqlParameter("@ChangeOperatorID","");
+
+
+               
+                    var sqlsprOperatorReqChange = "EXEC sprOperatorReqChange @Flag, @DocNo, @OperatorID, @SectionCode, @SectionAttribute, @OperatorGroup, @License, @Active, @ReqOperatorID, @ChangeOperatorID";
+                    var lst = await _sptoDbContext.Query<sprOperatorReqChange>().FromSql(sqlsprOperatorReqChange, flag,
+                        docNo, operatorId, sectionCode, sectionAttribute, operatorGroup, license, active, reqOperatorId,
+                        changeOperatorId).ToListAsync();
+
+                  
+                }
+
+
+                var list = await _sptoDbContext.TempReqChange.ToListAsync();
+                _sptoDbContext.TempReqChange.RemoveRange(list);
+                await _sptoDbContext.SaveChangesAsync();
+                //return RedirectToAction(nameof(Index));
+
+            }
+            //ViewBag.DataReq = dataCollection;
+            return RedirectToAction("UserInCharge", "Management", new {opno});
+        }
+
     }
 }

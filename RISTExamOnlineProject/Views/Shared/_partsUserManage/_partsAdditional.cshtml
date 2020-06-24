@@ -153,11 +153,11 @@
 
     $("#DDL_Department").on("change", function () {
     
-        var DIV = $("#DDL_Division").val()
-        var DEP = $("#DDL_Department").val()
+        var DIV = $("#DDL_Division").val();
+        var DEP = $("#DDL_Department").val();
         if ($("#DDL_Department").val != 0) {
             $("#DDL_Section option").remove();
-            GetSection_Addition(DIV, DEP)
+            GetSection_Addition(DIV, DEP);
         } else {
             $("#DDL_Section option").remove();
         }
@@ -167,11 +167,11 @@
 
     $("#DDL_Division").on("change", function () {
    
-        var DIV = $("#DDL_Division").val()
+        var DIV = $("#DDL_Division").val();
         if (DIV != 0) {
             $("#DDL_Department option").remove();
             $("#DDL_Section option").remove();
-            GetDepartment_Addition(DIV)
+            GetDepartment_Addition(DIV);
         } else {
             $("#DDL_Department option").remove();
             $("#DDL_Section option").remove();
@@ -201,10 +201,10 @@
 
         }).then(function (result) {
             if (result.value) {
-                SaveData(OPID, MakerID)
+                SaveData(OPID, MakerID);
             }
 
-        })
+        });
 
 
     });
@@ -255,15 +255,7 @@
 
             }
 
-        })
-
-
-
-
-
-
-
-
+        });
 
 
     });
@@ -274,8 +266,8 @@
          var MakerID = '@User.Identity.Name';
          var OPID = $("#strOPNo").val();
 
-        debugger
-        Swal.fire({
+        debugger;
+         Swal.fire({
             icon: 'warning',
             title: 'Are you sure?',
             text: "Are you sure you want to Delete Section ?",
@@ -288,15 +280,10 @@
         }).then(function (result) {
             if (result.value) {
 
-                Delete_Data(OPID, MakerID)
+                Delete_Data(OPID, MakerID);
             }
 
-        })
-
-
-
-
-
+        });
 
 
     });
@@ -304,7 +291,7 @@
 
 
     function GetuserDetail() {
-        debugger
+        debugger;
 
         var MakerID = '@User.Identity.Name';
          var OPID = $("#strOPNo").val();
@@ -316,7 +303,7 @@
             MakeDataTemp(OPID, MakerID);
         //    Getdata(OPID)
         } else {
-            return false
+            return false;
         }
 
 
@@ -324,12 +311,12 @@
     }
 
     function Getdata(OPID) {
-        debugger
+        debugger;
         if (TableTarget != null) {
             TableTarget.destroy();
             TableTarget.clear();
         }
-        debugger
+        debugger;
         try {
 
             TableTarget = $("#MyTable").DataTable({
@@ -363,8 +350,8 @@
                         data: null,
                         name: null,
                         className: "center",
-                        "fnCreatedCell": function (nTd, oData, ) {
-                            var Target = oData.sectionCode
+                        "fnCreatedCell": function (nTd, oData ) {
+                            var Target = oData.sectionCode;
 
                             $(nTd).html('<input type="checkbox"   class="editor-active" id="CB_Delete"  name="CB_Delete" value="' + Target + '"  />');
 
@@ -381,13 +368,13 @@
                 icon: 'error',
                 title: 'Oops...',
                 text: ("table:" + e)
-            })
+            });
 
 
         }
         finally {
 
-            GetDivision_Addition()
+            GetDivision_Addition();
 
             var x = document.getElementById("display_grid");
             x.style.display = "block";

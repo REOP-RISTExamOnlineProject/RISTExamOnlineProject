@@ -7,7 +7,7 @@ namespace RISTExamOnlineProject.Models.db
     {
         [Key]
         public long row_num { get; set; }
-        public string DivisionID { get; set; }
+
         public string DivisionName { get; set; }
         
 

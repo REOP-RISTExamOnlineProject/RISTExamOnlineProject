@@ -1,5 +1,6 @@
-﻿@using RISTExamOnlineProject.Controllers
-@using RISTExamOnlineProject.Models.db
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
 @model RISTExamOnlineProject.Models.db.vewDivisionMaster
 
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
@@ -7,20 +8,50 @@
     ViewData["Title"] = "EditUserInCharge";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
+}
+@section Styles
+    {
 
+
+    <link href="~/lib/XpageList/PagedList.css" rel="stylesheet" />
+}
+@{
+
+    var opnoedit = (string)ViewBag.opnoedit;
+    var arrayaddition = ViewBag.AdditionValue;
 }
 
-@*<h1>Edit User InCharge</h1>*@
+
+
 <h5 class="mb-0">
     <strong>Edit User InCharge</strong>
 </h5>
 <span class="text-secondary">OperatorReqChange </span>
-@*<h4>OperatorReqChange</h4>*@
+
 <hr />
 
 <div class="row mt-3">
     <div class="col-sm-8">
-        <form  asp-action="EditUserInCharge" method="post">
+        <form asp-action="EditUserInChargeSubmit" method="post">
+            <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label class="mb-0">Request OPNO.</label>
+                        @Html.TextBox("opnoreq", (string)ViewBag.opnoreq, new { @class = "form-control-plaintext" })
+                        @*<h5 class="mb-0">
+                                <strong id="opnoreq">Request OPNO:@ViewBag.opnoreq</strong>
+                            </h5>*@
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="mb-0">Request Name.</label>
+                        @Html.TextBox("namereq", (string)ViewBag.namereq, new { @class = "form-control-plaintext" })
+                        @*<h5 class="mb-0">
+                                <strong>Name:@ViewBag.namereq</strong>
+                            </h5>*@
+                    </div>
+                </div>
+            </div>
+
             <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
                 <h5 class="mb-0">
                     <strong>Section Change</strong>
@@ -34,8 +65,7 @@
                     </div>
                     <div class="col-sm-6">
                         <label class="mb-0 text-danger">New-Division</label>
-                        @*@Html.DropDownList("ProcedureID", ViewBag.ProcedureSubCategoryID as SelectList, new { @class = "form-data" })*@
-                        @Html.DropDownList("DivisionList",ViewBag.listofCatagoryDiv as SelectList, "Select", new { @class = "form-control" })
+                        @Html.DropDownList("divisionList", ViewBag.listofCatagoryDiv as SelectList, "Select", new { @class = "form-control" })
                     </div>
                 </div>
 
@@ -46,9 +76,11 @@
                     </div>
 
                     <div class="col-sm-6">
-                        <label for="DepartmentList" class="mb-0 text-danger">New-Department</label>
-                        <select class="form-control" id="DepartmentList" name="DepartmentList" asp-for="DepartmentID"
-                                asp-items="@(new SelectList(string.Empty,"DepartmentID", "Department"))"></select>
+                        <label for="departmentList" class="mb-0 text-danger">New-Department</label>
+                        <select class="form-control" id="departmentList" name="departmentList" asp-for="DepartmentID"
+                                asp-items="@(new SelectList(string.Empty, "DepartmentID", "Department"))">
+                        </select>
+
                     </div>
                 </div>
 
@@ -60,7 +92,8 @@
                     <div class="col-sm-6">
                         <label for="SectionCodeID" class="mb-0 text-danger">New-Section</label>
                         <select class="form-control" id="SectionCodeID" name="SectionCodeID" asp-for="SectionCodeID"
-                                asp-items="@(new SelectList(string.Empty,"SectionCodeID", "Section"))"></select>
+                                asp-items="@(new SelectList(string.Empty, "SectionCodeID", "Section"))">
+                        </select>
                     </div>
                 </div>
 
@@ -85,12 +118,6 @@
                         @Html.DropDownList("Shift", (IEnumerable<SelectListItem>)ViewBag.CategoryShiftmaster, "Select", new { @class = "form-control" })
                     </div>
                 </div>
-
-
-
-
-
-
             </div>
             <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
                 <h5 class="mb-0">
@@ -106,7 +133,7 @@
                     <div class="col-sm-6">
                         <label class="mb-0 text-danger">New-License</label>
                         <div>
-                            <select id="LicenseList" multiple="multiple" required name="LicenseList" class="selectlicenselist form-control" data-header="Select License">
+                            <select id="LicenseList" multiple="multiple"  name="LicenseList" class="selectlicenselist form-control" data-header="Select License">
                                 @if (ViewBag.licensecatagory != null)
                                 {
                                     foreach (var item in ViewBag.licensecatagory)
@@ -138,11 +165,7 @@
                     </div>
                     <div class="col-sm-6">
                         <label class="mb-0 text-danger">New-Resign</label>
-                        <div>
-                            @Html.DropDownList("ResignMaster", (IEnumerable
-                                <SelectListItem>)ViewBag.ResignMaster,"Select", new{@class = "form-control"})
-                        </div>
-
+                        @Html.DropDownList("ResignMaster", (IEnumerable<SelectListItem>)ViewBag.ResignMaster, "Select", new { @class = "form-control" })
                     </div>
                 </div>
             </div>
@@ -153,52 +176,135 @@
                 <hr />
 
                 <div class="form-group row">
-                    <div class="col-sm-12">
-                        <label class="mb-0">Current-Additional</label>
-                        <table class="table table-striped">
-                            <thead>
+                    @if (ViewBag.AdditionalCurrent.Count != 0)
+                    {
+                        <div class="col-sm-12">
+                            <label class="mb-0">Current-Additional</label>
+                            <table class="table table-striped">
+                                <thead>
                                 <tr>
                                     <th>Division</th>
                                     <th>Department</th>
                                     <th>Section</th>
                                 </tr>
-                            </thead>
-                            <tbody>
-                           
-                            @foreach (var item in ViewBag.AdditionalCurrent)
-                            
-                            {
-                                <tr>
-                                    <td>
-                                        @item.Division
-                                    </td>
-                                    <td>
-                                        @item.Department
-                                    </td>
-                                    <td>
-                                        @item.Section
-                                    </td>
-                                    
-                                </tr>
-                            }
+                                </thead>
+                                <tbody>
 
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-sm-12">
-                        <label class="mb-0 text-danger">New-Additional</label>
-                        <div>
-                            
+                                @foreach (var item in ViewBag.AdditionalCurrent)
+
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.Division
+                                        </td>
+                                        <td>
+                                            @item.Department
+                                        </td>
+                                        <td>
+                                            @item.Section
+                                        </td>
+
+                                    </tr>
+                                }
+
+                                </tbody>
+                            </table>
+                            <div class="text-right">
+                                @Html.PagedListPager((IPagedList)ViewBag.AdditionalCurrent, pageaddition => Url.Action("EditUserInCharge", new { pageaddition, ViewBag.opnoedit }), PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
+                            </div>
                         </div>
+                    }
 
+                    <div class="col-sm-4">
+                        <div>
+                            <label class="mb-0 text-danger">New-Division Additional</label>
+                            @Html.DropDownList("divListAddition", ViewBag.listofDivAdditional as SelectList, "Select", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div>
+                            <label class="mb-0 text-danger">New-Department Additional</label>
+                            <select class="form-control" id="deptListAdditional" name="deptListAdditional" asp-for="DepartmentID"
+                                    asp-items="@(new SelectList(string.Empty, "DepartmentID", "Department"))">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div>
+                            <label class="mb-0 text-danger">New-Section Additional</label>
+                            <select class="form-control" id="sectListAdditional" name="sectListAdditional" asp-for="SectionCodeID"
+                                    asp-items="@(new SelectList(string.Empty, "SectionCodeID", "Section"))">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm offset-9 col-sm-3">
+                        <div class="float-sm-right">
+                           
+                          
+                            <button type="button" class="btn btn-success" onclick="Send()">Add</button>
+                           
+                        </div>
+                    </div>
+
+                </div>
+                <hr/>
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <label class="mb-0">Select 1</label>
+                        @Html.TextBox("ValueSect1", "", new { @class = "form-control-plaintext" })
+                    </div>
+                    <div class="col-sm-3">
+                        @*<label class="mb-0">Select 2</label>
+                        @Html.TextBox("ValueSect2", "", new { @class = "form-control-plaintext", disabled = "disabled" })*@
+                    </div>
+                    <div class="col-sm-3">
+                        @*<label class="mb-0">Select 3</label>
+                        @Html.TextBox("ValueSect3", "", new { @class = "form-control-plaintext", disabled = "disabled" })*@
+                    </div>
+                    <div class="col-sm-3">
+                        @*<label class="mb-0">Select 4</label>
+                        @Html.TextBox("ValueSect4", "", new { @class = "form-control-plaintext", disabled = "disabled" })*@
                     </div>
                 </div>
+                @*@if (ViewBag.AdditionValue.Count != 0)
+                {
+                    <hr/>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>OPNO.</th>
+                            <th>Select-Section</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        @foreach (var item in ViewBag.AdditionValue)
+
+                        {
+                            <tr>
+                                <td>
+                                    @item.OPNO
+                                </td>
+                                <td>
+                                    @item.SectionSelect
+                                </td>
+                               
+
+                            </tr>
+                        }
+
+                        </tbody>
+                    </table>
+                }*@
+               
+
             </div>
 
             <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
-
+               
                 <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
+                   
+                    <input type="submit" value="Save" class="btn btn-primary"/>
                 </div>
 
             </div>
@@ -232,56 +338,101 @@
 
 
 @section scripts{
-    @*<script src="~/lib/jquery/jquery.js"></script>*@
+
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             var items = "<option value='0'>Select</option>";
 
-            $('#DepartmentList').html(items);
+            $('#departmentList').html(items);
             $('#SectionCodeID').html(items);
+            //for additional
+            $('#deptListAdditional').html(items);
+            $('#sectListAdditional').html(items);
         });
     </script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('#DivisionList').change(function () {
+        //for section change
+        $(document).ready(function() {
+            $('#divisionList').change(function() {
                 var url = '@Url.Content("~/")' + "Management/GetDepartmentCategory";
-                var ddlsource = "#DivisionList";
-                $.getJSON(url, { DivisionList: $(ddlsource).val() }, function (data) {
-                    var items = '';
-                    $("#DepartmentList").empty();
-                    $.each(data, function (i, department) {
-                        items += "<option value='" + department.value + "'>" + department.text + "</option>";
+                var ddlsource = "#divisionList";
+                $.getJSON(url,
+                    { divisionList: $(ddlsource).val() },
+                    function(data) {
+                        var items = '';
+                        $("#departmentList").empty();
+                        $.each(data,
+                            function(i, department) {
+                                items += "<option value='" + department.value + "'>" + department.text + "</option>";
+                            });
+                        $('#departmentList').html(items);
                     });
-                    $('#DepartmentList').html(items);
-                });
             });
 
-            $('#DepartmentList').change(function () {
+            $('#departmentList').change(function() {
                 var url = '@Url.Content("~/")' + "Management/GetSectionCategory";
-                var ddlsource = "#DepartmentList";
-                $.getJSON(url, { DepartmentList: $(ddlsource).val() }, function (data) {
-                    var items = '';
-                    $('#SectionCodeID').empty();
-                    $.each(data, function (i, section) {
-                        items += "<option value='" + section.value + "'>" + section.text + "</option>";
+                var ddlsource = "#departmentList";
+                $.getJSON(url,
+                    { departmentList: $(ddlsource).val() },
+                    function(data) {
+                        var items = '';
+                        $('#SectionCodeID').empty();
+                        $.each(data,
+                            function(i, section) {
+                                items += "<option value='" + section.value + "'>" + section.text + "</option>";
+                            });
+                        $('#SectionCodeID').html(items);
                     });
-                    $('#SectionCodeID').html(items);
-                });
             });
         });
+
+
+        //for additional list
+        $(document).ready(function() {
+            $('#divListAddition').change(function() {
+                var url = '@Url.Content("~/")' + "Management/GetDeptlistadditional";
+                var ddlsource = "#divListAddition";
+                $.getJSON(url,
+                    { divListAddition: $(ddlsource).val() },
+                    function(data) {
+                        var items = '';
+                        $("#deptListAdditional").empty();
+                        $.each(data,
+                            function(i, deptadditional) {
+                                items += "<option value='" + deptadditional.value + "'>" + deptadditional.text + "</option>";
+                            });
+                        $('#deptListAdditional').html(items);
+                    });
+            });
+
+            $('#deptListAdditional').change(function() {
+                var url = '@Url.Content("~/")' + "Management/GetSectlistadditional";
+                var ddlsource = "#deptListAdditional";
+                $.getJSON(url,
+                    { deptListAdditional: $(ddlsource).val() },
+                    function(data) {
+                        var items = '';
+                        $('#sectListAdditional').empty();
+                        $.each(data,
+                            function(i, sectadditional) {
+                                items += "<option value='" + sectadditional.value + "'>" + sectadditional.text + "</option>";
+                            });
+                        $('#sectListAdditional').html(items);
+                    });
+            });
+        });
+
     </script>
 
 
 
     <script src="~/lib/bootstrap-select/js/bootstrap-select.js"></script>
-
-
-    <link href="~/lib/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-select/css/bootstrap-select.css" rel="stylesheet"/>
 
 
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             // Enable Live Search.
             //$('#LicenseList').attr('data-live-search', true);
 
@@ -299,6 +450,42 @@
                     //tickIcon: 'fa-check'
                 });
         });
+    </script>
+
+    <script type="text/javascript">
+        function Send() {
+
+            var url = '@Url.Content("~/")' + "Management/GetAdditionValue";
+            var ddlsource = "#sectListAdditional";
+            var customvalue = "#CustomValue";
+            var valueprevios = "#ValueSect1";
+
+            $.getJSON(url,
+                {
+                    sectListAdditional: $(ddlsource).val(),
+                    opnovalue: $(opnoreq).val()
+
+                },
+                function() {
+                    //alert("Value Previous: " + $('#ValueSect1').val);
+                    var valuepre = document.getElementById("ValueSect1").value;
+                    if (valuepre !== "") {
+                        $('#ValueSect1').val(document.getElementById("ValueSect1").value + ";" + sectListAdditional.value);
+                    } else {
+                        $('#ValueSect1').val(sectListAdditional.value);
+                    }
+
+
+                    //alert("Value Previous: " + document.getElementById("ValueSect1").value);
+
+                    //alert("Value: " + sectListAdditional.value);
+
+                });
+        }
+
+        //$('#deptListAdditional').change(function () {
+
+        //});
     </script>
 }
 

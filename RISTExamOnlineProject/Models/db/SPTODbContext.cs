@@ -18,13 +18,17 @@ namespace RISTExamOnlineProject.Models.db
         {
             modelBuilder.Entity<vewOperatorAdditionalDep>()
                 .HasKey(k => new {k.OperatorID, k.SectionCode});
+            modelBuilder.Query<sprOperatorReqChange>();
+
         }
         public virtual DbSet<sprOperatorShowListInCharge> sprOperatorShowListInChang { get; set; }
+        public virtual DbSet<sprRunningNo> sprRunningNo { get; set; }
+        //public virtual DbSet<OperatorReqChange> OperatorReqChange { get; set; }
 
-     
+
         public virtual DbSet<vewT_Section_Master> vewT_Section_Master { get; set; }
         public DbSet<vewDivisionMaster> vewDivisionMaster { get; set; }
-        public DbSet<vewDepartmentMaster> vewDepartmentMaster { get; set; }
+        public virtual DbSet<vewDepartmentMaster> vewDepartmentMaster { get; set; }
         public DbSet<vewSectionMaster> vewSectionMaster { get; set; }
         public DbSet<vewOperatorReqChange> vewOperatorReqChange { get; set; }
         public DbSet<vewOperatorReqChange_Groupby> vewOperatorReqChange_Groupby { get; set; }              
@@ -32,7 +36,10 @@ namespace RISTExamOnlineProject.Models.db
         public virtual DbSet<vewOperatorGroupMaster> vewOperatorGroupMaster { get; set; }
         public virtual DbSet<vewLicenseMaster> vewLicenseMaster { get; set; }
 
-      
+        public virtual DbSet<TempReqChange> TempReqChange { get; set; }
+        public virtual DbSet<TempListAddition> TempListAddition { get; set; }
+
+
 
     }
 }

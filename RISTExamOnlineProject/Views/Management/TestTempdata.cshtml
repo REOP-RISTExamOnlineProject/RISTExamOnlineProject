@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewData["Title"] = "TestTempdata";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>TestTempdata</h1>
+
+@TempData["CurrTime"]
+@{ TempData.Keep("CurrTime"); }  

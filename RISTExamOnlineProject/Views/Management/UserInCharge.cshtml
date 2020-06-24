@@ -1,11 +1,20 @@
-﻿@model IEnumerable<RISTExamOnlineProject.Models.db.sprOperatorShowListInCharge>
+﻿@model IPagedList<RISTExamOnlineProject.Models.db.sprOperatorShowListInCharge>
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
+@addTagHelper *, PagedList.Core.Mvc
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
 @{
     ViewData["Title"] = "UserInCharge";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //var requestlist = (IEnumerable<TempReqChange>)TempData.Get<TempReqChange>("key");
 }
+@section Styles
+    {
 
+
+    <link href="~/lib/XpageList/PagedList.css" rel="stylesheet" />
+}
 
 <h5 class="mb-0">
     <strong>Request Change</strong>
@@ -16,80 +25,21 @@
         <div class="mt-1 mb-3  bg-white border shadow-sm">
             <table class="table table-striped ">
                 <thead class="table-dark">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.NameEng)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.NameThai)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.SectionName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Position)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.JobTitle)
-                    </th>
-                    <th>
-
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NameEng)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NameThai)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SectionName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Position)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.JobTitle)
-                        </td>
-                        <td>
-                            <a asp-action="EditUserInCharge" asp-route-opno="@item.OperatorID.Trim()"><i class="far fa-edit"></i> Edit</a> 
-                                
-                        </td>
-                    </tr>
-                }
-                </tbody>
-            </table>
-
-        </div>
-
-    </div>
-</div>
-
-<div class="row mt-3">
-    <div class="col-sm-12">
-        <div class="mt-1 mb-3  bg-white border shadow-sm">
-            <table class="table table-striped ">
-                <thead class="table-dark">
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.NameEng)
+                            NameEng
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.NameThai)
+                            NameThai
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.SectionName)
+                            SectionName
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Position)
+                            Position
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.JobTitle)
+                            JobTitle
                         </th>
                         <th>
 
@@ -116,15 +66,94 @@
                                 @Html.DisplayFor(modelItem => item.JobTitle)
                             </td>
                             <td>
-                                <a asp-action="EditUserInCharge" asp-route-opno="@item.OperatorID.Trim()"><i class="far fa-edit"></i> Edit</a>
+                                <a asp-action="EditUserInCharge" asp-route-opnoedit="@item.OperatorID.Trim()"><i class="far fa-edit"></i> Edit</a>
 
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
-
+           
         </div>
-
+        <div class="text-right">
+            @Html.PagedListPager(Model, page => Url.Action("UserInCharge", new { page, ViewBag.opno }), PagedListRenderOptionsBase.OnlyShowFivePagesAtATime)
+        </div>
     </div>
 </div>
+@if (ViewBag.Collection != null)
+{
+    <span class="text-secondary">User list Request</span>
+    <div class="row mt-3">
+        <div class="col-sm-12">
+           
+                <div class="mt-1 mb-3  bg-white border shadow-sm">
+                    <table class="table table-striped ">
+                        <thead class="table-danger">
+                            <tr>
+                                <th>
+                                    OPNO
+                                </th>
+                                <th>
+                                    SectionCode
+                                </th>
+                                <th>
+                                    Section Additional
+                                </th>
+                                <th>
+                                    Shift
+                                </th>
+                                <th>
+                                    License
+                                </th>
+                                <th>
+                                    Resign Active
+                                </th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in ViewBag.Collection)
+
+                            {
+                                <tr>
+                                    <td>
+                                        @item.OperatorID
+                                    </td>
+                                    <td>
+                                        @item.SectionCode
+                                    </td>
+                                    <td>
+                                        @item.SectionAttribute
+                                    </td>
+                                    <td>
+                                        @item.Shift
+                                    </td>
+                                    <td>
+                                        @item.License
+                                    </td>
+                                    <td>
+                                        @item.ResignStatus
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+
+
+                    </table>
+
+                </div>
+                <div class="form-group">
+                    @Html.ActionLink("Send Request", "SaveForm", new {  opno = ViewBag.opno }, new{@class="btn btn-success"})
+                    @*<input type="submit" value="Send Request" class="btn btn-success" />*@
+                    @*<input type="submit" value="Send Request" class="btn btn-success"/>*@
+                </div>
+            
+
+
+        </div>
+    </div>
+}
+

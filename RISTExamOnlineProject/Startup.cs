@@ -52,7 +52,8 @@ namespace RISTExamOnlineProject
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+            //services.AddMemoryCache();
+            //services.AddSession();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -76,8 +77,8 @@ namespace RISTExamOnlineProject
            
             app.UseCors("CorsPolicy");
 
-         
 
+            //app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
