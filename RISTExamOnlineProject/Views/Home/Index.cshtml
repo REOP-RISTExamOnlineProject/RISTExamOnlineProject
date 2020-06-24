@@ -11,54 +11,105 @@
 <!--Dashboard widget-->
 <div class="mt-1 mb-3 button-container">
     <div class="row pl-0">
-        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3">
-            <div class="bg-white border shadow">
+        <div class="col-xl col-md-4 col-sm-6 col-12 mb-3">
+            <div class="bg-light-blue border shadow">
                 <div class="media p-4">
                     <div class="align-self-center mr-3 rounded-circle notify-icon bg-theme">
                         <i class="fa fa-user"></i>
                     </div>
                     <div class="media-body pl-2">
                         <h3 class="mt-0 mb-0">
-                            <strong id="users"></strong>
+                            <strong class="text-white" id="users">1</strong>
                         </h3>
                         <p>
-                            <small class="text-muted bc-description">Total User Online</small>
+                            <small class=" bc-description text-white">Total User Online</small>
                         </p>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3">
-            <div class="bg-white border shadow">
-                <div class="media p-4">
-                    <div class="align-self-center mr-3 rounded-circle notify-icon bg-danger">
-                        <i class="fas fa-envelope-open"></i>
-                    </div>
-                    <div class="media-body pl-2">
-                        <h3 class="mt-0 mb-0">
-                            <strong>15</strong>
-                        </h3>
-                        <p>
-                            <small class="text-muted bc-description">Patrol</small>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3">
-            <div class="bg-theme border shadow">
+    </div>
+    <div class="row pl-0">
+        <div class="col-xl col-md-4 col-sm-6 col-12 mb-3">
+            <div class="  border shadow" style="background-color:#54C3D5;">
                 <div class="media p-4">
                     <div class="align-self-center mr-3 rounded-circle notify-icon bg-white">
-                        <i class="fa fa-tags text-theme"></i>
+                        <i class="fas fa-users text-theme"></i>
                     </div>
                     <div class="media-body pl-2">
                         <h3 class="mt-0 mb-0">
-                            <strong>60</strong>
+                            <strong class="text-white">15</strong>
                         </h3>
                         <p>
-                            <small class="bc-description text-white">Total Exam</small>
+                            <small class="  bc-description text-white">TRDI </small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl col-md-4 col-sm-6 col-12 mb-3">
+            <div class="  border shadow" style="background-color:#88E47F;">
+                <div class="media p-4">
+                    <div class="align-self-center mr-3 rounded-circle notify-icon bg-white">
+                        <i class="fas fa-users text-theme"></i>
+                    </div>
+                    <div class="media-body pl-2">
+                        <h3 class="mt-0 mb-0">
+                            <strong class="text-white">60</strong>
+                        </h3>
+                        <p>
+                            <small class="bc-description text-white">MCR</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl col-md-4 col-sm-6 col-12 mb-3">
+            <div class="  border shadow" style="background-color:#8E7FE4;">
+                <div class="media p-4">
+                    <div class="align-self-center mr-3 rounded-circle notify-icon bg-white">
+                        <i class="fas fa-users text-theme"></i>
+                    </div>
+                    <div class="media-body pl-2">
+                        <h3 class="mt-0 mb-0">
+                            <strong class="text-white">60</strong>
+                        </h3>
+                        <p>
+                            <small class="bc-description text-white">OPM</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl col-md-4 col-sm-6 col-12 mb-3">
+            <div class="  border shadow" style="background-color:#EF5F5F;">
+                <div class="media p-4">
+                    <div class="align-self-center mr-3 rounded-circle notify-icon bg-white">
+                        <i class="fas fa-users text-theme"></i>
+                    </div>
+                    <div class="media-body pl-2">
+                        <h3 class="mt-0 mb-0">
+                            <strong class="text-white">60</strong>
+                        </h3>
+                        <p>
+                            <small class="bc-description text-white">LAPIS</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl col-md-4 col-sm-6 col-12 mb-3">
+            <div class="  border shadow" style="background-color:#5FEFAA;">
+                <div class="media p-4">
+                    <div class="align-self-center mr-3 rounded-circle notify-icon bg-white">
+                        <i class="fas fa-users text-theme"></i>
+                    </div>
+                    <div class="media-body pl-2">
+                        <h3 class="mt-0 mb-0">
+                            <strong class="text-white">60</strong>
+                        </h3>
+                        <p>
+                            <small class="bc-description text-white">LSI</small>
                         </p>
                     </div>
                 </div>
@@ -67,135 +118,139 @@
     </div>
 </div>
 <!--/Dashboard widget-->
-<div class="row mt-3">
-    <div class="col-sm-6">
-        <!--Doughnut Chart-->
-        <div class="mt-1 mb-3 p-3 button-container bg-white shadow-sm border">
-            <h6 class="mb-2">Doughnut chart</h6>
-
-            <canvas id="doughnutChart" height="150px"></canvas>
+<div class="container-fluid">
+    <div class="row mt-3">
+        <div class="col-xl-3 ">
+            <div class="card   button-container   shadow-sm  ">
+                <div class="card-header ">
+                    <h6 class="mb-2">Doughnut chart</h6>
+                </div>
+                <div class=" card-body">
+                    <div class="chart-container"> 
+                        <canvas id="doughnutChart" height="150px"  ></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!--/Doughnut Chart-->
+        <div class="col-xl ">
+            <div class="card   button-container   shadow-sm  ">
+                <div class="card-header">
+                    <h6 class="mb-2">Doughnut chart</h6>
+                </div>
+                <div class=" card-body ">
+                    <table class="table table-sm text-sm-center">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">First</th>
+                                <th scope="col">Last</th>
+                                <th scope="col">Handle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>xmdo</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>xfat</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>Larry</td>
+                                <td>the Bird</td>
+                                <td>xtwitter</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 ">
+            <div class="card   button-container   shadow-sm  ">
+                <div class="card-header">
+                    <h6 class="mb-2">Doughnut chart</h6>
+                </div>
+                <div class=" card-body">
+                    <canvas id="pieChart" height="150px"  ></canvas>
+                </div>
+            </div>
+        </div>
     </div>
 
-
-    <div class="col-sm-6">
-        <!--Radar Chart-->
-        <div class="mt-1 mb-3 p-3 button-container  bg-white shadow-sm border">
-            <h6>Radar Chart</h6>
-
-            <canvas id="radarChart" height="150px"></canvas>
+    <div class="row mt-3">
+        <div class="col-xl-6  ">
+            <div class="card   button-container panel-head-primary  shadow-sm  ">
+                <div class="card-header">
+                    <h6 class="mb-2">Doughnut chart</h6>
+                </div>
+                <div class=" card-body">
+                    <canvas id="barChart1" height="100px"></canvas>
+                </div>
+            </div>
         </div>
-        <!--/Radar Table-->
-    </div>
-</div>
-<!--Latest projects-->
-<div class="row mt-3">
-    <div class="col-sm-12">
-        <div class="shadow panel-head-primary">
-            <h5 class="text-center mt-3 mb-3">
-                <strong>Latest Exam</strong>
-            </h5>
-            <div class="table-responsive">
-                <table class="table table-striped" id="project_table">
-                    <thead>
-                    <tr>
-                        <th>Project id</th>
-                        <th>Project name</th>
-                        <th>Start date</th>
-                        <th>Due date</th>
-                        <th>Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>01</td>
-                        <td>Web design</td>
-                        <td>13 Feb, 2020</td>
-                        <td>10 June, 2020</td>
-                        <td>
-                            <span class="badge badge-success">Completed</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>02</td>
-                        <td>App development</td>
-                        <td>03 July, 2020</td>
-                        <td>09 November, 2020</td>
-                        <td>
-                            <span class="badge badge-warning">Pending</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>03</td>
-                        <td>App prototyping</td>
-                        <td>31 January, 2020</td>
-                        <td>02 September, 2020</td>
-                        <td>
-                            <span class="badge badge-danger">Suspended</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>04</td>
-                        <td>Web development</td>
-                        <td>23 October, 2018</td>
-                        <td>15 December, 2018</td>
-                        <td>
-                            <span class="badge badge-info">Negotiations</span>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+        <div class="col-xl-6   ">
+            <div class="card   button-container panel-head-primary  shadow-sm  ">
+                <div class="card-header">
+                    <h6 class="mb-2">Doughnut chart</h6>
+                </div>
+                <div class=" card-body">
+                    <canvas id="barChart2" height="100px"></canvas>
+                </div>
             </div>
         </div>
     </div>
 </div>
+    @section scripts{
+        <!--Reference the autogenerated SignalR hub script. -->
 
-@section scripts{
-    <!--Reference the autogenerated SignalR hub script. -->
 
+        <script src="~/lib/microsoft-signalr/signalr.js"></script>
+        <script type="text/javascript">
 
-    <script src="~/lib/microsoft-signalr/signalr.js"></script> 
-    <script type="text/javascript">
-
-        document.addEventListener('DOMContentLoaded',
-            function() {
-                function bindConnectionMessage(connection) {
-                    var messageCallback = function(message) {
-                        console.log('message' + message);
-                        if (!message) return;
-                        var userCountSpan = document.getElementById('users');
-                        userCountSpan.innerText = message;
-                    };
-                    connection.on("updateCount", messageCallback);
-                    connection.onclose(onConnectionError);
-                }
-
-                function onConnected(connection) {
-                    console.log('connection started');
-                }
-
-                function onConnectionError(error) {
-                    if (error && error.message) {
-                        //alert(error.message);
-                        //console.error(error.message);
+            document.addEventListener('DOMContentLoaded',
+                function () {
+                    function bindConnectionMessage(connection) {
+                        var messageCallback = function (message) {
+                            console.log('message' + message);
+                            if (!message) return;
+                            var userCountSpan = document.getElementById('users');
+                            userCountSpan.innerText = message;
+                        };
+                        connection.on("updateCount", messageCallback);
+                        connection.onclose(onConnectionError);
                     }
-                }
 
-                var connection = new window.signalR.HubConnectionBuilder().configureLogging(window.signalR.LogLevel.Debug).withUrl('/DemoSkillTest/CounterHub').build();
+                    function onConnected(connection) {
+                        console.log('connection started');
+                    }
+
+                    function onConnectionError(error) {
+                        if (error && error.message) {
+                            //alert(error.message);
+                            //console.error(error.message);
+                        }
+                    }
+
+                    var connection = new window.signalR.HubConnectionBuilder().configureLogging(window.signalR.LogLevel.Debug).withUrl('/DemoSkillTest/CounterHub').build();
 
 
-                bindConnectionMessage(connection);
-                connection.start()
-                    .then(function() {
-                        onConnected(connection);
-                    })
-                    .catch(function(error) {
-                        //alert(error.message);
-                        //console.error(error.message);
-                    });
-            });
+                    bindConnectionMessage(connection);
+                    connection.start()
+                        .then(function () {
+                            onConnected(connection);
+                        })
+                        .catch(function (error) {
+                            //alert(error.message);
+                            //console.error(error.message);
+                        });
+                });
 
-    </script>
-}
+        </script>
+    }

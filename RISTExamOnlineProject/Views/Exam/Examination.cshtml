@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewData["Title"] = "Examination";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+<head>
+</head>
+<body>
+    <div class="container-fluid" id="Form_Main">
+
+
+
+        <!--     Form exam        -->
+
+
+        <div class="row justify-content-lg-start" id="Row_Head">
+
+            <h2> ItemCategName </h2>
+        </div>
+        <br />
+
+        <div class="container p-4 bg-dark   border rounded" id="Form_Exam">
+
+
+       
+
+
+        </div>
+    </div>
+
+
+
+
+
+    @section Scripts
+{
+
+        <script>
+
+            $(document).ready(function () {
+                debugger
+                GetExam('AU1000','CM001');
+            });
+
+
+            function GetExam(ItemCateg, ItemCode) {
+
+                debugger
+                $.ajax({
+                    type: 'post',
+                    url: "../Exam/GetHTML",
+                    dataSrc: "data",
+                    data: { ItemCateg: ItemCateg, ItemCode: ItemCode },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.success == true) {
+                            var Code = response.htmltext
+                            debugger    
+
+                            InputHTML("Form_Exam", Code);
+                        }
+                        else {
+
+                        }
+                    }
+
+
+                });
+            };
+
+            function InputHTML(elementID, Code) {
+                document.getElementById(elementID).innerHTML += Code;
+            }
+
+            function DeleteHTML(elementID) {
+                document.getElementById(elementID).innerHTML = "";
+            }
+
+        </script>
+
+
+
+    }
+
+
+
+
+
+</body>
+
+
+
+</html>
+
