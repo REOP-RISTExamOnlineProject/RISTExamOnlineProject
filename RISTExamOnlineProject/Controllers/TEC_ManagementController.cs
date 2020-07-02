@@ -95,7 +95,7 @@ namespace RISTExamOnlineProject.Controllers
             //            {        
             mgrSQLcommand_TEC_Approved ObjRun = new mgrSQLcommand_TEC_Approved(_configuration);
 
-            List<vewOperatorReqChange> DataShow = new List<vewOperatorReqChange>();
+            List<vewOperatorReqChangeCompare> DataShow = new List<vewOperatorReqChangeCompare>();
 
             var draw = HttpContext.Request.Form["draw"].FirstOrDefault();
             var start = Request.Form["start"].FirstOrDefault();
@@ -129,16 +129,27 @@ namespace RISTExamOnlineProject.Controllers
         }
 
 
-        public IActionResult ApproveData(string DocNO,string MakerID) {
+        public IActionResult ApproveData(string [] Nbr_Array, string MakerID, string reqOperatorID) {
+            string Nbr = "";
 
             try
             {
 
 
-                string Message;
+                string Message = "";
                 mgrSQLcommand_TEC_Approved ObjRun = new mgrSQLcommand_TEC_Approved(_configuration);
 
-                Message = ObjRun.OperatorReqChange("UPD", DocNO.Trim(), "", "", "", "", "", "", MakerID.Trim(), MakerID.Trim());
+                for (int i = 0; i < Nbr_Array.Length;i++) {
+
+                    Nbr = Nbr_Array[i];
+                    Message = ObjRun.OperatorReqChange("UPD", Nbr.Trim(), "", "", "", "", "", "", reqOperatorID.Trim(), MakerID.Trim());
+
+                }
+               
+
+
+
+
 
                 if (Message == "OK")
                 {
@@ -178,6 +189,39 @@ namespace RISTExamOnlineProject.Controllers
             { strResult = _Result, dataLabel = _DataResult, strboolbel = _ResultLabel, data = dataOperator});
 
             return jsonResult;
+        }
+
+
+        public JsonResult ShowComepare(int Nbr) {
+
+            //          try
+            //            {        
+            mgrSQLcommand_TEC_Approved ObjRun = new mgrSQLcommand_TEC_Approved(_configuration);
+
+            List<ReqChangeCompareData> DataShow = new List<ReqChangeCompareData>();
+
+            var draw = HttpContext.Request.Form["draw"].FirstOrDefault();
+            var start = Request.Form["start"].FirstOrDefault();
+            var length = Request.Form["length"].FirstOrDefault();
+            var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"]
+                .FirstOrDefault();
+            var sortColumnDir = Request.Form["order[0][dir]"].FirstOrDefault();
+            var searchValue = Request.Form["search[value]"].FirstOrDefault();
+            var pageSize = length != null ? Convert.ToInt32(length) : 10;
+            var skip = start != null ? Convert.ToInt32(start) : 0;
+            var recordsTotal = 0;
+
+
+            DataShow = ObjRun.GetCompareData(Nbr);
+
+
+            //   var DataShow = _sptoDbContext.vewOperatorReqChange.Where(x => x.DocNo == DocNo).ToList();
+
+            // var dataShow = _sptoDbContext.vewOperatorAdditionalDep.Where(x => x.OperatorID == OPID).ToList();
+
+            var data = DataShow.ToList();
+            //  return Json(new { success = true, data });
+            return Json(new { draw, recordsFiltered = recordsTotal, recordsTotal, data });
         }
 
     }
