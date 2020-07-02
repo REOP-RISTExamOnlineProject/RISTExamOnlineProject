@@ -33,7 +33,7 @@ Version: 1.0
     /*src: url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.eot?v=4.3.0");
     src: url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.eot?#iefix&v=4.3.0") format("embedded-opentype"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.woff2?v=4.3.0") format("woff2"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.woff?v=4.3.0") format("woff"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.ttf?v=4.3.0") format("truetype"), url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/fonts/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular") format("svg");*/
 
-
+@import url("https://use.fontawesome.com/releases/v5.13.0/css/all.css");
 
 html {
     width: 100%;
@@ -79,9 +79,9 @@ a:hover, a:focus {
     text-decoration: none;
 }
 
-a, a:link, a:hover {
+/*a, a:link, a:hover {
     color: #333;
-}
+}*/
 
 label, input, textarea, select, select option {
     color: #5c5c5c;
@@ -332,7 +332,9 @@ table tbody tr td {
 
 .menu-icon #sidebar-toggle-btn:before {
     content: '\f0c9';
-    font-family: FontAwesome !important;
+    font-family: "Font Awesome 5 Free" !important;
+    font-weight: 900;
+    font-size:18px;
     display: inline-block;
     color: #313246;
     transition: 300ms;
@@ -340,7 +342,9 @@ table tbody tr td {
 
 .menu-icon #sidebar-toggle-btn.slide-in:before {
     content: '\f00d';
-    font-family: FontAwesome !important;
+    font-family: "Font Awesome 5 Free" !important;
+    font-weight: 900;
+    font-size:18px;
     display: inline-block;
     color: #313246;
     font-size: 18px;
