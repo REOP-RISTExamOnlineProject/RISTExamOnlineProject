@@ -41,66 +41,113 @@
         </table>
 
 
-        <div class="modal fade mt-5 text-center rounded" id="Modal_Detail" tabindex="-1" role="dialog" aria-labelledby="ModalLabel_Detail" aria-hidden="true">
-            <div class="modal-dialog  rounded" role="document" style="max-width:1200px;">
 
 
-                <div class="modal-dialog  rounded" role="document" style="max-width:1200px;">
-                    <div class="modal-content">
-                        <div class="modal-header text-center rounded bg-light " style="background-repeat:no-repeat; background-size:cover; background-position:center center; height:60px;width:100%; border-bottom:2px #e96514 solid ">
 
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true" class="btn btn-secondary">&times;</span>
-                            </button>
+
+        <div   class="modal fade text-center rounded  border border-dark " style="z-index:99999999;"  id="Modal_Compare" role="dialog" aria-labelledby="Modal_Compare" aria-hidden="true" >
+
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content bg-light ">
+                    <div class="modal-header text-center rounded " style="background-repeat:no-repeat; background-size:cover; background-position:center center; height:60px;width:100%; border-bottom:2px #e96514 solid ">
+                        <h3>Detail</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="btn btn-secondary">&times;</span>
+                        </button>
+                    </div>
+
+
+                    <div class="modal-body " >
+                        <div  style="overflow:auto">
+
+
+                            <table class="table table-sm table-bordered table-striped " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable_Compare">
+
+                                <thead>
+                                    <tr>
+                                        <th class="text-wrap"> Catagory </th>
+                                        <th class="text-wrap text-dark"> New </th>
+                                        <th class="text-wrap"> Present </th>
+
+                                    </tr>
+                                </thead>
+
+                            </table>
+
                         </div>
+                    </div>
 
-                        <div class="modal-body ">
 
 
-                            <div class="card">
-                                <div class="card-header justify-content-center">
 
-                                    <h2> DocNO :     <label id="LB_DocNO" class="text-dark">       </label> </h2>
+                </div>
+            </div>
+        </div>
+
+        @*//-----------------------------*@
+
+        <div class="modal fade mt-5 text-center rounded" id="Modal_Detail" tabindex="-1" role="dialog" aria-labelledby="ModalLabel_Detail" aria-hidden="true">
+
+
+
+            <div class="modal-dialog  rounded" role="document" style="max-width:1200px;">
+                <div class="modal-content">
+                    <div class="modal-header text-center rounded bg-light " style="background-repeat:no-repeat; background-size:cover; background-position:center center; height:60px;width:100%; border-bottom:2px #e96514 solid ">
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="btn btn-secondary">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body ">
+
+
+                        <div class="card">
+                            <div class="card-header justify-content-center">
+
+                                <h2> DocNO :     <label id="LB_DocNO" class="text-dark">       </label> </h2>
+
+
+                            </div>
+
+
+
+                            <div class="card-body justify-content-center overflow-auto" style="height:400px;">
+                                <div class="col   justify-content-center pl-md-10 pr-md-10 pt-2 pb-2" id="DetailMain">
+
+
+                                    <table class="table table-sm table-bordered table-striped  " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable_Detail">
+                                        <thead>
+                                            <tr>
+
+                                                @*<th style="text-align:center;" class="text-wrap">nbr</th>
+                                                    <th style="text-align:center;" class="text-wrap"> docNo </th>*@
+
+                                                <th><input class="select-checkbox" value="1" id="CB_select_all" type="checkbox" /> All </th>
+                                                <th style="text-align:center;" class="text-wrap"> Nbr </th>
+                                                <th style="text-align:center;" class="text-wrap"> operatorID </th>
+                                                <th style="text-align:center;" class="text-wrap text-dark"> sectionCode </th>
+                                                <th style="text-align:center;" class="text-wrap text-dark">sectionAttribute</th>
+                                                <th style="text-align:center;" class="text-wrap text-dark"> operatorGroup </th>
+                                                <th style="text-align:center;" class="text-wrap text-dark"> license </th>
+                                                <th style="text-align:center;" class="text-wrap text-dark"> active </th>
+                                                <th style="text-align:center;" class="text-wrap"> reqOperatorID </th>
+                                                <th style="text-align:center;" class="text-wrap"> reqDate </th>
+                                                <th style="text-align:center;" class="text-wrap">  </th>
+
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+
+                                    </table>
+
 
 
                                 </div>
 
 
-
-                                <div class="card-body justify-content-center overflow-auto" style="height:400px;">
-                                    <div class="col   justify-content-center pl-md-10 pr-md-10 pt-2 pb-2" id="DetailMain">
-
-
-                                        <table class="table table-sm table-bordered table-striped  " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable_Detail">
-                                            <thead>
-                                                <tr>
-
-                                                    @*<th style="text-align:center;" class="text-wrap">nbr</th>
-                                                        <th style="text-align:center;" class="text-wrap"> docNo </th>*@
-                                                    <th style="text-align:center;" class="text-wrap"> seq </th>
-                                                    <th style="text-align:center;" class="text-wrap"> operatorID </th>
-                                                    <th style="text-align:center;" class="text-wrap"> sectionCode </th>
-                                                    <th style="text-align:center;" class="text-wrap">sectionAttribute</th>
-                                                    <th style="text-align:center;" class="text-wrap"> operatorGroup </th>
-                                                    <th style="text-align:center;" class="text-wrap"> license </th>
-                                                    <th style="text-align:center;" class="text-wrap"> active </th>
-                                                    <th style="text-align:center;" class="text-wrap"> reqOperatorID </th>
-                                                    <th style="text-align:center;" class="text-wrap"> reqDate </th>
-                                                    @*<th style="text-align:center;" class="text-wrap"> changeOperatorID </th>
-                                                        <th style="text-align:center;" class="text-wrap"> changeDate </th>*@
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-
-                                        </table>
-
-
-
-                                    </div>
-
-                                </div>
 
 
                             </div>
@@ -114,7 +161,7 @@
 
                                 <div class="col-5 text-center">*@
 
-                            <button class="btn btn-success  " id="BTN_Approved">
+                            <button class="btn btn-success   " id="BTN_Approved">
 
                                 Approve
                             </button>
@@ -209,27 +256,27 @@
 
             var TableTarget;
 
+            var TableApprove;
+
 
             $(document).ready(function () {
                 ShowGrid()
-                debugger
+
+
 
             });
 
 
-            //$(window).load(function () {
-            //    debugger
-            //    ShowGrid()
-            //});
+
 
 
             function ShowGrid() {
-                debugger
+
 
                 if (TableTarget != null) {
                     TableTarget.destroy();
                 }
-                debugger
+
                 try {
 
                     TableTarget = $("#MyTable").DataTable({
@@ -261,7 +308,7 @@
 
                                 render: function (data, type, row) {
                                     var Target = row.docNo
-                                    debugger
+
 
                                     return "<a href='#' class='btn btn-info text-white' onclick=showdetail('" + encodeURIComponent(Target) + "'); >Detail</a>";
 
@@ -300,17 +347,17 @@
 
 
             function showdetail(DocNo) {
-
+                $("#CB_Approve.CB").prop("checked", false)
                 DocNo_ = decodeURIComponent(DocNo)
 
-                if (TableTarget != null) {
-                    TableTarget.destroy();
+                if (TableApprove != null) {
+                    TableApprove.destroy();
                 }
 
-                debugger
+
                 try {
 
-                    TableTarget = $("#MyTable_Detail").DataTable({
+                    TableApprove = $("#MyTable_Detail").DataTable({
                         info: false,
                         searching: false,
                         ordering: false,
@@ -325,23 +372,57 @@
                             data: { DocNo: DocNo_ },
                         }),
 
+
                         dom: '<"top"><"bottom"><"clear">',
                         columns: [
-                         //   { data: "nbr", name: "nbr", class: "text-wrap text-center" },
-                        //    { data: "docNo", name: "docNo", class: "text-wrap text-center" },
-                            { data: "seq", name: "seq", class: "text-wrap text-center" },
+
+                        
+
+                            {
+                                //data: "Delete",
+                                //render: function (data, type, row)
+                                data: null,
+                                className: "center",
+                                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                                    var Target = oData.nbr + ',' + oData.reqOperatorID
+
+                                    $(nTd).html('<input type="checkbox"   class="CB" id="CB_Approve" name="CB_Approve" onchange="CB_Change()" value="' + Target + '"  />');
+
+                                }, className: "dt-body-center"
+                            },
+
+
+
+
+                            { data: "nbr", name: "Nbr", class: "text-wrap text-center" },
                             { data: "operatorID", name: "operatorID", class: "text-wrap text-center" },
-                            { data: "sectionCode", name: "sectionCode", class: "text-wrap text-center" },
-                            { data: "sectionAttribute", name: "sectionAttribute", class: "text-wrap text-center" },
-                            { data: "operatorGroup", name: "operatorGroup", class: "text-wrap text-center" },
-                            { data: "license", name: "license", class: "text-wrap text-center" },
-                            { data: "active", name: "active", class: "text-wrap text-center" },
-                            { data: "reqOperatorID", name: "reqOperatorID", class: "text-wrap text-center" },
+                            { data: "new_Section", name: "New_Section", class: "text-wrap text-center text-danger" },
+                            { data: "new_SectionAttribute", name: "New_SectionAttribute", class: "text-wrap text-center text-danger" },
+                            { data: "new_GroupName", name: "New_GroupName", class: "text-wrap text-center text-danger" },
+                            { data: "new_License", name: "New_License", class: "text-wrap text-center text-danger" },
+                            { data: "new_Active", name: "New_Active", class: "text-wrap text-center text-danger" },
+                            { data: "reqOperatorID", name: "ReqOperatorID", class: "text-wrap text-center" },
                             { data: "reqDate", name: "reqDate", class: "text-wrap text-center" },
                          //   { data: "changeOperatorID", name: "changeOperatorID", class: "text-wrap text-center" },
                            // { data: "changeDate", name: "changeDate", class: "text-wrap text-center" },
+                            {
+                                data: null,
+
+                                render: function (data, type, row) {
+                                    var Target = row.nbr
+
+
+                                    return "<a href='#' class='btn btn-info text-white'   onclick=ShowComepare('" + Target + "'); >Compare</a>";
+
+                                }, class: "text-wrap text-center"
+                            },
+
+                         
+
                         ],
-                        order: [0, "asc"],
+                        order: [1, "asc"],
+
+
 
                     });
 
@@ -363,14 +444,101 @@
 
 
 
+            }
+
+            $('#CB_select_all').click(function () {
+                debugger
+                if ($(this).is(":checked")) {
+                    $("#CB_Approve.CB").prop("checked", true)
+                }
+                else {
+                    $("#CB_Approve.CB").prop("checked", false)
+                }
+            });
+
+
+
+            function ShowComepare(Nbr) {
+
+
+               debugger
+
+                try {
+
+                    if (TableTarget != null) {
+                        TableTarget.destroy();
+                    }
+
+                
+                TableTarget = $("#MyTable_Compare").DataTable({
+
+                    searching: false,
+                    ordering: true,
+                    serverSide: true,
+                    processing: true,
+                    // cache: true,
+                    ajax: ({
+                        type: "post",
+                        url: "../TEC_Management/ShowComepare",
+                        dataSrc: "data",
+                        data: { Nbr: Nbr },
+                        dataType: "json",
+
+                    }),
+
+                    dom: '<"top"><"bottom"><"clear">',
+                    columns: [
+
+                        { data: "catagory", name: "Catagory", class: "text-wrap text-center" },
+                        { data: "new", name: "New", class: "text-wrap text-center text-danger" },
+                        { data: "present", name: "present", class: "text-wrap text-center" },                    
+
+
+                    ],
+                    order: [0, "asc"],
+
+                });
+
+            } catch (e) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: ("table:" + e)
+                })
+
 
             }
+            finally {
+
+                    $('#Modal_Compare').modal('show')
+
+            }
+
+
+
+            }
+
+
+
+            function CB_Change() {
+                debugger
+                $("#CB_select_all").prop("checked", false)
+
+            }
+            //$('#selectall').toggle(
+            //    function () {
+            //        $('#friendslist .tf').prop('checked', true);
+            //    },
+            //    function () {
+            //        $('#friendslist .tf').prop('checked', false);
+            //    }
+            //);
 
 
         $('#BTN_Approved').click(function (event) {
 
         var MakerID = '@User.Identity.Name';
-            var DocNO = $('#LB_DocNO').text();
+
 
         Swal.fire({
             icon: 'warning',
@@ -385,7 +553,7 @@
         }).then(function (result) {
             if (result.value) {
 
-                ApproveData(DocNO, MakerID)
+                ApproveData( MakerID)
             }
 
         })
@@ -393,17 +561,44 @@
             });
 
 
-            function ApproveData(DocNO, MakerID) {
+
+            function ApproveData(MakerID) {
+
+                debugger
+
+
+                var arrdata = TableApprove.$('input, select').serializeArray();
+
+
+                
+                var Nbr_Array = new Array();
+                var arrtemp = new Array();
+
+                var i;
+
+                var reqOperatorID;
+
+                for (i = 0; i < arrdata.length; i++) {
+                    debugger
+
+                    arrtemp = arrdata[i].value.split(',');
+                    Nbr_Array.push(arrtemp[0]);
+                    reqOperatorID = arrtemp[1];
+                    arrtemp = [];
+                }
+
+
+
+
 
                 $.ajax({
                     type: 'post',
                     url: "../TEC_Management/ApproveData",
                     dataSrc: "data",
-                    data: { DocNO: DocNO, MakerID: MakerID },
+                    data: { Nbr_Array: Nbr_Array, MakerID: MakerID, reqOperatorID: reqOperatorID},
                     dataType: 'json',
                     success: function (response) {
                         if (response.success == true) {
-
                             Swal.fire({
                                 position: 'top-mid',
                                 icon: 'success',
@@ -433,9 +628,11 @@
 
                     },
                     error: function (ex) {
+                        debugger
                         Swal.fire({
                             text: ('MakeDataTemp :' + ex.statusText),
-                            type: 'error',
+                            icon: 'error',
+                            title: 'Oops...',
                             //     timer: 1700,
                         }).then(function () {
                             return false;
@@ -447,7 +644,7 @@
             }
 
 
-      
+
 
 
         </script>
