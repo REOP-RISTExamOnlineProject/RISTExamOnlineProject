@@ -578,69 +578,90 @@
 
                 var reqOperatorID;
 
-                for (i = 0; i < arrdata.length; i++) {
-                    debugger
-
-                    arrtemp = arrdata[i].value.split(',');
-                    Nbr_Array.push(arrtemp[0]);
-                    reqOperatorID = arrtemp[1];
-                    arrtemp = [];
-                }
+                if (arrdata.length != 0) {
 
 
 
 
+                    for (i = 0; i < arrdata.length; i++) {
+                        debugger
 
-                $.ajax({
-                    type: 'post',
-                    url: "../TEC_Management/ApproveData",
-                    dataSrc: "data",
-                    data: { Nbr_Array: Nbr_Array, MakerID: MakerID, reqOperatorID: reqOperatorID},
-                    dataType: 'json',
-                    success: function (response) {
-                        if (response.success == true) {
+                        arrtemp = arrdata[i].value.split(',');
+                        Nbr_Array.push(arrtemp[0]);
+                        reqOperatorID = arrtemp[1];
+                        arrtemp = [];
+                    }
+
+
+
+
+
+                    $.ajax({
+                        type: 'post',
+                        url: "../TEC_Management/ApproveData",
+                        dataSrc: "data",
+                        data: { Nbr_Array: Nbr_Array, MakerID: MakerID, reqOperatorID: reqOperatorID },
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response.success == true) {
+                                Swal.fire({
+                                    position: 'top-mid',
+                                    icon: 'success',
+                                    title: (response.responseText),
+                                    showConfirmButton: true,
+                                    //   timer: 1700
+                                }).then(function (result) {
+                                    // if (result.value) {
+
+                                    $('#Modal_Detail').modal('hide')
+                                    ShowGrid()
+
+                                });
+
+
+
+                            } else {
+                                Swal.fire({
+                                    text: (response.responseText),
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    //     timer: 1700,
+                                }).then(function () {
+                                    return false;
+                                });
+                            }
+
+                        },
+                        error: function (ex) {
+                            debugger
                             Swal.fire({
-                                position: 'top-mid',
-                                icon: 'success',
-                                title: (response.responseText),
-                                showConfirmButton: true,
-                                //   timer: 1700
-                            }).then(function (result) {
-                                // if (result.value) {
-
-                                $('#Modal_Detail').modal('hide')
-                                ShowGrid()
-
-                            });
-
-
-
-                        } else {
-                            Swal.fire({
-                                text: (response.responseText),
+                                text: ('MakeDataTemp :' + ex.statusText),
                                 icon: 'error',
                                 title: 'Oops...',
                                 //     timer: 1700,
                             }).then(function () {
                                 return false;
                             });
-                        }
-
-                    },
-                    error: function (ex) {
-                        debugger
-                        Swal.fire({
-                            text: ('MakeDataTemp :' + ex.statusText),
-                            icon: 'error',
-                            title: 'Oops...',
-                            //     timer: 1700,
-                        }).then(function () {
-                            return false;
-                        });
-                    },
+                        },
 
 
-                });
+                    });
+
+
+                } else {
+
+                    Swal.fire({
+                        text: ("Plase select value"),
+                        icon: 'error',
+                        title: 'Oops...',
+                        //     timer: 1700,
+                    }).then(function () {
+                        return false;
+                    });
+
+
+
+                }
             }
 
 

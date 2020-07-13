@@ -40,6 +40,8 @@ namespace RISTExamOnlineProject.Models.db
         public virtual DbSet<TempListAddition> TempListAddition { get; set; }
         public virtual DbSet<vewOperatorReqChangeCompare> vewOperatorReqChangeCompare { get; set; }
         public virtual DbSet<ReqChangeCompareData> ReqChangeCompareData { get; set; }
+        public virtual DbSet<Exam_QuestionDetail> Exam_QuestionDetail { get; set; }
+
         
     }
 }
