@@ -1,5 +1,5 @@
 ﻿@using System.Security.Claims
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@*@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers*@
 <!DOCTYPE html>
 
 <html>
@@ -343,6 +343,21 @@
                 </div>
                 <!--Footer-->
             </div>
+            <div class="modal" tabindex="-1" role="dialog" id="form-modal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!--Main Content-->
@@ -352,51 +367,53 @@
     <!--Page Wrapper-->
 
 
-    <environment include="Development">
-        <!-- Page JavaScript Files-->
-        @*<script src="~/lib/js/jquery.min.js"></script>
+<environment include="Development">
+    <!-- Page JavaScript Files-->
+    @*<script src="~/lib/js/jquery.min.js"></script>
             <script src="~/lib/js/jquery-1.12.4.min.js"></script>*@
-        <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/jquery/jquery.js"></script>
 
-        <!--Popper JS-->
-        <script src="~/lib/js/popper.min.js"></script>
-        <!--Bootstrap-->
-        <script src="~/lib/bootstrap/js/bootstrap.js"></script>
-        <!--Sweet alert JS-->
-        <script src="~/lib/js/sweetalert.js"></script>
-        <!--Progressbar JS-->
-        <script src="~/lib/js/progressbar.min.js"></script>
-        <!--Flot.JS-->
-        <script src="~/lib/js/charts/jquery.flot.min.js"></script>
-        <script src="~/lib/js/charts/jquery.flot.pie.min.js"></script>
-        <script src="~/lib/js/charts/jquery.flot.categories.min.js"></script>
-        <script src="~/lib/js/charts/jquery.flot.stack.min.js"></script>
-        <!--Chart JS-->
-        <script src="~/lib/js/charts/chart.min.js"></script>
-        <!--Chartist JS-->
-        <script src="~/lib/js/charts/chartist.min.js"></script>
-        <script src="~/lib/js/charts/chartist-data.js"></script>
-        <script src="~/lib/js/charts/demo.js"></script>
+    <!--Popper JS-->
+    <script src="~/lib/js/popper.min.js"></script>
+    <!--Bootstrap-->
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    <!--Sweet alert JS-->
+    <script src="~/lib/js/sweetalert.js"></script>
+    <!--Progressbar JS-->
+    <script src="~/lib/js/progressbar.min.js"></script>
+    <!--Flot.JS-->
+    <script src="~/lib/js/charts/jquery.flot.min.js"></script>
+    <script src="~/lib/js/charts/jquery.flot.pie.min.js"></script>
+    <script src="~/lib/js/charts/jquery.flot.categories.min.js"></script>
+    <script src="~/lib/js/charts/jquery.flot.stack.min.js"></script>
+    <!--Chart JS-->
+    <script src="~/lib/js/charts/chart.min.js"></script>
+    <!--Chartist JS-->
+    <script src="~/lib/js/charts/chartist.min.js"></script>
+    <script src="~/lib/js/charts/chartist-data.js"></script>
+    <script src="~/lib/js/charts/demo.js"></script>
 
 
-        <!--Custom Js Script-->
-        <script src="~/lib/js/custom.js"></script>
-        <!--Custom Js Script-->
-        @*<script>
+    <!--Custom Js Script-->
+    <script src="~/lib/js/custom.js"></script>
+    <!--Custom Js Script-->
+    @*<script>
                 //Nice select
                 $('.bulk-actions').niceSelect();
             </script>*@
-        <!-- tempusdominus-bootstrap-4 -->
-        <script src="~/lib/datepicker/jquery/jquery.js"></script>
-        <script src="~/lib/datepicker/momentjs/moment.js"></script>
-        <script src="~/lib/datepicker/js/tempusdominus-bootstrap-4.js"></script>
-        <!-- tempusdominus-bootstrap-4 -->
-        <!--bootstrap-select-->
-        @*<script src="~/lib/bootstrap-select/js/bootstrap-select.js"></script>*@
-    </environment>
-
-
-    @await RenderSectionAsync("Scripts", false)
+    <!-- tempusdominus-bootstrap-4 -->
+    <script src="~/lib/datepicker/jquery/jquery.js"></script>
+    <script src="~/lib/datepicker/momentjs/moment.js"></script>
+    <script src="~/lib/datepicker/js/tempusdominus-bootstrap-4.js"></script>
+    <!-- tempusdominus-bootstrap-4 -->
+    <!--bootstrap-select-->
+    @*<script src="~/lib/bootstrap-select/js/bootstrap-select.js"></script>*@
+</environment>
+<script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/js/notify.min.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+   @* @await RenderSectionAsync("Scripts", false)*@
 
 </body>
 </html>

@@ -1,0 +1,49 @@
+﻿@model RISTExamOnlineProject.Models.db.ItemCategoryModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>ItemCategoryModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ItemCategName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ItemCategName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AddDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AddDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UpdDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UpdDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ComputerName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ComputerName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ItemCateg">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -9,6 +9,7 @@ namespace RISTExamOnlineProject.Models.db
     {
         public SPTODbContext(DbContextOptions<SPTODbContext> options) : base(options)
         {
+
         }
 
         public virtual DbSet<vewOperatorAlls> vewOperatorAll { get; set; }
@@ -28,50 +29,60 @@ namespace RISTExamOnlineProject.Models.db
                 .HasKey(k => new {k.ItemCateg, k.ItemCode});
 
             /////////////////////////////////////////////////////
-            modelBuilder.Entity<ItemCategory>(entity =>
-            {
-                entity.Property(e => e.ItemCateg)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+            //modelBuilder.Entity<ItemCategoryModel>(entity =>
+            //{
+            //    entity.Property(e => e.ItemCateg)
+            //        .IsRequired()
+            //        .HasMaxLength(50)
+            //        .IsUnicode(false);
 
-                entity.Property(e => e.ItemCategName)
-                    .IsRequired()
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+            //    entity.Property(e => e.ItemCategName)
+            //        .IsRequired()
+            //        .HasMaxLength(250)
+            //        .IsUnicode(false);
 
-                //entity.Property(e => e.AddDate)
-                //    //.IsRequired()
-                //    //.HasColumnType("Date")
-                //    .HasDefaultValueSql("GetDate()");
-                //entity.Property(e => e.UpdDate)
-                //    //.IsRequired()
-                //    //.HasColumnType("Date")
-                //    .HasDefaultValueSql("GetDate()");
-                //    //entity.Property(e => e.UpdDate)
-                //    //    .HasColumnType("timestamp without time zone")
+            //    //modelBuilder.Entity<Passage>()
+            //    //    .Property(b => b.CreatedDate)
+            //    //    .HasDefaultValueSql("getdate()");
+            //    //entity.Property(e => e.AddDate)
+            //    //    .ValueGeneratedOnAddOrUpdate();
+
+            //    //entity.Property(e => e.UpdDate)
+            //    //    .ValueGeneratedOnAddOrUpdate();
+
+            //    //entity.Property(e => e.AddDate)
+            //    //    .HasDefaultValueSql("getdate()");
+            //    entity.Property(e => e.AddDate)
+            //        .IsRequired()
+            //        .HasColumnType("DateTime");
+            //    entity.Property(e => e.UpdDate)
+            //        .IsRequired()
+            //        .HasColumnType("DateTime");
+            //    //    .HasDefaultValueSql("GetDate()");
+            //    //    //entity.Property(e => e.UpdDate)
+            //    //    //    .HasColumnType("timestamp without time zone")
 
 
-            });
-            modelBuilder.ApplyConfiguration(new OrderConfiguration());
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            //});
+            //modelBuilder.ApplyConfiguration(new OrderConfiguration());
+            //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         }
-        public class OrderConfiguration : IEntityTypeConfiguration<ItemCategory>
-        {
-            public void Configure(EntityTypeBuilder<ItemCategory> builder)
-            {
-                builder.HasKey(o => o.ItemCateg);
-                builder.Property(t => t.AddDate)
-                    .IsRequired()
-                    .HasColumnType("Date")
-                    .HasDefaultValueSql("GetDate()");
-                builder.Property(x => x.UpdDate)
-                    .IsRequired()
-                    .HasColumnType("Date")
-                    .HasDefaultValueSql("GetDate()");
-            }
-        }
+        //public class OrderConfiguration : IEntityTypeConfiguration<ItemCategory>
+        //{
+        //    public void Configure(EntityTypeBuilder<ItemCategory> builder)
+        //    {
+        //        builder.HasKey(o => o.ItemCateg);
+        //        builder.Property(t => t.AddDate)
+        //            .IsRequired()
+        //            .HasColumnType("Date")
+        //            .HasDefaultValueSql("GetDate()");
+        //        builder.Property(x => x.UpdDate)
+        //            .IsRequired()
+        //            .HasColumnType("Date")
+        //            .HasDefaultValueSql("GetDate()");
+        //    }
+        //}
 
         public virtual DbSet<sprOperatorShowListInCharge> sprOperatorShowListInChang { get; set; }
         public virtual DbSet<sprRunningNo> sprRunningNo { get; set; }
@@ -91,7 +102,7 @@ namespace RISTExamOnlineProject.Models.db
         public virtual DbSet<TempReqChange> TempReqChange { get; set; }
         public virtual DbSet<TempListAddition> TempListAddition { get; set; }
 
-        public virtual DbSet<ItemCategory> ItemCategory { get; set; }
+        public DbSet<ItemCategoryModel> ItemCategory { get; set; }
         public virtual DbSet<InputItemList> InputItemList { get; set; }
 
 

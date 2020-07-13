@@ -1,0 +1,57 @@
+﻿@model IEnumerable<RISTExamOnlineProject.Models.db.ItemCategoryModel>
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemCategName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AddDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UpdDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ComputerName)
+        </th>
+        <th>
+            <a onclick="showInPopup('@Url.Action("AddOrEdit","ItemCategoryMaster",null,Context.Request.Scheme)', 'New Transaction')" class="btn btn-success text-white"><i class="fas fa-random"></i> New Transaction</a>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemCategName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ComputerName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ItemCateg">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ItemCateg">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ItemCateg">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
