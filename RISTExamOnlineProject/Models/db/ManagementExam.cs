@@ -5,24 +5,24 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RISTExamOnlineProject.Models.db
 {
-    public class ItemCategory
+    public  class ItemCategory
     {
         [Key]
-        [Required]
-        [DisplayName("ItemCategKey")]
+        [DisplayName("ItemCategID")]
         public string ItemCateg { get; set; }
         [Required]
         public string ItemCategName { get; set; }
-        [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        //[DatabaseGenerated(DatabaseGeneratedOption.)]
+        
+        //[DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime AddDate { get; set; }
-        // [Required]
-        [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime UpdDate { get; set; }
-        [Required]
+        //[DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime UpdDate { get; set; }/* = DateTime.Now;*/
+        //[Required]
         public string UserName { get; set; }
-        [Required]
+        //[Required]
+
         public string ComputerName { get; set; }
+       
        
     }
 
