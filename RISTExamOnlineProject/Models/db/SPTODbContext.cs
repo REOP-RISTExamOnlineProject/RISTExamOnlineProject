@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Reflection;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace RISTExamOnlineProject.Models.db
 {
@@ -18,9 +21,58 @@ namespace RISTExamOnlineProject.Models.db
         {
             modelBuilder.Entity<vewOperatorAdditionalDep>()
                 .HasKey(k => new {k.OperatorID, k.SectionCode});
+
             modelBuilder.Query<sprOperatorReqChange>();
 
+            modelBuilder.Entity<InputItemList>()
+                .HasKey(k => new {k.ItemCateg, k.ItemCode});
+
+            /////////////////////////////////////////////////////
+            modelBuilder.Entity<ItemCategory>(entity =>
+            {
+                entity.Property(e => e.ItemCateg)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ItemCategName)
+                    .IsRequired()
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                //entity.Property(e => e.AddDate)
+                //    //.IsRequired()
+                //    //.HasColumnType("Date")
+                //    .HasDefaultValueSql("GetDate()");
+                //entity.Property(e => e.UpdDate)
+                //    //.IsRequired()
+                //    //.HasColumnType("Date")
+                //    .HasDefaultValueSql("GetDate()");
+                //    //entity.Property(e => e.UpdDate)
+                //    //    .HasColumnType("timestamp without time zone")
+
+
+            });
+            modelBuilder.ApplyConfiguration(new OrderConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
         }
+        public class OrderConfiguration : IEntityTypeConfiguration<ItemCategory>
+        {
+            public void Configure(EntityTypeBuilder<ItemCategory> builder)
+            {
+                builder.HasKey(o => o.ItemCateg);
+                builder.Property(t => t.AddDate)
+                    .IsRequired()
+                    .HasColumnType("Date")
+                    .HasDefaultValueSql("GetDate()");
+                builder.Property(x => x.UpdDate)
+                    .IsRequired()
+                    .HasColumnType("Date")
+                    .HasDefaultValueSql("GetDate()");
+            }
+        }
+
         public virtual DbSet<sprOperatorShowListInCharge> sprOperatorShowListInChang { get; set; }
         public virtual DbSet<sprRunningNo> sprRunningNo { get; set; }
         //public virtual DbSet<OperatorReqChange> OperatorReqChange { get; set; }

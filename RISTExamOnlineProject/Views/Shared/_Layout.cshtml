@@ -1,5 +1,5 @@
 ﻿@using System.Security.Claims
-
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <!DOCTYPE html>
 
 <html>
@@ -21,15 +21,13 @@
         <!--Custom style.css-->
         <link href="~/lib/Custom/style.css" rel="stylesheet" />
         <!--Font Awesome-->
-        @*<link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
-        <link href="~/lib/font-awesome/css/fontawesome.css" rel="stylesheet" />*@
         @*<script src="~/lib/font-awesome/js/a4c93cd695.js"></script>*@
 
         <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
-        <link href="~/lib/font-awesome/css/fontawesome.css" rel="stylesheet" />
-        <link href="~/lib/font-awesome/css/solid.css" rel="stylesheet" />
-        <link href="~/lib/font-awesome/css/regular.css" rel="stylesheet" />
-        <link href="~/lib/font-awesome/css/brands.css" rel="stylesheet" />
+        @*<link href="~/lib/font-awesome/css/fontawesome.css" rel="stylesheet" />
+            <link href="~/lib/font-awesome/css/solid.css" rel="stylesheet" />
+            <link href="~/lib/font-awesome/css/regular.css" rel="stylesheet" />
+            <link href="~/lib/font-awesome/css/brands.css" rel="stylesheet" />*@
         <script src="~/lib/js/sweetalert.min.js"></script>
 
         <!--FOR IE9-->
@@ -39,10 +37,10 @@
         <!-- tempusdominus-bootstrap-4 datetimepicker -->
         <link rel="stylesheet" href="~/lib/datepicker/css/tempusdominus-bootstrap-4.css">
         <!-- tempusdominus-bootstrap-4 -->
-        
-        
-        
-        
+
+
+
+
     </environment>
     @RenderSection("Styles", false)
 
@@ -52,7 +50,7 @@
     <!--Page Wrapper-->
 
     <div class="container-fluid">
-    <partial name="_CookieConsentPartial" />
+        <partial name="_CookieConsentPartial" />
         <!--Header-->
         <div class="row header shadow-sm">
 
@@ -214,12 +212,12 @@
                                     @User.Identity.Name   @User.FindFirst(claim => claim.Type == ClaimTypes.Role)?.Value
                                 </a>
 
-                                    <a href="@Url.Action("Logout", "Account")" class="dropdown-item">
-                                        <i class="fa fa-power-off pr-2"></i>Logout
-                                    </a>
+                                <a href="@Url.Action("Logout", "Account")" class="dropdown-item">
+                                    <i class="fa fa-power-off pr-2"></i>Logout
+                                </a>
 
-                                    @*<a class="dropdown-item" href="@Url.Action("Login","Home")"><i class="fa fa-power-off pr-2"></i> Logout</a>*@
-</div>
+                                @*<a class="dropdown-item" href="@Url.Action("Login","Home")"><i class="fa fa-power-off pr-2"></i> Logout</a>*@
+                            </div>
                         </div>
                     </div>
                     <!--Search box and avatar-->
@@ -238,11 +236,11 @@
                     <!--Image Avatar-->
                     <div class="avatar text-center">
                         <img src="@ViewBag.imgProfile" alt="" class="rounded-circle" />
-                         
+
                         <p><strong>@ViewBag.NameEng</strong></p>
                         <span class="text-primary small"><strong>@ViewBag.JobTitle</strong></span>
                         @*<p><strong>Mr.Wittaya S.</strong></p>
-        <span class="text-primary small"><strong>System Dev.</strong></span>*@
+                            <span class="text-primary small"><strong>System Dev.</strong></span>*@
                     </div>
                     <!--Image Avatar-->
                     <!--Sidebar Navigation Menu-->
@@ -287,27 +285,32 @@
                                     <li class="parent">
                                         <a href="#" onclick="toggle_menu('Shortcuts');return false;">
                                             <i class="fas fa-link mr-3"></i>
-                                            <span class="none">User Managemant <i class="fa fa-angle-down pull-right align-bottom"></i></span>
+                                            <span class="none">User Management <i class="fa fa-angle-down pull-right align-bottom"></i></span>
                                         </a>
 
                                         @{
                                             var opno = @User.Identity.Name;
-
-                                            //var positionlist = ViewBag.Positionlist;
-
-                            }
-                                        <ul class="children" id="Shortcuts">
-                                            <li class="child"><a href="@Url.Action("UserDetailMaintenance","Management")" class="ml-4"><i class="fa fa-angle-right mr-2 "></i><i class="fa fa-font-awesome"></i> Edit User detail</a></li>
-                                            <li class="child"><a href="@Url.Action("UserInCharge", "Management" , new { opno=$"{opno.Trim()}"})" class="ml-4"><i class="fa fa-angle-right mr-2"></i><i class="fa fa-font-awesome"></i> Request Change</a></li>
-                                            <li class="child"><a href="@Url.Action("TEC_Approved","TEC_Management")" class="ml-4"><i class="fa fa-angle-right mr-2"></i><i class="fa fa-font-awesome"></i> TEC Approved</a></li>
-                                           <li class="child"><a href="@Url.Action("UserReqeustInqury","Management")" class="ml-4"><i class="fa fa-angle-right mr-2"></i><i class="fa fa-font-awesome"></i> Request Inquiry</a></li>
-
-
-
+                                        }
+                                        <ul class="#" id="Shortcuts">
+                                            <li class="child"><a href="@Url.Action("UserDetailMaintenance","Management")" class="ml-4"><i class="fa fa-angle-right mr-2 "></i> Edit User detail</a></li>
+                                            <li class="child"><a href="@Url.Action("UserInCharge", "Management" , new { opno=$"{opno.Trim()}"})" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Request Change</a></li>
+                                            <li class="child"><a href="@Url.Action("TEC_Approved","TEC_Management")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> TEC Approved</a></li>
+                                            <li class="child"><a href="@Url.Action("UserReqeustInqury","Management")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Request Inquiry</a></li>
                                         </ul>
-                        </li>
+                                    </li>
+
+                                    <li class="parent">
+                                        <a href="#" onclick="toggle_menu('Shortcuts_exam');return false;">
+                                            <i class="fas fa-tasks mr-3"></i>
+                                            <span class="none">Exam Management <i class="fa fa-angle-down pull-right align-bottom"></i></span>
+
+                                        </a>
+                                        <ul class="#" id="Shortcuts_exam">
+                                            <li class="child"><a href="@Url.Action("Index","ManagementExam")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> License Master</a></li>
+                                        </ul>
+                                    </li>
+                                }
                             }
-                        }
 
                             <li class="parent">
                                 <a href="#">
@@ -321,7 +324,6 @@
                 </div>
             </div>
             <!--Sidebar left-->
-            
             <!--Content right-->
             <div class="col-sm-9 col-12 content pt-3 pl-0">
 
@@ -389,14 +391,12 @@
         <script src="~/lib/datepicker/momentjs/moment.js"></script>
         <script src="~/lib/datepicker/js/tempusdominus-bootstrap-4.js"></script>
         <!-- tempusdominus-bootstrap-4 -->
-        
-        
         <!--bootstrap-select-->
         @*<script src="~/lib/bootstrap-select/js/bootstrap-select.js"></script>*@
     </environment>
 
 
-@await RenderSectionAsync("Scripts", false)
+    @await RenderSectionAsync("Scripts", false)
 
 </body>
 </html>

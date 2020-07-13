@@ -1,0 +1,54 @@
+﻿@model RISTExamOnlineProject.Models.db.ItemCategory
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .input-validation-error {
+        border-color: red;
+    }
+</style>
+<h1>Create</h1>
+
+<h4>ItemCategory</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ItemCateg" class="control-label"></label>
+                <input asp-for="ItemCateg" class="form-control" />
+                <span asp-validation-for="ItemCateg" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItemCategName" class="control-label"></label>
+                <input asp-for="ItemCategName" class="form-control" />
+                <span asp-validation-for="ItemCategName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComputerName" class="control-label"></label>
+                <input asp-for="ComputerName" class="form-control" />
+                <span asp-validation-for="ComputerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+
+        <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

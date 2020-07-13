@@ -7,7 +7,7 @@
       "destination": "wwwroot/lib/bootstrap/"
     },
     {
-      "library": "font-awesome@5.13.0",
+      "library": "font-awesome@5.13.1",
       "destination": "wwwroot/lib/font-awesome/"
     },
     {
