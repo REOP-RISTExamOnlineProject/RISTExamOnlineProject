@@ -10,6 +10,8 @@ namespace RISTExamOnlineProject.Models.db
     public  class ItemCategoryModel
     {
         [Key]
+        public int Nbr { get; set; }
+
         [DisplayName("ItemCategID")]
         [Required(ErrorMessage = "This Field is required.")]
         public string ItemCateg { get; set; }
