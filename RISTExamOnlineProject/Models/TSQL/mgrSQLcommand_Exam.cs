@@ -81,7 +81,7 @@ namespace RISTExamOnlineProject.Models.TSQL
         {
 
             var ObjRun = new mgrSQLConnect(_configuration);
-            strSQL = "  SELECT[ItemCateg],[ItemCategName]  FROM[SPTOSystem].[dbo].[vewQuestionNull] group by[ItemCateg],[ItemCategName] order by ItemCateg asc";
+            strSQL = "  SELECT[ItemCateg],[ItemCategName]  FROM[SPTOSystem].[dbo].[vewQuestionCateg] group by[ItemCateg],[ItemCategName] order by ItemCateg asc";
 
             dt = ObjRun.GetDatatables(strSQL);
             List<SelectListItem> listItems = new List<SelectListItem>();
@@ -112,7 +112,7 @@ namespace RISTExamOnlineProject.Models.TSQL
         {
 
             var ObjRun = new mgrSQLConnect(_configuration);
-            strSQL = "SELECT    [ItemCode],[ItemName]   FROM [SPTOSystem].[dbo].[vewQuestionNull] where[ItemCateg] = '" + ItemCateg + "' group by[ItemName],[ItemCode]";
+            strSQL = "SELECT    [ItemCode],[ItemName]   FROM [SPTOSystem].[dbo].[vewQuestionCateg] where[ItemCateg] = '" + ItemCateg + "' group by[ItemName],[ItemCode]";
 
             dt = ObjRun.GetDatatables(strSQL);
             List<SelectListItem> listItems = new List<SelectListItem>();
