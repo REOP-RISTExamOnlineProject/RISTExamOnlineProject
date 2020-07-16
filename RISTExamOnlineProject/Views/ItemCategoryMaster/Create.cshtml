@@ -14,6 +14,11 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="ItemCateg" class="control-label"></label>
+                <input asp-for="ItemCateg" class="form-control" />
+                <span asp-validation-for="ItemCateg" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="ItemCategName" class="control-label"></label>
                 <input asp-for="ItemCategName" class="form-control" />
                 <span asp-validation-for="ItemCategName" class="text-danger"></span>

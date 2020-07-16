@@ -34,7 +34,8 @@ jQueryAjaxPost = form => {
                     $("#form-modal .modal-body").html(res.html);
             },
             error: function (err) {
-                console.log(err);
+                alert(err);
+                //console.log(err);
             }
         });
         //to prevent default form submit event

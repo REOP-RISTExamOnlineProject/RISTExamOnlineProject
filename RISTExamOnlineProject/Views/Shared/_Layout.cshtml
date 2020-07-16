@@ -21,13 +21,7 @@
         <!--Custom style.css-->
         <link href="~/lib/Custom/style.css" rel="stylesheet" />
         <!--Font Awesome-->
-        @*<script src="~/lib/font-awesome/js/a4c93cd695.js"></script>*@
-
         <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
-        @*<link href="~/lib/font-awesome/css/fontawesome.css" rel="stylesheet" />
-            <link href="~/lib/font-awesome/css/solid.css" rel="stylesheet" />
-            <link href="~/lib/font-awesome/css/regular.css" rel="stylesheet" />
-            <link href="~/lib/font-awesome/css/brands.css" rel="stylesheet" />*@
         <script src="~/lib/js/sweetalert.min.js"></script>
 
         <!--FOR IE9-->
@@ -42,7 +36,7 @@
 
 
     </environment>
-    @RenderSection("Styles", false)
+    @await RenderSectionAsync("Styles", false)
 
 </head>
 <body>
@@ -306,7 +300,7 @@
 
                                         </a>
                                         <ul class="#" id="Shortcuts_exam">
-                                            <li class="child"><a href="@Url.Action("Index","ManagementExam")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> License Master</a></li>
+                                            <li class="child"><a href="@Url.Action("Index","ItemCategoryMaster")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> License Master</a></li>
                                         </ul>
                                     </li>
                                 }
@@ -357,6 +351,10 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            
+            <div class="loaderbody" id="loaderbody">
+                <div class="loader"></div>
             </div>
         </div>
 
@@ -409,11 +407,13 @@
     <!--bootstrap-select-->
     @*<script src="~/lib/bootstrap-select/js/bootstrap-select.js"></script>*@
 </environment>
-<script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="~/lib/js/site.js" asp-append-version="true"></script>
     <script src="~/lib/js/notify.min.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
-   @* @await RenderSectionAsync("Scripts", false)*@
+
+    @await RenderSectionAsync("Scripts", required: false)
+@* @await RenderSectionAsync("Scripts", false)*@
 
 </body>
 </html>
