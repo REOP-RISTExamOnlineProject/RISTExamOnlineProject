@@ -20,14 +20,9 @@
         <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
         <!--Custom style.css-->
         <link href="~/lib/Custom/style.css" rel="stylesheet" />
-        <!--Font Awesome-->
-        @*<script src="~/lib/font-awesome/js/a4c93cd695.js"></script>*@
+        <!--Font Awesome--> 
 
-        <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
-        @*<link href="~/lib/font-awesome/css/fontawesome.css" rel="stylesheet" />
-            <link href="~/lib/font-awesome/css/solid.css" rel="stylesheet" />
-            <link href="~/lib/font-awesome/css/regular.css" rel="stylesheet" />
-            <link href="~/lib/font-awesome/css/brands.css" rel="stylesheet" />*@
+        <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" /> 
         <script src="~/lib/js/sweetalert.min.js"></script>
 
         <!--FOR IE9-->
@@ -200,7 +195,7 @@
                         </div>
                         <div class="mr-4">
                             <a class="" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="@ViewBag.imgProfile" alt="#" class="rounded-circle" width="40px" height="40px">
+                                <img src="@ViewBag.imgProfile" alt="#" class="rounded-circle profiles" width="40px" height="40px">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right mt-13" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item" href="@Url.Action("UserDetailMaintenance","Management")"><i class="fa fa-user pr-2"></i> Profile</a>
@@ -235,10 +230,10 @@
                 <div class="inner-sidebar mr-3">
                     <!--Image Avatar-->
                     <div class="avatar text-center">
-                        <img src="@ViewBag.imgProfile" alt="" class="rounded-circle" />
+                        <img src="@ViewBag.imgProfile" alt=""  class="rounded-circle profiles" />
 
-                        <p><strong>@ViewBag.NameEng</strong></p>
-                        <span class="text-primary small"><strong>@ViewBag.JobTitle</strong></span>
+                        <p><strong id="strName">@ViewBag.NameEng</strong></p>
+                        <span class="text-primary small"><strong id="strJobTitle">@ViewBag.JobTitle</strong></span>
                         @*<p><strong>Mr.Wittaya S.</strong></p>
                             <span class="text-primary small"><strong>System Dev.</strong></span>*@
                     </div>
@@ -414,6 +409,35 @@
     <script src="~/lib/js/notify.min.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
    @* @await RenderSectionAsync("Scripts", false)*@
+    <script>
+        $(document).ready(function () {
 
+            Profile()
+
+
+          
+        });
+
+
+        function Profile() {
+
+            $.ajax({
+                type: 'POST',
+                url: "../Home/Profile",
+                   data: { OPID: "@User.Identity.Name" },
+                dataType: 'json',
+                success: function (Data) {
+                     
+                    $(".profiles").attr("src", Data.data);/*text(Data.data);*/
+                    $("#strName").text(Data.strName);
+                    $("#strJobTitle").text(Data.strJobTitle);
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                },
+            });
+            
+        }
+    </script>
 </body>
 </html>
