@@ -767,6 +767,7 @@ namespace RISTExamOnlineProject.Controllers
                     Section = s.Section,
                     SectionCode = s.SectionCode
                 }).ToPagedListAsync(pageaddition ?? 1, padgeSizeAddition);
+
             ViewBag.opnoedit = opnoedit;
             ViewBag.AdditionalCurrent = listadditional;
 

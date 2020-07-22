@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RISTExamOnlineProject.Models.db;
+using X.PagedList;
 
 namespace RISTExamOnlineProject.Controllers
 {
@@ -17,16 +19,20 @@ namespace RISTExamOnlineProject.Controllers
         }
 
         // GET: ItemCategoryMaster
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            return View(await _context.ItemCategory.ToListAsync());
+            const int padgeSize = 8;
+
+            ViewBag.pageCurrent = page;
+            return View(await _context.ItemCategory.ToPagedListAsync(page ?? 1, padgeSize));
         }
 
 
-        public async Task<IActionResult> AddOrEdit(int id = 0)
+        public async Task<IActionResult> AddOrEdit(int? page,int id = 0)
         {
             if (id == 0)
                 return View(new ItemCategoryModel());
+            ViewBag.pageCurrent = page;
             var itemCategoryModel = await _context.ItemCategory.FindAsync(id);
             if (itemCategoryModel == null)
             {
@@ -34,9 +40,10 @@ namespace RISTExamOnlineProject.Controllers
             }
             return View(itemCategoryModel);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit(int id, [Bind("Nbr,ItemCateg,ItemCategName,AddDate,UpdDate,UserName,ComputerName")] ItemCategoryModel itemCategoryModel)
+        public async Task<IActionResult> AddOrEdit(int id, [Bind("Nbr,ItemCateg,ItemCategName,AddDate,UpdDate,UserName,ComputerName")] int? page, ItemCategoryModel itemCategoryModel)
         {
             if (!ModelState.IsValid)
                 return Json(new
@@ -57,8 +64,9 @@ namespace RISTExamOnlineProject.Controllers
             {
                 try
                 {
-                    
-                   //update spec field EF 
+                    ViewBag.pageCurrent = page;
+
+                    //update spec field EF 
                     _context.ItemCategory.Attach(itemCategoryModel);
                     
                     itemCategoryModel.UpdDate = DateTime.Now;
@@ -82,7 +90,8 @@ namespace RISTExamOnlineProject.Controllers
                     throw;
                 }
             }
-            return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.ItemCategory.ToList()) });
+            const int pageSize = 8;
+            return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll",  await _context.ItemCategory.ToPagedListAsync(page ?? 1, pageSize)) });
         }
         private bool ItemCategoryModelExists(int id)
         {
@@ -91,12 +100,15 @@ namespace RISTExamOnlineProject.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id,int? page)
         {
             var itemCategoryModel = await _context.ItemCategory.FindAsync(id);
             _context.ItemCategory.Remove(itemCategoryModel);
             await _context.SaveChangesAsync();
-            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.ItemCategory.ToList()) });
+            const int pageSize = 8;
+
+         
+            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", await _context.ItemCategory.ToPagedListAsync( page ?? 1, pageSize)) });
         }
 
 
