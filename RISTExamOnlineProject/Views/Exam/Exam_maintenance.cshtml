@@ -7,7 +7,12 @@
 <html>
 
 <head>
-
+    
+    <style>
+        .initiallyHidden {
+            display: none;
+        }
+    </style>
 
 </head>
 
@@ -37,7 +42,7 @@
 
                             <div class="col-1">
 
-                                <button class="btn btn-outline-dark border-0 m-2" data-toggle="collapse" data-target="#collapse_New_Question" aria-expanded="true" aria-controls="collaps_New_Question">
+                                <button class="btn btn-outline-dark border-0 m-2"  onclick="Toggle('#collapse_New_Question')" >
                                     <i class="fas fa-plus-square fa-2x"></i>
                                 </button>
                             </div>
@@ -46,7 +51,7 @@
 
                     </div>
 
-                    <div id="collapse_New_Question" class="collapse hidden" aria-labelledby="heading_New_Question" data-parent="#Exam_Form">
+                    <div id="collapse_New_Question"  class="initiallyHidden">
 
                         <div class="card-body">
 
@@ -254,37 +259,32 @@
 
                             <div class="col-1">
 
-                                <button class="btn btn-outline-dark border-0 m-2" data-toggle="collapse" data-target="#collapse_Question_List" aria-expanded="true" aria-controls="collaps_Question_List">
+                                @*<button class="btn btn-outline-dark border-0 m-2" data-toggle="collapse" data-target="#collapse_Question_List" aria-expanded="true" aria-controls="collaps_Question_List">
+                        <i class="fas fa-plus-square fa-2x"></i>
+                    </button>*@
+
+
+                                <button class="btn btn-outline-dark border-0 m-2" onclick="Toggle('#collapse_Question_List')">
                                     <i class="fas fa-plus-square fa-2x"></i>
                                 </button>
+
+
                             </div>
 
                         </div>
 
                     </div>
 
+                    @*<div id="collapse_Question_List" class="collapse show" aria-labelledby="heading_Question_List" data-parent="#QuestionList_Form">*@
+                        <div id="collapse_Question_List"  class="initiallyHidden">
 
-                    <div id="collapse_Question_List" class="collapse show" aria-labelledby="heading_Question_List" data-parent="#QuestionList_Form">
-
-                        <div class="card-body">
+                            <div class="card-body">
 
 
+                            </div>
                         </div>
-
-
                     </div>
-
-
                 </div>
-
-
-            </div>
-
-
-
-
-
-
         </div>
 
 
@@ -332,7 +332,6 @@
 
                         </div>
                     </div>
-
                 </div>
 
                 <!-- Modal footer -->
@@ -342,11 +341,8 @@
                     </button>
                     <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
                 </div>
-
             </div>
         </div>
-
-
     </div>
 
 
@@ -355,14 +351,18 @@
 
 
         <script src="~/lib/summernote/dist/Bootstrap_4_4_1.js"></script>
-        <script src="~/lib/jquery/jquery.min.js"></script>
-        <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+
+        @*<script src="~/lib/jquery/jquery.min.js"></script>*@
+        @*<script src="~/lib/bootstrap/js/bootstrap.min.js"></script>*@
+
         <link href="~/lib/summernote/dist/summernote-bs4.min.css" rel="stylesheet" />
         <script src="~/lib/summernote/dist/summernote-bs4.min.js"></script>
         <script src="~/lib/CustomJS/Exam/CommonJS.js"></script>
         <script src="~/lib/CustomJS/Exam/Create_Exam.js"></script>
+
         <link href="~/lib/bootstrap/css/bootstrap4-toggle.css" rel="stylesheet" />
         <script src="~/lib/bootstrap/js/bootstrap4-toggle.js"></script>
+
 
         <script>
             var Exam_NO = 0
@@ -389,6 +389,11 @@
             });
 
 
+
+            function Toggle(ID) {
+
+                $(ID).toggle(500);
+            }
 
         </script>
 

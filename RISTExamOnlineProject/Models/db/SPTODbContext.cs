@@ -28,6 +28,9 @@ namespace RISTExamOnlineProject.Models.db
             modelBuilder.Entity<InputItemList>()
                 .HasKey(k => new {k.ItemCateg, k.ItemCode});
 
+            modelBuilder.Entity<Exam_QuestionDetail>()
+              .HasKey(k => new { k.ItemCode,k.ValueCodeQuestion,k.ValueCodeAnswer });
+
             /////////////////////////////////////////////////////
             //modelBuilder.Entity<ItemCategoryModel>(entity =>
             //{

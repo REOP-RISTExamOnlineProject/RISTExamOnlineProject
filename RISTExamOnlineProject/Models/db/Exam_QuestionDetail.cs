@@ -11,7 +11,7 @@ namespace RISTExamOnlineProject.Models.db
 
         public string ItemCode { get; set; }
         public string temCategName { get; set; }
-        [Key]
+ 
         public string ValueCodeQuestion { get; set; }
        // [Key]
         public string ValueCodeAnswer { get; set; }

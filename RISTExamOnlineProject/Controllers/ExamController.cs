@@ -30,10 +30,7 @@ namespace RISTExamOnlineProject.Controllers
 
 
 
-        public IActionResult Exam_Management()
-        {
-            return View();
-        }
+
 
         public IActionResult New_Exam()
         {
