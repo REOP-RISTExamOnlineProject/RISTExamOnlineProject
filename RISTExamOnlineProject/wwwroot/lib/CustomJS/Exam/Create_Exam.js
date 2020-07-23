@@ -13,9 +13,12 @@ function GetExamDetail(Itemcode) {
                 ValueCodeQuestion = response.valueCodeQuestion
                 ValueCodeAnswer = response.valueCodeAnswer
                 ItemName = response.itemName
-          
+           var     Detail = response.detail
                 $('#LB_Exam_Count').text(QuestionCount);
-                $('#LB_Exam_Name').text(ItemName)
+                $('#LB_Exam_Name').text(ItemName);
+                debugger
+                MakeTable(Detail);
+
             } else {
 
             }

@@ -42,9 +42,10 @@ namespace RISTExamOnlineProject.Controllers
             return View();
         }
 
-     
 
-        public IActionResult Exam_maintenance(string Itemcode) {
+
+        public IActionResult Exam_maintenance(string Itemcode)
+        {
 
             ViewBag.Itemcode = Itemcode;
             return View();
@@ -82,11 +83,40 @@ namespace RISTExamOnlineProject.Controllers
             if (dt.Rows.Count != 0)
             {
 
+
+                List<Exam_QuestionDetail> Detail = new List<Exam_QuestionDetail>();
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    Detail.Add(new Exam_QuestionDetail()
+                    {
+
+                        ItemCode = row["ItemCode"].ToString(),
+                        ItemCategName = row["ItemCategName"].ToString(),
+                        ValueCodeQuestion = row["ValueCodeQuestion"].ToString(),
+                        ValueCodeAnswer = row["ValueCodeAnswer"].ToString(),
+                        Seq = Convert.ToInt16(row["Seq"].ToString()),
+                        Question = row["Question"].ToString(),
+                        Ans_Count = row["Ans_Count"].ToString(),
+                        Max_Seq = row["Max_Seq"].ToString(),
+
+                    });
+
+                }
+
+
+
+
+
                 ValueCodeQuestion = dt.Rows[0]["ValueCodeQuestion"].ToString();
                 ValueCodeAnswer = dt.Rows[0]["ValueCodeAnswer"].ToString();
 
                 dt = ObjRun.Get_ValueCount(ValueCodeQuestion);
                 //   QuestionCount = Convert.ToInt32(dt.Rows.Count);
+
+
+           
+
 
                 LastSeq = Convert.ToInt32(dt.Rows[0]["Seq"].ToString());
                 ItemName = dt.Rows[0]["ItemName"].ToString();
@@ -105,7 +135,7 @@ namespace RISTExamOnlineProject.Controllers
                 }
 
 
-                return Json(new { success = true, ValueCodeQuestion = ValueCodeQuestion, ValueCodeAnswer = ValueCodeAnswer, QuestionCount = QuestionCount, LastSeq = LastSeq, ItemName = ItemName });
+                return Json(new { success = true, ValueCodeQuestion = ValueCodeQuestion, ValueCodeAnswer = ValueCodeAnswer, QuestionCount = QuestionCount, LastSeq = LastSeq, ItemName = ItemName  , Detail = Detail });
 
 
 
@@ -167,7 +197,7 @@ namespace RISTExamOnlineProject.Controllers
 
                 //----------- inseart Qeustion ----
 
-                ObjRun.InseartExam(ValueCodeQuestion, LastSeq, TextHTML_Question, Text_Question, "0", "0", IP,"008454");
+                ObjRun.InseartExam(ValueCodeQuestion, LastSeq, TextHTML_Question, Text_Question, "0", "0", IP, "008454");
 
 
 
@@ -189,7 +219,7 @@ namespace RISTExamOnlineProject.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, responseText = ex.Message.ToString() }) ;
+                return Json(new { success = false, responseText = ex.Message.ToString() });
                 throw;
             }
 

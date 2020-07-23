@@ -10,12 +10,9 @@ namespace RISTExamOnlineProject.Models.db
     {
 
         public string ItemCode { get; set; }
-        public string temCategName { get; set; }
- 
+        public string ItemCategName { get; set; } 
         public string ValueCodeQuestion { get; set; }
-       // [Key]
         public string ValueCodeAnswer { get; set; }
-       // [Key]
         public int Seq { get; set; }
         public string Question { get; set; }
         public string Ans_Count { get; set; }
