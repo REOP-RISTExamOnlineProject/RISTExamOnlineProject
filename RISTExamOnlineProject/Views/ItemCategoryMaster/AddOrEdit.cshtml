@@ -1,48 +1,48 @@
 ﻿@model RISTExamOnlineProject.Models.db.ItemCategoryModel
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{ Layout = null; }
 @{
-    ViewData["Title"] = "Edit";
-    Layout = null;
+    //var page = ViewBag.pageCurrent;
 }
 
-<h1>Edit</h1>
-
-<h4>ItemCategoryModel</h4>
-<hr />
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="AddOrEdit" asp-route-id="@Model.ItemCateg" onsubmit="return jQueryAjaxPost(this);">
+    <div class="col-md-12">
+        <form asp-action="AddOrEdit" asp-route-id="@Model.Nbr" onsubmit="return jQueryAjaxPost(this);">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ItemCateg" />
+            <input type="hidden" asp-for="Nbr" />
+            <input type="hidden" asp-for="UpdDate" />
+            <input type="hidden" asp-for="AddDate" />
+            <input type="hidden" asp-for="ComputerName" />
+            <input type="hidden" asp-for="UserName" />
+            <input type="hidden" name="page" value="@ViewBag.pageCurrent" />
+
+            <div class="form-group">
+                <label asp-for="ItemCateg" class="control-label"></label>
+                @if (Model.Nbr != 0)
+                {
+                    @Html.TextBoxFor(x => Model.ItemCateg, new { @readonly = "readonly", @class = "form-control" })
+                }
+                else
+                {
+                    @Html.TextBoxFor(x => Model.ItemCateg, new { @class = "form-control" })
+                }
+
+                <span asp-validation-for="ItemCateg" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="ItemCategName" class="control-label"></label>
                 <input asp-for="ItemCategName" class="form-control" />
                 <span asp-validation-for="ItemCategName" class="text-danger"></span>
             </div>
+          
             <div class="form-group">
-                <label asp-for="AddDate" class="control-label"></label>
-                <input asp-for="AddDate" class="form-control" />
-                <span asp-validation-for="AddDate" class="text-danger"></span>
+                <input type="submit" value="Submit" class="btn btn-primary btn-block" />
             </div>
-            <div class="form-group">
-                <label asp-for="UpdDate" class="control-label"></label>
-                <input asp-for="UpdDate" class="form-control" />
-                <span asp-validation-for="UpdDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ComputerName" class="control-label"></label>
-                <input asp-for="ComputerName" class="form-control" />
-                <span asp-validation-for="ComputerName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+           
         </form>
     </div>
 </div>
+
 

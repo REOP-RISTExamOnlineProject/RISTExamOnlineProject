@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace RISTExamOnlineProject.Models.db
 {
-    public  class ItemCategoryModel
+    public class InputItemListModel
     {
+
         [Key]
         public int Nbr { get; set; }
 
@@ -16,15 +17,17 @@ namespace RISTExamOnlineProject.Models.db
         [Required(ErrorMessage = "This Field is required.")]
         public string ItemCateg { get; set; }
         [Required(ErrorMessage = "This Field is required.")]
-        public string ItemCategName { get; set; }
+        public string ItemCode { get; set; }
+        [Required(ErrorMessage = "This Field is required.")]
+        public string ItemName { get; set; }
+        public int DisplayOrder { get; set; }
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? AddDate { get; set; }
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? UpdDate { get; set; }
-       
-        public string UserName { get; set; }
-    
-        public string ComputerName { get; set; }
 
+        public string UserName { get; set; }
+
+        public string ComputerName { get; set; }
     }
 }

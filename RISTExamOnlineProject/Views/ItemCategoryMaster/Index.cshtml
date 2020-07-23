@@ -1,6 +1,10 @@
-﻿@model IEnumerable<RISTExamOnlineProject.Models.db.ItemCategoryModel>
+﻿@model X.PagedList.IPagedList<RISTExamOnlineProject.Models.db.ItemCategoryModel>
 
-@{ ViewData["Title"] = "Index"; }
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 <div id="view-all">
     @await Html.PartialAsync("_ViewAll", Model)
@@ -9,10 +13,3 @@
 @section Scripts{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-
-
-@{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-

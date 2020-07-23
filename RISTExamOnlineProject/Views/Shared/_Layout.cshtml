@@ -9,7 +9,6 @@
     <meta name="author" content="">
     <meta name="keywords" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
     <!--Meta Responsive tag-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@ViewBag.Title</title>
@@ -20,14 +19,9 @@
         <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
         <!--Custom style.css-->
         <link href="~/lib/Custom/style.css" rel="stylesheet" />
-        <!--Font Awesome-->
-        @*<script src="~/lib/font-awesome/js/a4c93cd695.js"></script>*@
+        <!--Font Awesome--> 
 
-        <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
-        @*<link href="~/lib/font-awesome/css/fontawesome.css" rel="stylesheet" />
-            <link href="~/lib/font-awesome/css/solid.css" rel="stylesheet" />
-            <link href="~/lib/font-awesome/css/regular.css" rel="stylesheet" />
-            <link href="~/lib/font-awesome/css/brands.css" rel="stylesheet" />*@
+        <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" /> 
         <script src="~/lib/js/sweetalert.min.js"></script>
 
         <!--FOR IE9-->
@@ -37,12 +31,14 @@
         <!-- tempusdominus-bootstrap-4 datetimepicker -->
         <link rel="stylesheet" href="~/lib/datepicker/css/tempusdominus-bootstrap-4.css">
         <!-- tempusdominus-bootstrap-4 -->
-
+        
+        
+        <link href="~/lib/XpageList/PagedList.css" rel="stylesheet" />
 
 
 
     </environment>
-    @RenderSection("Styles", false)
+    @await RenderSectionAsync("Styles", false)
 
 </head>
 <body>
@@ -200,7 +196,7 @@
                         </div>
                         <div class="mr-4">
                             <a class="" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="@ViewBag.imgProfile" alt="#" class="rounded-circle" width="40px" height="40px">
+                                <img src="@ViewBag.imgProfile" alt="#" class="rounded-circle profiles" width="40px" height="40px">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right mt-13" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item" href="@Url.Action("UserDetailMaintenance","Management")"><i class="fa fa-user pr-2"></i> Profile</a>
@@ -235,10 +231,10 @@
                 <div class="inner-sidebar mr-3">
                     <!--Image Avatar-->
                     <div class="avatar text-center">
-                        <img src="@ViewBag.imgProfile" alt="" class="rounded-circle" />
+                        <img src="@ViewBag.imgProfile" alt=""  class="rounded-circle profiles" />
 
-                        <p><strong>@ViewBag.NameEng</strong></p>
-                        <span class="text-primary small"><strong>@ViewBag.JobTitle</strong></span>
+                        <p><strong id="strName">@ViewBag.NameEng</strong></p>
+                        <span class="text-primary small"><strong id="strJobTitle">@ViewBag.JobTitle</strong></span>
                         @*<p><strong>Mr.Wittaya S.</strong></p>
                             <span class="text-primary small"><strong>System Dev.</strong></span>*@
                     </div>
@@ -306,7 +302,7 @@
 
                                         </a>
                                         <ul class="#" id="Shortcuts_exam">
-                                            <li class="child"><a href="@Url.Action("Index","ManagementExam")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> License Master</a></li>
+                                            <li class="child"><a href="@Url.Action("Index","ItemCategoryMaster")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> License Master</a></li>
                                         </ul>
                                     </li>
                                 }
@@ -357,6 +353,10 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            
+            <div class="loaderbody" id="loaderbody">
+                <div class="loader"></div>
             </div>
         </div>
 
@@ -409,11 +409,41 @@
     <!--bootstrap-select-->
     @*<script src="~/lib/bootstrap-select/js/bootstrap-select.js"></script>*@
 </environment>
-<script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="~/lib/js/site.js" asp-append-version="true"></script>
     <script src="~/lib/js/notify.min.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
    @* @await RenderSectionAsync("Scripts", false)*@
+    <script>
+        $(document).ready(function () {
 
+            Profile()
+
+
+          
+        });
+
+
+        function Profile() {
+
+            $.ajax({
+                type: 'POST',
+                url: "../Home/Profile",
+                   data: { OPID: "@User.Identity.Name" },
+                dataType: 'json',
+                success: function (Data) {
+                     
+                    $(".profiles").attr("src", Data.data);/*text(Data.data);*/
+                    $("#strName").text(Data.strName);
+                    $("#strJobTitle").text(Data.strJobTitle);
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                },
+            });
+            
+        }
+    </script>
 </body>
 </html>

@@ -32,6 +32,19 @@ namespace RISTExamOnlineProject.Controllers
             return View();
         }
 
-       
+        public JsonResult Profile(string OPID)
+        {
+            var UserName = OPID;
+             
+            vewOperatorAlls dataOperator = new vewOperatorAlls();
+            dataOperator = _sptoDbContext.vewOperatorAll.FirstOrDefault(x => x.OperatorID == UserName);
+            var Name = dataOperator.NameEng;
+            var JobTitle = dataOperator.JobTitle;
+            var varsd = "http://10.29.1.12/RAJPTrainingControlSystem/PIC/" + UserName + ".jpg";
+
+            var jsonResult = Json(new{ data=varsd ,strName = Name, strJobTitle = JobTitle } );
+
+            return jsonResult;
+        }
     }
 }
