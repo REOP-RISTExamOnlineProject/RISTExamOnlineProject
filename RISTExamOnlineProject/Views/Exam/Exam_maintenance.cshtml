@@ -306,7 +306,7 @@
 
                 <div class="card  p-0 m-0 rounded-0">
 
-                    <div class="card-header  bg-dark badge-dark  p-0 m-0" id="heading_New_Question">
+                    <div class="card-header  bg-dark badge-dark  p-0 m-0" id="heading_Edit_Question">
                         <div class="row justify-content-between">
 
                             <div class="col-3 ">
@@ -316,7 +316,7 @@
 
                             <div class="col-1">
 
-                                <button class="btn btn-outline-secondary border-0 m-2" onclick="Toggle('#collapse_New_Question')">
+                                <button class="btn btn-outline-secondary border-0 m-2" onclick="Toggle('#collapse_Edit_Question')">
                                     <i class="fas fa-plus-square fa-2x"></i>
                                 </button>
                             </div>
@@ -325,13 +325,13 @@
 
                     </div>
 
-                    <div id="collapse_New_Question" class="initiallyHidden">
+                    <div id="collapse_Edit_Question" class="initiallyHidden">
 
                         <div class="card-body">
 
                             @*----  form Que----------*@
 
-                            <div class="row justify-content-center" id="Question_Form">
+                            <div class="row justify-content-center" id="Edit_Question_Form">
 
                                 <div class="col-10">
 
@@ -346,7 +346,7 @@
                                                     </h3>
                                                 </div>
                                                 <div class="col-2">
-                                                    <h6> NO : <label id="LB_Exam_Count" class="text-white"></label></h6>
+                                        @*<h6> NO : <label id="LB_Exam_Count" class="text-white"></label></h6>*@
                                                 </div>
 
                                             </div>
@@ -359,7 +359,7 @@
 
                                                 <div class="col-11 border border-dark  rounded">
 
-                                                    <div class="Display_Question" id="Display_Question" style="min-height:70px; max-height:250px; overflow:auto;">
+                                                    <div class="Display_Question" id="Display_Edit_Question" style="min-height:70px; max-height:250px; overflow:auto;">
 
                                                     </div>
 
@@ -368,13 +368,13 @@
                                                 <div class="col-1">
                                                     <div class="row p-1">
 
-                                                        <button class="btn btn-dark" id="BTN_Clear_Question" data-toggle="tooltip" data-placement="right" title="ลบทั้งหมด" onclick="Clear_Display('Display_Question')">
+                                                        <button class="btn btn-dark" id="BTN_Clear_Edit_Question" data-toggle="tooltip" data-placement="right" title="ลบทั้งหมด" onclick="Clear_Display('Display_Edit_Question')">
                                                             <i class="fas fa-eraser"></i>
                                                         </button>
 
                                                     </div>
                                                     <div class="row p-1">
-                                                        <button class="btn btn-dark " data-toggle="tooltip" data-placement="right" title="เครื่องมือ" onclick="Show_Summernote('Display_Question')">
+                                                        <button class="btn btn-dark " data-toggle="tooltip" data-placement="right" title="เครื่องมือ" onclick="Show_Summernote('Display_Edit_Question')">
                                                             <i class="fas fa-paint-brush"></i>
                                                         </button>
 
@@ -397,7 +397,7 @@
                                                 <div class="col-1 text-left">
 
 
-                                                    <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="dark" id="CB_Need" data-size="sm">
+                                                    <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="dark" id="CB_Edit_Need" data-size="sm">
 
                                                 </div>
 
@@ -410,7 +410,7 @@
                             </div> @*---- end form Que----------*@
 
 
-                            <div class="row justify-content-center" id="Answer_Form">
+                            <div class="row justify-content-center" id="Edit_Answer_Form">
 
 
                                 <div class="col-10">
@@ -427,7 +427,7 @@
                                             <div class="card border-0">
 
 
-                                                <div class="card-body" id="FormDisplay_Answer">
+                                                <div class="card-body" id="FormDisplay_Edit_Answer">
 
 
 
@@ -582,7 +582,7 @@
                 <!-- Modal footer -->
                 <div class="modal-footer">
                     <button class="btn btn-success " id="BTN_Save" onclick="Save()">
-                        <i class="fas fa-save"></i> Save
+                        <i class="fas fa-save"></i>Save Edit 
                     </button>
                     <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
                 </div>
