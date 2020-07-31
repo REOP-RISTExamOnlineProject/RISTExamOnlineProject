@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewData["Title"] = "ModeExemList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="mb-4">
+        <h1>Licensure Examination</h1>
+        <p>การสอบใบอนุญาต</p>
+    </div>
+    <hr />
+    <div class="card shadow">
+        <div class="card-body">
+            <h4 class="text-uppercase ml-4 font-weight-lighter">
+                Exam category  : @ViewBag.Itemcateg @ViewBag.ItemCateName
+            </h4>
+            <hr />
+            <div class=" p-3">
+                <table class="table table-bordered table-sm bg-white w-100" id="tbItemCatg">
+                    <thead class="bg-dark text-white">
+                        <tr>
+                            <th class="text-center">รหัสชุดข้อสอบ</th>
+                            <th class="text-center">ชื่อข้อสอบ</th>
+                            <th class="text-center">เลือกทำ</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div> 
+            <a href="@Url.Action("LicenceList")" class="btn  btn-link"> Back</a>
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+    <link href="~/lib/datatables/Css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="~/lib/datatables/Js/jquery.dataTables.min.js"></script>
+
+
+
+    <script type="text/javascript">
+        var myTables1;
+        $(document).ready(function () {
+            InitTable();
+            GetData();
+        });
+
+        function InitTable() {
+
+            myTables1 = $("#tbItemCatg").DataTable({
+                // searching: false,
+                ordering: true,
+                processing: true,
+                dom: '<"top"l>rt<"bottom"ip><"clear">',
+                columns: [
+                    { data: "itemCateg", name: "itemCateg", class: "text-wrap  " },
+                    { data: "itemCategName", name: "itemCategName", class: "text-wrap  " },
+                    {
+                        data: null,
+                        name: null,
+                        className: "center",
+                        "fnCreatedCell": function (nTd, oData) {
+                            var itemCateg = oData.itemCateg;
+                            $(nTd).html('<a href="../UIExam/Examexamination?ItemInput=' + itemCateg + '"  class="btn btn-success btn-sm">SELECT</a>');
+                        }, className: "dt-body-center"
+                    },
+                ],
+                order: [0, "asc"],
+            });
+        }
+
+        function GetData() {
+
+            $.ajax({
+                type: 'POST',
+                url: "../UIExam/GetInputItem",
+                  data: { itemCateg : "@ViewBag.Itemcateg" },
+                dataType: 'json',
+                success: function (Data) {
+
+                    myTables1.clear().draw();
+                    if (Data._strResult == "OK") {
+
+                        myTables1.rows.add(Data.data).draw();
+
+                    } else {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: Data.dataLabel,
+                            type: 'error',
+                            timer: 1700,
+                        }).then(function () {
+                            return false;
+                        });
+
+                    };
+                },
+                error: function (ex) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Failed to retrieve states.' + ex,
+                        type: 'error',
+                        timer: 1700,
+                    }).then(function () {
+                        return false;
+                    });
+
+                },
+            });
+
+        } 
+
+
+    </script>
+}

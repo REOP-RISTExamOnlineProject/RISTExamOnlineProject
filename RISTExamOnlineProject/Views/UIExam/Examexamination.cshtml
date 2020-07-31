@@ -1,0 +1,155 @@
+﻿
+@{
+    ViewData["Title"] = "Examexamination";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="myvideo"></div>
+<div id="xxxxxx" class="bg-white container">
+    <h1>Examexamination</h1>
+    <div class="row">
+        <div class="col-12"> <button id="btndemo" class="btn btn-warning float-lg-none"><span id="demo"> เริ่มทำข้อสอบ</span></button></div>
+    </div>
+    <hr class="m-4" />
+    <div id="DivContents"></div>
+    <button class="btn btn-success text-uppercase" id="btnSubmit" disabled> Submit</button>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@section scripts{
+    <link href="~/lib/datatables/Css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="~/lib/datatables/Js/jquery.dataTables.min.js"></script>
+
+
+
+    <script type="text/javascript">
+        var myTables1;
+        $(document).ready(function () {  
+            var elem = document.getElementById("xxxxxx");
+            var elemx = document.getElementById("btndemo");
+            elemx.onclick = function () {
+                GetData() 
+                req = elem.requestFullScreen || elem.webkitRequestFullScreen || elem.mozRequestFullScreen;
+                req.call(elem);
+               
+            }
+            return false;
+        });
+
+        var closeOnEscape = $(".selector").dialog("option", "closeOnEscape");
+        //setter
+        $(".selector").dialog("option", "closeOnEscape", false);
+
+        $(document).keypress(function (event) {
+          
+            if (event.keyCode == 123) { // Prevent F12
+                return false;
+            } else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) { // Prevent Ctrl+Shift+I        
+                return false;
+            } else if (event.keyCode == 27) { // Prevent F12
+                
+                return false;
+            }
+        });
+        function onReady(callback) {
+            var intervalId = window.setInterval(function () {
+                if (document.getElementsByTagName('body')[0] !== undefined) {
+                    window.clearInterval(intervalId);
+                    callback.call(this);
+                }
+            }, 1000);
+        }
+
+
+        function GetData() {
+              $.ajax({
+                type: 'POST',
+                  url: "../UIExam/GetExamList",
+                  data: { itemCateg: "@ViewBag.Itemcateg", InputItem : "@ViewBag.InputItem" },
+                  dataType: 'json',
+                  success: function (Data) { 
+                      $("#DivContents").html(Data._strResult); 
+                      Gettime();
+                      $("#btndemo").attr("disabled", 'disabled');
+                      $("#btnSubmit").removeAttr("disabled", 'disabled'); 
+                  },
+                  error: function (ex) { 
+
+                  },
+                }); 
+        } 
+
+        function Gettime() {
+            // Set the date we're counting down to
+
+            var now = new Date();
+            now.setMinutes(now.getMinutes() + 5); // timestamp
+            now = new Date(now);
+
+            var countDownDate = new Date(now).getTime();
+
+            // Update the count down every 1 second
+            var x = setInterval(function () {
+
+                // Get today's date and time
+                var now = new Date().getTime();
+
+                // Find the distance between now and the count down date
+                var distance = countDownDate - now;
+
+                // Time calculations for days, hours, minutes and seconds
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Display the result in the element with id="demo"
+                document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+                    + minutes + "m " + seconds + "s ";
+
+                // If the count down is finished, write some text
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.getElementById("demo").innerHTML = "EXPIRED";
+
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'TIME OUT!!',
+                        type: 'error',
+                        timer: 1700,
+                    }).then(function () {
+
+                        return false;
+                    });
+                }
+            }, 1000);
+        }
+
+        function hashchanged() {
+            debugger
+            Swal.fire({
+                icon: 'warning',
+                title: 'TIME OUT!!',
+                type: 'error',
+                timer: 1700,
+            }).then(function () {
+                return false;
+            });
+        }
+
+      
+       
+    </script>
+}
