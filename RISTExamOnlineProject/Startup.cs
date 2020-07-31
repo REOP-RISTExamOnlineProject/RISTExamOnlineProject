@@ -85,6 +85,7 @@ namespace RISTExamOnlineProject
                     "default",
                     "{controller=Account}/{action=Login}");
             });
+
             app.UseSignalR(routes => { routes.MapHub<CounterHub>("/CounterHub"); });
         }
     }

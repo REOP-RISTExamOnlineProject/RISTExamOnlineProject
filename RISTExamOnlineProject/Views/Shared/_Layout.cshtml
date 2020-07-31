@@ -19,9 +19,9 @@
         <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
         <!--Custom style.css-->
         <link href="~/lib/Custom/style.css" rel="stylesheet" />
-        <!--Font Awesome--> 
+        <!--Font Awesome-->
 
-        <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" /> 
+        <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
         <script src="~/lib/js/sweetalert.min.js"></script>
 
         <!--FOR IE9-->
@@ -31,8 +31,8 @@
         <!-- tempusdominus-bootstrap-4 datetimepicker -->
         <link rel="stylesheet" href="~/lib/datepicker/css/tempusdominus-bootstrap-4.css">
         <!-- tempusdominus-bootstrap-4 -->
-        
-        
+
+
         <link href="~/lib/XpageList/PagedList.css" rel="stylesheet" />
 
 
@@ -45,312 +45,332 @@
 
     <!--Page Wrapper-->
 
-    <div class="container-fluid">
-        <partial name="_CookieConsentPartial" />
-        <!--Header-->
-        <div class="row header shadow-sm">
 
-            <!--Logo-->
-            <div class="col-sm-3 pl-0 text-center header-logo">
-                <div class="bg-theme mr-3 pt-3 pb-2 mb-0">
-                    <h3 class="logo">
-                        <a href="#" class="text-secondary logo"><i class="fa fa-book"></i> Skill Test<span class="small"> Online</span></a>
-                    </h3>
-                </div>
+    <partial name="_CookieConsentPartial" />
+    <!--Header-->
+    <div class="row header shadow-sm">
+
+        <!--Logo-->
+        <div class="col-sm-3 pl-0 text-center header-logo">
+            <div class="bg-theme mr-3 pt-3 pb-2 mb-0">
+                <h3 class="logo">
+                    <a href="#" class="text-secondary logo"><i class="fa fa-book"></i> Skill Test<span class="small"> Online</span></a>
+                </h3>
             </div>
-            <!--Logo-->
-            <!--Header Menu-->
-            <div class="col-sm-9 header-menu pt-2 pb-0">
-                <div class="row">
-
-                    <!--Menu Icons-->
-                    <div class="col-sm-4 col-8 pl-0">
-                        <!--Toggle sidebar-->
-                        <span class="menu-icon" onclick="toggle_sidebar()">
-                            <span id="sidebar-toggle-btn"></span>
-                        </span>
-                        <!--Toggle sidebar-->
-                        <!--Notification icon-->
-                        <div class="menu-icon">
-                            <a href="#" onclick="toggle_dropdown(this);return false;" role="button" class="dropdown-toggle">
-                                <i class="fa fa-bell"></i>
-                                <span class="badge badge-danger">5</span>
-                            </a>
-                            <div class="dropdown dropdown-left bg-white shadow border">
-                                <a class="dropdown-item" href="#">
-                                    <strong>Notifications</strong>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
-                                    <div class="media">
-                                        <div class="align-self-center mr-3 rounded-circle notify-icon bg-primary">
-                                            <i class="fa fa-bookmark"></i>
-                                        </div>
-                                        <div class="media-body">
-                                            <h6 class="mt-0">
-                                                <strong>Meeting</strong>
-                                            </h6>
-                                            <p>You have a meeting by 8:00</p>
-                                            <small class="text-success">09:23am</small>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
-                                    <div class="media">
-                                        <div class="align-self-center mr-3 rounded-circle notify-icon bg-secondary">
-                                            <i class="fa fa-link"></i>
-                                        </div>
-                                        <div class="media-body">
-                                            <h6 class="mt-0">
-                                                <strong>Events</strong>
-                                            </h6>
-                                            <p>Launching new programme</p>
-                                            <small class="text-success">09:23am</small>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
-                                    <div class="media">
-                                        <div class="align-self-center mr-3 rounded-circle notify-icon bg-warning">
-                                            <i class="fa fa-user"></i>
-                                        </div>
-                                        <div class="media-body">
-                                            <h6 class="mt-0">
-                                                <strong>Personnel</strong>
-                                            </h6>
-                                            <p>New employee arrival</p>
-                                            <small class="text-success">09:23am</small>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-center link-all" href="#">See all notifications ></a>
-                            </div>
-                        </div>
-                        <!--Notication icon-->
-                        <!--Inbox icon-->
-                        <span class="menu-icon inbox">
-                            <a class="" href="#" role="button" id="dropdownMenuLink3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-envelope"></i>
-                                <span class="badge badge-danger">4</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-left mt-10 animated zoomInDown" aria-labelledby="dropdownMenuLink3">
-                                <a class="dropdown-item" href="#">
-                                    <strong>Unread messages</strong>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
-                                    <div class="media">
-                                        <img class="align-self-center mr-3 rounded-circle" src="~/lib/img/man-512.png" width="50px" height="50px" alt="Generic placeholder image">
-                                        <div class="media-body">
-                                            <h6 class="mt-0">
-                                                <strong>Adam Abdulrahman</strong>
-                                            </h6>
-                                            <p>How are you?</p>
-                                            <small class="text-success">09:23am</small>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
-                                    <div class="media">
-                                        <img class="align-self-center mr-3 rounded-circle" src="~/lib/img/man-512.png" width="50px" height="50px" alt="Generic placeholder image">
-                                        <div class="media-body">
-                                            <h6 class="mt-0">
-                                                <strong>Adam Abdulrahman</strong>
-                                            </h6>
-                                            <p>How are you?</p>
-                                            <small class="text-success">09:23am</small>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
-                                    <div class="media">
-                                        <img class="align-self-center mr-3 rounded-circle" src="~/lib/img/man-512.png" width="50px" height="50px" alt="Generic placeholder image">
-                                        <div class="media-body">
-                                            <h6 class="mt-0">
-                                                <strong>Adam Abdulrahman</strong>
-                                            </h6>
-                                            <p>How are you?</p>
-                                            <small class="text-success">09:23am</small>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-center link-all" href="#">View all messages</a>
-                            </div>
-                        </span>
-                        <!--Inbox icon-->
-                        <span class="menu-icon">
-                            <i class="fa fa-th-large"></i>
-                        </span>
-                    </div>
-                    <!--Menu Icons-->
-                    <!--Search box and avatar-->
-                    <div class="col-sm-8 col-4 text-right flex-header-menu justify-content-end">
-                        <div class="search-rounded mr-3">
-                            <input type="text" class="form-control search-box" placeholder="Enter keywords.." />
-                        </div>
-                        <div class="mr-4">
-                            <a class="" href="#" role="button" id="dropdownMenuLink" onclick="toggle_dropdown(this);return false;" data-toggle="dropdownx" aria-haspopup="true" aria-expanded="r">
-                                <img src="@ViewBag.imgProfile" alt="#" class="rounded-circle profiles" width="40px" height="40px">
-                            </a>
-                            <div class="dropdown dropdown-right text-left bg-white shadow border mt-13" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" href="@Url.Action("UserDetailMaintenance","Management")"><i class="fa fa-user pr-2"></i> Profile</a>
-
-                                <div class="dropdown-divider"></div>
-
-                                <a href="#" class="dropdown-item">
-                                    <i class="fa fa-user"></i>
-                                    @User.Identity.Name   @User.FindFirst(claim => claim.Type == ClaimTypes.Role)?.Value
-                                </a>
-
-                                <a href="@Url.Action("Logout", "Account")" class="dropdown-item">
-                                    <i class="fa fa-power-off pr-2"></i>Logout
-                                </a>
-
-                                @*<a class="dropdown-item" href="@Url.Action("Login","Home")"><i class="fa fa-power-off pr-2"></i> Logout</a>*@
-                            </div>
-                        </div>
-                    </div>
-                    <!--Search box and avatar-->
-                </div>
-            </div>
-            <!--Header Menu-->
         </div>
-        <!--Header-->
-        <!--Main Content-->
+        <!--Logo-->
+        <!--Header Menu-->
+        <div class="col-sm-9 header-menu pt-2 pb-0">
+            <div class="row">
 
-        <div class="row main-content">
-
-            <!--Sidebar left-->
-            <div class="col-sm-3 col-xs-6 sidebar pl-0">
-                <div class="inner-sidebar mr-3">
-                    <!--Image Avatar-->
-                    <div class="avatar text-center">
-                        <img src="@ViewBag.imgProfile" alt="" class="rounded-circle profiles" />
-
-                        <p><strong id="strName">@ViewBag.NameEng</strong></p>
-                        <span class="text-primary small"><strong id="strJobTitle">@ViewBag.JobTitle</strong></span>
-                        @*<p><strong>Mr.Wittaya S.</strong></p>
-                            <span class="text-primary small"><strong>System Dev.</strong></span>*@
+                <!--Menu Icons-->
+                <div class="col-sm-4 col-8 pl-0">
+                    <!--Toggle sidebar-->
+                    <span class="menu-icon" onclick="toggle_sidebar()">
+                        <span id="sidebar-toggle-btn"></span>
+                    </span>
+                    <!--Toggle sidebar-->
+                    <!--Notification icon-->
+                    <div class="menu-icon">
+                        <a href="#" onclick="toggle_dropdown(this);return false;" role="button" class="dropdown-toggle">
+                            <i class="fa fa-bell"></i>
+                            <span class="badge badge-danger">5</span>
+                        </a>
+                        <div class="dropdown dropdown-left bg-white shadow border">
+                            <a class="dropdown-item" href="#">
+                                <strong>Notifications</strong>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
+                                <div class="media">
+                                    <div class="align-self-center mr-3 rounded-circle notify-icon bg-primary">
+                                        <i class="fa fa-bookmark"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <h6 class="mt-0">
+                                            <strong>Meeting</strong>
+                                        </h6>
+                                        <p>You have a meeting by 8:00</p>
+                                        <small class="text-success">09:23am</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
+                                <div class="media">
+                                    <div class="align-self-center mr-3 rounded-circle notify-icon bg-secondary">
+                                        <i class="fa fa-link"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <h6 class="mt-0">
+                                            <strong>Events</strong>
+                                        </h6>
+                                        <p>Launching new programme</p>
+                                        <small class="text-success">09:23am</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
+                                <div class="media">
+                                    <div class="align-self-center mr-3 rounded-circle notify-icon bg-warning">
+                                        <i class="fa fa-user"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <h6 class="mt-0">
+                                            <strong>Personnel</strong>
+                                        </h6>
+                                        <p>New employee arrival</p>
+                                        <small class="text-success">09:23am</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-center link-all" href="#">See all notifications ></a>
+                        </div>
                     </div>
-                    <!--Image Avatar-->
-                    <!--Sidebar Navigation Menu-->
-                    <div class="sidebar-menu-container">
-                        <ul class="sidebar-menu mt-4 mb-4">
-                            <li class="parent">
-                                <a href="#" class="">
-                                    <i class="fa fa-qrcode mr-3"> </i>
-                                    <span class="none">Dashboard </span>
-                                </a>
-                            </li>
+                    <!--Notication icon-->
+                    <!--Inbox icon-->
+                    <span class="menu-icon inbox">
+                        <a class="" href="#" role="button" id="dropdownMenuLink3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-envelope"></i>
+                            <span class="badge badge-danger">4</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-left mt-10 animated zoomInDown" aria-labelledby="dropdownMenuLink3">
+                            <a class="dropdown-item" href="#">
+                                <strong>Unread messages</strong>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
+                                <div class="media">
+                                    <img class="align-self-center mr-3 rounded-circle" src="~/lib/img/man-512.png" width="50px" height="50px" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                        <h6 class="mt-0">
+                                            <strong>Adam Abdulrahman</strong>
+                                        </h6>
+                                        <p>How are you?</p>
+                                        <small class="text-success">09:23am</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
+                                <div class="media">
+                                    <img class="align-self-center mr-3 rounded-circle" src="~/lib/img/man-512.png" width="50px" height="50px" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                        <h6 class="mt-0">
+                                            <strong>Adam Abdulrahman</strong>
+                                        </h6>
+                                        <p>How are you?</p>
+                                        <small class="text-success">09:23am</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
+                                <div class="media">
+                                    <img class="align-self-center mr-3 rounded-circle" src="~/lib/img/man-512.png" width="50px" height="50px" alt="Generic placeholder image">
+                                    <div class="media-body">
+                                        <h6 class="mt-0">
+                                            <strong>Adam Abdulrahman</strong>
+                                        </h6>
+                                        <p>How are you?</p>
+                                        <small class="text-success">09:23am</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-center link-all" href="#">View all messages</a>
+                        </div>
+                    </span>
+                    <!--Inbox icon-->
+                    <span class="menu-icon">
+                        <i class="fa fa-th-large"></i>
+                    </span>
+                </div>
+                <!--Menu Icons-->
+                <!--Search box and avatar-->
+                <div class="col-sm-8 col-4 text-right flex-header-menu justify-content-end">
+                    <div class="search-rounded mr-3">
+                        <input type="text" class="form-control search-box" placeholder="Enter keywords.." />
+                    </div>
+                    <div class="mr-4">
+                        <a class="" href="#" role="button" id="dropdownMenuLink" onclick="toggle_dropdown(this);return false;" data-toggle="dropdownx" aria-haspopup="true" aria-expanded="r">
+                            <img src="@ViewBag.imgProfile" alt="#" class="rounded-circle profiles" width="40px" height="40px">
+                        </a>
+                        <div class="dropdown dropdown-right text-left bg-white shadow border mt-13" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="@Url.Action("UserDetailMaintenance","Management")"><i class="fa fa-user pr-2"></i> Profile</a>
+
+                            <div class="dropdown-divider"></div>
+
+                            <a href="#" class="dropdown-item">
+                                <i class="fa fa-user"></i>
+                                @User.Identity.Name   @User.FindFirst(claim => claim.Type == ClaimTypes.Role)?.Value
+                            </a>
+
+                            <a href="@Url.Action("Logout", "Account")" class="dropdown-item">
+                                <i class="fa fa-power-off pr-2"></i>Logout
+                            </a>
+
+                        </div>
+                    </div>
+                    <div class="mr-4">
+                        <a class="" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="~/lib/img/avatar1.png" alt="#" class="rounded-circle" width="40px" height="40px">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right mt-13" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="#"><i class="fa fa-user pr-2"></i> Profile</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#"><i class="fa fa-th-list pr-2"></i> Tasks</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#"><i class="fa fa-book pr-2"></i> Projects</a>
+                            <div class="dropdown-divider"></div>
+
+                            @User.Identity.Name Test!, @User.FindFirst(claim => claim.Type == ClaimTypes.Role)?.Value
+
+                            <a href="@Url.Action("Logout", "Account")" class="dropdown-item">
+                                <i class="fa fa-power-off pr-2"></i>Logout
+                            </a>
 
 
-                            <li class="parent">
-                                <a href="#">
-                                    <i class="fas fa-stream mr-3"></i>
-                                    <span class="none">Overview</span>
-                                </a>
-                            </li>
+                        </div>
+                    </div>
+                </div>
+                <!--Search box and avatar-->
+            </div>
+        </div>
+        <!--Header Menu-->
+    </div>
+    <!--Header-->
+    <!--Main Content-->
 
-                            <li class="parent">
-                                <a href="#">
-                                    <i class="fas fa-question-circle mr-3"></i>
-                                    <span class="none">About</span>
-                                </a>
-                            </li>
-                            @if (User.Identity.IsAuthenticated)
+    <div class="row main-content">
+
+        <!--Sidebar left-->
+        <div class="col-sm-3 col-xs-6 sidebar pl-0">
+            <div class="inner-sidebar mr-3">
+                <!--Image Avatar-->
+                <div class="avatar text-center">
+                    <img src="@ViewBag.imgProfile" alt="" class="rounded-circle profiles" />
+
+                    <p><strong id="strName">@ViewBag.NameEng</strong></p>
+                    <span class="text-primary small"><strong id="strJobTitle">@ViewBag.JobTitle</strong></span>
+                    @*<p><strong>Mr.Wittaya S.</strong></p>
+                        <span class="text-primary small"><strong>System Dev.</strong></span>*@
+                </div>
+                <!--Image Avatar-->
+                <!--Sidebar Navigation Menu-->
+                <div class="sidebar-menu-container">
+                    <ul class="sidebar-menu mt-4 mb-4">
+                        <li class="parent">
+                            <a href="#" class="">
+                                <i class="fa fa-qrcode mr-3"> </i>
+                                <span class="none">Dashboard </span>
+                            </a>
+                        </li>
+
+
+                        <li class="parent">
+                            <a href="#">
+                                <i class="fas fa-stream mr-3"></i>
+                                <span class="none">Overview</span>
+                            </a>
+                        </li>
+
+                        <li class="parent">
+                            <a href="#">
+                                <i class="fas fa-question-circle mr-3"></i>
+                                <span class="none">About</span>
+                            </a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            var userRoles = "";
+                            @if (User.IsInRole("Admin"))
                             {
-                                var userRoles = "";
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    userRoles = "Admin";
-                                }
-                                else
-                                {
-                                    userRoles = "User";
-                                }
-
-                                @if (userRoles == "Admin")
-                                {
-
-                                    <li class="parent">
-                                        <a href="#" onclick="toggle_menu('Shortcuts');return false;">
-                                            <i class="fas fa-link mr-3"></i>
-                                            <span class="none">User Management <i class="fa fa-angle-down pull-right align-bottom"></i></span>
-                                        </a>
-
-                                        @{
-                                            var opno = @User.Identity.Name;
-                                        }
-                                        <ul class="#" id="Shortcuts">
-                                            <li class="child"><a href="@Url.Action("UserDetailMaintenance","Management")" class="ml-4"><i class="fa fa-angle-right mr-2 "></i> Edit User detail</a></li>
-                                            <li class="child"><a href="@Url.Action("UserInCharge", "Management" , new { opno=$"{opno.Trim()}"})" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Request Change</a></li>
-                                            <li class="child"><a href="@Url.Action("TEC_Approved","TEC_Management")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> TEC Approved</a></li>
-                                            <li class="child"><a href="@Url.Action("UserReqeustInqury","Management")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Request Inquiry</a></li>
-                                        </ul>
-                                    </li>
-
-                                    <li class="parent">
-                                        <a href="#" onclick="toggle_menu('Shortcuts_exam');return false;">
-                                            <i class="fas fa-tasks mr-3"></i>
-                                            <span class="none">Exam Management <i class="fa fa-angle-down pull-right align-bottom"></i></span>
-                                        </a>
-                                        <ul class="#" id="Shortcuts_exam">
-                                            <li class="child"><a href="@Url.Action("Index","ItemCategoryMaster")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> License Master</a></li>
-                                        </ul>
-                                    </li>
-                                }
+                                userRoles = "Admin";
                             }
-                            <li class="parent">
-                                <a href="@Url.Action("LicenceList","UIExam")" >
-                                    <i class="fas fa-stream mr-3"></i> <span class="none">กะเพราไก่</span>
-                                </a>
-                            </li> 
-                        </ul>
-                    </div>
-                    <!--Sidebar Naigation Menu-->
+                            else
+                            {
+                                userRoles = "User";
+                            }
+
+                            @if (userRoles == "Admin")
+                            {
+
+                                <li class="parent">
+                                    <a href="#" onclick="toggle_menu('Shortcuts');return false;">
+                                        <i class="fas fa-link mr-3"></i>
+                                        <span class="none">User Management <i class="fa fa-angle-down pull-right align-bottom"></i></span>
+                                    </a>
+
+                                    @{
+                                        var opno = @User.Identity.Name;
+                                    }
+                                    <ul class="#" id="Shortcuts">
+                                        <li class="child"><a href="@Url.Action("UserDetailMaintenance","Management")" class="ml-4"><i class="fa fa-angle-right mr-2 "></i> Edit User detail</a></li>
+                                        <li class="child"><a href="@Url.Action("UserInCharge", "Management" , new { opno=$"{opno.Trim()}"})" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Request Change</a></li>
+                                        <li class="child"><a href="@Url.Action("TEC_Approved","TEC_Management")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> TEC Approved</a></li>
+                                        <li class="child"><a href="@Url.Action("UserReqeustInqury","Management")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Request Inquiry</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="parent">
+                                    <a href="#" onclick="toggle_menu('Shortcuts_exam');return false;">
+                                        <i class="fas fa-tasks mr-3"></i>
+                                        <span class="none">Exam Management <i class="fa fa-angle-down pull-right align-bottom"></i></span>
+                                    </a>
+                                    <ul class="#" id="Shortcuts_exam">
+                                        <li class="child"><a href="@Url.Action("Index","ItemCategoryMaster")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> License Master</a></li>
+                                    </ul>
+                                </li>
+                            }
+                        }
+                        <li class="parent">
+                            <a href="@Url.Action("LicenceList","UIExam")">
+                                <i class="fas fa-stream mr-3"></i> <span class="none">กะเพราไก่ไข่ดาวพิเศษ1</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!--Sidebar Naigation Menu-->
+            </div>
+        </div>
+        <!--Sidebar left-->
+        <!--Content right-->
+        <div class="col-sm-9 col-12 content pt-3 pl-0">
+
+
+
+            @RenderBody()
+
+            <!--Footer-->
+            <div class="row mt-5 mb-4 footer">
+                <div class="col-sm-8">
+                    <span>&copy; All rights reserved 2020 designed by <a class="text-theme" href="#">IS-SYSTEM</a></span>
+                </div>
+                <div class="col-sm-4 text-right">
+                    <a href="#" class="ml-2">Contact Us</a>
+                    <a href="#" class="ml-2">Support</a>
                 </div>
             </div>
-            <!--Sidebar left-->
-            <!--Content right-->
-            <div class="col-sm-9 col-12 content pt-3 pl-0">
-
-
-
-                @RenderBody()
-
-                <!--Footer-->
-                <div class="row mt-5 mb-4 footer">
-                    <div class="col-sm-8">
-                        <span>&copy; All rights reserved 2020 designed by <a class="text-theme" href="#">IS-SYSTEM</a></span>
+            <!--Footer-->
+        </div>
+        <div class="modal" tabindex="-1" role="dialog" id="form-modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
                     </div>
-                    <div class="col-sm-4 text-right">
-                        <a href="#" class="ml-2">Contact Us</a>
-                        <a href="#" class="ml-2">Support</a>
-                    </div>
-                </div>
-                <!--Footer-->
-            </div>
-            <div class="modal" tabindex="-1" role="dialog" id="form-modal">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title"></h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
+                    <div class="modal-body">
 
-                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
             @*<div class="loaderbody" id="loaderbody">
                 <div class="loader"></div>
@@ -358,8 +378,7 @@
 
         </div>
 
-        <!--Main Content-->
-
+    <!--Main Content-->
     </div>
 
     <!--Page Wrapper-->
@@ -414,7 +433,7 @@
     <script src="~/lib/js/notify.min.js"></script>
 
     @*<script src="~/lib/js/site.js" asp-append-version="true"></script>
-    <script src="~/lib/js/notify.min.js" asp-append-version="true"></script>*@
+        <script src="~/lib/js/notify.min.js" asp-append-version="true"></script>*@
 
     @RenderSection("Scripts", required: false)
     @* @await RenderSectionAsync("Scripts", false)*@

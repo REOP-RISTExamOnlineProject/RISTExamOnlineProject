@@ -89,6 +89,7 @@ namespace RISTExamOnlineProject.Controllers
 
             var jsonResult = Json(new { data = ResultOPcateg._listOpCateg, _strResult = ResultOPcateg.strResult });
 
+              
             return jsonResult;
         }
 
@@ -104,4 +105,4 @@ namespace RISTExamOnlineProject.Controllers
         }
 
     }
-}
+} 

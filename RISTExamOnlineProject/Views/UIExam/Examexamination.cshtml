@@ -24,7 +24,7 @@
 
 
 
-
+ 
 
 
 
@@ -37,32 +37,26 @@
     <script type="text/javascript">
         var myTables1;
         $(document).ready(function () {  
-            var elem = document.getElementById("xxxxxx");
-            var elemx = document.getElementById("btndemo");
-            elemx.onclick = function () {
-                GetData() 
-                req = elem.requestFullScreen || elem.webkitRequestFullScreen || elem.mozRequestFullScreen;
-                req.call(elem);
+            //var elem = document.getElementById("xxxxxx");
+            //var elemx = document.getElementById("btndemo");
+            //elemx.onclick = function () {
+            //    GetData() 
+            //    req = elem.requestFullScreen || elem.webkitRequestFullScreen || elem.mozRequestFullScreen;
+            //    req.call(elem);
                
-            }
+            //}
+
+
+
+
+
+
             return false;
         });
+ 
 
-        var closeOnEscape = $(".selector").dialog("option", "closeOnEscape");
-        //setter
-        $(".selector").dialog("option", "closeOnEscape", false);
+      
 
-        $(document).keypress(function (event) {
-          
-            if (event.keyCode == 123) { // Prevent F12
-                return false;
-            } else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) { // Prevent Ctrl+Shift+I        
-                return false;
-            } else if (event.keyCode == 27) { // Prevent F12
-                
-                return false;
-            }
-        });
         function onReady(callback) {
             var intervalId = window.setInterval(function () {
                 if (document.getElementsByTagName('body')[0] !== undefined) {
@@ -149,7 +143,40 @@
             });
         }
 
-      
+        function toggleFullScreen(elem) {
+            $(document).keydown(function (event) {
+                if (event.keyCode == 123) { // Prevent F12
+                    return false;
+                } else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) { // Prevent Ctrl+Shift+I        
+                    return false;
+                }
+            });
+            // ## The below if statement seems to work better ## if ((document.fullScreenElement && document.fullScreenElement !== null) || (document.msfullscreenElement && document.msfullscreenElement !== null) || (!document.mozFullScreen && !document.webkitIsFullScreen)) {
+            if ((document.fullScreenElement !== undefined && document.fullScreenElement === null) || (document.msFullscreenElement !== undefined && document.msFullscreenElement === null) || (document.mozFullScreen !== undefined && !document.mozFullScreen) || (document.webkitIsFullScreen !== undefined && !document.webkitIsFullScreen)) {
+                if (elem.requestFullScreen) {
+                    elem.requestFullScreen();
+                } else if (elem.mozRequestFullScreen) {
+                    elem.mozRequestFullScreen();
+                } else if (elem.webkitRequestFullScreen) {
+                    elem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+                } else if (elem.msRequestFullscreen) {
+                    elem.msRequestFullscreen();
+                }
+            } else {
+                if (document.cancelFullScreen) {
+                    document.cancelFullScreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitCancelFullScreen) {
+                    document.webkitCancelFullScreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+
+
+        }
        
     </script>
 }
+    <input type="button" value="click to toggle fullscreen" onclick="toggleFullScreen(document.body)">
