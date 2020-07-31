@@ -144,11 +144,35 @@ namespace RISTExamOnlineProject.Models.TSQL
 
             var ObjRun = new mgrSQLConnect(_configuration);
             strSQL = "insert  into [SPTOSystem].[dbo].[ValueList] ( [ValueCode],[DisplayOrder],[Value_HTML],[Value_TEXT],[Answer],[Need],ComputerName,[AddDate]   ,UpdDate   ,[UserName])";
-            strSQL += "  values ('" + ValueCode.Trim() + "','" + Seq + "'  ,'" + Value_HTML.Trim() + "'  ,'" + Value_TEXT.Trim() + "'  ,'" + Answer + "'  ,'" + Need + "'   ,'" + ComputerName + "',GETDATE(),GETDATE(),'" + OPID + "')   ";
+            strSQL += "  values (N'" + ValueCode.Trim() + "',N'" + Seq + "'  ,N'" + Value_HTML.Trim() + "'  ,N'" + Value_TEXT.Trim() + "'  ,N'" + Answer + "'  ,N'" + Need + "'   ,N'" + ComputerName + "',GETDATE(),GETDATE(),'" + OPID + "')   ";
 
             dt = ObjRun.GetDatatables(strSQL);
 
 
+
+        }
+
+
+        public void DeleteQuestion(string ValueQuestion, string ValueAnswer, int Seq) {
+
+            var ObjRun = new mgrSQLConnect(_configuration);
+            strSQL = "delete ValueList   where (ValueCode ='"+ ValueQuestion + "' or ValueCode ='"+ ValueAnswer + "') and  DisplayOrder = '"+ Seq + "'   ";
+       //     strSQL += "  values ('" + ValueCode.Trim() + "','" + Seq + "'  ,'" + Value_HTML.Trim() + "'  ,'" + Value_TEXT.Trim() + "'  ,'" + Answer + "'  ,'" + Need + "'   ,'" + ComputerName + "',GETDATE(),GETDATE(),'" + OPID + "')   ";
+
+            dt = ObjRun.GetDatatables(strSQL);
+        }
+
+
+        public string EditQuestion_Detail(string ValueQuestion, string ValueAnswer, int Seq) {
+
+            string HTML_Test;
+            var ObjRun = new mgrSQLConnect(_configuration);
+            strSQL = "[dbo].[srpEditQuestion_SelectHTML] '" + ValueQuestion.Trim() + "','" + ValueAnswer.Trim() + "','" + Seq.ToString() + "','0'";
+          
+            dt = ObjRun.GetDatatables(strSQL);
+
+            HTML_Test = dt.Rows[0][0].ToString();
+            return HTML_Test;
 
         }
 

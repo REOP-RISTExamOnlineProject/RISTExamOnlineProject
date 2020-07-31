@@ -73,14 +73,15 @@ namespace RISTExamOnlineProject.Controllers
             int QuestionCount = 0;
             int LastSeq = 0;
             string ItemName;
+            int Max_Seq;
 
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
 
 
 
             dt = ObjRun.Get_ExamDetail(Itemcode);
-
-            if (dt.Rows.Count != 0)
+            Max_Seq = Convert.ToInt16(dt.Rows[0]["Max_Seq"].ToString());
+            if (Max_Seq != 0)
             {
 
 
@@ -184,20 +185,31 @@ namespace RISTExamOnlineProject.Controllers
 
 
         public IActionResult InseartExam(string LastSeq, int QuestionCount, string ValueCodeQuestion, string ValueCodeAnswer, string[] Ans_TextDisplay, string[] Ans_Text_HTML_Display
-          , string[] Ans_Value, string[] Need_value, string Text_Question, string TextHTML_Question)
+          , string[] Ans_Value, string Need_value, string Text_Question, string TextHTML_Question,string Job,string OP_UPD,int DisplayOrder)
         {
 
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
 
-
+   
             string IP = Request.HttpContext.Connection.RemoteIpAddress.ToString();
             try
             {
 
 
+                if (Job == "Edit") {
+                    //---------------------------- Delete Data ------------
+
+                    ObjRun.DeleteQuestion(ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(), Convert.ToInt32(DisplayOrder));
+                    LastSeq = DisplayOrder.ToString();
+
+                }
+
+
                 //----------- inseart Qeustion ----
 
-                ObjRun.InseartExam(ValueCodeQuestion, LastSeq, TextHTML_Question, Text_Question, "0", "0", IP, "008454");
+
+
+                ObjRun.InseartExam(ValueCodeQuestion, LastSeq, TextHTML_Question, Text_Question, "0", Need_value, IP, OP_UPD);
 
 
 
@@ -206,12 +218,8 @@ namespace RISTExamOnlineProject.Controllers
 
                 for (int i = 0; i < Ans_TextDisplay.Length; i++)
                 {
-
-
-                    ObjRun.InseartExam(ValueCodeAnswer, LastSeq, Ans_Text_HTML_Display[i].Trim(), Ans_TextDisplay[i].Trim(), Ans_Value[i].Trim(), Need_value[i].Trim(), IP, "008454");
-
-
-
+                    
+                    ObjRun.InseartExam(ValueCodeAnswer, LastSeq, Ans_Text_HTML_Display[i].Trim(), Ans_TextDisplay[i].Trim(), Ans_Value[i].Trim(), "0", IP, OP_UPD);
 
 
                 }
@@ -230,8 +238,27 @@ namespace RISTExamOnlineProject.Controllers
         }
 
 
+        public JsonResult Get_EditQuestion_Detail(string ValueCodeAnswer, string ValueCodeQuestion, int Seq) {
+            mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
+
+            string HTML_Text = ObjRun.EditQuestion_Detail(ValueCodeQuestion, ValueCodeAnswer, Seq);
+            return Json(new { success = true ,HTML = HTML_Text});
+
+        }
 
 
+        public JsonResult Delete_Question(string ValueCodeAnswer, string ValueCodeQuestion, int Seq) {
+
+
+
+            mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
+
+            ObjRun.DeleteQuestion(ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(), Seq);
+
+
+            return Json(new { success = true });
+        
+        }
 
 
     }

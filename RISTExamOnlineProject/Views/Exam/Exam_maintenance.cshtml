@@ -203,7 +203,7 @@
 
                                                 <div class="row justify-content-end m-3">
                                                     <div class="col-2 text-right">
-                                                        <button class="btn btn-dark " id="BTN_Add_New_Ans" data-toggle="tooltip" data-placement="right" title="เพิ่มคำตอบ" onclick="Add_Ans()">
+                                                        <button class="btn btn-dark " id="BTN_Add_New_Ans" data-toggle="tooltip" data-placement="right" title="เพิ่มคำตอบ" onclick="Add_Ans('new')">
                                                             <i class="fas fa-plus"></i>
                                                         </button>
                                                     </div>
@@ -226,7 +226,7 @@
 
 
 
-                            <button class="btn btn-success " id="BTN_Save" onclick="Save_Exam()">
+                            <button class="btn btn-success " id="BTN_Save" onclick="Save_Exam('new')">
                                 <i class="fas fa-save"></i> Save
                             </button>
 
@@ -256,8 +256,8 @@
                             <div class="col-1">
 
                                 @*<button class="btn btn-outline-dark border-0 m-2" data-toggle="collapse" data-target="#collapse_Question_List" aria-expanded="true" aria-controls="collaps_Question_List">
-                                <i class="fas fa-plus-square fa-2x"></i>
-                            </button>*@
+                                        <i class="fas fa-plus-square fa-2x"></i>
+                                    </button>*@
 
 
                                 <button class="btn btn-outline-secondary border-0 m-2" onclick="Toggle('#collapse_Question_List')">
@@ -284,6 +284,7 @@
                                         <td>Edit</td>
                                         <td>Question</td>
                                         <td>Ans Count</td>
+                                        <td>Delete</td>
                                     </tr>
                                 </thead>
                             </table>
@@ -302,7 +303,7 @@
 
 
 
-            <div id="Edit_Exam_Form">
+            @*<div id="Edit_Exam_Form">
 
                 <div class="card  p-0 m-0 rounded-0">
 
@@ -329,168 +330,6 @@
 
                         <div class="card-body">
 
-                            @*----  form Que----------*@
-
-                            <div class="row justify-content-center" id="Edit_Question_Form">
-
-                                <div class="col-10">
-
-                                    <div class="card rounded border-dark m-4">
-
-                                        <div class="card-header badge-dark">
-                                            <div class="row justify-content-between">
-
-                                                <div class="col-4">
-                                                    <h3>
-                                                        Question
-                                                    </h3>
-                                                </div>
-                                                <div class="col-2">
-                                        @*<h6> NO : <label id="LB_Exam_Count" class="text-white"></label></h6>*@
-                                                </div>
-
-                                            </div>
-
-
-                                        </div>
-                                        <div class="card-body">
-
-                                            <div class="row justify-content-center  m-3">
-
-                                                <div class="col-11 border border-dark  rounded">
-
-                                                    <div class="Display_Question" id="Display_Edit_Question" style="min-height:70px; max-height:250px; overflow:auto;">
-
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="col-1">
-                                                    <div class="row p-1">
-
-                                                        <button class="btn btn-dark" id="BTN_Clear_Edit_Question" data-toggle="tooltip" data-placement="right" title="ลบทั้งหมด" onclick="Clear_Display('Display_Edit_Question')">
-                                                            <i class="fas fa-eraser"></i>
-                                                        </button>
-
-                                                    </div>
-                                                    <div class="row p-1">
-                                                        <button class="btn btn-dark " data-toggle="tooltip" data-placement="right" title="เครื่องมือ" onclick="Show_Summernote('Display_Edit_Question')">
-                                                            <i class="fas fa-paint-brush"></i>
-                                                        </button>
-
-                                                    </div>
-
-
-                                                </div>
-
-                                            </div>
-
-                                            <hr class="bg-dark mt-4" />
-
-                                            <div class="row justify-content-lg-start">
-
-                                                <div class="col-2 text-right">
-                                                    NEED :
-
-                                                </div>
-
-                                                <div class="col-1 text-left">
-
-
-                                                    <input type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-offstyle="dark" id="CB_Edit_Need" data-size="sm">
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div> @*---- end form Que----------*@
-
-
-                            <div class="row justify-content-center" id="Edit_Answer_Form">
-
-
-                                <div class="col-10">
-
-                                    <div class="card border border-dark  rounded m-4">
-                                        <div class="card-header badge-dark ">
-                                            <h3>
-                                                Answer
-                                            </h3>
-
-                                        </div>
-                                        <div class="card-body">
-
-                                            <div class="card border-0">
-
-
-                                                <div class="card-body" id="FormDisplay_Edit_Answer">
-
-
-
-                                                    <div class="ANS" id="Ans1">
-
-                                                        <div class="form-group row justify-content-center">
-                                                            <div class="col-1">
-                                                                <div class="RD_Display">
-                                                                    <input type="radio" name="optradio" id="RD_Ans_1" />
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="col-10 border border-dark  rounded m-3 p-3">
-
-                                                                <div class="Display_Answer" id="Display_Answer_1" style="min-height:30px; max-height:150px; overflow:auto;">
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group row justify-content-end">
-                                                            <div class="col-3">
-                                                                <button class="btn btn-dark" data-toggle="tooltip" data-placement="right" title="Clear" onclick="Clear_Display('Display_Answer_1')">
-                                                                    <i class="fas fa-eraser"></i>
-                                                                </button>
-
-
-                                                                <button class="btn btn-dark " data-toggle="tooltip" data-placement="right" title="Tool" onclick="Show_Summernote('Display_Answer_1')">
-                                                                    <i class="fas fa-paint-brush"></i>
-                                                                </button>
-
-                                                                <button class="remove btn btn-dark" data-toggle="tooltip" data-placement="right" title="Delete">
-                                                                    <i class="fas fa-trash"></i>
-                                                                </button>
-
-
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-
-                                                    <h6>  Count : <label id="LB_Ans_Count"></label> </h6>
-
-                                                </div>
-
-                                                <hr class="bg-dark m-auto" style="width:95%;" />
-
-                                                <div class="row justify-content-end m-3">
-                                                    <div class="col-2 text-right">
-                                                        <button class="btn btn-dark " id="BTN_Add_New_Ans" data-toggle="tooltip" data-placement="right" title="เพิ่มคำตอบ" onclick="Add_Ans()">
-                                                            <i class="fas fa-plus"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div>
-
 
                         </div>
 
@@ -500,10 +339,6 @@
 
 
 
-                            <button class="btn btn-success " id="BTN_Save" onclick="Save_Exam()">
-                                <i class="fas fa-save"></i> Save
-                            </button>
-
 
 
                         </div>
@@ -512,7 +347,7 @@
 
 
 
-            </div>
+            </div>*@
 
 
 
@@ -530,121 +365,149 @@
 
 
 
+    <div class="modal hide fade " id="Modal_Edit" tabindex="-1" data-focus-on="input:first">
+        <div class="modal-dialog modal-lg "style="max-width:1200px;max-height:300px;">
 
-
-
-
-
-
-
-
-    <div class="modal fade" id="Modal_Summernote">
-        <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Modal Heading</h4>
+                    <h4 class="modal-title">Edit</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
+
                 </div>
+                <div class="modal-body" id="Modal_body_Edit" style="overflow:auto">
 
-                <!-- Modal body -->
-                <div class="modal-body">
+               
 
-                    <div id="Display_Modal" class="border border-dark rounded m-3 p-3" style="min-height:30px; max-height:150px; overflow:auto;">
-
-                    </div>
-                    <textarea class="form-control " id="Summernote_modal" name="" style="height:150px; overflow:auto;"></textarea>
-                    <br />
-
-                    <div class="row justify-content-end m-3">
-                        <div class="col-2">
-                            <button class="btn btn-info w-100" id="BTN_Add" onclick="Add_Detail_Display('Display_Modal','Summernote_modal')">
-                                <i class="fas fa-plus"></i>     Add
-                            </button>
-
-                        </div>
-                        <div class="col-2">
-                            <button class="btn btn-info w-100" id="BTN_Edit" onclick="Edit_Detail_Display('Display_Modal','Summernote_modal')">
-                                <i class="fas fa-edit"></i> Edit
-                            </button>
-
-                        </div>
-
-                        <div class="col-2">
-                            <button class="btn btn-danger w-100" id="BTN_Reset" onclick="Reset_Summernote('Summernote_modal')">
-                                <i class="fas fa-trash-alt"></i> Reset
-                            </button>
-
-                        </div>
-                    </div>
                 </div>
-
-                <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button class="btn btn-success " id="BTN_Save" onclick="Save()">
-                        <i class="fas fa-save"></i>Save Edit 
-                    </button>
-                    <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
+
+
+
                 </div>
             </div>
+
         </div>
+
+
+
     </div>
 
 
-    @section Scripts
+
+
+
+
+
+        <div class="modal hide fade" id="Modal_Summernote" tabindex="-1" data-focus-on="input:first">
+            <div class="modal-dialog modal-dialog-centered modal-lg  " >
+                <div class="modal-content border border-dark shadow shadow-lg rounded ">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Input Detail</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+
+                        <div id="Display_Modal" class="border border-dark rounded m-3 p-3" style="min-height:30px; max-height:150px; overflow:auto;">
+
+                        </div>
+                        <textarea class="form-control " id="Summernote_modal" name="" style="height:150px; overflow:auto;"></textarea>
+                        <br />
+
+                        <div class="row justify-content-end m-3">
+                            <div class="col-2">
+                                <button class="btn btn-info w-100" id="BTN_Add" onclick="Add_Detail_Display('Display_Modal','Summernote_modal')">
+                                    <i class="fas fa-plus"></i>     Add
+                                </button>
+
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-info w-100" id="BTN_Edit" onclick="Edit_Detail_Display('Display_Modal','Summernote_modal')">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+
+                            </div>
+
+                            <div class="col-2">
+                                <button class="btn btn-danger w-100" id="BTN_Reset" onclick="Reset_Summernote('Summernote_modal')">
+                                    <i class="fas fa-trash-alt"></i> Reset
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button class="btn btn-success " id="BTN_Save" onclick="Save()">
+                            <i class="fas fa-save"></i>Save Edit
+                        </button>
+                        <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        @section Scripts
 {
 
 
-        <script src="~/lib/summernote/dist/Bootstrap_4_4_1.js"></script>
+            <script src="~/lib/summernote/dist/Bootstrap_4_4_1.js"></script>
 
-        @*<script src="~/lib/jquery/jquery.min.js"></script>*@
-        @*<script src="~/lib/bootstrap/js/bootstrap.min.js"></script>*@
+            @*<script src="~/lib/jquery/jquery.min.js"></script>*@
+            @*<script src="~/lib/bootstrap/js/bootstrap.min.js"></script>*@
 
-        <link href="~/lib/summernote/dist/summernote-bs4.min.css" rel="stylesheet" />
-        <script src="~/lib/summernote/dist/summernote-bs4.min.js"></script>
-        <script src="~/lib/CustomJS/Exam/CommonJS.js"></script>
-        <script src="~/lib/CustomJS/Exam/Create_Exam.js"></script>
+            <link href="~/lib/summernote/dist/summernote-bs4.min.css" rel="stylesheet" />
+            <script src="~/lib/summernote/dist/summernote-bs4.min.js"></script>
+            <script src="~/lib/CustomJS/Exam/CommonJS.js"></script>
+            <script src="~/lib/CustomJS/Exam/Create_Exam.js"></script>
 
-        <link href="~/lib/bootstrap/css/bootstrap4-toggle.css" rel="stylesheet" />
-        <script src="~/lib/bootstrap/js/bootstrap4-toggle.js"></script>
+            <link href="~/lib/bootstrap/css/bootstrap4-toggle.css" rel="stylesheet" />
+            <script src="~/lib/bootstrap/js/bootstrap4-toggle.js"></script>
 
-        <link href="~/lib/DataTables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
-        <link href="~/lib/DataTables/css/colReorder.bootstrap4.min.css" rel="stylesheet" />
-        <link href="~/lib/DataTables/css/fixedColumns.bootstrap4.min.css" rel="stylesheet" />
-        <link href="~/lib/DataTables/css/fixedHeader.bootstrap4.min.css" rel="stylesheet" />
-        <link href="~/lib/DataTables/css/keyTable.bootstrap4.min.css" rel="stylesheet" />
-        <link href="~/lib/DataTables/css/responsive.bootstrap4.min.css" rel="stylesheet" />
-        <link href="~/lib/DataTables/css/rowGroup.bootstrap4.min.css" rel="stylesheet" />
-        <link href="~/lib/DataTables/css/rowReorder.bootstrap4.min.css" rel="stylesheet" />
-        <link href="~/lib/DataTables/css/scroller.bootstrap4.min.css" rel="stylesheet" />
-        <link href="~/lib/DataTables/css/select.bootstrap4.min.css" rel="stylesheet" />
-        <link href="~/lib/DataTables/css/buttons.bootstrap4.min.css" rel="stylesheet" />
-        <link href="~/lib/DataTables/css/buttons.dataTables.min.css" rel="stylesheet" />
+            <link href="~/lib/DataTables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+            <link href="~/lib/DataTables/css/colReorder.bootstrap4.min.css" rel="stylesheet" />
+            <link href="~/lib/DataTables/css/fixedColumns.bootstrap4.min.css" rel="stylesheet" />
+            <link href="~/lib/DataTables/css/fixedHeader.bootstrap4.min.css" rel="stylesheet" />
+            <link href="~/lib/DataTables/css/keyTable.bootstrap4.min.css" rel="stylesheet" />
+            <link href="~/lib/DataTables/css/responsive.bootstrap4.min.css" rel="stylesheet" />
+            <link href="~/lib/DataTables/css/rowGroup.bootstrap4.min.css" rel="stylesheet" />
+            <link href="~/lib/DataTables/css/rowReorder.bootstrap4.min.css" rel="stylesheet" />
+            <link href="~/lib/DataTables/css/scroller.bootstrap4.min.css" rel="stylesheet" />
+            <link href="~/lib/DataTables/css/select.bootstrap4.min.css" rel="stylesheet" />
+            <link href="~/lib/DataTables/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+            <link href="~/lib/DataTables/css/buttons.dataTables.min.css" rel="stylesheet" />
 
-        <script src="~/lib/DataTables/js/jquery.dataTables.min.js"></script>
-        <script src="~/lib/DataTables/js/dataTables.bootstrap4.min.js"></script>
-        <script src="~/lib/DataTables/js/dataTables.colReorder.min.js"></script>
-        <script src="~/lib/DataTables/js/dataTables.fixedHeader.min.js"></script>
-        <script src="~/lib/DataTables/js/dataTables.keyTable.min.js"></script>
-        <script src="~/lib/DataTables/js/dataTables.responsive.min.js"></script>
-        <script src="~/lib/DataTables/js/responsive.bootstrap4.min.js"></script>
-        <script src="~/lib/DataTables/js/dataTables.rowGroup.min.js"></script>
-        <script src="~/lib/DataTables/js/dataTables.rowReorder.min.js"></script>
-        <script src="~/lib/DataTables/js/dataTables.scroller.min.js"></script>
-        <script src="~/lib/DataTables/js/dataTables.select.min.js"></script>
-        <script src="~/lib/DataTables/js/dataTables.buttons.min.js"></script>
-        <script src="~/lib/DataTables/js/buttons.bootstrap.min.js"></script>
-        <script src="~/lib/DataTables/js/buttons.flash.min.js"></script>
-        <script src="~/lib/DataTables/js/buttons.html5.min.js"></script>
-        <script src="~/lib/DataTables/js/buttons.print.min.js"></script>
+            <script src="~/lib/DataTables/js/jquery.dataTables.min.js"></script>
+            <script src="~/lib/DataTables/js/dataTables.bootstrap4.min.js"></script>
+            <script src="~/lib/DataTables/js/dataTables.colReorder.min.js"></script>
+            <script src="~/lib/DataTables/js/dataTables.fixedHeader.min.js"></script>
+            <script src="~/lib/DataTables/js/dataTables.keyTable.min.js"></script>
+            <script src="~/lib/DataTables/js/dataTables.responsive.min.js"></script>
+            <script src="~/lib/DataTables/js/responsive.bootstrap4.min.js"></script>
+            <script src="~/lib/DataTables/js/dataTables.rowGroup.min.js"></script>
+            <script src="~/lib/DataTables/js/dataTables.rowReorder.min.js"></script>
+            <script src="~/lib/DataTables/js/dataTables.scroller.min.js"></script>
+            <script src="~/lib/DataTables/js/dataTables.select.min.js"></script>
+            <script src="~/lib/DataTables/js/dataTables.buttons.min.js"></script>
+            <script src="~/lib/DataTables/js/buttons.bootstrap.min.js"></script>
+            <script src="~/lib/DataTables/js/buttons.flash.min.js"></script>
+            <script src="~/lib/DataTables/js/buttons.html5.min.js"></script>
+            <script src="~/lib/DataTables/js/buttons.print.min.js"></script>
 
 
 
-        <script>
+            <script>
+
+                var DisplayOrder = 0
             var Exam_NO = 0
             var TempDisplayID;
             var TempHTML;
-            var AnsrowCount = 1
+                var AnsrowCount = 1
+                var AnsrowCount_Edit = 0
             //---------------------------
             var Ans_Array;
             var result = { NO: "", Value: [] };  //[0]type,[1]HTMLText,[2]Ans_Value,[3]Need
@@ -658,10 +521,12 @@
             var TableTarget;
             //----------------
 
+                var OP_UPD
             $(document).ready(function () {
                 $('#CB_Need').bootstrapToggle('off')
-                CountAns()
+                CountAns('new')
                 GetExamDetail('@ViewBag.Itemcode')
+                OP_UPD   = '@User.Identity.Name';
             });
 
 
@@ -682,56 +547,149 @@
                     //searching: false,
                     ordering: false,
                     //serverSide: true,
-                    //processing: true,                  
-                    //paging: true,               
-                
+                    //processing: true,
+                    //paging: true,
+
                     //deferRender: true,
                     data: Detail,
                     dom: '<"top"l>rt<"bottom">ip<"clear">',
                     columns: [
                         {
                             data: null,
-                            render: function (data, type, row) {                           
+                            render: function (data, type, row) {
                                 var ValueCodeQuestion = row.valueCodeQuestion.trim();
                                 var ValueCodeAnswer = row.valueCodeAnswer.trim();
                                 var Seq = row.seq;
-                                var Max_Seq = row.max_Seq.trim();                             
-                     
+                                var Max_Seq = row.max_Seq.trim();
+
                                 return "<a href='#' class='btn btn-info text-white' onclick=EditQuestion('"+ ValueCodeAnswer +"','"+ ValueCodeQuestion + "','" + Seq + "','" + Max_Seq + "') >Edit</a>";
 
                                 //return "<a href='#' class='btn btn-info text-white' onclick=EditQuestion('" + ValueCodeAnswer + "') >Edit</a>";
-                               
+
                             }, class: "text-wrap text-center"
                         },
                         { data: "question", name: "question", class: "text-wrap text-left" },
                         { data: "ans_Count", name: "ans_Count", class: "text-wrap text-center" },
+                        {
+                            data: null,
+                            render: function (data, type, row) {
+                                var ValueCodeQuestion = row.valueCodeQuestion.trim();
+                                var ValueCodeAnswer = row.valueCodeAnswer.trim();
+                                var Seq = row.seq;                        
 
+                                return "<a href='#' class='btn btn-danger  text-white' onclick=DeleteQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "') ><i class='fas fa-trash-alt'></i></a>";
+
+                                //return "<a href='#' class='btn btn-info text-white' onclick=EditQuestion('" + ValueCodeAnswer + "') >Edit</a>";
+
+                            }, class: "text-wrap text-center"
+                        },
                     ],
- 
-                    //fnInitComplete: function (oSettings, json, sData) {                      
+
+                    //fnInitComplete: function (oSettings, json, sData) {
                     //    TableTarget.clear().draw();
                     //    TableTarget.rows.add(Detail).draw();
                     //    debugger
                     //    return;
                     //},
                     //order: [0, "asc"],
-                 
+
                 });
 
-      
+
 
             }
+                
+                function DeleteQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq) {
+
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Are you sure?',
+                        text: "Are you sure you want to Delete Question ?",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, Delete it!'
+
+                    }).then(function (result) {
+                        if (result.value) {
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '../Exam/Delete_Question',
+                                dataType: 'json',
+                                data: { ValueCodeAnswer: ValueCodeAnswer, ValueCodeQuestion: ValueCodeQuestion, Seq: Seq },
+                                success: function (response) {
+                                    if (response.success == true) {
+
+
+                                        Swal.fire({
+                                            position: 'top-mid',
+                                            icon: 'success',
+                                            title: ("Delete  Question  success "),
+                                            showConfirmButton: true,
+                                            //   timer: 1700
+                                        }).then(function (result) {
+
+                                            location.reload();
+
+                                        });
+                                    }
+
+                                }
+
+
+
+                            });
+
+
+                        }
+                    })
+
+
+
+          
+                }
 
             function EditQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq, Max_Seq) {
               //  function EditQuestion(ValueCodeAnswer) {
+
+                LastSeq = Number(Max_Seq) + 1;
+                DisplayOrder = Seq;
+                var HTML_TEXT;
+                $.ajax({
+                    type: 'POST',
+                    url: '../Exam/Get_EditQuestion_Detail',
+                    dataType: 'json',
+                    data: { ValueCodeAnswer: ValueCodeAnswer, ValueCodeQuestion: ValueCodeQuestion, Seq: Seq},
+                    success: function (response) {
+                        if (response.success == true) {
+                            debugger
+                            HTML_TEXT = response.html;
+                            DeleteHTML('Modal_body_Edit');
+                            InputHTML('Modal_body_Edit', HTML_TEXT);
+                            CountAns('Edit')
+                            $('#Modal_Edit').modal('show')
+                        }
+
+                    }
+
+
+
+                });
+
+
+
+                debugger
+
                 debugger
 
             }
 
 
-        </script>
+            </script>
 
-    }
+        }
 
 
 
