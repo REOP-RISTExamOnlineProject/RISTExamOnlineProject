@@ -7,7 +7,9 @@ function GetExamDetail(Itemcode) {
         dataType: 'json',
         data: { Itemcode: Itemcode },
         success: function (response) {
+    
             if (response.success == true) {
+                debugger
                 LastSeq = response.lastSeq
                 QuestionCount = response.questionCount
                 ValueCodeQuestion = response.valueCodeQuestion
@@ -84,11 +86,11 @@ function Edit_Detail_Display(DisplayID, SummernoteID) {
 
 function CountAns(type) {
     if (type == 'new') {
-        var parent = document.getElementById("FormDisplay_Answer");
+        var parent = document.getElementById("FormDisplay_Answer_New");
         var eee = 0
-        eee = parent.getElementsByClassName("ANS");
+        eee = parent.getElementsByClassName("ANS_New");
         var count = eee.length
-        $('#LB_Ans_Count').text(count);
+        $('#LB_Ans_Count_New').text(count);
     } else {
         var parent = document.getElementById("FormDisplay_Answer_Edit");
         var eee = 0
@@ -121,9 +123,9 @@ function Clear_Display(DisplayID) {
 
 
 
-$(document).on('click', 'button.remove', function (e) {
+$(document).on('click', 'button.remove-new', function (e) {
   
-    var parent = document.getElementById("FormDisplay_Answer");
+    var parent = document.getElementById("FormDisplay_Answer_New");
     var nodesSameClass = 0
     nodesSameClass = parent.getElementsByClassName("ANS");
 
@@ -131,7 +133,7 @@ $(document).on('click', 'button.remove', function (e) {
 
         e.preventDefault();
 
-        $(this).closest('div.ANS').remove();
+        $(this).closest('div.ANS_New').remove();
     }
 
 
@@ -197,12 +199,12 @@ function Insert_Exam(job) {
     var RD_Display_class
     var Display_Question
     if (job == 'new') {
-        CB_Need_class = "CB_Need";
-        FormDisplay_class = "FormDisplay_Answer";
-        ANS_class = "ANS"
-        Display_Answer_class = "Display_Answer"
-        RD_Display_class = "RD_Display"
-        Display_Question ="Display_Question"   
+        CB_Need_class = "CB_Need_New";
+        FormDisplay_class = "FormDisplay_Answer_New";
+        ANS_class = "ANS_New"
+        Display_Answer_class = "Display_Answer_New"
+        RD_Display_class = "RD_Display_New"
+        Display_Question ="Display_Question_New"   
     } else {
         CB_Need_class = "CB_Need_Edit";
         FormDisplay_class = "FormDisplay_Answer_Edit";
@@ -336,24 +338,24 @@ function Add_Ans(type) {
     if (type == "new") {
 
 
-        var count_row = $('#LB_Ans_Count').text();
+        var count_row = $('#LB_Ans_Count_New').text();
         if (count_row < 5) {
 
             AnsrowCount++
-            var newid_Dp = "Display_Answer_" + AnsrowCount
-            var newid_Rd = "RD_Ans_" + AnsrowCount
-            var newel = $('.ANS:last').clone();
-            var replaseID_RD = newel[0].getElementsByClassName('RD_Display');
-            replaseID_RD = replaseID_RD[0].childNodes[1].id
-            var replaseID_Display = newel[0].getElementsByClassName('Display_Answer');
+            var newid_Dp = "Display_Answer_New_" + AnsrowCount
+            var newid_Rd = "RD_Ans_New_" + AnsrowCount
+            var newel = $('.ANS_New:last').clone();
+            var replaseID_RD = newel[0].getElementsByClassName('RD_Display_New');
+            replaseID_RD = replaseID_RD[0].childNodes[0].id
+            var replaseID_Display = newel[0].getElementsByClassName('Display_Answer_New');
             replaseID_Display = replaseID_Display[0].id
             replaseID_RD = new RegExp(replaseID_RD, 'g');
             replaseID_Display = new RegExp(replaseID_Display, 'g');
-            var HTMLText = $('.ANS:last').clone().html();
+            var HTMLText = $('.ANS_New:last').clone().html();
             HTMLText = HTMLText.replace(replaseID_Display, newid_Dp).replace(replaseID_RD, newid_Rd)
-            newel[0].id = 'Ans' + AnsrowCount
+            newel[0].id = 'ANS_New' + AnsrowCount
             newel[0].innerHTML = HTMLText
-            $(newel).insertAfter(".ANS:last")
+            $(newel).insertAfter(".ANS_New:last")
             $('#' + newid_Dp + '').empty();
             CountAns('new')
         } else {
@@ -413,11 +415,12 @@ function Add_Ans(type) {
 
 
 function Save() {
-
+    $('#Modal_Summernote').modal('hide')
     var HTMLText = document.getElementById('Display_Modal').innerHTML
     DeleteHTML(TempDisplayID)
     InputHTML(TempDisplayID, HTMLText)
-    $('#Modal_Summernote').modal('hide')
+
+   
    
 }
 

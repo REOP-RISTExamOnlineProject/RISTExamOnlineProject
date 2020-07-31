@@ -163,11 +163,23 @@ namespace RISTExamOnlineProject.Models.TSQL
         }
 
 
-        public string EditQuestion_Detail(string ValueQuestion, string ValueAnswer, int Seq) {
+
+        public void BK_Data(string ValueQuestion, string ValueAnswer, int Seq,string Job) { 
+          var ObjRun = new mgrSQLConnect(_configuration);
+            strSQL = "SELECT [RemoveDate],[Flag],[Nbr],[ValueCode],[DisplayOrder],[Value_HTML],[Value_TEXT],[Answer],[Need],[AddDate],[UpdDate],[UserName]"+
+          ",[ComputerName]FROM[SPTOSystemH].[dbo].[ValueList]insert into[SPTOSystemH].[dbo].[ValueList]([RemoveDate],[Flag],[Nbr],[ValueCode],[DisplayOrder]"+
+          ",[Value_HTML],[Value_TEXT],[Answer],[Need],[AddDate],[UpdDate],[UserName],[ComputerName]) select  GETDATE()  as  [RemoveDate] ,'"+ Job + "' as Flag"+
+          ",[Nbr],[ValueCode],[DisplayOrder],[Value_HTML],[Value_TEXT],[Answer],[Need],[AddDate],[UpdDate],[UserName],[ComputerName]FROM[SPTOSystem].[dbo].[ValueList]  " +
+                "where([ValueCode]= '"+ ValueAnswer + " ' or[ValueCode] = '"+ ValueQuestion + "') and[DisplayOrder] = '"+ Seq + "'  ";
+             ObjRun.GetDatatables(strSQL);
+        }
+
+
+        public string HTML_Question_Detail(string ValueQuestion, string ValueAnswer, int Seq,string Job) {
 
             string HTML_Test;
             var ObjRun = new mgrSQLConnect(_configuration);
-            strSQL = "[dbo].[srpEditQuestion_SelectHTML] '" + ValueQuestion.Trim() + "','" + ValueAnswer.Trim() + "','" + Seq.ToString() + "','0'";
+            strSQL = "[dbo].[srpEditQuestion_SelectHTML] '" + ValueQuestion.Trim() + "','" + ValueAnswer.Trim() + "','" + Seq.ToString() + "','0','"+ Job + "' ";
           
             dt = ObjRun.GetDatatables(strSQL);
 
