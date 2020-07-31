@@ -80,30 +80,45 @@ namespace RISTExamOnlineProject.Controllers
 
 
             dt = ObjRun.Get_ExamDetail(Itemcode);
-            Max_Seq = Convert.ToInt16(dt.Rows[0]["Max_Seq"].ToString());
-            if (Max_Seq != 0)
+        
+            if (dt.Rows.Count != 0)
             {
-
+                Max_Seq = Convert.ToInt16(dt.Rows[0]["Max_Seq"].ToString());
 
                 List<Exam_QuestionDetail> Detail = new List<Exam_QuestionDetail>();
 
-                foreach (DataRow row in dt.Rows)
+                if (Max_Seq != 0)
                 {
-                    Detail.Add(new Exam_QuestionDetail()
+
+                    foreach (DataRow row in dt.Rows)
                     {
+                        Detail.Add(new Exam_QuestionDetail()
+                        {
 
-                        ItemCode = row["ItemCode"].ToString(),
-                        ItemCategName = row["ItemCategName"].ToString(),
-                        ValueCodeQuestion = row["ValueCodeQuestion"].ToString(),
-                        ValueCodeAnswer = row["ValueCodeAnswer"].ToString(),
-                        Seq = Convert.ToInt16(row["Seq"].ToString()),
-                        Question = row["Question"].ToString(),
-                        Ans_Count = row["Ans_Count"].ToString(),
-                        Max_Seq = row["Max_Seq"].ToString(),
+                            ItemCode = row["ItemCode"].ToString(),
+                            ItemCategName = row["ItemCategName"].ToString(),
+                            ValueCodeQuestion = row["ValueCodeQuestion"].ToString(),
+                            ValueCodeAnswer = row["ValueCodeAnswer"].ToString(),
+                            Seq = Convert.ToInt16(row["Seq"].ToString()),
+                            Question = row["Question"].ToString(),
+                            Ans_Count = row["Ans_Count"].ToString(),
+                            Max_Seq = row["Max_Seq"].ToString(),
 
-                    });
+                        });
+
+                    }
+
 
                 }
+                else { 
+                
+                
+                }
+
+
+
+
+        
 
 
 
@@ -113,36 +128,33 @@ namespace RISTExamOnlineProject.Controllers
                 ValueCodeAnswer = dt.Rows[0]["ValueCodeAnswer"].ToString();
 
                 dt = ObjRun.Get_ValueCount(ValueCodeQuestion);
-                //   QuestionCount = Convert.ToInt32(dt.Rows.Count);
+                //   QuestionCount = Convert.ToInt32(dt.Rows.Count);         
 
 
-           
-
-
-                LastSeq = Convert.ToInt32(dt.Rows[0]["Seq"].ToString());
+             
                 ItemName = dt.Rows[0]["ItemName"].ToString();
                 ItemName = Itemcode + "-" + ItemName;
 
-                if (LastSeq == 0)
+                if (Max_Seq == 0)
                 {
-                    QuestionCount = 1;
-                    LastSeq = 1;
-                }
+                    QuestionCount = 0;
+        
+                }            
                 else
                 {
-
-                    QuestionCount = Convert.ToInt32(dt.Rows.Count) ;
-                    LastSeq = LastSeq + 1;
+                    QuestionCount = Convert.ToInt32(dt.Rows.Count);
+                   
                 }
 
 
-                return Json(new { success = true, ValueCodeQuestion = ValueCodeQuestion, ValueCodeAnswer = ValueCodeAnswer, QuestionCount = QuestionCount, LastSeq = LastSeq, ItemName = ItemName  , Detail = Detail });
+                return Json(new { success = true, ValueCodeQuestion = ValueCodeQuestion, ValueCodeAnswer = ValueCodeAnswer, QuestionCount = QuestionCount, Max_Seq = Max_Seq, ItemName = ItemName  , Detail = Detail });
 
 
 
             }
             else
             {
+          
                 return Json(new { success = false });
             }
 
@@ -184,7 +196,7 @@ namespace RISTExamOnlineProject.Controllers
 
 
 
-        public IActionResult InseartExam(string LastSeq, int QuestionCount, string ValueCodeQuestion, string ValueCodeAnswer, string[] Ans_TextDisplay, string[] Ans_Text_HTML_Display
+        public IActionResult InseartExam(int Max_Seq , int QuestionCount, string ValueCodeQuestion, string ValueCodeAnswer, string[] Ans_TextDisplay, string[] Ans_Text_HTML_Display
           , string[] Ans_Value, string Need_value, string Text_Question, string TextHTML_Question,string Job,string OP_UPD,int DisplayOrder)
         {
 
@@ -196,25 +208,29 @@ namespace RISTExamOnlineProject.Controllers
             {
 
 
-                if (Job == "Edit") {
+                if (Job == "Edit")
+                {
 
                     //---------------------------- BK Data ------------
 
-                    ObjRun.BK_Data(ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(), Convert.ToInt32(DisplayOrder),"UPD");
+                    ObjRun.BK_Data(ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(), Convert.ToInt32(DisplayOrder), "UPD");
 
                     //---------------------------- Delete Data ------------
                     ObjRun.DeleteQuestion(ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(), Convert.ToInt32(DisplayOrder));
-                    LastSeq = DisplayOrder.ToString();
+
+                    Max_Seq = DisplayOrder;
+                }
+                else {
+
+                    Max_Seq = Max_Seq + 1;
+
 
                 }
 
 
                 //----------- inseart Qeustion ----
 
-
-
-                ObjRun.InseartExam(ValueCodeQuestion, LastSeq, TextHTML_Question, Text_Question, "0", Need_value, IP, OP_UPD);
-
+                ObjRun.InseartExam(ValueCodeQuestion, Max_Seq, TextHTML_Question, Text_Question, "0", Need_value, IP, OP_UPD);
 
 
 
@@ -223,7 +239,7 @@ namespace RISTExamOnlineProject.Controllers
                 for (int i = 0; i < Ans_TextDisplay.Length; i++)
                 {
                     
-                    ObjRun.InseartExam(ValueCodeAnswer, LastSeq, Ans_Text_HTML_Display[i].Trim(), Ans_TextDisplay[i].Trim(), Ans_Value[i].Trim(), "0", IP, OP_UPD);
+                    ObjRun.InseartExam(ValueCodeAnswer, Max_Seq, Ans_Text_HTML_Display[i].Trim(), Ans_TextDisplay[i].Trim(), Ans_Value[i].Trim(), "0", IP, OP_UPD);
 
 
                 }
