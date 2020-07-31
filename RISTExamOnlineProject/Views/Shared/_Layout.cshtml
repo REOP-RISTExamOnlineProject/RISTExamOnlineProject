@@ -1,5 +1,5 @@
 ﻿@using System.Security.Claims
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@*@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers*@
 <!DOCTYPE html>
 
 <html>
@@ -195,10 +195,10 @@
                             <input type="text" class="form-control search-box" placeholder="Enter keywords.." />
                         </div>
                         <div class="mr-4">
-                            <a class="" href="#" role="button" id="dropdownMenuLink" onclick="toggle_dropdown(this);return false;" data-toggle="dropdownx" aria-haspopup="true" aria-expanded="r">
+                            <a class="" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img src="@ViewBag.imgProfile" alt="#" class="rounded-circle profiles" width="40px" height="40px">
                             </a>
-                            <div class="dropdown dropdown-right text-left bg-white shadow border mt-13" aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-menu dropdown-menu-right mt-13" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item" href="@Url.Action("UserDetailMaintenance","Management")"><i class="fa fa-user pr-2"></i> Profile</a>
 
                                 <div class="dropdown-divider"></div>
@@ -251,7 +251,7 @@
                 <div class="inner-sidebar mr-3">
                     <!--Image Avatar-->
                     <div class="avatar text-center">
-                        <img src="@ViewBag.imgProfile" alt="" class="rounded-circle profiles" />
+                        <img src="@ViewBag.imgProfile" alt=""  class="rounded-circle profiles" />
 
                         <p><strong id="strName">@ViewBag.NameEng</strong></p>
                         <span class="text-primary small"><strong id="strJobTitle">@ViewBag.JobTitle</strong></span>
@@ -319,6 +319,7 @@
                                         <a href="#" onclick="toggle_menu('Shortcuts_exam');return false;">
                                             <i class="fas fa-tasks mr-3"></i>
                                             <span class="none">Exam Management <i class="fa fa-angle-down pull-right align-bottom"></i></span>
+
                                         </a>
                                         <ul class="#" id="Shortcuts_exam">
                                             <li class="child"><a href="@Url.Action("Index","ItemCategoryMaster")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> License Master</a></li>
@@ -326,11 +327,12 @@
                                     </li>
                                 }
                             }
+
                             <li class="parent">
                                 <a href="@Url.Action("LicenceList","UIExam")" >
                                     <i class="fas fa-stream mr-3"></i> <span class="none">กะเพราไก่ไข่ดาวพิเศษ1</span>
                                 </a>
-                            </li> 
+                            </li>
                         </ul>
                     </div>
                     <!--Sidebar Naigation Menu-->
@@ -371,7 +373,7 @@
                     </div>
                 </div>
             </div>
-
+            
             <div class="loaderbody" id="loaderbody">
                 <div class="loader"></div>
             </div>
@@ -384,65 +386,60 @@
     <!--Page Wrapper-->
 
 
-    <environment include="Development">
-        <!-- Page JavaScript Files-->
-        @*<script src="~/lib/js/jquery.min.js"></script>
+<environment include="Development">
+    <!-- Page JavaScript Files-->
+    @*<script src="~/lib/js/jquery.min.js"></script>
             <script src="~/lib/js/jquery-1.12.4.min.js"></script>*@
-        <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/jquery/jquery.js"></script>
 
-        <!--Popper JS-->
-        <script src="~/lib/js/popper.min.js"></script>
-        <!--Bootstrap-->
-        @*<script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>*@
-        <script src="~/lib/bootstrap/js/bootstrap.js"></script>
-        <!--Sweet alert JS-->
-        <script src="~/lib/js/sweetalert.js"></script>
-        <!--Progressbar JS-->
-        <script src="~/lib/js/progressbar.min.js"></script>
-        <!--Flot.JS-->
-        <script src="~/lib/js/charts/jquery.flot.min.js"></script>
-        <script src="~/lib/js/charts/jquery.flot.pie.min.js"></script>
-        <script src="~/lib/js/charts/jquery.flot.categories.min.js"></script>
-        <script src="~/lib/js/charts/jquery.flot.stack.min.js"></script>
-        <!--Chart JS-->
-        <script src="~/lib/js/charts/chart.min.js"></script>
-        <!--Chartist JS-->
-        <script src="~/lib/js/charts/chartist.min.js"></script>
-        <script src="~/lib/js/charts/chartist-data.js"></script>
-        <script src="~/lib/js/charts/demo.js"></script>
+    <!--Popper JS-->
+    <script src="~/lib/js/popper.min.js"></script>
+    <!--Bootstrap-->
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    <!--Sweet alert JS-->
+    <script src="~/lib/js/sweetalert.js"></script>
+    <!--Progressbar JS-->
+    <script src="~/lib/js/progressbar.min.js"></script>
+    <!--Flot.JS-->
+    <script src="~/lib/js/charts/jquery.flot.min.js"></script>
+    <script src="~/lib/js/charts/jquery.flot.pie.min.js"></script>
+    <script src="~/lib/js/charts/jquery.flot.categories.min.js"></script>
+    <script src="~/lib/js/charts/jquery.flot.stack.min.js"></script>
+    <!--Chart JS-->
+    <script src="~/lib/js/charts/chart.min.js"></script>
+    <!--Chartist JS-->
+    <script src="~/lib/js/charts/chartist.min.js"></script>
+    <script src="~/lib/js/charts/chartist-data.js"></script>
+    <script src="~/lib/js/charts/demo.js"></script>
 
 
-        <!--Custom Js Script-->
-        <script src="~/lib/js/custom.js"></script>
-        <!--Custom Js Script-->
-        @*<script>
+    <!--Custom Js Script-->
+    <script src="~/lib/js/custom.js"></script>
+    <!--Custom Js Script-->
+    @*<script>
                 //Nice select
                 $('.bulk-actions').niceSelect();
             </script>*@
-        <!-- tempusdominus-bootstrap-4 -->
-        <script src="~/lib/datepicker/jquery/jquery.js"></script>
-        <script src="~/lib/datepicker/momentjs/moment.js"></script>
-        <script src="~/lib/datepicker/js/tempusdominus-bootstrap-4.js"></script>
-        <!-- tempusdominus-bootstrap-4 -->
-        <!--bootstrap-select-->
-        @*<script src="~/lib/bootstrap-select/js/bootstrap-select.js"></script>*@
-    </environment>
+    <!-- tempusdominus-bootstrap-4 -->
+    <script src="~/lib/datepicker/jquery/jquery.js"></script>
+    <script src="~/lib/datepicker/momentjs/moment.js"></script>
+    <script src="~/lib/datepicker/js/tempusdominus-bootstrap-4.js"></script>
+    <!-- tempusdominus-bootstrap-4 -->
+    <!--bootstrap-select-->
+    @*<script src="~/lib/bootstrap-select/js/bootstrap-select.js"></script>*@
+</environment>
     <script src="~/lib/jquery/jquery.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
-    <script src="~/lib/js/site.js"></script>
-    <script src="~/lib/js/notify.min.js"></script>
-
-    @*<script src="~/lib/js/site.js" asp-append-version="true"></script>
-    <script src="~/lib/js/notify.min.js" asp-append-version="true"></script>*@
-
+    <script src="~/lib/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/js/notify.min.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
-    @* @await RenderSectionAsync("Scripts", false)*@
+   @* @await RenderSectionAsync("Scripts", false)*@
     <script>
         $(document).ready(function () {
 
             Profile();
 
-
+          
         });
 
 
@@ -454,7 +451,7 @@
                    data: { OPID: "@User.Identity.Name" },
                 dataType: 'json',
                 success: function (Data) {
-
+                     
                     $(".profiles").attr("src", Data.data);/*text(Data.data);*/
                     $("#strName").text(Data.strName);
                     $("#strJobTitle").text(Data.strJobTitle);
@@ -463,7 +460,7 @@
                     alert('Failed to retrieve states.' + ex);
                 }
             });
-
+            
         }
     </script>
 </body>
