@@ -16,7 +16,7 @@ namespace RISTExamOnlineProject.Models.TSQL
         public mgrSQLcommand(IConfiguration configuration)
         {
             _configuration = configuration;
-        } 
+        }
         public DataTable GetSectionCode(string strDivision, string strDepartment)
         {
             var ObjRun = new mgrSQLConnect(_configuration);
@@ -38,9 +38,9 @@ namespace RISTExamOnlineProject.Models.TSQL
 
                 strSQL += "Substring(sectionCode,1,2) = '" + strDepartment + "'";
                 Chk++;
-            } 
-            strSQL += "group by  [SectionCode],[Section],[Department],[Division]  "; 
-            dt = ObjRun.GetDatatables(strSQL); 
+            }
+            strSQL += "group by  [SectionCode],[Section],[Department],[Division]  ";
+            dt = ObjRun.GetDatatables(strSQL);
             return dt;
         }
 
@@ -55,8 +55,8 @@ namespace RISTExamOnlineProject.Models.TSQL
 
             if (strDivision != "" && strDivision != null)
             {
-                strSQL += Chk == 0 ? " Where  " : " and  "; 
-                strSQL += "Substring(sectionCode,1,1) = '" + strDivision + "'"; 
+                strSQL += Chk == 0 ? " Where  " : " and  ";
+                strSQL += "Substring(sectionCode,1,1) = '" + strDivision + "'";
                 Chk++;
             }
             strSQL += "group by Substring(sectionCode,1,2),[Department] ";
@@ -82,7 +82,7 @@ namespace RISTExamOnlineProject.Models.TSQL
 
         public DataTable GetGroupName()
         {
-         
+
             mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
             dt = new DataTable();
             strSQL = "";
@@ -97,21 +97,21 @@ namespace RISTExamOnlineProject.Models.TSQL
 
         public List<vewOperatorLicense> GetUserLicense(string Opid)
         {
-            
+
             mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
             List<vewOperatorLicense> dataList = new List<vewOperatorLicense>();
             dt = new DataTable();
             strSQL = "";
-            strSQL += "SELECT * FROM [SPTOSystem].[dbo].vewOperatorLicense  where OperatorID ='"+ Opid + "'";
-            dt = ObjRun.GetDatatables(strSQL); 
+            strSQL += "SELECT * FROM [SPTOSystem].[dbo].vewOperatorLicense  where OperatorID ='" + Opid + "'";
+            dt = ObjRun.GetDatatables(strSQL);
             if (dt.Rows.Count != 0)
-            { 
+            {
                 foreach (DataRow row in dt.Rows)
                 {
                     dataList.Add(new vewOperatorLicense()
                     {
                         OperatorID = row["OperatorID"].ToString().Trim(),
-                        License = row["License"].ToString().Trim(), 
+                        License = row["License"].ToString().Trim(),
                     });
                 }
             }
@@ -119,11 +119,11 @@ namespace RISTExamOnlineProject.Models.TSQL
 
         }
 
-        public string[] GetUpdUserdetail(vewOperatorAlls _Data, List<vewOperatorLicense> _DataLicense,string OpNo,string strIpAddress)
+        public string[] GetUpdUserdetail(vewOperatorAlls _Data, List<vewOperatorLicense> _DataLicense, string OpNo, string strIpAddress)
         {
             mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
             dt = new DataTable();
-            string DataMgs,strFlag;
+            string DataMgs, strFlag;
             var results = true;
             strSQL = "";
             string[] Result;
@@ -131,10 +131,10 @@ namespace RISTExamOnlineProject.Models.TSQL
             try
             {
                 string DataLicense = "";
-                foreach(vewOperatorLicense i in _DataLicense)
+                foreach (vewOperatorLicense i in _DataLicense)
                 {
                     DataLicense += ";" + i.License;
-                   
+
                 }
 
 
@@ -156,12 +156,12 @@ namespace RISTExamOnlineProject.Models.TSQL
                 strSQL += "'" + OpNo + "',";
                 strSQL += "'" + strIpAddress + "';";
 
-                
-               
+
+
 
 
                 strSQL += "   Exec [sprOperatorLicense]";
-                strSQL += "'"+_Data.OperatorID+"'";
+                strSQL += "'" + _Data.OperatorID + "'";
                 strSQL += ",'" + DataLicense.Substring(1) + "'";
                 strSQL += ",'" + OpNo + "'";
                 strSQL += ",'" + strIpAddress + "';";
@@ -169,7 +169,7 @@ namespace RISTExamOnlineProject.Models.TSQL
 
 
                 dt = ObjRun.GetDatatables(strSQL);
-                if(dt.Rows.Count > 0)
+                if (dt.Rows.Count > 0)
                 {
                     Result = new[] { dt.Rows[0][0].ToString(), dt.Rows[0][1].ToString() };
                 }
@@ -177,14 +177,189 @@ namespace RISTExamOnlineProject.Models.TSQL
                 {
                     results = false;
                     Result = new[] { results.ToString(), "Error " };
-                } 
-            } 
+                }
+            }
             catch (Exception e)
             {
                 DataMgs = e.Message + ":" + strSQL;
                 results = false;
                 Result = new[] { results.ToString(), DataMgs };
-            } 
+            }
+            return Result;
+        }
+
+
+
+        public ResultItemCateg GetOperatorItemCateg(string Opid)
+        {
+            dt = new DataTable();
+            mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
+            ResultItemCateg ResultOPcateg = new ResultItemCateg();
+            List<_OperatorItemCateg> dataList = new List<_OperatorItemCateg>();
+
+            try { 
+
+
+            strSQL = "";
+            strSQL += "SELECT * FROM [SPTOSystem].[dbo].[ItemCategory]";
+               // strSQL += "  where OperatorID ='" + Opid + "'";
+                dt = ObjRun.GetDatatables(strSQL);
+            if (dt.Rows.Count != 0)
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    dataList.Add(new _OperatorItemCateg()
+                    {
+                        ItemCateg = row["ItemCateg"].ToString().Trim(),
+                        ItemCategName = row["ItemCategName"].ToString().Trim(),
+                    });
+                }
+
+                ResultOPcateg._listOpCateg = dataList;
+                ResultOPcateg.strResult = "OK";
+            }
+            else
+            {
+                ResultOPcateg.strResult = "Err :"+ strSQL;
+            }
+            }catch(Exception e)
+            {
+                ResultOPcateg.strResult = e.Message;
+            }
+
+            return ResultOPcateg;
+        }
+
+
+        public DataTable GetItemCateg(string strItemCateg)
+        {
+            dt = new DataTable();
+            mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
+            ResultItemCateg ResultOPcateg = new ResultItemCateg();
+            List<_OperatorItemCateg> dataList = new List<_OperatorItemCateg>();
+
+            try
+            { 
+                strSQL = "";
+                strSQL += "SELECT * FROM [SPTOSystem].[dbo].[ItemCategory]";
+                strSQL += "  where ItemCateg ='" + strItemCateg + "'";
+                dt = ObjRun.GetDatatables(strSQL);
+                if (dt.Rows.Count != 0)
+                {
+                    strSQL = "XX";
+                }
+                else
+                {
+                    strSQL = "aaa";
+                }
+            }
+            catch (Exception e)
+            {
+                dt = null;
+            }
+            return dt;
+        }
+
+
+        public ResultItemCateg GetInputItemList(string strItemCateg)
+        {
+            dt = new DataTable();
+            mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
+            ResultItemCateg ResultOPcateg = new ResultItemCateg();
+            List<_OperatorItemCateg> dataList = new List<_OperatorItemCateg>();
+
+            try
+            {
+
+
+                strSQL = "";
+                strSQL += "SELECT * FROM [SPTOSystem].[dbo].[InputItemList]";
+                 strSQL += "  where ItemCateg ='" + strItemCateg + "'";
+                dt = ObjRun.GetDatatables(strSQL);
+                if (dt.Rows.Count != 0)
+                {
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        dataList.Add(new _OperatorItemCateg()
+                        {
+                            ItemCateg = row["ItemCode"].ToString().Trim(),
+                            ItemCategName = row["ItemName"].ToString().Trim(),
+                        });
+                    }
+
+                    ResultOPcateg._listOpCateg = dataList;
+                    ResultOPcateg.strResult = "OK";
+                }
+                else
+                {
+                    ResultOPcateg.strResult = "Err :" + strSQL;
+                }
+            }
+            catch (Exception e)
+            {
+                ResultOPcateg.strResult = e.Message;
+            }
+
+            return ResultOPcateg;
+        }
+
+        public DataTable GetInputItems(string strItemCode)
+        {
+            dt = new DataTable();
+            mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
+            ResultItemCateg ResultOPcateg = new ResultItemCateg();
+            List<_OperatorItemCateg> dataList = new List<_OperatorItemCateg>();
+
+            try
+            {
+                strSQL = "";
+                strSQL += "SELECT * FROM [SPTOSystem].[dbo].[InputItemList]";
+                strSQL += "  where ItemCode ='" + strItemCode + "'";
+                dt = ObjRun.GetDatatables(strSQL);
+                if (dt.Rows.Count != 0)
+                {
+                    strSQL = "XX";
+                }
+                else
+                {
+                    strSQL = "aaa";
+                }
+            }
+            catch (Exception e)
+            {
+                dt = null;
+            }
+            return dt;
+        }
+
+
+        public string MakingExam(string strItemCateg,string strItemCode)
+        {
+            dt = new DataTable();
+            mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
+            ResultItemCateg ResultOPcateg = new ResultItemCateg();
+            List<_OperatorItemCateg> dataList = new List<_OperatorItemCateg>();
+            string Result = "";
+            try
+            {
+                strSQL = "";
+                strSQL += "srpMakeHTMLQuestion";
+                strSQL += " N'" + strItemCateg + "',";
+                strSQL += " N'" + strItemCode + "'";
+                dt = ObjRun.GetDatatables(strSQL);
+                if (dt.Rows.Count != 0)
+                {
+                    Result = dt.Rows[0][0].ToString();
+                }
+                else
+                {
+                    Result = "Error";
+                }
+            }
+            catch (Exception e)
+            {
+                Result = e.Message;
+            }
             return Result;
         }
     }
