@@ -231,7 +231,7 @@ namespace RISTExamOnlineProject.Models.TSQL
         }
 
 
-        public DataTable GetItemCateg(string strItemCateg)
+        public DataTable GetItemCateg(string strItemCateg) 
         {
             dt = new DataTable();
             mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
