@@ -131,7 +131,7 @@ namespace RISTExamOnlineProject.Controllers
                 else
                 {
 
-                    QuestionCount = Convert.ToInt32(dt.Rows.Count) + 1;
+                    QuestionCount = Convert.ToInt32(dt.Rows.Count) ;
                     LastSeq = LastSeq + 1;
                 }
 
@@ -197,8 +197,12 @@ namespace RISTExamOnlineProject.Controllers
 
 
                 if (Job == "Edit") {
-                    //---------------------------- Delete Data ------------
 
+                    //---------------------------- BK Data ------------
+
+                    ObjRun.BK_Data(ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(), Convert.ToInt32(DisplayOrder),"UPD");
+
+                    //---------------------------- Delete Data ------------
                     ObjRun.DeleteQuestion(ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(), Convert.ToInt32(DisplayOrder));
                     LastSeq = DisplayOrder.ToString();
 
@@ -238,10 +242,10 @@ namespace RISTExamOnlineProject.Controllers
         }
 
 
-        public JsonResult Get_EditQuestion_Detail(string ValueCodeAnswer, string ValueCodeQuestion, int Seq) {
+        public JsonResult Get_HTML_Question_Detail(string ValueCodeAnswer, string ValueCodeQuestion, int Seq,string Job) {
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
 
-            string HTML_Text = ObjRun.EditQuestion_Detail(ValueCodeQuestion, ValueCodeAnswer, Seq);
+            string HTML_Text = ObjRun.HTML_Question_Detail(ValueCodeQuestion, ValueCodeAnswer, Seq, Job);
             return Json(new { success = true ,HTML = HTML_Text});
 
         }
@@ -252,6 +256,9 @@ namespace RISTExamOnlineProject.Controllers
 
 
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
+            //---------------------------- BK Data ------------
+
+            ObjRun.BK_Data(ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(), Convert.ToInt32(Seq), "DEL");
 
             ObjRun.DeleteQuestion(ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(), Seq);
 
