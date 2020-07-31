@@ -24,14 +24,18 @@ jQueryAjaxPost = form => {
             processData: false,
             success: function (res) {
                 if (res.isValid) {
+
                     $("#view-all").html(res.html);
                     $("#form-modal .modal-body").html('');
                     $("#form-modal .modal-title").html('');
                     $("#form-modal").modal('hide');
                     $.notify('submitted successfully', { globalPosition: 'top center', className: 'success' });
+
                 }
                 else
+
                     $("#form-modal .modal-body").html(res.html);
+
             },
             error: function (err) {
                 alert(err);
