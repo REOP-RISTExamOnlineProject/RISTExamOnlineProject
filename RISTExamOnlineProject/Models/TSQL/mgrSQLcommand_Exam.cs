@@ -67,7 +67,7 @@ namespace RISTExamOnlineProject.Models.TSQL
         {
 
             var ObjRun = new mgrSQLConnect(_configuration);
-            strSQL = " select[ItemCode],ItemCategName,[ValueCodeQuestion],[ValueCodeAnswer],ISNULL(Seq,-1) as Seq  ,ISNULL([Question],'') as [Question]  ,[InputItemName] ,count(*) as Ans_Count  ";
+            strSQL = " select[ItemCode],ItemCategName,[ValueCodeQuestion],[ValueCodeAnswer],ISNULL(Seq,0) as Seq  ,ISNULL([Question],'') as [Question]  ,[InputItemName] ,count(*) as Ans_Count  ";
             strSQL += ",ISNULL((select max(Seq) FROM   [SPTOSystem].[dbo].[vewQuestionAll]   where[ItemCode] = '" + Itemcode.Trim() + "'),0)  As Max_Seq  FROM[SPTOSystem].[dbo].[vewQuestionAll] where[ItemCode] = '" + Itemcode.Trim() + "' ";
             strSQL += "   group by[ItemCode], ItemCategName,[ValueCodeQuestion],[ValueCodeAnswer],[Question],[Seq],[InputItemName] order by[ValueCodeQuestion], Seq";
 
@@ -138,7 +138,7 @@ namespace RISTExamOnlineProject.Models.TSQL
             return listItems;
 
         }
-        public void InseartExam(string ValueCode, string Seq, string Value_HTML, string Value_TEXT, string Answer, string Need, string ComputerName, string OPID)
+        public void InseartExam(string ValueCode, int Seq, string Value_HTML, string Value_TEXT, string Answer, string Need, string ComputerName, string OPID)
         {
 
 

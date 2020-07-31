@@ -273,7 +273,7 @@
             var result = { NO: "", Value: [] };  //[0]type,[1]HTMLText,[2]Ans_Value,[3]Need
             var Need_Value
             //---------------
-            var LastSeq;
+            var Max_Seq;
             var QuestionCount;
             var ValueCodeQuestion;
             var ValueCodeAnswer;
@@ -320,9 +320,9 @@
                                 var ValueCodeQuestion = row.valueCodeQuestion.trim();
                                 var ValueCodeAnswer = row.valueCodeAnswer.trim();
                                 var Seq = row.seq;
-                                var Max_Seq = row.max_Seq.trim();
+                                var Max_Seq_ = row.max_Seq.trim();
 
-                                return "<a href='#' class='btn btn-info text-white' onclick=EditQuestion('"+ ValueCodeAnswer +"','"+ ValueCodeQuestion + "','" + Seq + "','" + Max_Seq + "') >Edit</a>";
+                                return "<a href='#' class='btn btn-info text-white' onclick=EditQuestion('"+ ValueCodeAnswer +"','"+ ValueCodeQuestion + "','" + Seq + "','" + Max_Seq_ + "') >Edit</a>";
 
                                 //return "<a href='#' class='btn btn-info text-white' onclick=EditQuestion('" + ValueCodeAnswer + "') >Edit</a>";
 
@@ -442,7 +442,7 @@
             function EditQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq, Max_Seq) {
               //  function EditQuestion(ValueCodeAnswer) {
 
-                LastSeq = Number(Max_Seq) + 1;
+                Max_Seq = Max_Seq;
                 DisplayOrder = Seq;
                 var HTML_TEXT;
                 $.ajax({

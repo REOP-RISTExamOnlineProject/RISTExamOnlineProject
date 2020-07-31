@@ -10,7 +10,7 @@ function GetExamDetail(Itemcode) {
     
             if (response.success == true) {
                 debugger
-                LastSeq = response.lastSeq
+                Max_Seq = response.max_Seq
                 QuestionCount = response.questionCount
                 ValueCodeQuestion = response.valueCodeQuestion
                 ValueCodeAnswer = response.valueCodeAnswer
@@ -283,7 +283,7 @@ function Insert_Exam(job) {
             url: '../Exam/InseartExam',
             dataType: 'json',
             data: {
-                LastSeq: LastSeq, QuestionCount: QuestionCount, ValueCodeQuestion: ValueCodeQuestion, ValueCodeAnswer: ValueCodeAnswer,
+                Max_Seq: Max_Seq, QuestionCount: QuestionCount, ValueCodeQuestion: ValueCodeQuestion, ValueCodeAnswer: ValueCodeAnswer,
                 Ans_TextDisplay: Ans_TextDisplay, Ans_Text_HTML_Display: Ans_Text_HTML_Display, Ans_Value: Ans_Value, Need_value: Need_value,
                 Text_Question: Text_Question, TextHTML_Question: TextHTML_Question, job: job, OP_UPD: OP_UPD, DisplayOrder: DisplayOrder
             },
