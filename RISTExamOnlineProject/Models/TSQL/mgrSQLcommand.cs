@@ -187,5 +187,180 @@ namespace RISTExamOnlineProject.Models.TSQL
             } 
             return Result;
         }
+
+
+
+        public ResultItemCateg GetOperatorItemCateg(string Opid)
+        {
+            dt = new DataTable();
+            mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
+            ResultItemCateg ResultOPcateg = new ResultItemCateg();
+            List<_OperatorItemCateg> dataList = new List<_OperatorItemCateg>();
+
+            try { 
+
+
+            strSQL = "";
+            strSQL += "SELECT * FROM [SPTOSystem].[dbo].[ItemCategory]";
+               // strSQL += "  where OperatorID ='" + Opid + "'";
+                dt = ObjRun.GetDatatables(strSQL);
+            if (dt.Rows.Count != 0)
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    dataList.Add(new _OperatorItemCateg()
+                    {
+                        ItemCateg = row["ItemCateg"].ToString().Trim(),
+                        ItemCategName = row["ItemCategName"].ToString().Trim(),
+                    });
+                }
+
+                ResultOPcateg._listOpCateg = dataList;
+                ResultOPcateg.strResult = "OK";
+            }
+            else
+            {
+                ResultOPcateg.strResult = "Err :"+ strSQL;
+            }
+            }catch(Exception e)
+            {
+                ResultOPcateg.strResult = e.Message;
+            }
+
+            return ResultOPcateg;
+        }
+
+
+        public DataTable GetItemCateg(string strItemCateg) 
+        {
+            dt = new DataTable();
+            mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
+            ResultItemCateg ResultOPcateg = new ResultItemCateg();
+            List<_OperatorItemCateg> dataList = new List<_OperatorItemCateg>();
+
+            try
+            { 
+                strSQL = "";
+                strSQL += "SELECT * FROM [SPTOSystem].[dbo].[ItemCategory]";
+                strSQL += "  where ItemCateg ='" + strItemCateg + "'";
+                dt = ObjRun.GetDatatables(strSQL);
+                if (dt.Rows.Count != 0)
+                {
+                    strSQL = "XX";
+                }
+                else
+                {
+                    strSQL = "aaa";
+                }
+            }
+            catch (Exception e)
+            {
+                dt = null;
+            }
+            return dt;
+        }
+
+
+        public ResultItemCateg GetInputItemList(string strItemCateg)
+        {
+            dt = new DataTable();
+            mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
+            ResultItemCateg ResultOPcateg = new ResultItemCateg();
+            List<_OperatorItemCateg> dataList = new List<_OperatorItemCateg>();
+
+            try
+            {
+
+
+                strSQL = "";
+                strSQL += "SELECT * FROM [SPTOSystem].[dbo].[InputItemList]";
+                 strSQL += "  where ItemCateg ='" + strItemCateg + "'";
+                dt = ObjRun.GetDatatables(strSQL);
+                if (dt.Rows.Count != 0)
+                {
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        dataList.Add(new _OperatorItemCateg()
+                        {
+                            ItemCateg = row["ItemCode"].ToString().Trim(),
+                            ItemCategName = row["ItemName"].ToString().Trim(),
+                        });
+                    }
+
+                    ResultOPcateg._listOpCateg = dataList;
+                    ResultOPcateg.strResult = "OK";
+                }
+                else
+                {
+                    ResultOPcateg.strResult = "Err :" + strSQL;
+                }
+            }
+            catch (Exception e)
+            {
+                ResultOPcateg.strResult = e.Message;
+            }
+
+            return ResultOPcateg;
+        }
+
+        public DataTable GetInputItems(string strItemCode)
+        {
+            dt = new DataTable();
+            mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
+            ResultItemCateg ResultOPcateg = new ResultItemCateg();
+            List<_OperatorItemCateg> dataList = new List<_OperatorItemCateg>();
+
+            try
+            {
+                strSQL = "";
+                strSQL += "SELECT * FROM [SPTOSystem].[dbo].[InputItemList]";
+                strSQL += "  where ItemCode ='" + strItemCode + "'";
+                dt = ObjRun.GetDatatables(strSQL);
+                if (dt.Rows.Count != 0)
+                {
+                    strSQL = "XX";
+                }
+                else
+                {
+                    strSQL = "aaa";
+                }
+            }
+            catch (Exception e)
+            {
+                dt = null;
+            }
+            return dt;
+        }
+
+
+        public string MakingExam(string strItemCateg,string strItemCode)
+        {
+            dt = new DataTable();
+            mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
+            ResultItemCateg ResultOPcateg = new ResultItemCateg();
+            List<_OperatorItemCateg> dataList = new List<_OperatorItemCateg>();
+            string Result = "";
+            try
+            {
+                strSQL = "";
+                strSQL += "srpMakeHTMLQuestion";
+                strSQL += " N'" + strItemCateg + "',";
+                strSQL += " N'" + strItemCode + "'";
+                dt = ObjRun.GetDatatables(strSQL);
+                if (dt.Rows.Count != 0)
+                {
+                    Result = dt.Rows[0][0].ToString();
+                }
+                else
+                {
+                    Result = "Error";
+                }
+            }
+            catch (Exception e)
+            {
+                Result = e.Message;
+            }
+            return Result;
+        }
     }
 }
