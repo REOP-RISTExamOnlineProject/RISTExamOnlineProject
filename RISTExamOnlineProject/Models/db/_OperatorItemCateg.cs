@@ -17,3 +17,4 @@ namespace RISTExamOnlineProject.Models.db
         public string strResult { get; set; } 
     }
 }
+ 
