@@ -2,57 +2,108 @@
 @{
     ViewData["Title"] = "Examexamination";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<div id="myvideo"></div>
+} 
 <div id="element" class="bg-white container">
     <h1>Examexamination</h1>
     <div class="row">
-        <div class="col-12"> <button id="btndemo" class="btn btn-warning float-lg-none"><span id="demo"> เริ่มทำข้อสอบ</span></button></div>
-
-
-        
-
+        <div class="col-12">
+            <button id="btndemo" class="btn btn-warning float-lg-none">
+                <span id="demo"> เริ่มทำข้อสอบ</span>
+            </button>
+            <span style="font: bold 12px; color:red; display:none;" id="Massaging" >
+                ห้ามออกจากหน้าจอจนกว่าจะข้อสอบจบ
+            </span>
+        </div>
     </div>
     <hr class="m-4" />
-    <div id="DivContents"></div>
-    <button class="btn btn-success text-uppercase" id="btnSubmit" disabled> Submit</button>
+
+    <div class="offset-1 col-11 table-responsive " style="overflow-y:scroll; height:80%">
+        <div class="m-2" id="DivContents"></div>
+    </div>
+        <button class="btn btn-success text-uppercase" id="btnSubmit" disabled> Submit</button>
+   
 </div>
 
 
 
 
 
-<input type="button" id="asxas" value="click to toggle fullscreen" onclick="toggleFullScreen(document.body)">
 
 
 
+    @section scripts{
+        <link href="~/lib/datatables/Css/jquery.dataTables.min.css" rel="stylesheet" />
+        <script src="~/lib/datatables/Js/jquery.dataTables.min.js"></script>
 
 
 
-@section scripts{
-    <link href="~/lib/datatables/Css/jquery.dataTables.min.css" rel="stylesheet" />
-    <script src="~/lib/datatables/Js/jquery.dataTables.min.js"></script>
-
-
-
-    <script type="text/javascript">
+        <script type="text/javascript">
         var myTables1;
         $(document).ready(function () {
-             
+            alert(window.location.hash);
         });
 
-        
+
         onReady(function () {
-         
 
-            $("#asxas").click();
+
+
 
         });
+      
 
 
-        
+            (function ($) {
+                var refreshKeyPressed = false;
+                var modifierPressed = false;
 
+                var f5key = 116;
+                var rkey = 82;
+                var modkey = [17, 224, 91, 93,27];
+
+                // Check for refresh keys
+                $(document).bind(
+                    'keydown',
+                    function (evt) {
+                        // Check for refresh
+                        if (evt.which == f5key || window.modifierPressed && evt.which == rkey) {
+                            refreshKeyPressed = true;
+                        }
+
+                        // Check for modifier
+                        if (modkey.indexOf(evt.which) >= 0) {
+                            modifierPressed = true;
+                        }
+                    }
+                );
+
+                // Check for refresh keys
+                $(document).bind(
+                    'keyup',
+                    function (evt) {
+                        // Check undo keys
+                        if (evt.which == f5key || evt.which == rkey) {
+                            refreshKeyPressed = false;
+                        }
+
+                        // Check for modifier
+                        if (modkey.indexOf(evt.which) >= 0) {
+                            modifierPressed = false;
+                        }
+                    }
+                );
+
+                $(window).bind('beforeunload', function (event) {
+                    var message = "not refreshed";
+
+                    if (refreshKeyPressed) {
+                        message = "refreshed";
+                    }
+
+                    event.returnValue = message;
+                    return message;
+                });
+            }(jQuery));
         function onReady(callback) {
             var intervalId = window.setInterval(function () {
                 if (document.getElementsByTagName('body')[0] !== undefined) {
@@ -129,23 +180,12 @@
         }
 
 
-        //$(document).keydown(function (event) {
-        //    if (event.keyCode == 123) { // Prevent F12
-        //        return false;
-        //    } else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) { // Prevent Ctrl+Shift+I
-        //        return false;
-        //    }
-        //});
 
-        //$(document).on('keydown', function (event) {
-        //    if (event.key == "Escape") {
-        //        alert('Esc key pressed.');
-        //    }
-        //});
 
 
         /* Get into full screen */
-        function GoInFullscreen(element) {
+            function GoInFullscreen(element) {
+             
             if (element.requestFullscreen)
                 element.requestFullscreen();
             else if (element.mozRequestFullScreen)
@@ -166,7 +206,7 @@
                 document.webkitExitFullscreen();
             else if (document.msExitFullscreen)
                 document.msExitFullscreen();
-         
+
         }
 
         /* Is currently in full screen or not */
@@ -179,29 +219,32 @@
             else
                 return true;
         }
-        $("#btndemo").on("click", function () {
+            $("#btndemo").on("click", function () {
+
             if (IsFullScreenCurrently()) {
                 GoOutFullscreen();
+                
             } else {
-                GoInFullscreen($("#element").get(0)); 
+                GoInFullscreen($("#element").get(0));
                 GetData();
-
+                $("#Massaging").css("display", "block");
             }
         });
         window.onbeforeunload = function () {
             alert( 'Are you sure you want to leave?');
         };
-       
- 
+
+
         $(document).on('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', function () {
-            if (IsFullScreenCurrently()) { 
-                
+            if (IsFullScreenCurrently()) {
+                return false;
             }
-            else {   
-              
+            else {
+                GoInFullscreen($("#element").get(0));
+                return false;
             }
         });
-       
 
-    </script>
-}
+
+        </script>
+    }
