@@ -52,6 +52,11 @@ namespace RISTExamOnlineProject.Controllers
 
         public IActionResult Examexamination(string ItemInput )
         {
+            if (TempData["XX"] == null)
+            {
+                return View("LicenceList");
+            }
+
             string ItemCateg = TempData["XX"].ToString();
 
             ViewBag.Itemcateg = ItemCateg;
