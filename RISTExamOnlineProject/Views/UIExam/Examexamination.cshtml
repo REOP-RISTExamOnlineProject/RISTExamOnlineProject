@@ -2,17 +2,26 @@
 @{
     ViewData["Title"] = "Examexamination";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<div id="myvideo"></div>
-<div id="xxxxxx" class="bg-white container">
+} 
+<div id="element" class="bg-white container">
     <h1>Examexamination</h1>
     <div class="row">
-        <div class="col-12"> <button id="btndemo" class="btn btn-warning float-lg-none"><span id="demo"> เริ่มทำข้อสอบ</span></button></div>
+        <div class="col-12">
+            <button id="btndemo" class="btn btn-warning float-lg-none">
+                <span id="demo"> เริ่มทำข้อสอบ</span>
+            </button>
+            <span style="font: bold 12px; color:red; display:none;" id="Massaging" >
+                ห้ามออกจากหน้าจอจนกว่าจะข้อสอบจบ
+            </span>
+        </div>
     </div>
     <hr class="m-4" />
-    <div id="DivContents"></div>
-    <button class="btn btn-success text-uppercase" id="btnSubmit" disabled> Submit</button>
+
+    <div class="offset-1 col-11 table-responsive " style="overflow-y:scroll; height:80%">
+        <div class="m-2" id="DivContents"></div>
+    </div>
+        <button class="btn btn-success text-uppercase" id="btnSubmit" disabled> Submit</button>
+   
 </div>
 
 
@@ -22,41 +31,79 @@
 
 
 
-
-
- 
-
-
-
-@section scripts{
-    <link href="~/lib/datatables/Css/jquery.dataTables.min.css" rel="stylesheet" />
-    <script src="~/lib/datatables/Js/jquery.dataTables.min.js"></script>
+    @section scripts{
+        <link href="~/lib/datatables/Css/jquery.dataTables.min.css" rel="stylesheet" />
+        <script src="~/lib/datatables/Js/jquery.dataTables.min.js"></script>
 
 
 
-    <script type="text/javascript">
+        <script type="text/javascript">
         var myTables1;
-        $(document).ready(function () {  
-            //var elem = document.getElementById("xxxxxx");
-            //var elemx = document.getElementById("btndemo");
-            //elemx.onclick = function () {
-            //    GetData() 
-            //    req = elem.requestFullScreen || elem.webkitRequestFullScreen || elem.mozRequestFullScreen;
-            //    req.call(elem);
-               
-            //}
-
-
-
-
-
-
-            return false;
+        $(document).ready(function () {
+            alert(window.location.hash);
         });
- 
 
+
+        onReady(function () {
+
+
+
+
+        });
       
 
+
+            (function ($) {
+                var refreshKeyPressed = false;
+                var modifierPressed = false;
+
+                var f5key = 116;
+                var rkey = 82;
+                var modkey = [17, 224, 91, 93,27];
+
+                // Check for refresh keys
+                $(document).bind(
+                    'keydown',
+                    function (evt) {
+                        // Check for refresh
+                        if (evt.which == f5key || window.modifierPressed && evt.which == rkey) {
+                            refreshKeyPressed = true;
+                        }
+
+                        // Check for modifier
+                        if (modkey.indexOf(evt.which) >= 0) {
+                            modifierPressed = true;
+                        }
+                    }
+                );
+
+                // Check for refresh keys
+                $(document).bind(
+                    'keyup',
+                    function (evt) {
+                        // Check undo keys
+                        if (evt.which == f5key || evt.which == rkey) {
+                            refreshKeyPressed = false;
+                        }
+
+                        // Check for modifier
+                        if (modkey.indexOf(evt.which) >= 0) {
+                            modifierPressed = false;
+                        }
+                    }
+                );
+
+                $(window).bind('beforeunload', function (event) {
+                    var message = "not refreshed";
+
+                    if (refreshKeyPressed) {
+                        message = "refreshed";
+                    }
+
+                    event.returnValue = message;
+                    return message;
+                });
+            }(jQuery));
         function onReady(callback) {
             var intervalId = window.setInterval(function () {
                 if (document.getElementsByTagName('body')[0] !== undefined) {
@@ -73,17 +120,18 @@
                   url: "../UIExam/GetExamList",
                   data: { itemCateg: "@ViewBag.Itemcateg", InputItem : "@ViewBag.InputItem" },
                   dataType: 'json',
-                  success: function (Data) { 
-                      $("#DivContents").html(Data._strResult); 
+                  success: function (Data) {
+                      $("#DivContents").html(Data._strResult);
                       Gettime();
                       $("#btndemo").attr("disabled", 'disabled');
-                      $("#btnSubmit").removeAttr("disabled", 'disabled'); 
-                  },
-                  error: function (ex) { 
+                      $("#btnSubmit").removeAttr("disabled", 'disabled');
 
                   },
-                }); 
-        } 
+                  error: function (ex) {
+
+                  },
+                });
+        }
 
         function Gettime() {
             // Set the date we're counting down to
@@ -131,52 +179,72 @@
             }, 1000);
         }
 
-        function hashchanged() {
-            debugger
-            Swal.fire({
-                icon: 'warning',
-                title: 'TIME OUT!!',
-                type: 'error',
-                timer: 1700,
-            }).then(function () {
+
+
+
+
+        /* Get into full screen */
+            function GoInFullscreen(element) {
+             
+            if (element.requestFullscreen)
+                element.requestFullscreen();
+            else if (element.mozRequestFullScreen)
+                element.mozRequestFullScreen();
+            else if (element.webkitRequestFullscreen)
+                element.webkitRequestFullscreen();
+            else if (element.msRequestFullscreen)
+                element.msRequestFullscreen();
+        }
+
+        /* Get out of full screen */
+        function GoOutFullscreen() {
+            if (document.exitFullscreen)
+                document.exitFullscreen();
+            else if (document.mozCancelFullScreen)
+                document.mozCancelFullScreen();
+            else if (document.webkitExitFullscreen)
+                document.webkitExitFullscreen();
+            else if (document.msExitFullscreen)
+                document.msExitFullscreen();
+
+        }
+
+        /* Is currently in full screen or not */
+        function IsFullScreenCurrently() {
+            var full_screen_element = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement || null;
+
+            // If no element is in full-screen
+            if (full_screen_element === null)
                 return false;
-            });
+            else
+                return true;
         }
+            $("#btndemo").on("click", function () {
 
-        function toggleFullScreen(elem) {
-            $(document).keydown(function (event) {
-                if (event.keyCode == 123) { // Prevent F12
-                    return false;
-                } else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) { // Prevent Ctrl+Shift+I        
-                    return false;
-                }
-            });
-            // ## The below if statement seems to work better ## if ((document.fullScreenElement && document.fullScreenElement !== null) || (document.msfullscreenElement && document.msfullscreenElement !== null) || (!document.mozFullScreen && !document.webkitIsFullScreen)) {
-            if ((document.fullScreenElement !== undefined && document.fullScreenElement === null) || (document.msFullscreenElement !== undefined && document.msFullscreenElement === null) || (document.mozFullScreen !== undefined && !document.mozFullScreen) || (document.webkitIsFullScreen !== undefined && !document.webkitIsFullScreen)) {
-                if (elem.requestFullScreen) {
-                    elem.requestFullScreen();
-                } else if (elem.mozRequestFullScreen) {
-                    elem.mozRequestFullScreen();
-                } else if (elem.webkitRequestFullScreen) {
-                    elem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
-                } else if (elem.msRequestFullscreen) {
-                    elem.msRequestFullscreen();
-                }
+            if (IsFullScreenCurrently()) {
+                GoOutFullscreen();
+                
             } else {
-                if (document.cancelFullScreen) {
-                    document.cancelFullScreen();
-                } else if (document.mozCancelFullScreen) {
-                    document.mozCancelFullScreen();
-                } else if (document.webkitCancelFullScreen) {
-                    document.webkitCancelFullScreen();
-                } else if (document.msExitFullscreen) {
-                    document.msExitFullscreen();
-                }
+                GoInFullscreen($("#element").get(0));
+                GetData();
+                $("#Massaging").css("display", "block");
             }
+        });
+        window.onbeforeunload = function () {
+            alert( 'Are you sure you want to leave?');
+        };
 
 
-        }
-       
-    </script>
-}
-    <input type="button" value="click to toggle fullscreen" onclick="toggleFullScreen(document.body)">
+        $(document).on('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', function () {
+            if (IsFullScreenCurrently()) {
+                return false;
+            }
+            else {
+                GoInFullscreen($("#element").get(0));
+                return false;
+            }
+        });
+
+
+        </script>
+    }
