@@ -152,7 +152,7 @@ namespace RISTExamOnlineProject.Models.TSQL
 
         }
 
-
+         
         public void DeleteQuestion(string ValueQuestion, string ValueAnswer, int Seq) {
 
             var ObjRun = new mgrSQLConnect(_configuration);

@@ -71,7 +71,7 @@ namespace RISTExamOnlineProject.Controllers
             string ValueCodeQuestion = "";
             string ValueCodeAnswer;
             int QuestionCount = 0;
-            int LastSeq = 0;
+  
             string ItemName;
             int Max_Seq;
 
