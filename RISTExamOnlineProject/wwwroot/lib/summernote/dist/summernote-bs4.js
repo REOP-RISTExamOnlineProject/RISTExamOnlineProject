@@ -9078,6 +9078,12 @@ var VideoDialog_VideoDialog = /*#__PURE__*/function () {
         var vid = qqMatch && qqMatch[1].length ? qqMatch[1] : qqMatch2[2];
         $video = external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default()('<iframe webkitallowfullscreen mozallowfullscreen allowfullscreen>').attr('frameborder', 0).attr('height', '310').attr('width', '500').attr('src', 'https://v.qq.com/txp/iframe/player.html?vid=' + vid + '&amp;auto=0');
       } else if (mp4Match || oggMatch || webmMatch) {
+
+
+         
+          url = "../lib/" + url;
+      
+
           $video = external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default()('<video style="min-height:200px;min-width:300px;max-height:800px;max-width:1200px"  controls>').attr('src', url);
       } else if (fbMatch && fbMatch[0].length) {
         $video = external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default()('<iframe>').attr('frameborder', 0).attr('src', 'https://www.facebook.com/plugins/video.php?href=' + encodeURIComponent(fbMatch[0]) + '&show_text=0&width=560').attr('width', '560').attr('height', '301').attr('scrolling', 'no').attr('allowtransparency', 'true');

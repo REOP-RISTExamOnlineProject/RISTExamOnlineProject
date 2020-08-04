@@ -9,7 +9,7 @@ function GetExamDetail(Itemcode) {
         success: function (response) {
     
             if (response.success == true) {
-                debugger
+            
                 Max_Seq = response.max_Seq
                 QuestionCount = response.questionCount
                 ValueCodeQuestion = response.valueCodeQuestion
@@ -18,7 +18,7 @@ function GetExamDetail(Itemcode) {
            var     Detail = response.detail
                 $('#LB_Exam_Count').text(QuestionCount);
                 $('#LB_Exam_Name').text(ItemName);
-                debugger
+              
                 MakeTable(Detail);
 
             } else {

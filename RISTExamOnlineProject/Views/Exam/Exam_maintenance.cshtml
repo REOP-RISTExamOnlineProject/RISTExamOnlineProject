@@ -207,7 +207,7 @@
 {
 
 
-        @*<script src="~/lib/summernote/dist/Bootstrap_4_4_1.js"></script>*@
+        <script src="~/lib/summernote/dist/Bootstrap_4_4_1.js"></script>
 
         @*<script src="~/lib/jquery/jquery.min.js"></script>*@
         @*<script src="~/lib/bootstrap/js/bootstrap.min.js"></script>*@
@@ -279,6 +279,7 @@
                 var OP_UPD
             $(document).ready(function () {
                 //$('#CB_Need').bootstrapToggle('off')
+                CheckRole()
 
                 GetExamDetail('@ViewBag.Itemcode')
                 OP_UPD = '@User.Identity.Name';
@@ -360,7 +361,7 @@
 
                 $('.summernote').summernote('module', 'videoDialog').createVideoNode =
                     function (url) {
-                        debugger
+
                         // native function generating the elements (iframe)
                         var html = func(url);
                        var a
@@ -369,6 +370,19 @@
                     };
 
 
+            function CheckRole() {
+
+             debugger
+
+                if ( '@User.IsInRole("Admin")' != "True") {
+
+
+
+                    window.location.href = "@Url.Action("index", "home")";
+                }
+
+
+            }
 
 
 

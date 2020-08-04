@@ -63,14 +63,14 @@
 
 
             $(document).ready(function () {
-
+                CheckRole();
                 GetExamCategory();
 
             });
 
             function GetExamCategory() {
 
-       
+
                 $.ajax({
                     type: 'POST',
                     url: '../Exam/GetCategory',
@@ -89,7 +89,7 @@
             }
 
             function GetExamName(Category) {
-        
+
                 $.ajax({
                     type: 'POST',
                     url: '../Exam/GetExamname',
@@ -110,7 +110,7 @@
             }
 
             function Manage_Exam() {
-          
+
 
                 var ExamCode = $("#DDL_ExamName").val();
 
@@ -126,11 +126,11 @@
 
                 }).then(function (result) {
                     if (result.value) {
-                   
+
 
                         if (ExamCode != '' && ExamCode != null ) {
 
-                             
+
 
                             window.location.href = "@Url.Action("Exam_maintenance", "Exam")?Itemcode=" + ExamCode;
 
@@ -162,11 +162,24 @@
             }
 
 
-         
+
+            function CheckRole() {
+
+             debugger
+
+                if ( '@User.IsInRole("Admin")' != "True") {
+
+
+
+                    window.location.href = "@Url.Action("index", "home")";
+                }
+
+
+            }
 
 
             $("#DDL_ExamCategory").on("change", function () {
-        
+
                 var Category = $("#DDL_ExamCategory").val()
 
                 if (Category != 0) {
