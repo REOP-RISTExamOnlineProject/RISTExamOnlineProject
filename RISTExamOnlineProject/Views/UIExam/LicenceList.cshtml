@@ -5,18 +5,30 @@
 }
 
 
-
 <div class="container-fluid">
-    <div class="mb-4">
-        <h1>Licensure Examination</h1>
-        <p>การสอบใบอนุญาต</p>
-    </div> 
+    <div class="row">
+        <div class="mb-4 col-6">
+            <h1>Licensure Examination</h1>
+            <p>การสอบใบอนุญาต</p>
+        </div>
+        <div class="mb-4 offset-2 col-6 ">
+            <div class="card ">
+                <div class="row card-body">
+                    <span class="text-uppercase  ml-4 pull-right font-weight-lighter"> Tatal : </span>
+                    <span> 0 </span>
+                </div>
+            </div>
+        </div>
+    </div>
     <hr />
+
+     
     <div class="card shadow">
         <div class="card-body">
             <h4 class="text-uppercase ml-4 font-weight-lighter">
                 Licence category
             </h4>
+           
             <hr />
             <div class="text-center bg-white p-3">
                 <table class="table table-bordered table-sm bg-white w-100" id="tbItemCatg">
@@ -25,14 +37,14 @@
                             <td>licensure Code</td>
                             <td>licensure Name</td>
                             <td>Mode/โหมด</td>
-                        </tr> 
+                        </tr>
                     </thead>
                     <tbody></tbody>
                 </table>
             </div>
         </div>
-        </div>
     </div>
+</div>
 
 <style>
     #tbItemCatg tbody tr.even:hover {
@@ -58,8 +70,7 @@
 
         function InitTable() {
 
-            myTables1 = $("#tbItemCatg").DataTable({ 
-               // searching: false, 
+            myTables1 = $("#tbItemCatg").DataTable({  
                 ordering: true, 
                 processing: true, 
                 dom: '<"top"l>rt<"bottom"ip><"clear">',
@@ -77,24 +88,8 @@
                     }, 
                 ],
                 order: [0, "asc"], 
-            });
+            }); 
 
-       
-            //$('#tbItemCatg tbody').on('click', 'tr', function () {
-              
-            //    if ($(this).hasClass('selected')) {
-            //        $(this).removeClass('selected');
-            //    }
-            //    else {
-            //        myTables1.$('tr.selected').removeClass('selected');
-            //        $(this).addClass('selected');
-            //    }
-            //    var tete = myTables1.rows('.selected').data(); 
-            //    var eerer = tete[0].itemCateg;
-            //    window.location.href = "../Exam/new_exam";
-            //   // alert(eerer);
-                
-            //});
             $('#tbItemCatg tbody').on('hover', 'tr', function () {
                 if ($(this).hasClass('selected')) {
                     $(this).removeClass('selected');
@@ -102,11 +97,7 @@
                 else {
                     myTables1.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
-                }
-                //var tete = myTables1.rows('.selected').data(); 
-                //var eerer = tete[0].itemCateg;
-                //window.location.href = "../Exam/new_exam";
-                // alert(eerer);
+                } 
             });
         }
 
