@@ -9063,7 +9063,7 @@ var VideoDialog_VideoDialog = /*#__PURE__*/function () {
           }
         }
 
-          $video = external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default()('<iframe style="min-height:200px;min-width:300px;max-height:400px;max-width:600px" >').attr('frameborder', 0).attr('src', '//www.youtube.com/embed/' + youtubeId + (start > 0 ? '?start=' + start : ''));
+          $video = external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default()('<iframe style="min-height:200px;min-width:300px;max-height:800px;max-width:1200px" >').attr('frameborder', 0).attr('src', '//www.youtube.com/embed/' + youtubeId + (start > 0 ? '?start=' + start : ''));
       } else if (igMatch && igMatch[0].length) {
         $video = external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default()('<iframe>').attr('frameborder', 0).attr('src', 'https://instagram.com/p/' + igMatch[1] + '/embed/').attr('width', '612').attr('height', '710').attr('scrolling', 'no').attr('allowtransparency', 'true');
       } else if (vMatch && vMatch[0].length) {
@@ -9084,7 +9084,7 @@ var VideoDialog_VideoDialog = /*#__PURE__*/function () {
           url = "../lib/" + url;
       
 
-          $video = external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default()('<video style="min-height:200px;min-width:300px;max-height:400px;max-width:600px"  controls>').attr('src', url);
+          $video = external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default()('<video style="min-height:200px;min-width:300px;max-height:800px;max-width:1200px"  controls>').attr('src', url);
       } else if (fbMatch && fbMatch[0].length) {
         $video = external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default()('<iframe>').attr('frameborder', 0).attr('src', 'https://www.facebook.com/plugins/video.php?href=' + encodeURIComponent(fbMatch[0]) + '&show_text=0&width=560').attr('width', '560').attr('height', '301').attr('scrolling', 'no').attr('allowtransparency', 'true');
       } else {

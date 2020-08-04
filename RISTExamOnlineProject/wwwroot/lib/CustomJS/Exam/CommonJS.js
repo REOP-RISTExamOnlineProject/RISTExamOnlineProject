@@ -6,16 +6,3 @@ function InputHTML(elementID, Code) {
 function DeleteHTML(elementID) {
     document.getElementById(elementID).innerHTML = "";
 }
-
-
-function CheckRole() {
-
-    debugger
-
-    if ('@User.IsInRole("Admin")' != "True") {
-
-        window.location.href = "@Url.Action("index", "home")";
-    }
-
-
-}
