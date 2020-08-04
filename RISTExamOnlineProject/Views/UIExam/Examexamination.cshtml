@@ -3,32 +3,35 @@
     ViewData["Title"] = "Examexamination";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div id="element" class="bg-white container">
-    <h1>Examexamination</h1>
-    <div class="row">
-        <div class="col-12">
-            <button id="btndemo" class="btn btn-warning float-lg-none">
-                <span id="demo"> เริ่มทำข้อสอบ</span>
-            </button>
-            <span style="font: bold 12px; color:red; display:none;" id="Massaging">
-                ห้ามออกจากหน้าจอจนกว่าจะข้อสอบจบ
+<div id="element" class="  container" style="background-color:#F5F5F5;">
+    <div class="card card-body">
+        <h1>Examexamination</h1>
+        <div class="row border-danger border-left  ">
+            <div class="col-12 text-center">
+            
+                    <H1 id="demo" class="display-1"> เริ่มทำข้อสอบ</H1>
+              
+                <span style="font: bold 12px; color:red; display:none;" id="Massaging">
+                    ห้ามออกจากหน้าจอจนกว่าจะข้อสอบจบ
+                </span>
+            </div>
+        </div>
+    @*    <hr class="m-4" />*@
+    </div>
+   
+
+    <div class="offset-1 col-11 table-responsive " style="overflow-y:scroll; height:70%">
+        <div class="m-2" id="DivContents"></div>
+        <div class="text-center" id="ftExam"  style="display:none;">
+            <span style="font: bold 12px; color:red;  "  >
+               กรุณาตรวจคำตอบให้แน่ใจก่อนกดปุ่ม SUBMIT
             </span>
+            <button class="btn btn-success btn-lg btn-block text-uppercase" id="btnSubmit" disabled> Submit</button>
         </div>
     </div>
-    <hr class="m-4" />
-
-    <div class="offset-1 col-11 table-responsive " style="overflow-y:scroll; height:80%">
-        <div class="m-2" id="DivContents"></div>
-    </div>
-    <button class="btn btn-success text-uppercase" id="btnSubmit" disabled> Submit</button>
 
 </div>
 
-@*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-    Launch demo modal
-</button>*@
-
-<!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -42,8 +45,7 @@
                 กฏการทำข้อสอบ
             </div>
             <div class="modal-footer">
-                <button type="button" id="testtest" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               @* <button type="button" class="btn btn-primary">Save changes</button>*@
+                <button type="button" id="testtest" class="btn btn-warning" data-dismiss="modal">START</button>
             </div>
         </div>
     </div>
@@ -58,74 +60,16 @@
     <link href="~/lib/datatables/Css/jquery.dataTables.min.css" rel="stylesheet" />
     <script src="~/lib/datatables/Js/jquery.dataTables.min.js"></script>
 
-
-
     <script type="text/javascript">
         var distance;
         var myTables1;
         $(document).ready(function () {
             $('#exampleModalCenter').modal('show');
         });
-
-
         onReady(function () {
 
 
-
-
-        });
-
-
-
-            (function ($) {
-                var refreshKeyPressed = false;
-                var modifierPressed = false;
-
-                var f5key = 116;
-                var rkey = 82;
-                var modkey = [17, 224, 91, 93,27];
-
-                // Check for refresh keys
-                $(document).bind(
-                    'keydown',
-                    function (evt) {
-                        // Check for refresh
-                        if (evt.which == f5key || window.modifierPressed && evt.which == rkey   ) {
-                            refreshKeyPressed = true;
-                        }
-                        // Check for modifier
-                        if (modkey.indexOf(evt.which) >= 0) {
-                            modifierPressed = true;
-                        }
-                    }
-                );
-                // Check for refresh keys
-                $(document).bind(
-                    'keyup',
-                    function (evt) {
-                        // Check undo keys
-                        if (evt.which == f5key || evt.which == rkey) {
-                            refreshKeyPressed = false;
-                        }
-
-                        // Check for modifier
-                        if (modkey.indexOf(evt.which) >= 0) {
-                            modifierPressed = false;
-                        }
-                    }
-                );
-
-                $(window).bind('beforeunload', function (event) {
-                    var message = "not refreshed";
-
-                    if (refreshKeyPressed) {
-                        message = "refreshed";
-                    }
-
-                    event.returnValue = message;
-                    return message;
-                });
-            }(jQuery));
+        }); 
 
         document.addEventListener("keydown", function (e) {
             //tab keyCode===9
@@ -154,7 +98,8 @@
                   dataType: 'json',
                   success: function (Data) {
                       $("#DivContents").html(Data._strResult);
-                      Gettime(5);
+                      TESTRedio();
+                      Gettime(2);
                       $("#btndemo").attr("disabled", 'disabled');
                       $("#btnSubmit").removeAttr("disabled", 'disabled');
 
@@ -166,7 +111,32 @@
         }
 
 
+        function TESTRedio() {
 
+            var Arrs = [];
+            var ArrCompl = [];
+
+
+            $('input[type="radio"]').click(function () {
+                 
+                if ($(this).is(':checked')) {
+                    var Quest = $(this).attr("name");
+
+                     
+                    var x = ArrCompl.indexOf($(this).attr("name"));
+                    
+                    var Ans = $(this).val(); 
+                    var GroupItem = { strQuest: Quest, strAns: Ans };
+
+                    if (x < 0) { 
+                        Arrs.push(GroupItem);
+                        ArrCompl.push(Quest);
+                    } else {
+                        Arrs.splice(x, 1, GroupItem);
+                    } 
+                }
+            });
+        }
 
 
         var x
@@ -195,35 +165,32 @@
                 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
                 // Display the result in the element with id="demo"
-                document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+                document.getElementById("demo").innerHTML =   hours + "h "
                     + minutes + "m " + seconds + "s ";
-              
+
+                if (minutes == 0) { 
+                    $("#demo").css("color", "#f00");
+                }
                 // If the count down is finished, write some text
                 if (distance < 0) {
                     clearInterval(x);
                     document.getElementById("demo").innerHTML = "EXPIRED";
+
                     $("#DivContents").html("");
-
-
+                    GoOutFullscreen();
                     Swal.fire({
                         icon: 'warning',
                         title: 'TIME OUT!!',
                         type: 'error',
                         timer: 1700,
-                    }).then(function () {
-
+                    }).then(function () { 
                         return true;
                     });
                 }
             }, 1000);
-
-
-         
+             
         }
-
-
-
-
+         
 
         /* Get into full screen */
             function GoInFullscreen(element) {
@@ -264,28 +231,42 @@
         $("#testtest").on("click", function () {
 
             if (IsFullScreenCurrently()) {
-                GoOutFullscreen();
-
+                GoOutFullscreen(); 
             } else {
                 GoInFullscreen($("#element").get(0));
                 GetData();
                 $("#Massaging").css("display", "block");
+                $("#ftExam").css("display", "block");
             }
         });
-        window.onbeforeunload = function () {
-            alert( 'Are you sure you want to leave?');
-        };
 
+        $("#btnSubmit").on("click", function () { 
+            if (IsFullScreenCurrently()) { 
+                GoOutFullscreen();  
+
+            } else {
+                GoInFullscreen($("#element").get(0));
+            }
+
+        });
+
+
+
+        //window.onbeforeunload = function () {
+        //  //  alert( 'Are you sure you want to leave?');
+        //};
+       
 
         $(document).on('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', function () {
             if (IsFullScreenCurrently()) {
                 return false;
             }
-            else { 
+            else {
                 clearInterval(x);
-                alert('End exam');
-               
-                $("#DivContents").html("<div class='text-center'><H1 class='text-danger'>TEST END</H1><H1 class='text-danger'><i class='fas fa-check-circle'></i></H1></div>");
+                alert('The exam is over'); 
+                $("#DivContents").html("<div class='text-center m-4'><H1 class='text-danger'>TEST END</H1><H1 class='text-danger'><i class='fas fa-check-circle'></i></H1> <br/> <a href='@Url.Action("LicenceList")' class='btn  btn-link'> MainMenu</a></div>" );
+                $("#ftExam").css("display", "none");
+
                 return false;
             }
         });
