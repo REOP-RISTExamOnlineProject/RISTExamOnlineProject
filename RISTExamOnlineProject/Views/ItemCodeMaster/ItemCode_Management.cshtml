@@ -1,0 +1,277 @@
+﻿
+@{
+    ViewData["Title"] = "ItemCode_Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<html>
+<head>
+
+
+
+</head>
+<body>
+
+
+
+    <div class="container-fluid">
+        <div class="row justify-content-center m-4">
+            <h1> Itemcode Master List</h1>
+        </div>
+
+
+
+        <div class="row justify-content-center">
+
+            <div class="col-10">
+
+                <div class="card rounded text-center shadow-lg">
+
+                    <div class="card-body">
+                        <div class="row justify-content-center m-4">
+                            <div class="col-2">
+                                ItemCode :
+
+                            </div>
+                            <div class="col-3">
+                                @Html.DropDownList("DDL_Category", new SelectList("", ""), new { @id = "DDL_Category", @class = " custom-select custom-select-sm" })
+
+                            </div>
+
+                        </div>
+                        <div class="row justify-content-center m-4" id="Table_Display">
+                            <table class="table table-sm table-bordered table-striped " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable">
+
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <td>Edit</td>
+                                        <td>ItemCode </td>
+                                        <td>ItemName </td>
+                                        <td>DisplayOrder </td>
+                                        <td>TimeLimit </td>
+                                        <td>Delete</td>
+                                    </tr>
+
+
+                                </thead>
+                            </table>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                </div>
+
+
+
+
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    @section Scripts
+{
+        <script src="~/lib/summernote/dist/Bootstrap_4_4_1.js"></script>
+        <link href="~/lib/summernote/dist/summernote-bs4.css" rel="stylesheet" />
+        <script src="~/lib/summernote/dist/summernote-bs4.js"></script>
+
+
+        <script src="~/lib/CustomJS/Exam/CommonJS.js"></script>
+        <script src="~/lib/CustomJS/Exam/Create_Exam.js"></script>
+        <link href="~/lib/bootstrap/css/bootstrap4-toggle.css" rel="stylesheet" />
+        <script src="~/lib/bootstrap/js/bootstrap4-toggle.js"></script>
+        <link href="~/lib/DataTables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/colReorder.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/fixedColumns.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/fixedHeader.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/keyTable.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/responsive.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/rowGroup.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/rowReorder.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/scroller.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/select.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/buttons.dataTables.min.css" rel="stylesheet" />
+
+        <script src="~/lib/DataTables/js/jquery.dataTables.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.bootstrap4.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.colReorder.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.fixedHeader.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.keyTable.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.responsive.min.js"></script>
+        <script src="~/lib/DataTables/js/responsive.bootstrap4.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.rowGroup.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.rowReorder.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.scroller.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.select.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.buttons.min.js"></script>
+        <script src="~/lib/DataTables/js/buttons.bootstrap.min.js"></script>
+        <script src="~/lib/DataTables/js/buttons.flash.min.js"></script>
+        <script src="~/lib/DataTables/js/buttons.html5.min.js"></script>
+        <script src="~/lib/DataTables/js/buttons.print.min.js"></script>
+
+
+
+        <script>
+            var OP_UPD
+            var ItemCateg
+            var TableTarget
+
+            $(document).ready(function () {
+
+                CheckRole()
+
+
+                OP_UPD = '@User.Identity.Name';
+                GetExamCategory()
+
+
+                $("#Table_Display").hide();
+
+            });
+
+
+
+            function CheckRole() {
+
+
+                if ( '@User.IsInRole("Admin")' != "True") {
+
+                    window.location.href = "@Url.Action("index", "home")";
+                }
+
+
+
+
+
+
+            }
+
+            function MakeTable(ItemCateg) {
+                TableTarget = $("#MyTable").DataTable()
+
+                if (TableTarget != null) {
+                    TableTarget.destroy();
+                }
+                TableTarget = $("#MyTable").DataTable({
+                searching: false,
+                    ordering: true,
+                        serverSide: true,
+                            processing: true,
+                                // cache: true,
+                                ajax: ({
+                                    type: "post",
+                                    url: "../ItemCodeMaster/ItemCode_TableDetail",
+                                    dataSrc: "data",
+                                    data: { ItemCateg: ItemCateg },
+                                    dataType: "json",
+
+                                }),
+
+                                   // dom: '<"top"l>rt<"bottom">ip<"clear">',
+                                        columns: [
+                                            {
+                                                data: null,
+                                                render: function (data, type, row) {
+                                                    var itemCode = row.itemCode.trim();
+                                                    var itemName = row.itemName.trim();
+                                                    var timeLimit = row.timeLimit;
+                                                  
+
+                                                    return "<a href='#' class='btn btn-info text-white' onclick=EditQuestion('" + itemCode + "','" + itemName + "','" + timeLimit + "') >Edit</a>";
+
+                                                    //return "<a href='#' class='btn btn-info text-white' onclick=EditQuestion('" + ValueCodeAnswer + "') >Edit</a>";
+
+                                                }, class: "text-wrap text-center"
+                                            },
+                                            { data: "itemCode", name: "itemCode", class: "text-wrap text-left" },
+                                            { data: "itemName", name: "itemName", class: "text-wrap text-left" },
+                                            { data: "displayOrder", name: "displayOrder", class: "text-wrap text-left" },
+                                            { data: "timeLimit", name: "timeLimit", class: "text-wrap text-left" },
+                                            {
+                                                data: null,
+                                                render: function (data, type, row) {
+                                                    var nbr = row.nbr.trim();
+                                                 
+                                                    return "<a href='#' class='btn btn-danger  text-white' onclick=DeleteQuestion('" + nbr + "') ><i class='fas fa-trash-alt'></i></a>";
+
+                                                    //return "<a href='#' class='btn btn-info text-white' onclick=EditQuestion('" + ValueCodeAnswer + "') >Edit</a>";
+
+                                                }, class: "text-wrap text-center"
+                                            },
+                                           
+                    ],
+                order: [0, "asc"],
+
+                    });
+
+           //     Get_ItemCode_TableDetail
+
+
+            };
+
+            $("#DDL_Category").on("change", function () {
+
+                ItemCateg = $("#DDL_Category").val()
+
+                if (Category != 0) {
+                    $("#Table_Display").show();
+                    MakeTable(ItemCateg)
+                   // GetExamName(Category)
+                } else {
+                    $("#Table_Display").hide();
+
+                }
+            });
+
+
+
+            function GetExamCategory() {
+                $.ajax({
+                    type: 'POST',
+                    url: '../ItemCodeMaster/GetCategory',
+                    dataType: 'json',
+                    success: function (Divisions) {
+                        if (Divisions.length != 0) {
+                            $.each(Divisions, function (i, div) {
+                                $("#DDL_Category").append('<option value="' + div.value + '">' + div.text + '</option>');
+                            });
+                        }
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+            }
+
+
+
+
+        </script>
+
+
+    }
+
+
+</body>
+</html>
+

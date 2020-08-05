@@ -109,7 +109,9 @@ namespace RISTExamOnlineProject.Models.db
         public virtual DbSet<Exam_QuestionDetail> Exam_QuestionDetail { get; set; }
 
         public DbSet<ItemCategoryModel> ItemCategory { get; set; }
+        public DbSet<ItemCode_Detail> ItemCode_Detail { get; set; }
 
         
+
     }
 }

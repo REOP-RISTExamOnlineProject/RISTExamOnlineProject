@@ -204,6 +204,8 @@ namespace RISTExamOnlineProject.Controllers
 
    
             string IP = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+
+
             try
             {
 
