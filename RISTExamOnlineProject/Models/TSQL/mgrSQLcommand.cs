@@ -469,7 +469,7 @@ namespace RISTExamOnlineProject.Models.TSQL
                 EXresult.strResult = "Error";
             }
 
-
+             
 
 
 
