@@ -12,61 +12,69 @@
 
 <body>
 
-    <div class="container-fluid p-4">
+    <div class="container-fluid">
+        <div class="row justify-content-center m-4">
 
- <div class="row justify-content-center">
-     <div class="col-10">
-         <div class="card rounded shadow-lg m-auto ">
-             <div class="card-header badge-dark  ">
-                 <h1><b>Select Exam </b></h1>
-             </div>
-
-             <div class="card-body">
-
-                 <br />
-                 <div class="row justify-content-lg-start ">
-
-                     <div class="col-2 text-right">
-
-                         <b>  Exam Category :</b>
-                     </div>
-                     <div class="col-3">
-                         @Html.DropDownList("DDL_ExamCategory", new SelectList("", ""), new { @id = "DDL_ExamCategory", @class = " custom-select custom-select-sm" })
-                     </div>
-
-                     <div class="col-2 text-right">
-                         <b>
-                             Exam Name :
-                         </b>
-                     </div>
-                     <div class="col-3">
-                         @Html.DropDownList("DDL_ExamName", new SelectList("", ""), new { @id = "DDL_ExamName", @class = " custom-select custom-select-sm" })
-                     </div>
+            <div class="col-5">
+                <h1><b> Exam Maintenance  </b></h1>
+            </div>
+        </div>
 
 
 
-                 </div>
-                 <br />
-                 <div class="row justify-content-center">
-                     <div class="col-2">
+        <div class="row justify-content-center">
+            <div class="col-10">
+                <div class="card rounded shadow-lg m-auto ">
+                    <div class="card-header badge-dark  ">
+                        <h3><b>Select Exam </b></h3>
+                    </div>
 
-                         <button class="btn btn-success" onclick="Manage_Exam()">Management </button>
+                    <div class="card-body">
 
-                     </div>
+                        <br />
+                        <div class="row justify-content-lg-start ">
+
+                            <div class="col-2 text-right">
+
+                                <b>  Exam Category :</b>
+                            </div>
+                            <div class="col-3">
+                                @Html.DropDownList("DDL_ExamCategory", new SelectList("", ""), new { @id = "DDL_ExamCategory", @class = " custom-select custom-select-sm" })
+                            </div>
+
+                            <div class="col-2 text-right">
+                                <b>
+                                    Exam Name :
+                                </b>
+                            </div>
+                            <div class="col-3">
+                                @Html.DropDownList("DDL_ExamName", new SelectList("", ""), new { @id = "DDL_ExamName", @class = " custom-select custom-select-sm" })
+                            </div>
 
 
 
-                 </div>
+                        </div>
+                        <br />
+                        <div class="row justify-content-center">
+                            <div class="col-2">
 
-             </div>
-         </div>
+                                <button class="btn btn-success" onclick="Manage_Exam()">Management </button>
 
-     </div>
- </div>
+                            </div>
 
-     
 
-    
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
 
     </div>
 
