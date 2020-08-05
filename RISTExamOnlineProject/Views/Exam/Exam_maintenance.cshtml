@@ -26,48 +26,47 @@
 
 
 
-    <div class="container-fluid">
+    <div class="container-fluid ">
 
-        <div class="container rounded bg-white m-auto" id="Main_Form">
+        @*<div class="container rounded bg-white m-auto p-1" id="Main_Form">*@
 
-            <div class="row justify-content-center m-4">
-                <h2 class="m-2"> Exam Name : <label id="LB_Exam_Name"></label></h2>
+            <div class="row justify-content-center m-2">
+                <h1><b>   Exam Name : <label id="LB_Exam_Name"></label></b></h1>
             </div>
+                              
+            <div class="row justify-content-center p-2">
+                <div class="col-10">
+
+                    <div class="card  rounded-lg mt-2 shadow-lg">
+
+                        <div class="card-header  bg-dark badge-dark m-0 p-0" id="heading_Question_List">
+                            <div class="row justify-content-between">
+
+                                <div class="col-3 ">
+                                    <h4 class="m-3 "><b>  Question List </b> </h4>
+
+                                </div>
+
+                                <div class="col-1">
+
+                                    @*<button class="btn btn-outline-dark border-0 m-2" data-toggle="collapse" data-target="#collapse_Question_List" aria-expanded="true" aria-controls="collaps_Question_List">
+                            <i class="fas fa-plus-square fa-2x"></i>
+                        </button>*@
 
 
-
-            <div id="QuestionList_Form">
-
-                <div class="card  rounded-0  m-0 p-0">
-
-                    <div class="card-header  bg-dark badge-dark m-0 p-0" id="heading_Question_List">
-                        <div class="row justify-content-between">
-
-                            <div class="col-3 ">
-                                <h4 class="m-3 "><b>  Question List </b> </h4>
-
-                            </div>
-
-                            <div class="col-1">
-
-                                @*<button class="btn btn-outline-dark border-0 m-2" data-toggle="collapse" data-target="#collapse_Question_List" aria-expanded="true" aria-controls="collaps_Question_List">
-                                        <i class="fas fa-plus-square fa-2x"></i>
-                                    </button>*@
+                                    @*<button class="btn btn-outline-secondary border-0 m-2" onclick="Toggle('#collapse_Question_List')">
+                            <i class="fas fa-plus-square fa-2x"></i>
+                        </button>*@
 
 
-                                <button class="btn btn-outline-secondary border-0 m-2" onclick="Toggle('#collapse_Question_List')">
-                                    <i class="fas fa-plus-square fa-2x"></i>
-                                </button>
-
+                                </div>
 
                             </div>
 
                         </div>
 
-                    </div>
-
-                    @*<div id="collapse_Question_List" class="collapse show" aria-labelledby="heading_Question_List" data-parent="#QuestionList_Form">*@
-                    <div id="collapse_Question_List" class="collapse show">
+                        @*<div id="collapse_Question_List" class="collapse show" aria-labelledby="heading_Question_List" data-parent="#QuestionList_Form">*@
+                        @*<div id="collapse_Question_List" class="collapse show">*@
 
                         <div class="card-body">
 
@@ -104,15 +103,18 @@
 
 
                         </div>
+                        @*</div>*@
                     </div>
                 </div>
             </div>
+             
+      
 
 
 
             @*//---------------------------------*@
 
-        </div>
+        @*</div>*@
 
     </div>
 
@@ -376,8 +378,6 @@
 
                 if ( '@User.IsInRole("Admin")' != "True") {
 
-
-
                     window.location.href = "@Url.Action("index", "home")";
                 }
 
@@ -450,7 +450,7 @@
                         data: { ValueCodeAnswer:'0', ValueCodeQuestion: '0', Seq: 0, Job:"new"},
                         success: function (response) {
                             if (response.success == true) {
-                                debugger
+                        
                                 $('#LB_title').text('New Question');
                                 HTML_TEXT = response.html;
                                 DeleteHTML('Modal_body_Form_Main');
@@ -480,7 +480,7 @@
                     data: { ValueCodeAnswer: ValueCodeAnswer, ValueCodeQuestion: ValueCodeQuestion, Seq: Seq, Job:"Edit"},
                     success: function (response) {
                         if (response.success == true) {
-                            debugger
+                     
                             $('#LB_title').text('Edit Question');
                             HTML_TEXT = response.html;
                             DeleteHTML('Modal_body_Form_Main');
