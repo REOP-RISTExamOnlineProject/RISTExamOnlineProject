@@ -104,15 +104,12 @@
            
 
 
-        function GetData() {
-             
+        function GetData() { 
              $.ajax({
                 type: 'POST',
-                 url: "../UIExam/GetItemCatg",
-              //  data: { ArrData: strControl[0] },
+                 url: "../UIExam/GetItemCatg", 
                 dataType: 'json',
-                success: function (Data) {
-
+                success: function (Data) { 
                     myTables1.clear().draw();
                     if (Data._strResult == "OK") {
                          
@@ -145,7 +142,6 @@
             
         } 
 
-     
          
         
     </script>

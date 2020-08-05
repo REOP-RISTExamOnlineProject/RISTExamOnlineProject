@@ -92,22 +92,36 @@ namespace RISTExamOnlineProject.Controllers
             ResultOPcateg = ObjRun.GetInputItemList(itemCateg);
 
 
-            var jsonResult = Json(new { data = ResultOPcateg._listOpCateg, _strResult = ResultOPcateg.strResult });
-
-              
+            var jsonResult = Json(new { data = ResultOPcateg._listOpCateg, _strResult = ResultOPcateg.strResult }); 
             return jsonResult;
-        }
-
-
+        }  
         public JsonResult GetExamList(string itemCateg, string InputItem)
         {
             mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration); 
             string Result = ObjRun.MakingExam(itemCateg, InputItem);
-
-
+            TempData["GG"] = DateTime.Now.ToString();
             var jsonResult = Json(new { data = "OK", _strResult = Result }); 
             return jsonResult;
         }
 
+        public JsonResult CommitExam(List<_ExamQuestionAnswer> ArrAns,string strItemCateg,string strItemInput,string OPID)
+        {
+            string ItemCateg = strItemCateg;
+            string ItemInput = strItemInput;
+            string strOPID = OPID;
+            mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
+            string strStartTime = TempData["GG"].ToString(); 
+            string strEndTime = DateTime.Now.ToString();
+            string IP = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+            _ExamCommitResult dt = new _ExamCommitResult();
+            dt = ObjRun.CommitExam(strOPID, ItemCateg, ItemInput, strStartTime, strEndTime, ArrAns, IP); 
+
+
+
+
+            var jsonResult = Json(new { data = dt.strResult,dataResult = dt.strMgs, dataBool = dt.BoolResult  });
+            return jsonResult;
+        }
+        
     }
 } 

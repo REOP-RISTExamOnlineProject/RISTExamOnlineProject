@@ -362,5 +362,122 @@ namespace RISTExamOnlineProject.Models.TSQL
             }
             return Result;
         }
+
+        public _ExamCommitResult CommitExam(string Opid, string strItemCateg, string strItemInput, string strStartTime, string strEndTime, List<_ExamQuestionAnswer> ArrAns,string IpAddress)
+        {
+            mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
+            _ExamCommitResult EXresult = new _ExamCommitResult();
+            DataTable dt = new DataTable();
+            double Correct = 0;
+            double TatalExam = 0;
+            double Average = 0;
+            double Wrong = 0;
+            string strPlan = null;
+            string strLevel = null;
+            double Standard = 0;
+            Boolean Result = true;
+            try { 
+            foreach (_ExamQuestionAnswer rows in ArrAns)
+            {
+                strSQL = "";
+                strSQL += "[sprExamAnswerCheck] '" + rows.strQuestion + "','" + rows.strAnswer + "','CheckAns'";
+                dt = ObjRun.GetDatatables(strSQL);
+                if (dt.Rows.Count > 0)
+                {
+                    Correct += Convert.ToDouble(dt.Rows[0][0].ToString());
+                }
+            }
+            strSQL = "";
+            strSQL += "[sprExamAnswerCheck] '" + strItemCateg + "','" + strItemInput + "','TatalExam'";
+            dt = ObjRun.GetDatatables(strSQL);
+            if (dt.Rows.Count > 0)
+            {
+                TatalExam += Convert.ToDouble(dt.Rows[0][0].ToString()); 
+            }
+                Wrong = TatalExam - Correct;
+                Average = (Correct / TatalExam) * 100;
+                strSQL = "";
+            strSQL += "select * from zz_vew";
+            dt = ObjRun.GetDatatables(strSQL);
+            if (dt.Rows.Count > 0)
+            {
+                strPlan = dt.Rows[0]["Plan"].ToString();
+                strLevel = dt.Rows[0]["Level"].ToString();
+                Standard = Convert.ToDouble(dt.Rows[0]["Standard"].ToString());
+            }
+
+                Result = (Average > Standard) ? true : false;
+
+            strSQL = "";
+                strSQL += "[sprExamResults] ";
+                strSQL += " '" + strPlan + "' ";
+                strSQL += ",'" + Opid + "' ";
+                strSQL += ",'" + strItemCateg + "' ";
+                strSQL += ",'" + strItemInput + "' ";
+                strSQL += ",'" + strStartTime + "' ";
+                strSQL += ",'" + strEndTime + "' ";
+                strSQL += ",'" + strLevel + "' ";
+                strSQL += ",'" + Correct + "' ";
+                strSQL += ",'" + Wrong + "' ";
+                strSQL += ",'" + TatalExam + "' ";
+                strSQL += ",'" + Result + "' ";
+                strSQL += ",'" + Opid + "' ";
+                strSQL += ",'"+ IpAddress + "' ";
+                dt = ObjRun.GetDatatables(strSQL);
+
+
+                if(dt.Rows.Count > 0)
+                {
+                    if (dt.Rows[0][1].ToString()=="OK")
+                    {
+                        string ExNbr = dt.Rows[0]["ExNbr"].ToString(); 
+                        foreach (_ExamQuestionAnswer rows in ArrAns)
+                        {
+                            strSQL = "";
+                            strSQL += "[sprExamResultsAttribute] '" + ExNbr + "','" + rows.strQuestion + "','" + rows.strAnswer + "' ,'" + Opid + "','" + IpAddress + "' ";
+                            dt = ObjRun.GetDatatables(strSQL);
+                            if (dt.Rows.Count > 0)
+                            {
+                                EXresult.BoolResult = Convert.ToBoolean( dt.Rows[0][0].ToString());
+                                EXresult.strMgs = Convert.ToString( Result); //dt.Rows[0][1].ToString();
+                                EXresult.strResult = dt.Rows[0][1].ToString();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        EXresult.BoolResult = false;
+                        EXresult.strMgs = dt.Rows[0][1].ToString();
+                        EXresult.strResult = "Error";
+                    }
+
+
+                }
+                else
+                {
+                    EXresult.BoolResult = false;
+                    EXresult.strMgs = "ExamResult";
+                    EXresult.strResult = "Error";
+                }
+                 
+
+            }
+            catch(Exception e)
+            {
+                EXresult.BoolResult = false;
+                EXresult.strMgs = e.Message.ToString();
+                EXresult.strResult = "Error";
+            }
+
+
+
+
+
+
+
+
+            return EXresult;
+        }
+
     }
 }

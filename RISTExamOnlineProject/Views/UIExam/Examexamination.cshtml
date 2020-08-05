@@ -110,10 +110,10 @@
                 });
         }
 
-
+        var Arrs = [];
         function TESTRedio() {
 
-            var Arrs = [];
+          
             var ArrCompl = [];
 
 
@@ -126,7 +126,7 @@
                     var x = ArrCompl.indexOf($(this).attr("name"));
                     
                     var Ans = $(this).val(); 
-                    var GroupItem = { strQuest: Quest, strAns: Ans };
+                    var GroupItem = { strQuestion: Quest, strAnswer: Ans };
 
                     if (x < 0) { 
                         Arrs.push(GroupItem);
@@ -240,6 +240,7 @@
 
         $("#btnSubmit").on("click", function () { 
             if (IsFullScreenCurrently()) { 
+                
                 GoOutFullscreen();  
 
             } else {
@@ -248,27 +249,90 @@
 
         });
 
+        function CommitExam() {
+
+               $.ajax({
+                type: 'POST',
+                   url: "../UIExam/CommitExam",
+                   data: { ArrAns: Arrs ,strItemCateg: "@ViewBag.Itemcateg",strItemInput:"@ViewBag.InputItem",OPID:"@User.Identity.Name"},
+                  dataType: 'json',
+                   success: function (Data) {
+                        debugger
+                       var strTitle = "";
+                       var strText = "";
+                       var strCateg = "";
+                       if (Data.dataBool == true && Data.data == "OK") {
+                           
+                           if (Data.dataResult == "True") {
+                               strTitle = "PASS <i class='fas fa-thumbs-up'></i>";
+                               strText = "congratulation!! :>";
+                               strCateg = "success";
+                           } else { 
+                               strTitle = "FAIL <i class='fas fa-thumbs-down'></i>";
+                               strText = "Please context to TEC ";
+                               strCateg = "error";
+                           }
+                       } else {
+                           debugger
+                           strTitle = Data.data;
+                           strText = Data.dataResult;
+                           strCateg = "error";
+                       }
+                       
+                      Swal.fire({
+                          icon: strCateg,
+                          title: strTitle,
+                          text: strText,
+                          type: strCateg,
+                          //timer: 1700,
+                      }).then(function () {
+                          return true;
+                      });
+                  },
+                  error: function (ex) {
+
+                  },
+                });
 
 
-        //window.onbeforeunload = function () {
-        //  //  alert( 'Are you sure you want to leave?');
-        //};
-       
+        }
 
         $(document).on('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', function () {
             if (IsFullScreenCurrently()) {
                 return false;
             }
             else {
+               
                 clearInterval(x);
                 alert('The exam is over'); 
                 $("#DivContents").html("<div class='text-center m-4'><H1 class='text-danger'>TEST END</H1><H1 class='text-danger'><i class='fas fa-check-circle'></i></H1> <br/> <a href='@Url.Action("LicenceList")' class='btn  btn-link'> MainMenu</a></div>" );
                 $("#ftExam").css("display", "none");
-
+                CommitExam();
                 return false;
             }
         });
 
+
+        window.onbeforeunload = function (event) {
+             
+            var message = 'Important: Please click on \'Save\' button to leave this page.';
+            if (typeof event == 'undefined') {
+               // CommitExam();
+                event = window.event;
+               
+            }
+            if (event) { 
+                event.returnValue = message;
+            }
+            return message;
+           
+        };
+
+        $(window).on("beforeunload", function () {
+            return inFormOrLink ? "Do you really want to close?" : null;
+        })
+
+       
 
     </script>
 } 
