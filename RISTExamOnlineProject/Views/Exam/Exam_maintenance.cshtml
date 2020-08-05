@@ -29,90 +29,78 @@
     <div class="container-fluid ">
 
         @*<div class="container rounded bg-white m-auto p-1" id="Main_Form">*@
+        <div class="row justify-content-center m-4">
 
-            <div class="row justify-content-center m-2">
-                <h1><b>   Exam Name : <label id="LB_Exam_Name"></label></b></h1>
+            <div class="col-5">
+                <h1><b> Exam Maintenance  </b></h1>
             </div>
-                              
-            <div class="row justify-content-center p-2">
-                <div class="col-10">
+        </div>
 
-                    <div class="card  rounded-lg mt-2 shadow-lg">
+        <div class="row justify-content-center p-2">
+            <div class="col-10">
 
-                        <div class="card-header  bg-dark badge-dark m-0 p-0" id="heading_Question_List">
-                            <div class="row justify-content-between">
+                <div class="card  rounded-lg mt-2 shadow-lg">
 
-                                <div class="col-3 ">
-                                    <h4 class="m-3 "><b>  Question List </b> </h4>
+                    <div class="card-header  bg-dark badge-dark">
 
-                                </div>
+                        <div class="row justify-content">
 
-                                <div class="col-1">
-
-                                    @*<button class="btn btn-outline-dark border-0 m-2" data-toggle="collapse" data-target="#collapse_Question_List" aria-expanded="true" aria-controls="collaps_Question_List">
-                            <i class="fas fa-plus-square fa-2x"></i>
-                        </button>*@
-
-
-                                    @*<button class="btn btn-outline-secondary border-0 m-2" onclick="Toggle('#collapse_Question_List')">
-                            <i class="fas fa-plus-square fa-2x"></i>
-                        </button>*@
-
-
-                                </div>
+                            <div class="col-12">
+                                <h3><b>   Exam Name : <label id="LB_Exam_Name" class="text-white"></label></b></h3>
 
                             </div>
-
                         </div>
 
-                        @*<div id="collapse_Question_List" class="collapse show" aria-labelledby="heading_Question_List" data-parent="#QuestionList_Form">*@
-                        @*<div id="collapse_Question_List" class="collapse show">*@
-
-                        <div class="card-body">
-
-                            <div class="row justify-content-between m-auto">
-                                <div class="col-2">
-                                    <h6> <b>  Total : <label id="LB_Exam_Count"></label> </b></h6>
-                                </div>
-
-                                <div class="col-2">
-                                    <button class="btn btn-success" onclick="NewQuestion()">
-                                        New Question
-                                    </button>
-
-                                </div>
-
-
-
-                            </div>
-                            <table class="table table-sm table-bordered table-striped " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable">
-
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <td>Edit</td>
-                                        <td>Question</td>
-                                        <td>Ans Count</td>
-                                        <td>Delete</td>
-                                    </tr>
-                                </thead>
-                            </table>
-
-
-
-
-
-
-                        </div>
-                        @*</div>*@
                     </div>
+
+                    @*<div id="collapse_Question_List" class="collapse show" aria-labelledby="heading_Question_List" data-parent="#QuestionList_Form">*@
+                    @*<div id="collapse_Question_List" class="collapse show">*@
+
+                    <div class="card-body">
+
+                        <div class="row justify-content-between m-auto">
+                            <div class="col-2">
+                                <h6> <b>  Total : <label id="LB_Exam_Count"></label> </b></h6>
+                            </div>
+
+                            <div class="col-2">
+                                <button class="btn btn-success" onclick="NewQuestion()">
+                                    New Question
+                                </button>
+
+                            </div>
+
+
+
+                        </div>
+                        <table class="table table-sm table-bordered table-striped " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable">
+
+                            <thead class="thead-dark">
+                                <tr>
+                                    <td>Edit</td>
+                                    <td>Question</td>
+                                    <td>Ans Count</td>
+                                    <td>Delete</td>
+                                </tr>
+                            </thead>
+                        </table>
+
+
+
+
+
+
+                    </div>
+                    @*</div>*@
                 </div>
             </div>
-             
-      
+        </div>
 
 
 
-            @*//---------------------------------*@
+
+
+        @*//---------------------------------*@
 
         @*</div>*@
 
