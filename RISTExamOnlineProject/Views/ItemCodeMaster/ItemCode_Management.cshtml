@@ -237,6 +237,7 @@
                 inputs = container.getElementsByTagName('input');
                 for (index = 0; index < inputs.length; ++index) {
                     if (inputs[index].type == "text") {
+                        debugger
                         if (inputs[index].value == '')
                         {
                             Swal.fire({
@@ -245,6 +246,7 @@
                                 text: 'Please complete all information.!',
                        
                             })
+
                             return false;
 
                         }
@@ -305,8 +307,9 @@
                         Message = "Update Data";
                     }
 
-
-
+                
+                    if (CheckValue_NotNull('Modal_Management') == false) return false;
+                    debugger
                     Swal.fire({
                         icon: 'warning',
                         title: 'Are you sure?',
@@ -320,7 +323,7 @@
                     }).then(function (result) {
                         if (result.value) {
 
-                            CheckValue_NotNull('Modal_Management');
+                          
 
 
                             $.ajax({
