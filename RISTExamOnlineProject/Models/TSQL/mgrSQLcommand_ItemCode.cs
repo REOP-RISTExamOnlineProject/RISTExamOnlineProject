@@ -51,11 +51,24 @@ namespace RISTExamOnlineProject.Models.TSQL
 
 
 
+        public string Itemcode_Management(string Job, string ItemCateg, string ItemCode, string ItemName, int time, int Nbr,string IP,string OPID) {
+            string MS;
+            var ObjRun = new mgrSQLConnect(_configuration);
+            strSQL = "EXEC [dbo].[srpItemCode_Management] '"+ Job + "', '" + ItemCateg + "','" + ItemCode + "','" + ItemName + "','" + Nbr + "','" + time + "','" + OPID + "','" + IP + "'";
+      
+            dt = ObjRun.GetDatatables(strSQL);
+        
+             MS = dt.Rows[0][0].ToString();
+
+
+            return MS;
+        }
+
         public List<ItemCode_Detail> Get_ItemCode_TableDetail(string ItemCateg) {
             var ObjRun = new mgrSQLConnect(_configuration);
             List<ItemCode_Detail> Detail = new List<ItemCode_Detail>();
 
-            strSQL = " select * FROM [SPTOSystem].[dbo].[InputItemList where ItemCateg = '"+ ItemCateg .Trim()+ "' order by ItemCode asc ]";
+            strSQL = " select * FROM [SPTOSystem].[dbo].[InputItemList] where ItemCateg = '"+ ItemCateg .Trim()+ "' order by ItemCode asc ";
             dt = ObjRun.GetDatatables(strSQL);
 
             if (dt.Rows.Count != 0) {

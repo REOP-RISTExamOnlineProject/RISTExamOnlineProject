@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.ExpressionTranslators.Internal;
 using Microsoft.Extensions.Configuration;
 using RISTExamOnlineProject.Models.db;
 using RISTExamOnlineProject.Models.TSQL;
@@ -81,7 +82,46 @@ namespace RISTExamOnlineProject.Controllers
             //}
         }
 
+        public JsonResult DeleteItem(int Nbr,string OPID) {
+            string ms;
+            string IP = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+            mgrSQLcommand_ItemCode ObjRun = new mgrSQLcommand_ItemCode(_configuration);
+            ms = ObjRun.Itemcode_Management("del", "", "", "", 0, Nbr, IP, OPID);
+            if (ms.Trim() == "OK")
+            {
+                return Json(new { success = true });
 
+            }
+            else
+            {
+
+                return Json(new { success = false, ms = ms });
+
+            }
+
+        }
+
+
+        public JsonResult Item_management(string Job, string ItemCateg ,string ItemCode, string ItemName, int time , int Nbr,string OPID) {
+            string ms;
+            string IP = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+            mgrSQLcommand_ItemCode ObjRun = new mgrSQLcommand_ItemCode(_configuration);
+            ms = ObjRun.Itemcode_Management(Job, ItemCateg, ItemCode, ItemName, time, Nbr, IP, OPID);
+            if (ms.Trim() == "OK")
+            {
+                return Json(new { success = true });
+
+            }
+            else {
+
+                return Json(new { success = false ,ms =ms});
+
+            }
+
+
+
+           
+        }
 
     }
 }

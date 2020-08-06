@@ -21,47 +21,62 @@
             <h1> Itemcode Master List</h1>
         </div>
 
+        <div class="row justify-content-center m-4">
+            <div class="col-2">
+                ItemCode :
 
+            </div>
+            <div class="col-3">
+                @Html.DropDownList("DDL_Category", new SelectList("", ""), new { @id = "DDL_Category", @class = " custom-select custom-select-sm" })
 
-        <div class="row justify-content-center">
+            </div>
 
-            <div class="col-10">
+        </div>
 
-                <div class="card rounded text-center shadow-lg">
+        <div id="Table_Display">
 
-                    <div class="card-body">
-                        <div class="row justify-content-center m-4">
-                            <div class="col-2">
-                                ItemCode :
+            <div class="row justify-content-center">
 
-                            </div>
-                            <div class="col-3">
-                                @Html.DropDownList("DDL_Category", new SelectList("", ""), new { @id = "DDL_Category", @class = " custom-select custom-select-sm" })
+                <div class="col-10">
 
-                            </div>
+                    <div class="card rounded  shadow-lg">
 
-                        </div>
-                        <div class="row justify-content-center m-4" id="Table_Display">
-                            <table class="table table-sm table-bordered table-striped " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable">
-
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <td>Edit</td>
-                                        <td>ItemCode </td>
-                                        <td>ItemName </td>
-                                        <td>DisplayOrder </td>
-                                        <td>TimeLimit </td>
-                                        <td>Delete</td>
-                                    </tr>
-
-
-                                </thead>
-                            </table>
-
+                        <div class="card-header badge-dark">
+                            <h3>  <label id="LB_Name" class="text-white"></label>  </h3>
 
                         </div>
 
+                        <div class="card-body">
+                            <div class="row justify-content-end m-2">
+                                <div class="col-2">
+                                    <button type="button" class="btn btn-success" id="BTN_NEW" onclick="Modal_setup('new','','','')">New Item</button>
+                                </div>
+                            </div>
 
+
+                            <div class="row justify-content-center m-2">
+
+                                <table class="table table-sm table-bordered table-striped " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable">
+
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <td>Edit</td>
+                                            <td>ItemCode </td>
+                                            <td>ItemName </td>
+                                            <td>DisplayOrder </td>
+                                            <td>TimeLimit </td>
+                                            <td>Delete</td>
+                                        </tr>
+
+
+                                    </thead>
+                                </table>
+
+
+                            </div>
+
+
+                        </div>
                     </div>
 
 
@@ -81,9 +96,59 @@
     </div>
 
 
+    <div class="modal hide fade" id="Modal_Management" tabindex="-1" data-focus-on="input:first">
+        <div class="modal-dialog ">
+
+            <div class="modal-content border border-dark shadow shadow-lg rounded ">
+                <div class="modal-header badge-dark">
+                    <h4 class="modal-title "><label id="LB_title" class="text-white"></label></h4>
+
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
 
 
 
+                </div>
+                <div class="modal-body">
+                    <div class="row justify-content-center m-2">
+                        <div class="col-4">
+                            ItemCode :
+                        </div>
+                        <div class="col-6">
+                            <input type="text" class="form-control" id="TB_ItemCode" maxlength="6" />
+                        </div>
+
+                    </div>
+                    <div class="row justify-content-center m-2">
+                        <div class="col-4">
+                            ItemName :
+                        </div>
+                        <div class="col-6">
+                            <input type="text" class="form-control" id="TB_ItemName"  maxlength="50"/>
+                        </div>
+
+                    </div>
+                    <div class="row justify-content-center m-2">
+                        <div class="col-4">
+                            Item limit :
+                        </div>
+                        <div class="col-2">
+                            <input type="text" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="4" id="TB_Time" />
+                        </div>
+                        <div class="col-4">
+                            <label class="text-danger">
+                                <b> Minutes </b> 
+                            </label>
+                   
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="BTN_ModalSubmit" onclick=" Job_query()"> SUBMIT</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -132,52 +197,185 @@
 
 
         <script>
-            var OP_UPD
-            var ItemCateg
-            var TableTarget
+
+            var OP_UPD;
+            var ItemCateg;
+            var TableTarget;
+            var DisplayOrder;
+            var Nbr;
+            var Job;
+
+
 
             $(document).ready(function () {
-
                 CheckRole()
-
-
                 OP_UPD = '@User.Identity.Name';
-                GetExamCategory()
+                GetExamCategory();
 
 
                 $("#Table_Display").hide();
 
             });
 
+            function clearFields(fieldid) {
+                var container, inputs, index;
+ 
+                container = document.getElementById(fieldid);
+                inputs = container.getElementsByTagName('input');
+                for (index = 0; index < inputs.length; ++index) {
+                    if (inputs[index].type == "text")
+                        inputs[index].value = '';
+                };
+            };
+
+
+
+            function CheckValue_NotNull(fieldid) {
+                var container, inputs, index;
+               
+                container = document.getElementById(fieldid);
+                inputs = container.getElementsByTagName('input');
+                for (index = 0; index < inputs.length; ++index) {
+                    if (inputs[index].type == "text") {
+                        if (inputs[index].value == '')
+                        {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Please complete all information.!',
+                       
+                            })
+                            return false;
+
+                        }
+                    }
+                        
+                };
+            };
+
 
 
             function CheckRole() {
-
-
                 if ( '@User.IsInRole("Admin")' != "True") {
-
                     window.location.href = "@Url.Action("index", "home")";
+                }
+            };
+
+
+
+
+            function Modal_setup(Job_, ItemCode, ItemName, time) {
+                
+                //Clear data input in modal
+
+                Job = Job_;
+
+                clearFields('Modal_Management');
+
+                // Inseart data to text box when job is upd
+                if (Job == "upd") {
+                    $('#TB_ItemCode').val(ItemCode)
+                    $('#TB_ItemName').val(ItemName)
+                    $('#TB_Time').val(time)
+                    $('#LB_title').text('Update Item');
+                } else {
+                    $('#LB_title').text('New Item');
+                    Nbr = 0
                 }
 
 
+                $("#Modal_Management").modal('show');
+
+            };
 
 
 
 
-            }
+                function Job_query() {
+                      //  Item_management(string Job, string ItemCateg, string ItemCode, string ItemName, int time, int Nbr, string OPID)
+                
+                    ItemCode = $('#TB_ItemCode').val();
+                    ItemName = $('#TB_ItemName').val();
+                    time = $('#TB_Time').val();
 
-            function MakeTable(ItemCateg) {
+                    var Message;
+                    if (Job == "new") {
+                        Message = "Insert Data";
+                    } else {
+                        Message = "Update Data";
+                    }
+
+
+
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Are you sure?',
+                        text: "Are you sure you want to " + Message+" Itemcode ?",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, Do it!'
+
+                    }).then(function (result) {
+                        if (result.value) {
+
+                            CheckValue_NotNull('Modal_Management');
+
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '../ItemCodeMaster/Item_management',
+                                dataType: 'json',
+                                data: { Job: Job, ItemCateg: ItemCateg, ItemCode: ItemCode, ItemName: ItemName, time: time, Nbr: Nbr, OPID: OP_UPD},
+                                success: function (response) {
+                                    if (response.success == true) {
+                                        Swal.fire({
+                                            position: 'top-mid',
+                                            icon: 'success',
+                                            title: (Message +" item  success "),
+                                            showConfirmButton: true,
+                                            //   timer: 1700
+                                        }).then(function (result) {
+                                            MakeTable_ItemCode(ItemCateg)
+                                            clearFields('Modal_Management');
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: response.ms ,
+
+                                        })
+
+                                    }
+                                }
+                            });
+
+                        }
+                    });
+
+
+                };
+
+
+
+
+
+
+            function MakeTable_ItemCode(ItemCateg) {
+
                 TableTarget = $("#MyTable").DataTable()
 
                 if (TableTarget != null) {
                     TableTarget.destroy();
                 }
                 TableTarget = $("#MyTable").DataTable({
-                searching: false,
+                   searching: false,
                     ordering: true,
-                        serverSide: true,
-                            processing: true,
-                                // cache: true,
+                    serverSide: true,
+                      processing: true,
+              cache: true,
                                 ajax: ({
                                     type: "post",
                                     url: "../ItemCodeMaster/ItemCode_TableDetail",
@@ -187,17 +385,16 @@
 
                                 }),
 
-                                   // dom: '<"top"l>rt<"bottom">ip<"clear">',
-                                        columns: [
+                    columns: [
+
                                             {
                                                 data: null,
                                                 render: function (data, type, row) {
                                                     var itemCode = row.itemCode.trim();
                                                     var itemName = row.itemName.trim();
                                                     var timeLimit = row.timeLimit;
-                                                  
-
-                                                    return "<a href='#' class='btn btn-info text-white' onclick=EditQuestion('" + itemCode + "','" + itemName + "','" + timeLimit + "') >Edit</a>";
+                                                    var nbr = row.nbr;
+                                                    return "<a href='#' class='btn btn-info text-white' onclick=EditItem('" + encodeURIComponent(itemCode) + "','" + encodeURIComponent(itemName) + "','" + timeLimit + "','" + nbr +"') >Edit</a>";
 
                                                     //return "<a href='#' class='btn btn-info text-white' onclick=EditQuestion('" + ValueCodeAnswer + "') >Edit</a>";
 
@@ -210,40 +407,92 @@
                                             {
                                                 data: null,
                                                 render: function (data, type, row) {
-                                                    var nbr = row.nbr.trim();
-                                                 
-                                                    return "<a href='#' class='btn btn-danger  text-white' onclick=DeleteQuestion('" + nbr + "') ><i class='fas fa-trash-alt'></i></a>";
+                                                    var nbr = row.nbr;
 
-                                                    //return "<a href='#' class='btn btn-info text-white' onclick=EditQuestion('" + ValueCodeAnswer + "') >Edit</a>";
+                                                    return "<a href='#' class='btn btn-danger  text-white' onclick=DeleteItemCode('" + nbr + "') ><i class='fas fa-trash-alt'></i></a>";
+
+
 
                                                 }, class: "text-wrap text-center"
                                             },
-                                           
+
+
                     ],
-                order: [0, "asc"],
 
                     });
 
-           //     Get_ItemCode_TableDetail
+
 
 
             };
+
+
+            function EditItem(itemCode, itemName, timeLimit, nbr) {
+              
+                Nbr = nbr
+                Modal_setup("upd", decodeURIComponent(itemCode), decodeURIComponent(itemName), timeLimit)
+            }
+
+            function DeleteItemCode(nbr) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Are you sure?',
+                    text: "Are you sure you want to Delete Itemcode ?",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Delete it!'
+
+                }).then(function (result) {
+                    if (result.value) {
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '../ItemCodeMaster/DeleteItem',
+                            dataType: 'json',
+                            data: { nbr: nbr, OPID: OP_UPD},
+                            success: function (response) {
+                                if (response.success == true) {
+
+                                    Swal.fire({
+                                        position: 'top-mid',
+                                        icon: 'success',
+                                        title: ("Delete  Item  success "),
+                                        showConfirmButton: true,
+                                        //   timer: 1700
+                                    }).then(function (result) {
+
+                                        MakeTable_ItemCode(ItemCateg)
+
+                                    });
+
+                                }
+                            }
+                        });
+
+                    }
+                })
+
+
+            };
+
 
             $("#DDL_Category").on("change", function () {
 
                 ItemCateg = $("#DDL_Category").val()
 
-                if (Category != 0) {
+                if (ItemCateg != 0) {
+                    MakeTable_ItemCode(ItemCateg)
+                    $("#LB_Name").text($("#DDL_Category option:selected").text());
                     $("#Table_Display").show();
-                    MakeTable(ItemCateg)
-                   // GetExamName(Category)
                 } else {
                     $("#Table_Display").hide();
 
                 }
             });
 
-             
+
 
             function GetExamCategory() {
                 $.ajax({
