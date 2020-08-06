@@ -54,7 +54,7 @@
         <div class="col-sm-3 pl-0 text-center header-logo">
             <div class="bg-theme mr-3 pt-3 pb-2 mb-0">
                 <h3 class="logo">
-                    <a href="#" class="text-secondary logo"><i class="fa fa-book"></i> Skill Test<span class="small"> Online</span></a>
+                    <a href="@Url.Action("index","Home")" class="text-secondary logo"><i class="fa fa-book"></i> Skill Test<span class="small"> Online</span></a>
                 </h3>
             </div>
         </div>
@@ -195,7 +195,7 @@
                         <input type="text" class="form-control search-box" placeholder="Enter keywords.." />
                     </div>
                     <div class="mr-4">
-                        <a class="" href="#" role="button" id="dropdownMenuLink" onclick="toggle_dropdown(this);return false;" data-toggle="dropdownx" aria-haspopup="true" aria-expanded="r">
+                        <a class="" href="#" role="button" id="dropdownMenuLink" onclick="toggle_dropdown(this);return false;" data-toggle="dropdownx" aria-haspopup="true" aria-expanded=" ">
                             <img src="@ViewBag.imgProfile" alt="#" class="rounded-circle profiles" width="40px" height="40px">
                         </a>
                         <div class="dropdown dropdown-right text-left bg-white shadow border mt-13" aria-labelledby="dropdownMenuLink">
@@ -236,14 +236,14 @@
                     <p><strong id="strName">@ViewBag.NameEng</strong></p>
                     <span class="text-primary small"><strong id="strJobTitle">@ViewBag.JobTitle</strong></span>
                     @*<p><strong>Mr.Wittaya S.</strong></p>
-                        <span class="text-primary small"><strong>System Dev.</strong></span>*@
+                    <span class="text-primary small"><strong>System Dev.</strong></span>*@
                 </div>
                 <!--Image Avatar-->
                 <!--Sidebar Navigation Menu-->
                 <div class="sidebar-menu-container">
                     <ul class="sidebar-menu mt-4 mb-4">
                         <li class="parent">
-                            <a href="#" class="">
+                            <a href="@Url.Action("index","Home")" class="">
                                 <i class="fa fa-qrcode mr-3"> </i>
                                 <span class="none">Dashboard </span>
                             </a>
@@ -313,7 +313,7 @@
                         }
                         <li class="parent">
                             <a href="@Url.Action("LicenceList","UIExam")">
-                                <i class="fas fa-stream mr-3"></i> <span class="none">กะเพราไก่ไข่ดาวพิเศษ1</span>
+                                <i class="fas fa-stream mr-3"></i> <span class="none">Examexamination</span>
                             </a>
                         </li>
                     </ul>
@@ -329,19 +329,9 @@
             <div class="container-fluid">
                 @RenderBody()
             </div>
-          
 
-            <!--Footer-->
-            <div class="row mt-5 mb-4 footer">
-                <div class="col-sm-8">
-                    <span>&copy; All rights reserved 2020 designed by <a class="text-theme" href="#">IS-SYSTEM</a></span>
-                </div>
-                <div class="col-sm-4 text-right">
-                    <a href="#" class="ml-2">Contact Us</a>
-                    <a href="#" class="ml-2">Support</a>
-                </div>
-            </div>
-            <!--Footer-->
+
+
         </div>
         <div class="modal" tabindex="-1" role="dialog" id="form-modal">
             <div class="modal-dialog" role="document">
@@ -358,12 +348,22 @@
                 </div>
             </div>
         </div>
+        <!--Footer-->
+        @*<div class="row mt-5 mb-4 footer">
+            <div class="col-sm-8">
+                <span>&copy; All rights reserved 2020 designed by <a class="text-theme" href="#">IS-SYSTEM</a></span>
+            </div>
+            <div class="col-sm-4 text-right">
+                <a href="#" class="ml-2">Contact Us</a>
+                <a href="#" class="ml-2">Support</a>
+            </div>
+        </div>*@
+        <!--Footer-->
+        @*<div class="loaderbody" id="loaderbody">
+            <div class="loader"></div>
+        </div>*@
 
-            @*<div class="loaderbody" id="loaderbody">
-                <div class="loader"></div>
-            </div>*@
-
-        </div>
+    </div>
 
     <!--Main Content-->
    
