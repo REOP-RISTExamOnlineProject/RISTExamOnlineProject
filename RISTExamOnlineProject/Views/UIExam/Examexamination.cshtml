@@ -257,7 +257,7 @@
                    data: { ArrAns: Arrs ,strItemCateg: "@ViewBag.Itemcateg",strItemInput:"@ViewBag.InputItem",OPID:"@User.Identity.Name"},
                   dataType: 'json',
                    success: function (Data) {
-                        debugger
+                         
                        var strTitle = "";
                        var strText = "";
                        var strCateg = "";
@@ -273,7 +273,7 @@
                                strCateg = "error";
                            }
                        } else {
-                           debugger
+                            
                            strTitle = Data.data;
                            strText = Data.dataResult;
                            strCateg = "error";

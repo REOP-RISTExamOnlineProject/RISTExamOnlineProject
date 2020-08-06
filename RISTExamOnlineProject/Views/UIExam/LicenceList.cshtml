@@ -5,33 +5,33 @@
 }
 
 
-<div class="container-fluid">
+<div class="container-fluid fade-in">
     <div class="row">
         <div class="mb-4 col-6">
             <h1>Licensure Examination</h1>
             <p>การสอบใบอนุญาต</p>
         </div>
-        <div class="mb-4 offset-2 col-6 ">
+        @*<div class="mb-4 offset-2 col-6 ">
             <div class="card ">
                 <div class="row card-body">
                     <span class="text-uppercase  ml-4 pull-right font-weight-lighter"> Tatal : </span>
                     <span> 0 </span>
                 </div>
             </div>
-        </div>
+        </div>*@
     </div>
     <hr />
 
      
     <div class="card shadow">
-        <div class="card-body">
+        <div class="card-body ">
             <h4 class="text-uppercase ml-4 font-weight-lighter">
                 Licence category
             </h4>
            
             <hr />
             <div class="text-center bg-white p-3">
-                <table class="table table-bordered table-sm bg-white w-100" id="tbItemCatg">
+                <table class="table table-hover table-sm bg-white w-100" id="tbItemCatg">
                     <thead class="bg-dark text-white">
                         <tr>
                             <td>licensure Code</td>
@@ -46,7 +46,7 @@
     </div>
 </div>
 
-<style>
+@*<style>
     #tbItemCatg tbody tr.even:hover {
         background-color: cadetblue;
         cursor: pointer;
@@ -56,7 +56,7 @@
         background-color: cadetblue;
         cursor: pointer;
     }
-</style>
+</style>*@
 @section scripts{
     <link href="~/lib/datatables/Css/jquery.dataTables.min.css" rel="stylesheet" />
     <script src="~/lib/datatables/Js/jquery.dataTables.min.js"></script>
@@ -83,22 +83,22 @@
                         className: "center",
                         "fnCreatedCell": function (nTd, oData) {  
                             var itemCateg = oData.itemCateg;
-                            $(nTd).html('<a href="../UIExam/ModeExemList?ItemCateg=' + itemCateg +' " class="btn btn-success btn-sm">SELECT</a>');  
+                            $(nTd).html('<a href="../UIExam/ModeExemList?ItemCateg=' + itemCateg +' " class="btn btn-success btn-sm"> SELECT     <span class="badge badge-info">4</span></a>');  
                         }, className: "dt-body-center"
                     }, 
                 ],
                 order: [0, "asc"], 
             }); 
 
-            $('#tbItemCatg tbody').on('hover', 'tr', function () {
-                if ($(this).hasClass('selected')) {
-                    $(this).removeClass('selected');
-                }
-                else {
-                    myTables1.$('tr.selected').removeClass('selected');
-                    $(this).addClass('selected');
-                } 
-            });
+            //$('#tbItemCatg tbody').on('hover', 'tr', function () {
+            //    if ($(this).hasClass('selected')) {
+            //        $(this).removeClass('selected');
+            //    }
+            //    else {
+            //        myTables1.$('tr.selected').removeClass('selected');
+            //        $(this).addClass('selected');
+            //    } 
+            //});
         }
 
            
