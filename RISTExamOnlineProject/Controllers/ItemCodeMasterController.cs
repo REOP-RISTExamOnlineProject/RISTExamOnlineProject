@@ -86,7 +86,7 @@ namespace RISTExamOnlineProject.Controllers
             string ms;
             string IP = Request.HttpContext.Connection.RemoteIpAddress.ToString();
             mgrSQLcommand_ItemCode ObjRun = new mgrSQLcommand_ItemCode(_configuration);
-            ms = ObjRun.Itemcode_Management("del", "", "", "", 0, Nbr, IP, OPID);
+            ms = ObjRun.Itemcode_Management("del", "", "", "", 0, Nbr, IP, OPID,"","");
             if (ms.Trim() == "OK")
             {
                 return Json(new { success = true });
@@ -102,11 +102,14 @@ namespace RISTExamOnlineProject.Controllers
         }
 
 
-        public JsonResult Item_management(string Job, string ItemCateg ,string ItemCode, string ItemName, int time , int Nbr,string OPID) {
+
+       
+        public JsonResult Item_management(string Job, string ItemCateg ,string ItemCode, string ItemName, int time ,
+            int Nbr,string OPID,string ValueCodeQuestion,string ValueCodeAnswer) {
             string ms;
             string IP = Request.HttpContext.Connection.RemoteIpAddress.ToString();
             mgrSQLcommand_ItemCode ObjRun = new mgrSQLcommand_ItemCode(_configuration);
-            ms = ObjRun.Itemcode_Management(Job, ItemCateg, ItemCode, ItemName, time, Nbr, IP, OPID);
+            ms = ObjRun.Itemcode_Management(Job, ItemCateg, ItemCode, ItemName, time, Nbr, IP, OPID, ValueCodeQuestion, ValueCodeAnswer);
             if (ms.Trim() == "OK")
             {
                 return Json(new { success = true });

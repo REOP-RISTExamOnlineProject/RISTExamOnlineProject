@@ -37,7 +37,7 @@
 
             <div class="row justify-content-center">
 
-                <div class="col-10">
+                <div class="col-12">
 
                     <div class="card rounded  shadow-lg">
 
@@ -47,25 +47,27 @@
                         </div>
 
                         <div class="card-body">
-                            <div class="row justify-content-end m-2">
+                            @*<div class="row justify-content-end m-2">
                                 <div class="col-2">
                                     <button type="button" class="btn btn-success" id="BTN_NEW" onclick="Modal_setup('new','','','')">New Item</button>
                                 </div>
-                            </div>
+                            </div>*@
 
 
                             <div class="row justify-content-center m-2">
 
                                 <table class="table table-sm table-bordered table-striped " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable">
 
-                                    <thead class="thead-dark">
+                                    <thead>
                                         <tr>
-                                            <td>Edit</td>
-                                            <td>ItemCode </td>
-                                            <td>ItemName </td>
-                                            <td>DisplayOrder </td>
-                                            <td>TimeLimit </td>
-                                            <td>Delete</td>
+                                            @*<td>Edit</td>*@
+                                            <td><h6>ItemCode</h6>  </td>
+                                            <td><h6>ItemName</h6>  </td>
+                                            <td><h6>Question</h6>  </td>
+                                            <td><h6>Answer</h6>  </td>
+                                            <td><h6>Display</h6>  </td>
+                                            <td><h6>Time</h6> </td>
+                                            <td> <button type="button" class="btn btn-success w-auto" id="BTN_NEW" onclick="Modal_setup('new','','','')"><i class="fas fa-random"></i> New Item</button>       </td>
                                         </tr>
 
 
@@ -136,9 +138,27 @@
                         </div>
                         <div class="col-4">
                             <label class="text-danger">
-                                <b> Minutes </b> 
+                                <b> Minutes </b>
                             </label>
-                   
+
+                        </div>
+                        <div class="row justify-content-center m-2">
+                            <div class="col-4">
+                                Code Question :
+                            </div>
+                            <div class="col-6">
+                                <input type="text" class="form-control w-100 " id="TB_Code_Question" maxlength="6" />
+                            </div>
+
+                        </div>
+                        <div class="row justify-content-center m-2">
+                            <div class="col-4">
+                                Code Answer :
+                            </div>
+                            <div class="col-6">
+                                <input type="text" class="form-control w-100" id="TB_Code_Answer" maxlength="6" />
+                            </div>
+
                         </div>
 
                     </div>
@@ -204,7 +224,8 @@
             var DisplayOrder;
             var Nbr;
             var Job;
-
+            var ValueCodeQuestion
+            var ValueCodeAnswer
 
 
             $(document).ready(function () {
@@ -219,7 +240,7 @@
 
             function clearFields(fieldid) {
                 var container, inputs, index;
- 
+
                 container = document.getElementById(fieldid);
                 inputs = container.getElementsByTagName('input');
                 for (index = 0; index < inputs.length; ++index) {
@@ -232,7 +253,7 @@
 
             function CheckValue_NotNull(fieldid) {
                 var container, inputs, index;
-               
+
                 container = document.getElementById(fieldid);
                 inputs = container.getElementsByTagName('input');
                 for (index = 0; index < inputs.length; ++index) {
@@ -244,14 +265,14 @@
                                 icon: 'error',
                                 title: 'Oops...',
                                 text: 'Please complete all information.!',
-                       
+
                             })
 
                             return false;
 
                         }
                     }
-                        
+
                 };
             };
 
@@ -266,8 +287,8 @@
 
 
 
-            function Modal_setup(Job_, ItemCode, ItemName, time) {
-                
+            function Modal_setup(Job_, ItemCode, ItemName, time, Code_Question, Code_Answer) {
+
                 //Clear data input in modal
 
                 Job = Job_;
@@ -276,9 +297,12 @@
 
                 // Inseart data to text box when job is upd
                 if (Job == "upd") {
-                    $('#TB_ItemCode').val(ItemCode)
-                    $('#TB_ItemName').val(ItemName)
-                    $('#TB_Time').val(time)
+                    $('#TB_ItemCode').val(ItemCode);
+                    $('#TB_ItemName').val(ItemName);
+                    $('#TB_Time').val(time);
+                    $('#TB_Code_Question').val(Code_Question);
+                    $('#TB_Code_Answer').val(Code_Answer);
+
                     $('#LB_title').text('Update Item');
                 } else {
                     $('#LB_title').text('New Item');
@@ -295,11 +319,12 @@
 
                 function Job_query() {
                       //  Item_management(string Job, string ItemCateg, string ItemCode, string ItemName, int time, int Nbr, string OPID)
-                
+
                     ItemCode = $('#TB_ItemCode').val();
                     ItemName = $('#TB_ItemName').val();
                     time = $('#TB_Time').val();
-
+                   ValueCodeQuestion = $('#TB_Code_Question').val();
+                   ValueCodeAnswer = $('#TB_Code_Answer').val();
                     var Message;
                     if (Job == "new") {
                         Message = "Insert Data";
@@ -307,7 +332,7 @@
                         Message = "Update Data";
                     }
 
-                
+
                     if (CheckValue_NotNull('Modal_Management') == false) return false;
                     debugger
                     Swal.fire({
@@ -323,14 +348,12 @@
                     }).then(function (result) {
                         if (result.value) {
 
-                          
-
 
                             $.ajax({
                                 type: 'POST',
                                 url: '../ItemCodeMaster/Item_management',
                                 dataType: 'json',
-                                data: { Job: Job, ItemCateg: ItemCateg, ItemCode: ItemCode, ItemName: ItemName, time: time, Nbr: Nbr, OPID: OP_UPD},
+                                data: { Job: Job, ItemCateg: ItemCateg, ItemCode: ItemCode, ItemName: ItemName, time: time, Nbr: Nbr, OPID: OP_UPD, ValueCodeQuestion: ValueCodeQuestion, ValueCodeAnswer: ValueCodeAnswer},
                                 success: function (response) {
                                     if (response.success == true) {
                                         Swal.fire({
@@ -390,34 +413,34 @@
 
                     columns: [
 
-                                            {
-                                                data: null,
-                                                render: function (data, type, row) {
-                                                    var itemCode = row.itemCode.trim();
-                                                    var itemName = row.itemName.trim();
-                                                    var timeLimit = row.timeLimit;
-                                                    var nbr = row.nbr;
-                                                    return "<a href='#' class='btn btn-info text-white' onclick=EditItem('" + encodeURIComponent(itemCode) + "','" + encodeURIComponent(itemName) + "','" + timeLimit + "','" + nbr +"') >Edit</a>";
+                      
+                        { data: "itemCode", name: "itemCode", class: "text-wrap text-center m-auto" },
+                        { data: "itemName", name: "itemName", class: "text-wrap text-center m-auto" },
+                        { data: "valueCodeQuestion", name: "valueCodeQuestion", class: "text-wrap text-center m-auto" },
+                        { data: "valueCodeAnswer", name: "valueCodeAnswer", class: "text-wrap text-center m-auto" },
+                        { data: "displayOrder", name: "displayOrder", class: "text-wrap text-center m-auto" },
+                        { data: "timeLimit", name: "timeLimit", class: "text-wrap text-center m-auto" },
+                        {
 
-                                                    //return "<a href='#' class='btn btn-info text-white' onclick=EditQuestion('" + ValueCodeAnswer + "') >Edit</a>";
-
-                                                }, class: "text-wrap text-center"
-                                            },
-                                            { data: "itemCode", name: "itemCode", class: "text-wrap text-left" },
-                                            { data: "itemName", name: "itemName", class: "text-wrap text-left" },
-                                            { data: "displayOrder", name: "displayOrder", class: "text-wrap text-left" },
-                                            { data: "timeLimit", name: "timeLimit", class: "text-wrap text-left" },
-                                            {
-                                                data: null,
-                                                render: function (data, type, row) {
-                                                    var nbr = row.nbr;
-
-                                                    return "<a href='#' class='btn btn-danger  text-white' onclick=DeleteItemCode('" + nbr + "') ><i class='fas fa-trash-alt'></i></a>";
+                            data: null,
+                            render: function (data, type, row) {
+                                var itemCode = row.itemCode.trim();
+                                var itemName = row.itemName.trim();
+                                var timeLimit = row.timeLimit;
+                                var nbr = row.nbr;
+                                var valueCodeQuestion = row.valueCodeQuestion;
+                                var valueCodeAnswer = row.valueCodeAnswer;
 
 
+                                return "<div class='row justify-content-center m-2'>" +
+                                    "<div class='col-6'> <a href='#' class='btn btn-info w-100 text-white' onclick=EditItem('" + encodeURIComponent(itemCode) + "','" + encodeURIComponent(itemName) + "','" + timeLimit + "','" + nbr + "','" + encodeURIComponent(valueCodeQuestion) + "','" + encodeURIComponent(valueCodeAnswer) + "') ><i class='fas fa-pencil-alt'></i> Edit</a> </div> " +
+                                    "<div class='col-6'><a href='#' class='btn btn-danger w-100 text-white' onclick=DeleteItemCode('" + nbr + "') ><i class='fas fa-trash-alt'></i> Delete </a> </div>" +
+                                    "</div>";                         
 
-                                                }, class: "text-wrap text-center"
-                                            },
+                            }, class: "text-wrap text-center"
+                        },
+
+
 
 
                     ],
@@ -430,10 +453,11 @@
             };
 
 
-            function EditItem(itemCode, itemName, timeLimit, nbr) {
-              
+            function EditItem(itemCode, itemName, timeLimit, nbr,CodeQuestion,CodeAnswer) {
+
                 Nbr = nbr
-                Modal_setup("upd", decodeURIComponent(itemCode), decodeURIComponent(itemName), timeLimit)
+
+                Modal_setup("upd", decodeURIComponent(itemCode), decodeURIComponent(itemName), timeLimit, decodeURIComponent(CodeQuestion), decodeURIComponent(CodeAnswer))
             }
 
             function DeleteItemCode(nbr) {

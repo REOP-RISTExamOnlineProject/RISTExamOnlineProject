@@ -1,5 +1,5 @@
 ﻿
-@{
+@*@{
     ViewData["Title"] = "New_Exam";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -137,28 +137,8 @@
 
 
                 var ExamCode = $("#DDL_ExamName").val();
-
-                //Swal.fire({
-                //    icon: 'warning',
-                //    title: 'Are you sure?',
-                //    text: "Are you sure you want to ?anage Exam  ?",
-                //    type: 'warning',
-                //    showCancelButton: true,
-                //    confirmButtonColor: '#3085d6',
-                //    cancelButtonColor: '#d33',
-                //    confirmButtonText: 'Yes, Do it!'
-
-                //}).then(function (result) {
-                //    if (result.value) {
-
-
                         if (ExamCode != '' && ExamCode != null ) {
-
-
-
                             window.location.href = "@Url.Action("Exam_maintenance", "Exam")?Itemcode=" + ExamCode;
-
-
                         } else {
 
                             Swal.fire({
@@ -172,16 +152,6 @@
 
 
                         }
-
-
-
-
-                  //  }
-
-           //     })
-
-
-
 
             }
 
@@ -228,5 +198,5 @@
 
 
 
-</html>
+</html>*@
 

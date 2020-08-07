@@ -29,14 +29,75 @@
     <div class="container-fluid ">
 
         @*<div class="container rounded bg-white m-auto p-1" id="Main_Form">*@
-        <div class="row justify-content-center m-4">
+        <div class="row justify-content-center m-2">
 
             <div class="col-5">
                 <h1><b> Exam Maintenance  </b></h1>
             </div>
         </div>
 
-        <div class="row justify-content-center p-2">
+
+
+
+        <div class="row justify-content-center">
+            <div class="col-10">
+                <div class="card rounded shadow-lg m-auto ">
+                    <div class="card-header badge-dark  ">
+                        <h3><b>Select Exam </b></h3>
+                    </div>
+
+
+                    <div class="card-body">
+
+                        <br />
+                        <div class="row justify-content-lg-start ">
+
+                            <div class="col-2 text-right">
+
+                                <b>  Exam Category :</b>
+                            </div>
+                            <div class="col-3">
+                                @Html.DropDownList("DDL_ExamCategory", new SelectList("", ""), new { @id = "DDL_ExamCategory", @class = " custom-select custom-select-sm" })
+                            </div>
+
+                            <div class="col-2 text-right">
+                                <b>
+                                    Exam Name :
+                                </b>
+                            </div>
+                            <div class="col-3">
+                                @Html.DropDownList("DDL_ExamName", new SelectList("", ""), new { @id = "DDL_ExamName", @class = " custom-select custom-select-sm" })
+                            </div>
+
+
+
+                        </div>
+                        <br />
+                        <div class="row justify-content-center">
+                            <div class="col-2">
+
+                                <button class="btn btn-success" onclick="Manage_Exam()">Search </button>
+
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <br/>
+
+
+
+
+
+        <div class="row justify-content-center p-2" id="Display">
             <div class="col-10">
 
                 <div class="card  rounded-lg mt-2 shadow-lg">
@@ -58,29 +119,22 @@
 
                     <div class="card-body">
 
-                        <div class="row justify-content-between m-auto">
+                        <div class="row justify-content-start m-auto">
                             <div class="col-2">
                                 <h6> <b>  Total : <label id="LB_Exam_Count"></label> </b></h6>
                             </div>
-
-                            <div class="col-2">
-                                <button class="btn btn-success" onclick="NewQuestion()">
-                                    New Question
-                                </button>
-
-                            </div>
-
-
-
                         </div>
                         <table class="table table-sm table-bordered table-striped " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable">
 
                             <thead class="thead-dark">
                                 <tr>
-                                    <td>Edit</td>
                                     <td>Question</td>
                                     <td>Ans Count</td>
-                                    <td>Delete</td>
+                                    <td>
+                                        <button class="btn btn-success" onclick="NewQuestion()">
+                                            <i class="fas fa-random"></i>     New Question
+                                        </button>
+                                    </td>
                                 </tr>
                             </thead>
                         </table>
@@ -151,7 +205,6 @@
                 <div class="modal-body">
 
                     <div id="Display_Modal" class="border border-dark rounded m-3 p-3" style="min-height:30px; max-height:150px; overflow:auto;">
-
                     </div>
                     <textarea class="form-control " id="Summernote_modal" name="" style="height:150px; overflow:auto;"></textarea>
                     <br />
@@ -207,9 +260,6 @@
         <script src="~/lib/summernote/dist/summernote-bs4.js"></script>
 
 
-        <script src="~/lib/CustomJS/Exam/CommonJS.js"></script>
-        <script src="~/lib/CustomJS/Exam/Create_Exam.js"></script>
-
         <link href="~/lib/bootstrap/css/bootstrap4-toggle.css" rel="stylesheet" />
         <script src="~/lib/bootstrap/js/bootstrap4-toggle.js"></script>
 
@@ -245,6 +295,10 @@
 
 
 
+        <script src="~/lib/CustomJS/Exam/CommonJS.js"></script>
+
+        <script src="~/lib/CustomJS/Exam/Create_Exam.js"></script>
+
         <script>
 
                 var DisplayOrder = 0
@@ -268,227 +322,55 @@
 
                 var OP_UPD
             $(document).ready(function () {
-                //$('#CB_Need').bootstrapToggle('off')
-                CheckRole()
-
-                GetExamDetail('@ViewBag.Itemcode')
+                debugger
+                $('#Display').hide();
+                CheckRole();
                 OP_UPD = '@User.Identity.Name';
-
+                GetExamCategory();
 
             });
 
-
-
-            function Toggle(ID) {
-                $(ID).toggle(500);
-            }
-
-
-            function MakeTable(Detail) {
-                TableTarget = $("#MyTable").DataTable()
-                if (TableTarget != null) {
-                    TableTarget.destroy();
-                }
-
-                debugger
-                TableTarget = $("#MyTable").DataTable({
-                    //searching: false,
-                    ordering: false,
-                    //serverSide: true,
-                    //processing: true,
-                    //paging: true,
-
-                    //deferRender: true,
-                    data: Detail,
-                    dom: '<"top"l>rt<"bottom">ip<"clear">',
-                    columns: [
-                        {
-                            data: null,
-                            render: function (data, type, row) {
-                                var ValueCodeQuestion = row.valueCodeQuestion.trim();
-                                var ValueCodeAnswer = row.valueCodeAnswer.trim();
-                                var Seq = row.seq;
-                                var Max_Seq_ = row.max_Seq.trim();
-
-                                return "<a href='#' class='btn btn-info text-white' onclick=EditQuestion('"+ ValueCodeAnswer +"','"+ ValueCodeQuestion + "','" + Seq + "','" + Max_Seq_ + "') >Edit</a>";
-
-                                //return "<a href='#' class='btn btn-info text-white' onclick=EditQuestion('" + ValueCodeAnswer + "') >Edit</a>";
-
-                            }, class: "text-wrap text-center"
-                        },
-                        { data: "question", name: "question", class: "text-wrap text-left" },
-                        { data: "ans_Count", name: "ans_Count", class: "text-wrap text-center" },
-                        {
-                            data: null,
-                            render: function (data, type, row) {
-                                var ValueCodeQuestion = row.valueCodeQuestion.trim();
-                                var ValueCodeAnswer = row.valueCodeAnswer.trim();
-                                var Seq = row.seq;
-
-                                return "<a href='#' class='btn btn-danger  text-white' onclick=DeleteQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "') ><i class='fas fa-trash-alt'></i></a>";
-
-                                //return "<a href='#' class='btn btn-info text-white' onclick=EditQuestion('" + ValueCodeAnswer + "') >Edit</a>";
-
-                            }, class: "text-wrap text-center"
-                        },
-                    ],
-
-                    //fnInitComplete: function (oSettings, json, sData) {
-                    //    TableTarget.clear().draw();
-                    //    TableTarget.rows.add(Detail).draw();
-                    //    debugger
-                    //    return;
-                    //},
-                    //order: [0, "asc"],
-
-                });
-
-
-
-            }
-
                 var func = $('.summernote').summernote('module', 'videoDialog').createVideoNode;
 
-                $('.summernote').summernote('module', 'videoDialog').createVideoNode =
-                    function (url) {
+            $('.summernote').summernote('module', 'videoDialog').createVideoNode =
+                function (url) {
 
                         // native function generating the elements (iframe)
                         var html = func(url);
                        var a
 
                         return a;
-                    };
+                  };
 
 
             function CheckRole() {
 
              debugger
-
                 if ( '@User.IsInRole("Admin")' != "True") {
 
                     window.location.href = "@Url.Action("index", "home")";
                 }
-
-
             }
 
 
 
+            $("#DDL_ExamCategory").on("change", function () {
 
-                function DeleteQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq) {
+                var Category = $("#DDL_ExamCategory").val()
 
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Are you sure?',
-                        text: "Are you sure you want to Delete Question ?",
-                        type: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, Delete it!'
+                $('#Display').hide();
 
-                    }).then(function (result) {
-                        if (result.value) {
-
-                            $.ajax({
-                                type: 'POST',
-                                url: '../Exam/Delete_Question',
-                                dataType: 'json',
-                                data: { ValueCodeAnswer: ValueCodeAnswer, ValueCodeQuestion: ValueCodeQuestion, Seq: Seq },
-                                success: function (response) {
-                                    if (response.success == true) {
-
-
-                                        Swal.fire({
-                                            position: 'top-mid',
-                                            icon: 'success',
-                                            title: ("Delete  Question  success "),
-                                            showConfirmButton: true,
-                                            //   timer: 1700
-                                        }).then(function (result) {
-
-                                            location.reload();
-
-                                        });
-                                    }
-
-                                }
-
-
-
-                            });
-
-
-                        }
-                    })
-
-
-
-
+                if (Category != 0) {
+                    $("#DDL_ExamName option").remove();
+                    GetExamName(Category)
+                } else {
+                    $("#DDL_ExamName option").remove();
                 }
+            });
 
-
-                function NewQuestion() {
-
-                    var HTML_TEXT;
-                    $.ajax({
-                        type: 'POST',
-                        url: '../Exam/Get_HTML_Question_Detail',
-                        dataType: 'json',
-                        data: { ValueCodeAnswer:'0', ValueCodeQuestion: '0', Seq: 0, Job:"new"},
-                        success: function (response) {
-                            if (response.success == true) {
-                        
-                                $('#LB_title').text('New Question');
-                                HTML_TEXT = response.html;
-                                DeleteHTML('Modal_body_Form_Main');
-                                InputHTML('Modal_body_Form_Main', HTML_TEXT);
-                                $('#Modal_Form_Main').modal('show');
-                                CountAns('new');
-                            }
-
-                        }
-
-
-
-                    });
-
-                }
-
-            function EditQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq, Max_Seq) {
-              //  function EditQuestion(ValueCodeAnswer) {
-
-                Max_Seq = Max_Seq;
-                DisplayOrder = Seq;
-                var HTML_TEXT;
-                $.ajax({
-                    type: 'POST',
-                    url: '../Exam/Get_HTML_Question_Detail',
-                    dataType: 'json',
-                    data: { ValueCodeAnswer: ValueCodeAnswer, ValueCodeQuestion: ValueCodeQuestion, Seq: Seq, Job:"Edit"},
-                    success: function (response) {
-                        if (response.success == true) {
-                     
-                            $('#LB_title').text('Edit Question');
-                            HTML_TEXT = response.html;
-                            DeleteHTML('Modal_body_Form_Main');
-                            InputHTML('Modal_body_Form_Main', HTML_TEXT);
-                            CountAns('Edit')
-                            $('#Modal_Form_Main').modal('show')
-
-                        }
-
-                    }
-
-
-
-                });
-
-
-
-         
-
-            }
+            $("#DDL_ExamName").on("change", function () {
+                $('#Display').hide();
+            });
 
 
         </script>

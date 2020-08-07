@@ -15,6 +15,8 @@ namespace RISTExamOnlineProject.Models.db
         public string ItemName { get; set; }
         public int DisplayOrder { get; set; }
         public int TimeLimit { get; set; }
-           
+        public string ValueCodeQuestion { get; set; }
+        public string ValueCodeAnswer { get; set; }
+
     }
 }
