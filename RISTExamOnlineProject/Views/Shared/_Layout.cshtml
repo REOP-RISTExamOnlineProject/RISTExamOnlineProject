@@ -223,148 +223,150 @@
     </div>
     <!--Header-->
     <!--Main Content-->
-
-    <div class="row main-content">
-
-        <!--Sidebar left-->
-        <div class="col-sm-3 col-xs-6 sidebar pl-0">
-            <div class="inner-sidebar mr-3">
-                <!--Image Avatar-->
-                <div class="avatar text-center">
-                    <img src="@ViewBag.imgProfile" alt="" class="rounded-circle profiles" />
-
-                    <p><strong id="strName">@ViewBag.NameEng</strong></p>
-                    <span class="text-primary small"><strong id="strJobTitle">@ViewBag.JobTitle</strong></span>
-                    @*<p><strong>Mr.Wittaya S.</strong></p>
-                    <span class="text-primary small"><strong>System Dev.</strong></span>*@
-                </div>
-                <!--Image Avatar-->
-                <!--Sidebar Navigation Menu-->
-                <div class="sidebar-menu-container">
-                    <ul class="sidebar-menu mt-4 mb-4">
-                        <li class="parent">
-                            <a href="@Url.Action("index","Home")" class="">
-                                <i class="fa fa-qrcode mr-3"> </i>
-                                <span class="none">Dashboard </span>
-                            </a>
-                        </li>
+   
 
 
-                        <li class="parent">
-                            <a href="#">
-                                <i class="fas fa-stream mr-3"></i>
-                                <span class="none">Overview</span>
-                            </a>
-                        </li>
+        <div class="row">
 
-                        <li class="parent">
-                            <a href="#">
-                                <i class="fas fa-question-circle mr-3"></i>
-                                <span class="none">About</span>
-                            </a>
-                        </li>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            var userRoles = "";
-                            @if (User.IsInRole("Admin"))
-                            {
-                                userRoles = "Admin";
-                            }
-                            else
-                            {
-                                userRoles = "User";
-                            }
+            <!--Sidebar left-->
+            <div class="col-sm-3 col-xs-6 sidebar pl-0">
+                <div class="inner-sidebar mr-3">
+                    <!--Image Avatar-->
+                    <div class="avatar text-center">
+                        <img src="@ViewBag.imgProfile" alt="" class="rounded-circle profiles" />
 
-                            @if (userRoles == "Admin")
-                            {
-
-                                <li class="parent">
-                                    <a href="#" onclick="toggle_menu('Shortcuts');return false;">
-                                        <i class="fas fa-link mr-3"></i>
-                                        <span class="none">User Management <i class="fa fa-angle-down pull-right align-bottom"></i></span>
-                                    </a>
-
-                                    @{
-                                        var opno = @User.Identity.Name;
-                                    }
-                                    <ul class="#" id="Shortcuts">
-                                        <li class="child"><a href="@Url.Action("UserDetailMaintenance","Management")" class="ml-4"><i class="fa fa-angle-right mr-2 "></i> Edit User detail</a></li>
-                                        <li class="child"><a href="@Url.Action("UserInCharge", "Management" , new { opno=$"{opno.Trim()}"})" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Request Change</a></li>
-                                        <li class="child"><a href="@Url.Action("TEC_Approved","TEC_Management")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> TEC Approved</a></li>
-                                        <li class="child"><a href="@Url.Action("UserReqeustInqury","Management")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Request Inquiry</a></li>
-                                    </ul>
-                                </li>
-
-                                <li class="parent">
-                                    <a href="#" onclick="toggle_menu('Shortcuts_exam');return false;">
-                                        <i class="fas fa-tasks mr-3"></i>
-                                        <span class="none">Exam Management <i class="fa fa-angle-down pull-right align-bottom"></i></span>
-                                    </a>
-                                    <ul class="#" id="Shortcuts_exam">
-
-                                        <li class="child"><a href="@Url.Action("Index","ItemCategoryMaster")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> License Master</a></li>
-                                        <li class="child"><a href="@Url.Action("ItemCode_Management","ItemCodeMaster")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Itemcode Master</a></li>
-                                        <li class="child"><a href="@Url.Action("Exam_maintenance","exam")" class="ml-4"><i class="fa fa-angle-right mr-2"></i>Exam Management</a></li>
-                                    </ul>
-                                </li>
-
-
-                            }
-                        }
-                        <li class="parent">
-                            <a href="@Url.Action("LicenceList","UIExam")">
-                                <i class="fas fa-stream mr-3"></i> <span class="none">Examexamination</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <!--Sidebar Naigation Menu-->
-            </div>
-        </div>
-        <!--Sidebar left-->
-        <!--Content right-->
-        <div class="col-sm-9 col-12 content pt-3 pl-0">
-
-
-            <div class="container-fluid">
-                @RenderBody()
-            </div>
-
-
-
-        </div>
-        <div class="modal" tabindex="-1" role="dialog" id="form-modal">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
+                        <p><strong id="strName">@ViewBag.NameEng</strong></p>
+                        <span class="text-primary small"><strong id="strJobTitle">@ViewBag.JobTitle</strong></span>
+                        @*<p><strong>Mr.Wittaya S.</strong></p>
+                        <span class="text-primary small"><strong>System Dev.</strong></span>*@
                     </div>
-                    <div class="modal-body">
+                    <!--Image Avatar-->
+                    <!--Sidebar Navigation Menu-->
+                    <div class="sidebar-menu-container">
+                        <ul class="sidebar-menu mt-4 mb-4">
+                            <li class="parent">
+                                <a href="@Url.Action("index","Home")" class="">
+                                    <i class="fa fa-qrcode mr-3"> </i>
+                                    <span class="none">Dashboard </span>
+                                </a>
+                            </li>
 
+
+                            <li class="parent">
+                                <a href="#">
+                                    <i class="fas fa-stream mr-3"></i>
+                                    <span class="none">Overview</span>
+                                </a>
+                            </li>
+
+                            <li class="parent">
+                                <a href="#">
+                                    <i class="fas fa-question-circle mr-3"></i>
+                                    <span class="none">About</span>
+                                </a>
+                            </li>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                var userRoles = "";
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    userRoles = "Admin";
+                                }
+                                else
+                                {
+                                    userRoles = "User";
+                                }
+
+                                @if (userRoles == "Admin")
+                                {
+
+                                    <li class="parent">
+                                        <a href="#" onclick="toggle_menu('Shortcuts');return false;">
+                                            <i class="fas fa-link mr-3"></i>
+                                            <span class="none">User Management <i class="fa fa-angle-down pull-right align-bottom"></i></span>
+                                        </a>
+
+                                        @{
+                                            var opno = @User.Identity.Name;
+                                        }
+                                        <ul class="#" id="Shortcuts">
+                                            <li class="child"><a href="@Url.Action("UserDetailMaintenance","Management")" class="ml-4"><i class="fa fa-angle-right mr-2 "></i> Edit User detail</a></li>
+                                            <li class="child"><a href="@Url.Action("UserInCharge", "Management" , new { opno=$"{opno.Trim()}"})" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Request Change</a></li>
+                                            <li class="child"><a href="@Url.Action("TEC_Approved","TEC_Management")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> TEC Approved</a></li>
+                                            <li class="child"><a href="@Url.Action("UserReqeustInqury","Management")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Request Inquiry</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li class="parent">
+                                        <a href="#" onclick="toggle_menu('Shortcuts_exam');return false;">
+                                            <i class="fas fa-tasks mr-3"></i>
+                                            <span class="none">Exam Management <i class="fa fa-angle-down pull-right align-bottom"></i></span>
+                                        </a>
+                                        <ul class="#" id="Shortcuts_exam">
+
+                                            <li class="child"><a href="@Url.Action("Index","ItemCategoryMaster")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> License Master</a></li>
+                                            <li class="child"><a href="@Url.Action("ItemCode_Management","ItemCodeMaster")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Itemcode Master</a></li>
+                                            <li class="child"><a href="@Url.Action("Exam_maintenance","exam")" class="ml-4"><i class="fa fa-angle-right mr-2"></i>Exam Management</a></li>
+                                        </ul>
+                                    </li>
+
+
+                                }
+                            }
+                            <li class="parent">
+                                <a href="@Url.Action("LicenceList","UIExam")">
+                                    <i class="fas fa-stream mr-3"></i> <span class="none">Examexamination</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--Sidebar Naigation Menu-->
+                </div>
+            </div>
+            <!--Sidebar left-->
+            <!--Content right-->
+            <div class="col-sm-9 col-12 content pt-3 pl-0">
+
+
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+
+
+
+            </div>
+            <div class="modal" tabindex="-1" role="dialog" id="form-modal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                        </div>
                     </div>
                 </div>
             </div>
+            <!--Footer-->
+            @*<div class="row mt-5 mb-4 footer">
+                <div class="col-sm-8">
+                    <span>&copy; All rights reserved 2020 designed by <a class="text-theme" href="#">IS-SYSTEM</a></span>
+                </div>
+                <div class="col-sm-4 text-right">
+                    <a href="#" class="ml-2">Contact Us</a>
+                    <a href="#" class="ml-2">Support</a>
+                </div>
+            </div>*@
+            <!--Footer-->
+            @*<div class="loaderbody" id="loaderbody">
+                <div class="loader"></div>
+            </div>*@
+
         </div>
-        <!--Footer-->
-        @*<div class="row mt-5 mb-4 footer">
-            <div class="col-sm-8">
-                <span>&copy; All rights reserved 2020 designed by <a class="text-theme" href="#">IS-SYSTEM</a></span>
-            </div>
-            <div class="col-sm-4 text-right">
-                <a href="#" class="ml-2">Contact Us</a>
-                <a href="#" class="ml-2">Support</a>
-            </div>
-        </div>*@
-        <!--Footer-->
-        @*<div class="loaderbody" id="loaderbody">
-            <div class="loader"></div>
-        </div>*@
-
-    </div>
-
+   
     <!--Main Content-->
    
 

@@ -560,7 +560,7 @@ function MakeTable(Detail) {
 
         //deferRender: true,
         data: Detail,
-        dom: '<"top"l>rt<"bottom">ip<"clear">',
+        dom: '<"top">rt<"bottom"l>ip<"clear">',
         columns: [
 
             { data: "question", name: "question", class: "text-wrap text-left" },
