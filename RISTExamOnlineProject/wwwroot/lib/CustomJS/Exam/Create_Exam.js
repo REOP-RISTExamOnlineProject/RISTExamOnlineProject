@@ -300,9 +300,11 @@ function Insert_Exam(job) {
                         showConfirmButton: true,
                         //   timer: 1700
                     }).then(function (result) {
-
-                        location.reload();
-
+                        $('#Modal_Form_Main').modal('hide');
+                   //     location.reload();
+                        var ExamCode = $("#DDL_ExamName").val();
+                        GetExamDetail(ExamCode)
+                    
                     });
 
                 } else {
