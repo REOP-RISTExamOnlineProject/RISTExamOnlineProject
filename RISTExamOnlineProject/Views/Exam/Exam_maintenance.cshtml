@@ -41,6 +41,7 @@
 
         <div class="row justify-content-center">
             <div class="col-10">
+
                 <div class="card rounded shadow-lg m-auto ">
                     <div class="card-header badge-dark  ">
                         <h3><b>Select Exam </b></h3>
@@ -69,20 +70,20 @@
                                 @Html.DropDownList("DDL_ExamName", new SelectList("", ""), new { @id = "DDL_ExamName", @class = " custom-select custom-select-sm" })
                             </div>
 
-
-
-                        </div>
-                        <br />
-                        <div class="row justify-content-center">
                             <div class="col-2">
 
                                 <button class="btn btn-success" onclick="Manage_Exam()"><i class="fas fa-search"></i> Search </button>
 
                             </div>
 
-
-
                         </div>
+                        <br />
+                        @*<div class="row justify-content-center">
+                      
+
+
+
+                        </div>*@
 
                     </div>
                 </div>
@@ -95,12 +96,10 @@
 
 
 
-
-
-        <div class="row justify-content-center p-2" id="Display">
+        <div class="row justify-content-center " id="Display">
             <div class="col-10">
 
-                <div class="card  rounded-lg mt-2 shadow-lg">
+                <div class="card  rounded-lg m-auto shadow-lg">
 
                     <div class="card-header  bg-dark badge-dark">
 
