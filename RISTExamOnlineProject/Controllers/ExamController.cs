@@ -196,7 +196,7 @@ namespace RISTExamOnlineProject.Controllers
 
 
 
-        public IActionResult InseartExam(int Max_Seq , int QuestionCount, string ValueCodeQuestion, string ValueCodeAnswer, string[] Ans_TextDisplay, string[] Ans_Text_HTML_Display
+        public IActionResult Valueslist(int Max_Seq , int QuestionCount, string ValueCodeQuestion, string ValueCodeAnswer, string[] Ans_TextDisplay, string[] Ans_Text_HTML_Display
           , string[] Ans_Value, string Need_value, string Text_Question, string TextHTML_Question,string Job,string OP_UPD,int DisplayOrder)
         {
 
@@ -204,21 +204,22 @@ namespace RISTExamOnlineProject.Controllers
 
    
             string IP = Request.HttpContext.Connection.RemoteIpAddress.ToString();
-
+            string MS;
 
             try
             {
 
 
-                if (Job == "Edit")
+                if (Job == "UPD" || Job == "DEL")
                 {
 
                     //---------------------------- BK Data ------------
 
-                    ObjRun.BK_Data(ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(), Convert.ToInt32(DisplayOrder), "UPD");
-
+                 //   ObjRun.BK_Data(ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(), Convert.ToInt32(DisplayOrder), "UPD");                 
                     //---------------------------- Delete Data ------------
-                    ObjRun.DeleteQuestion(ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(), Convert.ToInt32(DisplayOrder));
+                   // ObjRun.DeleteQuestion(ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(), Convert.ToInt32(DisplayOrder));
+
+                    ObjRun.Valueslist_Management(Job, "", DisplayOrder, "", "", "0", "", IP, OP_UPD, ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim());
 
                     Max_Seq = DisplayOrder;
                 }
@@ -229,22 +230,37 @@ namespace RISTExamOnlineProject.Controllers
 
                 }
 
+                if (Job != "DEL") {
 
-                //----------- inseart Qeustion ----
+                    //----------- inseart Qeustion ----                   
 
-                ObjRun.InseartExam(ValueCodeQuestion, Max_Seq, TextHTML_Question, Text_Question, "0", Need_value, IP, OP_UPD);
+                    //     ObjRun.InseartExam(ValueCodeQuestion, Max_Seq, TextHTML_Question, Text_Question, "0", Need_value, IP, OP_UPD);
 
 
+                    MS = ObjRun.Valueslist_Management("NEW", ValueCodeQuestion, Max_Seq, TextHTML_Question, Text_Question, "0", Need_value, IP, OP_UPD,"","");
+                    if (MS !="OK") {
+                        return Json(new { success = false, responseText = MS });
+                    }
 
-                //----------- inseart Anser ----
 
-                for (int i = 0; i < Ans_TextDisplay.Length; i++)
-                {
-                    
-                    ObjRun.InseartExam(ValueCodeAnswer, Max_Seq, Ans_Text_HTML_Display[i].Trim(), Ans_TextDisplay[i].Trim(), Ans_Value[i].Trim(), "0", IP, OP_UPD);
+                    //----------- inseart Anser ----
 
+                    for (int i = 0; i < Ans_TextDisplay.Length; i++)
+                    {
+                        MS = ObjRun.Valueslist_Management("NEW", ValueCodeAnswer, Max_Seq, Ans_Text_HTML_Display[i].Trim(), Ans_TextDisplay[i].Trim(), Ans_Value[i].Trim(), "0", IP, OP_UPD, "", "");
+
+                        // ObjRun.InseartExam(ValueCodeAnswer, Max_Seq, Ans_Text_HTML_Display[i].Trim(), Ans_TextDisplay[i].Trim(), Ans_Value[i].Trim(), "0", IP, OP_UPD);
+
+                        if (MS != "OK")
+                        {
+                            return Json(new { success = false, responseText = MS });
+                        }
+                    }
 
                 }
+
+
+
 
             }
             catch (Exception ex)
@@ -262,28 +278,11 @@ namespace RISTExamOnlineProject.Controllers
 
         public JsonResult Get_HTML_Question_Detail(string ValueCodeAnswer, string ValueCodeQuestion, int Seq,string Job) {
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
-
             string HTML_Text = ObjRun.HTML_Question_Detail(ValueCodeQuestion, ValueCodeAnswer, Seq, Job);
-            return Json(new { success = true ,HTML = HTML_Text});
-
+            return Json(new { success = true ,HTML = HTML_Text});            
         }
 
 
-        public JsonResult Delete_Question(string ValueCodeAnswer, string ValueCodeQuestion, int Seq) {
-
-
-
-            mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
-            //---------------------------- BK Data ------------
-
-            ObjRun.BK_Data(ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(), Convert.ToInt32(Seq), "DEL");
-
-            ObjRun.DeleteQuestion(ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(), Seq);
-
-
-            return Json(new { success = true });
-        
-        }
 
 
     }

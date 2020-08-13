@@ -300,12 +300,13 @@
 
         <script>
 
-                var DisplayOrder = 0
-            var Exam_NO = 0
+            var DisplayOrder = 0;
+            var Exam_NO = 0;
             var TempDisplayID;
             var TempHTML;
-                var AnsrowCount = 1
-                var AnsrowCount_Edit = 0
+            var AnsrowCount = 1;
+            var AnsrowCount_Edit = 0;
+
             //---------------------------
             var Ans_Array;
             var result = { NO: "", Value: [] };  //[0]type,[1]HTMLText,[2]Ans_Value,[3]Need
@@ -318,8 +319,8 @@
             var ItemName;
             var TableTarget;
             //----------------
+            var OP_UPD;
 
-                var OP_UPD
             $(document).ready(function () {
                 debugger
                 $('#Display').hide();
@@ -329,24 +330,24 @@
 
             });
 
-                var func = $('.summernote').summernote('module', 'videoDialog').createVideoNode;
 
-            $('.summernote').summernote('module', 'videoDialog').createVideoNode =
-                function (url) {
+            //    var func = $('.summernote').summernote('module', 'videoDialog').createVideoNode;
 
-                        // native function generating the elements (iframe)
-                       var html = func(url);
-                       var a
+            //$('.summernote').summernote('module', 'videoDialog').createVideoNode =
+            //    function (url) {
 
-                        return a;
-                  };
+            //            // native function generating the elements (iframe)
+            //           var html = func(url);
+            //           var a
+
+            //            return a;
+            //      };
 
 
             function CheckRole() {
 
              debugger
                 if ( '@User.IsInRole("Admin")' != "True") {
-
                     window.location.href = "@Url.Action("index", "home")";
                 }
             }
@@ -354,11 +355,8 @@
 
 
             $("#DDL_ExamCategory").on("change", function () {
-
                 var Category = $("#DDL_ExamCategory").val()
-
                 $('#Display').hide();
-
                 if (Category != 0) {
                     $("#DDL_ExamName option").remove();
                     GetExamName(Category)
@@ -366,7 +364,6 @@
                     $("#DDL_ExamName option").remove();
                 }
             });
-
             $("#DDL_ExamName").on("change", function () {
                 $('#Display').hide();
             });

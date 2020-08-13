@@ -140,8 +140,6 @@ namespace RISTExamOnlineProject.Models.TSQL
         }
         public void InseartExam(string ValueCode, int Seq, string Value_HTML, string Value_TEXT, string Answer, string Need, string ComputerName, string OPID)
         {
-
-
             var ObjRun = new mgrSQLConnect(_configuration);
             strSQL = "insert  into [SPTOSystem].[dbo].[ValueList] ( [ValueCode],[DisplayOrder],[Value_HTML],[Value_TEXT],[Answer],[Need],ComputerName,[AddDate]   ,UpdDate   ,[UserName])";
             strSQL += "  values (N'" + ValueCode.Trim() + "',N'" + Seq + "'  ,N'" + Value_HTML.Trim() + "'  ,N'" + Value_TEXT.Trim() + "'  ,N'" + Answer + "'  ,N'" + Need + "'   ,N'" + ComputerName + "',GETDATE(),GETDATE(),'" + OPID + "')   ";
@@ -149,30 +147,10 @@ namespace RISTExamOnlineProject.Models.TSQL
             dt = ObjRun.GetDatatables(strSQL);
 
 
-
         }
 
          
-        public void DeleteQuestion(string ValueQuestion, string ValueAnswer, int Seq) {
 
-            var ObjRun = new mgrSQLConnect(_configuration);
-            strSQL = "delete ValueList   where (ValueCode ='"+ ValueQuestion + "' or ValueCode ='"+ ValueAnswer + "') and  DisplayOrder = '"+ Seq + "'   ";
-       //     strSQL += "  values ('" + ValueCode.Trim() + "','" + Seq + "'  ,'" + Value_HTML.Trim() + "'  ,'" + Value_TEXT.Trim() + "'  ,'" + Answer + "'  ,'" + Need + "'   ,'" + ComputerName + "',GETDATE(),GETDATE(),'" + OPID + "')   ";
-
-            dt = ObjRun.GetDatatables(strSQL);
-        }
-
-
-
-        public void BK_Data(string ValueQuestion, string ValueAnswer, int Seq,string Job) { 
-          var ObjRun = new mgrSQLConnect(_configuration);
-            strSQL = "SELECT [RemoveDate],[Flag],[Nbr],[ValueCode],[DisplayOrder],[Value_HTML],[Value_TEXT],[Answer],[Need],[AddDate],[UpdDate],[UserName]"+
-          ",[ComputerName]FROM[SPTOSystemH].[dbo].[ValueList]insert into[SPTOSystemH].[dbo].[ValueList]([RemoveDate],[Flag],[Nbr],[ValueCode],[DisplayOrder]"+
-          ",[Value_HTML],[Value_TEXT],[Answer],[Need],[AddDate],[UpdDate],[UserName],[ComputerName]) select  GETDATE()  as  [RemoveDate] ,'"+ Job + "' as Flag"+
-          ",[Nbr],[ValueCode],[DisplayOrder],[Value_HTML],[Value_TEXT],[Answer],[Need],[AddDate],[UpdDate],[UserName],[ComputerName]FROM[SPTOSystem].[dbo].[ValueList]  " +
-                "where([ValueCode]= '"+ ValueAnswer + " ' or[ValueCode] = '"+ ValueQuestion + "') and[DisplayOrder] = '"+ Seq + "'  ";
-             ObjRun.GetDatatables(strSQL);
-        }
 
 
         public string HTML_Question_Detail(string ValueQuestion, string ValueAnswer, int Seq,string Job) {
@@ -187,6 +165,23 @@ namespace RISTExamOnlineProject.Models.TSQL
             return HTML_Test;
 
         }
+
+
+
+        public string Valueslist_Management(string Job,string ValueCode,int Seq,string Value_HTML, string Value_TEXT, string Answer, string Need, string ComputerName, string OPID, string ValueQuestion, string ValueAnswer) {
+
+            var ObjRun = new mgrSQLConnect(_configuration);
+            strSQL = " [dbo].[sprValueList_Management] '"+ Job + "', '"+ ValueCode + "', '"+ Seq + "', N'"+ Value_HTML + "', N'"+ Value_TEXT + "', " +
+                "'"+ Answer + "', '"+ Need + "', '"+ ComputerName + "', '"+ OPID + "', '"+ ValueQuestion + "', '" + ValueAnswer + "'  ";
+         
+            string MS;
+            dt = ObjRun.GetDatatables(strSQL);
+            MS = dt.Rows[0][1].ToString();
+
+            return MS;
+
+        }
+
 
     }
 }

@@ -107,7 +107,7 @@ function Edit_Detail_Display(DisplayID, SummernoteID) {
 
 
 function CountAns(type) {
-    if (type == 'new') {
+    if (type == 'NEW') {
         var parent = document.getElementById("FormDisplay_Answer_New");
         var eee = 0
         eee = parent.getElementsByClassName("ANS_New");
@@ -153,7 +153,7 @@ $(document).on('click', 'button.remove-new', function (e) {
     }
 
 
-    CountAns('new')
+    CountAns('NEW')
 
 });
 
@@ -171,7 +171,7 @@ $(document).on('click', 'button.remove-edit', function (e) {
     }
 
 
-    CountAns('Edit')
+    CountAns('UPD')
 
 });
 
@@ -206,7 +206,7 @@ function Insert_Exam(job) {
     var Display_Answer_class
     var RD_Display_class
     var Display_Question
-    if (job == 'new') {
+    if (job == 'NEW') {
         CB_Need_class = "CB_Need_New";
         FormDisplay_class = "FormDisplay_Answer_New";
         ANS_class = "ANS_New"
@@ -283,7 +283,7 @@ function Insert_Exam(job) {
 
         $.ajax({
             type: 'POST',
-            url: '../Exam/InseartExam',
+            url: '../Exam/Valueslist',
             dataType: 'json',
             data: {
                 Max_Seq: Max_Seq, QuestionCount: QuestionCount, ValueCodeQuestion: ValueCodeQuestion, ValueCodeAnswer: ValueCodeAnswer,
@@ -360,7 +360,7 @@ function Add_Ans(type) {
             newel[0].innerHTML = HTMLText
             $(newel).insertAfter(".ANS_New:last")
             $('#' + newid_Dp + '').empty();
-            CountAns('new')
+            CountAns('NEW')
         } else {
 
             Swal.fire({
@@ -399,7 +399,7 @@ function Add_Ans(type) {
             newel[0].innerHTML = HTMLText
             $(newel).insertAfter(".ANS_Edit:last")
             $('#' + newid_Dp + '').empty();
-            CountAns('Edit')
+            CountAns('UPD')
 
         } else {
 
@@ -439,9 +439,23 @@ function DeleteQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq) {
 
             $.ajax({
                 type: 'POST',
-                url: '../Exam/Delete_Question',
+                url: '../Exam/Valueslist',
                 dataType: 'json',
-                data: { ValueCodeAnswer: ValueCodeAnswer, ValueCodeQuestion: ValueCodeQuestion, Seq: Seq },
+
+
+
+
+                data: {
+
+                    Max_Seq: 0, QuestionCount: 0, ValueCodeQuestion: ValueCodeQuestion, ValueCodeAnswer: ValueCodeAnswer,
+                    Ans_TextDisplay: "", Ans_Text_HTML_Display: "", Ans_Value: "0", Need_value: "0",
+                    Text_Question: "", TextHTML_Question: "", job: "DEL", OP_UPD: OP_UPD, DisplayOrder: Seq
+
+                  //  ValueCodeAnswer: ValueCodeAnswer, ValueCodeQuestion: ValueCodeQuestion, Seq: Seq
+                },
+
+
+
                 success: function (response) {
                     if (response.success == true) {
 
@@ -454,14 +468,13 @@ function DeleteQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq) {
                             //   timer: 1700
                         }).then(function (result) {
 
-                            location.reload();
+                            var ExamCode = $("#DDL_ExamName").val();
+                            GetExamDetail(ExamCode)
 
                         });
                     }
 
                 }
-
-
 
             });
 
@@ -482,19 +495,14 @@ function NewQuestion() {
         data: { ValueCodeAnswer: '0', ValueCodeQuestion: '0', Seq: 0, Job: "new" },
         success: function (response) {
             if (response.success == true) {
-
                 $('#LB_title').text('New Question');
                 HTML_TEXT = response.html;
                 DeleteHTML('Modal_body_Form_Main');
                 InputHTML('Modal_body_Form_Main', HTML_TEXT);
                 $('#Modal_Form_Main').modal('show');
-                CountAns('new');
+                CountAns('NEW');
             }
-
         }
-
-
-
     });
 
 };
@@ -507,7 +515,7 @@ function EditQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq, Max_Seq) {
         type: 'POST',
         url: '../Exam/Get_HTML_Question_Detail',
         dataType: 'json',
-        data: { ValueCodeAnswer: ValueCodeAnswer, ValueCodeQuestion: ValueCodeQuestion, Seq: Seq, Job: "Edit" },
+        data: { ValueCodeAnswer: ValueCodeAnswer, ValueCodeQuestion: ValueCodeQuestion, Seq: Seq, Job: "upd" },
         success: function (response) {
             if (response.success == true) {
 
@@ -515,7 +523,7 @@ function EditQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq, Max_Seq) {
                 HTML_TEXT = response.html;
                 DeleteHTML('Modal_body_Form_Main');
                 InputHTML('Modal_body_Form_Main', HTML_TEXT);
-                CountAns('Edit')
+                CountAns('UPD')
                 $('#Modal_Form_Main').modal('show')
 
             }
