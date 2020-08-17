@@ -208,41 +208,25 @@ namespace RISTExamOnlineProject.Controllers
 
             try
             {
-
-
                 if (Job == "UPD" || Job == "DEL")
                 {
 
-                    //---------------------------- BK Data ------------
-
-                 //   ObjRun.BK_Data(ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(), Convert.ToInt32(DisplayOrder), "UPD");                 
-                    //---------------------------- Delete Data ------------
-                   // ObjRun.DeleteQuestion(ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(), Convert.ToInt32(DisplayOrder));
+                    //---------------------------- BK Data  and Delete ------------
 
                     ObjRun.Valueslist_Management(Job, "", DisplayOrder, "", "", "0", "", IP, OP_UPD, ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim());
-
                     Max_Seq = DisplayOrder;
                 }
                 else {
-
                     Max_Seq = Max_Seq + 1;
-
-
                 }
 
                 if (Job != "DEL") {
 
-                    //----------- inseart Qeustion ----                   
-
-                    //     ObjRun.InseartExam(ValueCodeQuestion, Max_Seq, TextHTML_Question, Text_Question, "0", Need_value, IP, OP_UPD);
-
-
+                    //----------- inseart Qeustion ----  
                     MS = ObjRun.Valueslist_Management("NEW", ValueCodeQuestion, Max_Seq, TextHTML_Question, Text_Question, "0", Need_value, IP, OP_UPD,"","");
                     if (MS !="OK") {
                         return Json(new { success = false, responseText = MS });
                     }
-
-
                     //----------- inseart Anser ----
 
                     for (int i = 0; i < Ans_TextDisplay.Length; i++)
@@ -256,12 +240,7 @@ namespace RISTExamOnlineProject.Controllers
                             return Json(new { success = false, responseText = MS });
                         }
                     }
-
                 }
-
-
-
-
             }
             catch (Exception ex)
             {

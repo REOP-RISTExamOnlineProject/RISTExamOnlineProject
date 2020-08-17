@@ -32,15 +32,11 @@ namespace RISTExamOnlineProject.Models.TSQL
 
         public string GetStroeTemp_Additional(string OPID,string MakerID, string SectionCode, string Job)
         {
-
             var ObjRun = new mgrSQLConnect(_configuration);
-
             strSQL = "EXEC [dbo].[sprOperatorSectionAttributeTemp] ";
-            strSQL += " '"+ Job + "', '" + MakerID + "','" + OPID + "','"+ SectionCode.Trim() + "'   ";
-          
+            strSQL += " '"+ Job + "', '" + MakerID + "','" + OPID + "','"+ SectionCode.Trim() + "'   ";          
            DataTable dt = ObjRun.GetDatatables(strSQL);
             string check = dt.Rows[0][0].ToString();
-
             return check;
         }
 
@@ -58,7 +54,6 @@ namespace RISTExamOnlineProject.Models.TSQL
             List<vewOperatorAdditionalDepTemp> Temp = new List<vewOperatorAdditionalDepTemp>();
             if (dt.Rows.Count > 0)
             {
-
                 foreach (DataRow row in dt.Rows)
                 {
                     Temp.Add(new vewOperatorAdditionalDepTemp()
@@ -69,11 +64,7 @@ namespace RISTExamOnlineProject.Models.TSQL
                         Department = row["Department"].ToString(),
                         Division = row["Division"].ToString(),
                     });
-
                 }
-
-
-
             }
 
 

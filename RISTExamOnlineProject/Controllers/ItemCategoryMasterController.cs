@@ -113,6 +113,15 @@ namespace RISTExamOnlineProject.Controllers
 
 
 
+        //------------------- 
+
+
+
+        public ActionResult ItemCatogoryMaster() {
+            return View();
+        } 
+
+
 
 
     }

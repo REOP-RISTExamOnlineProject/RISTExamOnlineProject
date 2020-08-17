@@ -58,7 +58,7 @@
                                 <b>  Exam Category :</b>
                             </div>
                             <div class="col-3">
-                                @Html.DropDownList("DDL_ExamCategory", new SelectList("", ""), new { @id = "DDL_ExamCategory", @class = " custom-select custom-select-sm" })
+                                @Html.DropDownList("DDL_ExamCategory", new SelectList("", ""), new { @id = "DDL_ExamCategory", @class = "custom-select " })
                             </div>
 
                             <div class="col-2 text-right">
@@ -67,7 +67,7 @@
                                 </b>
                             </div>
                             <div class="col-3">
-                                @Html.DropDownList("DDL_ExamName", new SelectList("", ""), new { @id = "DDL_ExamName", @class = " custom-select custom-select-sm" })
+                                @Html.DropDownList("DDL_ExamName", new SelectList("", ""), new { @id = "DDL_ExamName", @class = "custom-select " })
                             </div>
 
                             <div class="col-2">
@@ -131,7 +131,7 @@
                                     <td>Ans Count</td>
                                     <td>
                                         <button class="btn btn-success" onclick="NewQuestion()">
-                                            <i class="fas fa-random"></i>     New Question
+                                            <i class="fas fa-plus"></i>    New Question
                                         </button>
                                     </td>
                                 </tr>
@@ -345,7 +345,6 @@
 
 
             function CheckRole() {
-
              debugger
                 if ( '@User.IsInRole("Admin")' != "True") {
                     window.location.href = "@Url.Action("index", "home")";
@@ -364,6 +363,7 @@
                     $("#DDL_ExamName option").remove();
                 }
             });
+
             $("#DDL_ExamName").on("change", function () {
                 $('#Display').hide();
             });

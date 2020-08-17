@@ -65,7 +65,6 @@ namespace RISTExamOnlineProject.Models.TSQL
 
         public DataTable Get_ExamDetail(string Itemcode)
         {
-
             var ObjRun = new mgrSQLConnect(_configuration);
             strSQL = " select[ItemCode],ItemCategName,[ValueCodeQuestion],[ValueCodeAnswer],ISNULL(Seq,0) as Seq  ,ISNULL([Question],'') as [Question]  ,[InputItemName] ,count(*) as Ans_Count  ";
             strSQL += ",ISNULL((select max(Seq) FROM   [SPTOSystem].[dbo].[vewQuestionAll]   where[ItemCode] = '" + Itemcode.Trim() + "'),0)  As Max_Seq  FROM[SPTOSystem].[dbo].[vewQuestionAll] where[ItemCode] = '" + Itemcode.Trim() + "' ";
@@ -138,16 +137,7 @@ namespace RISTExamOnlineProject.Models.TSQL
             return listItems;
 
         }
-        public void InseartExam(string ValueCode, int Seq, string Value_HTML, string Value_TEXT, string Answer, string Need, string ComputerName, string OPID)
-        {
-            var ObjRun = new mgrSQLConnect(_configuration);
-            strSQL = "insert  into [SPTOSystem].[dbo].[ValueList] ( [ValueCode],[DisplayOrder],[Value_HTML],[Value_TEXT],[Answer],[Need],ComputerName,[AddDate]   ,UpdDate   ,[UserName])";
-            strSQL += "  values (N'" + ValueCode.Trim() + "',N'" + Seq + "'  ,N'" + Value_HTML.Trim() + "'  ,N'" + Value_TEXT.Trim() + "'  ,N'" + Answer + "'  ,N'" + Need + "'   ,N'" + ComputerName + "',GETDATE(),GETDATE(),'" + OPID + "')   ";
-
-            dt = ObjRun.GetDatatables(strSQL);
-
-
-        }
+ 
 
          
 
@@ -157,10 +147,8 @@ namespace RISTExamOnlineProject.Models.TSQL
 
             string HTML_Test;
             var ObjRun = new mgrSQLConnect(_configuration);
-            strSQL = "[dbo].[srpEditQuestion_SelectHTML] '" + ValueQuestion.Trim() + "','" + ValueAnswer.Trim() + "','" + Seq.ToString() + "','0','"+ Job + "' ";
-          
+            strSQL = "[dbo].[srpEditQuestion_SelectHTML] '" + ValueQuestion.Trim() + "','" + ValueAnswer.Trim() + "','" + Seq.ToString() + "','0','"+ Job + "' ";          
             dt = ObjRun.GetDatatables(strSQL);
-
             HTML_Test = dt.Rows[0][0].ToString();
             return HTML_Test;
 
@@ -169,12 +157,11 @@ namespace RISTExamOnlineProject.Models.TSQL
 
 
         public string Valueslist_Management(string Job,string ValueCode,int Seq,string Value_HTML, string Value_TEXT, string Answer, string Need, string ComputerName, string OPID, string ValueQuestion, string ValueAnswer) {
-
+            string MS;
             var ObjRun = new mgrSQLConnect(_configuration);
             strSQL = " [dbo].[sprValueList_Management] '"+ Job + "', '"+ ValueCode + "', '"+ Seq + "', N'"+ Value_HTML + "', N'"+ Value_TEXT + "', " +
-                "'"+ Answer + "', '"+ Need + "', '"+ ComputerName + "', '"+ OPID + "', '"+ ValueQuestion + "', '" + ValueAnswer + "'  ";
-         
-            string MS;
+                "'"+ Answer + "', '"+ Need + "', '"+ ComputerName + "', '"+ OPID + "', '"+ ValueQuestion + "', '" + ValueAnswer + "'  ";        
+            
             dt = ObjRun.GetDatatables(strSQL);
             MS = dt.Rows[0][1].ToString();
 

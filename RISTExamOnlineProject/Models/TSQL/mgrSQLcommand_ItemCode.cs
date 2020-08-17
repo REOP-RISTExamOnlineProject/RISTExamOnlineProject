@@ -23,7 +23,7 @@ namespace RISTExamOnlineProject.Models.TSQL
         public List<SelectListItem> GetCategory() {
 
             var ObjRun = new mgrSQLConnect(_configuration);
-            strSQL = "    SELECT[ItemCateg],[ItemCateg]+' - '+[ItemCategName]  as [ItemCategName] FROM[SPTOSystem].[dbo].[vewQuestionCateg] group by[ItemCateg],[ItemCategName] order by ItemCateg asc";
+            strSQL = "    SELECT[ItemCateg],[ItemCateg]+' - '+[ItemCategName]  as [ItemCategName] FROM[SPTOSystem].[dbo].[ItemCategory] group by[ItemCateg],[ItemCategName] order by ItemCateg asc";
 
             dt = ObjRun.GetDatatables(strSQL);
             List<SelectListItem> listItems = new List<SelectListItem>();

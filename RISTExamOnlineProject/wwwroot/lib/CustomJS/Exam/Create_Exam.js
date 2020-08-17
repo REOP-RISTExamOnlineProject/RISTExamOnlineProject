@@ -1,11 +1,12 @@
 ﻿
 
 
-function GetExamCategory() {
+function GetExamCategory(Job) {
     $.ajax({
         type: 'POST',
         url: '../Exam/GetCategory',
         dataType: 'json',
+        data: {Job:Job},
         success: function (Divisions) {
             if (Divisions.length != 0) {
                 $.each(Divisions, function (i, div) {

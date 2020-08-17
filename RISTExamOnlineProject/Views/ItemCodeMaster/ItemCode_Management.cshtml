@@ -29,16 +29,16 @@
 
                 <div class="card rounded shadow-lg m-auto ">
                     <div class="card-header badge-dark  ">
-                        <h3><b>Select    ItemCode  </b></h3>
+                        <h3><b>Select    ItemCatagory  </b></h3>
                     </div>
 
                     <div class="card-body">                
                         <div class="row justify-content-center ">
-                            <div class="col-2">
-                                ItemCode :
+                            <div class="col-3">
+                                ItemCatagory :
                             </div>
                             <div class="col-5">
-                                @Html.DropDownList("DDL_Category", new SelectList("", ""), new { @id = "DDL_Category", @class = " custom-select custom-select-sm" })
+                                @Html.DropDownList("DDL_Category", new SelectList("", ""), new { @id = "DDL_Category", @class = "custom-select " })
 
                             </div>
 
@@ -82,7 +82,7 @@
                                         <td class="text-wrap text-center" ><h6>Answer</h6>  </td>
                                         <td class="text-wrap text-center" ><h6>Display</h6>  </td>
                                         <td class="text-wrap text-center" ><h6>Time</h6> </td>
-                                        <td class="text-wrap text-center" > <button type="button" class="btn btn-success w-auto" id="BTN_NEW" onclick="Modal_setup('new','','','')"><i class="fas fa-random"></i> New Item</button>       </td>
+                                        <td class="text-wrap text-center" > <button type="button" class="btn btn-success w-auto" id="BTN_NEW" onclick="Modal_setup('new','','','')"><i class="fas fa-plus"></i> New Item</button>       </td>
                                     </tr>
 
 
@@ -141,8 +141,10 @@
                         <div class="col-6">
                             <input type="text" class="form-control" id="TB_ItemName" maxlength="50" />
                         </div>
-
                     </div>
+
+
+
                     <div class="row justify-content-center m-2">
                         <div class="col-4">
                             Item limit :
@@ -178,7 +180,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="BTN_ModalSubmit" onclick=" Job_query()"> SUBMIT</button>
+                    <button type="button" class="btn btn-success" id="BTN_ModalSubmit" onclick=" Job_query()"><i class="fas fa-check"></i> Submit</button>
                 </div>
             </div>
         </div>
@@ -245,7 +247,7 @@
             $(document).ready(function () {
                 CheckRole()
                 OP_UPD = '@User.Identity.Name';
-                GetExamCategory();
+                GetExamCategory_();
 
 
                 $("#Table_Display").hide();
@@ -535,7 +537,7 @@
 
 
 
-            function GetExamCategory() {
+            function GetExamCategory_() {
                 $.ajax({
                     type: 'POST',
                     url: '../ItemCodeMaster/GetCategory',
