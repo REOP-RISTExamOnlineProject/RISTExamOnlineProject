@@ -83,11 +83,11 @@
                             var itemCateg = oData.itemCateg;
                             var HTMLTag = "";
                              
-                            if (itemCateg == 'AH002') {
+                           // if (itemCateg == 'AH002') {
                                 HTMLTag = '<a href="../UIExam/Examexamination?ItemInput=' + itemCateg + '"  class="btn btn-success btn"  >    <span class="badge badge-danger">4</span>SELECT</a>';
-                            } else {
-                                HTMLTag = '';
-                            }
+                            //} else {
+                            //    HTMLTag = '';
+                            //}
                             $(nTd).html(HTMLTag);
                         }, className: "dt-body-center"
                     },
