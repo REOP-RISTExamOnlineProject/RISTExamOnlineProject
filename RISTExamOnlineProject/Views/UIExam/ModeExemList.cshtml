@@ -82,9 +82,14 @@
                         "fnCreatedCell": function (nTd, oData) {
                             var itemCateg = oData.itemCateg;
                             var HTMLTag = "";
-                             
+                            var TEST = "@ViewBag.Itemcateg";
                            // if (itemCateg == 'AH002') {
-                                HTMLTag = '<a href="../UIExam/Examexamination?ItemInput=' + itemCateg + '"  class="btn btn-success btn"  >    <span class="badge badge-danger">4</span>SELECT</a>';
+                              //  HTMLTag = '<a href="../UIExam/Examexamination?ItemInput=' + itemCateg + '"  class="btn btn-success btn">    <span class="badge badge-danger">4</span>SELECT</a>';
+
+                            HTMLTag = '<a href="@Url.Action("Examexamination")?ItemInput=' + itemCateg + '&ItemCateg=' + TEST+'"  class="btn btn-success btn">    <span class="badge badge-danger">4</span>SELECT</a>';
+
+
+
                             //} else {
                             //    HTMLTag = '';
                             //}

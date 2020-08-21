@@ -293,7 +293,7 @@
 
         }
 
-        @*$(document).on('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', function () {
+        $(document).on('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', function () {
             if (IsFullScreenCurrently()) {
                 return false;
             }
@@ -306,7 +306,7 @@
                 CommitExam();
                 return false;
             }
-        });*@
+        });
 
 
         window.onbeforeunload = function (event) {
