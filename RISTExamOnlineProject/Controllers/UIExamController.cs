@@ -50,14 +50,14 @@ namespace RISTExamOnlineProject.Controllers
             return View();
         }
 
-        public IActionResult Examexamination(string ItemInput )
+        public IActionResult Examexamination(string ItemInput , string ItemCateg)
         {
-            if (TempData["XX"] == null)
-            {
-                return View("LicenceList");
-            }
+            //if (TempData["XX"] == null)
+            //{
+            //    return View("LicenceList");
+            //}
 
-            string ItemCateg = TempData["XX"].ToString();
+          //  string ItemCateg = TempData["XX"].ToString();
 
             ViewBag.Itemcateg = ItemCateg;
             ViewBag.InputItem = ItemInput; 
