@@ -226,8 +226,7 @@
             else
                 return true;
         }
-        $("#testtest").on("click", function () {
-
+        $("#testtest").on("click", function () { 
             if (IsFullScreenCurrently()) {
                 GoOutFullscreen(); 
             } else {
@@ -239,14 +238,11 @@
         });
 
         $("#btnSubmit").on("click", function () { 
-            if (IsFullScreenCurrently()) { 
-                
-                GoOutFullscreen();  
-
+            if (IsFullScreenCurrently()) {  
+                GoOutFullscreen();   
             } else {
                 GoInFullscreen($("#element").get(0));
-            }
-
+            } 
         });
 
         function CommitExam() {
@@ -297,7 +293,7 @@
 
         }
 
-        $(document).on('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', function () {
+        @*$(document).on('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', function () {
             if (IsFullScreenCurrently()) {
                 return false;
             }
@@ -310,7 +306,7 @@
                 CommitExam();
                 return false;
             }
-        });
+        });*@
 
 
         window.onbeforeunload = function (event) {
