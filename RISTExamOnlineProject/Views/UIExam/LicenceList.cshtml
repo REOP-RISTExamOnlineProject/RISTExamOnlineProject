@@ -83,7 +83,7 @@
                         className: "center",
                         "fnCreatedCell": function (nTd, oData) {  
                             var ItemCateg = oData.itemCateg;
-                            $(nTd).html('<a href="../UIExam/ModeExemList?ItemCateg=' + ItemCateg +' " class="btn btn-success btn-sm"> SELECT     <span class="badge badge-info">4</span></a>');  
+                            $(nTd).html('<a href="../UIExam/ModeExemList?ItemCateg=' + ItemCateg +' " class="btn btn-success btn-sm"> SELECT </a>');  
                         }, className: "dt-body-center"
                     }, 
                 ],
@@ -118,9 +118,9 @@
                     } else {
                         Swal.fire({
                             icon: 'warning',
-                            title: Data.dataLabel,
+                            title: Data._strResult,
                             type: 'error',
-                            timer: 1700,
+                           // timer: 1700,
                         }).then(function () {
                             return false;
                         });
@@ -132,7 +132,7 @@
                          icon: 'warning',
                          title: 'Failed to retrieve states.' + ex,
                          type: 'error',
-                         timer: 1700,
+                        // timer: 1700,
                      }).then(function () {
                          return false;
                      });

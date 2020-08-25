@@ -201,8 +201,8 @@ namespace RISTExamOnlineProject.Models.TSQL
 
 
             strSQL = "";
-            strSQL += "SELECT * FROM [SPTOSystem].[dbo].[ItemCategory]";
-               // strSQL += "  where OperatorID ='" + Opid + "'";
+            strSQL += "SELECT * FROM [SPTOSystem].[dbo].[vewItemCategPlan]";
+                strSQL += "  where OperatorID ='" + Opid + "'";
                 dt = ObjRun.GetDatatables(strSQL);
             if (dt.Rows.Count != 0)
             {
@@ -220,11 +220,11 @@ namespace RISTExamOnlineProject.Models.TSQL
             }
             else
             {
-                ResultOPcateg.strResult = "Err :"+ strSQL;
+                ResultOPcateg.strResult = "No exam found <br/> ไม่พบข้อสอบ" ;
             }
             }catch(Exception e)
             {
-                ResultOPcateg.strResult = e.Message;
+                ResultOPcateg.strResult = e.Message +" :: "+ strSQL;
             }
 
             return ResultOPcateg;
