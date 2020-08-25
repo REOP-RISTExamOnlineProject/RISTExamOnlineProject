@@ -205,7 +205,7 @@ namespace RISTExamOnlineProject.Controllers
    
             string IP = Request.HttpContext.Connection.RemoteIpAddress.ToString();
             string MS;
-
+             
             try
             {
                 if (Job == "UPD" || Job == "DEL")
