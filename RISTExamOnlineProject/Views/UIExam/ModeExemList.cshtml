@@ -65,11 +65,11 @@
                         "fnCreatedCell": function (nTd, oData) {
                             var itemCateg = oData.itemCateg;
                             var HTMLTag="";
-                            if (itemCateg == 'AH002') {
-                                HTMLTag = '<h3><i class=" text-success  fas fa-check-circle"></i></h3>';
-                            } else {
+                            //if (itemCateg == 'AH002') {
+                            //    HTMLTag = '<h3><i class=" text-success  fas fa-check-circle"></i></h3>';
+                            //} else {
                                 HTMLTag = '<h3><i class="text-primary fas fa-edit"></i></h3>';
-                            }
+                        //    }
 
 
                             $(nTd).html(HTMLTag);

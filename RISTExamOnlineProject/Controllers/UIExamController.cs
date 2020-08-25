@@ -82,7 +82,7 @@ namespace RISTExamOnlineProject.Controllers
             mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
             //List<_OperatorItemCateg> dataList = new List<_OperatorItemCateg>();
             ResultItemCateg ResultOPcateg = new ResultItemCateg();
-            ResultOPcateg = ObjRun.GetInputItemList(itemCateg);
+            ResultOPcateg = ObjRun.GetInputItemList(itemCateg, UserName);
 
 
             var jsonResult = Json(new { data = ResultOPcateg._listOpCateg, _strResult = ResultOPcateg.strResult }); 

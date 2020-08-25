@@ -82,8 +82,10 @@
                         name: null,
                         className: "center",
                         "fnCreatedCell": function (nTd, oData) {  
+                             
+                            var cntItemCateg = oData.cntItemCateg;
                             var ItemCateg = oData.itemCateg;
-                            $(nTd).html('<a href="../UIExam/ModeExemList?ItemCateg=' + ItemCateg +' " class="btn btn-success btn-sm"> SELECT </a>');  
+                            $(nTd).html('<a href="../UIExam/ModeExemList?ItemCateg=' + ItemCateg + ' " class="btn btn-success btn-sm"> SELECT   <span class="badge badge-danger">' + cntItemCateg+'</span></a>');  
                         }, className: "dt-body-center"
                     }, 
                 ],

@@ -9,7 +9,8 @@ namespace RISTExamOnlineProject.Models.db
     { 
         [Key]
         public string ItemCateg { get; set; }
-        public string ItemCategName { get; set; } 
+        public string ItemCategName { get; set; }
+        public string cntItemCateg { get; set; }
     }
     public class ResultItemCateg
     {
