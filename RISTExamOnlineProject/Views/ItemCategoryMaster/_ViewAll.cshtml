@@ -5,80 +5,87 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     var pageCurrent = ViewBag.pageCurrent;
-    
+
 
 }
 
-<h3 class="text-center"><i class="fas fa-list text-success"></i> ItemCategory Master List</h3>
+@*<h3 class="text-center"><i class="fas fa-list text-success"></i> </h3>*@
+<div class="card">
 
-<div class="mt-1 mb-3  bg-white border shadow table-responsive">
-   
-        <table class="table">
-            <thead class="table-dark">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.First().ItemCateg)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.First().ItemCategName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.First().AddDate)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.First().UpdDate)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.First().UserName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.First().ComputerName)
-                    </th>
-                    <th>
-                        <a onclick="showInPopup('@Url.Action("AddOrEdit", "ItemCategoryMaster", null, Context.Request.Scheme)', 'New ItemCategory Master')" class="btn btn-success text-white"><i class="fas fa-random"></i> New ItemCategory</a>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
+    <div class="card-body">
+        <div class="row justify-content-center">
+            <h1 class="text-uppercase">ItemCategory Master List</h1>
+        </div>
+        <div class="mt-1 mb-3  bg-white border shadow table-responsive">
+
+            <table class="table">
+                <thead class="table-dark">
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ItemCateg)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ItemCategName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.AddDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.UpdDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.UserName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ComputerName)
-                        </td>
-                        <td>
-                            <div>
-                                <a onclick="showInPopup('@Url.Action("AddOrEdit", "ItemCategoryMaster", new {id = item.Nbr, page = pageCurrent}, Context.Request.Scheme)', 'Update ItemCategory')" class="btn btn-info text-white"><i class="fas fa-pencil-alt"></i> Edit</a>
-
-                                <form asp-action="Delete" asp-route-id="@item.Nbr" asp-route-page="@ViewBag.pageCurrent" onsubmit="return jQueryAjaxDelete(this)" class="d-inline">
-
-                                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</button>
-
-
-                                </form>
-                            </div>
-                        </td>
+                        <th>
+                            @Html.DisplayNameFor(model => model.First().ItemCateg)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.First().ItemCategName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.First().AddDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.First().UpdDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.First().UserName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.First().ComputerName)
+                        </th>
+                        <th>
+                            <a onclick="showInPopup('@Url.Action("AddOrEdit", "ItemCategoryMaster", null, Context.Request.Scheme)', 'New ItemCategory Master')" class="btn btn-success text-white"><i class="fas fa-random"></i> New ItemCategory</a>
+                        </th>
                     </tr>
-                }
-            </tbody>
-        </table>
-    
-</div>
-<div class="text-right">
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemCateg)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemCategName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AddDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UpdDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UserName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ComputerName)
+                            </td>
+                            <td>
+                                <div>
+                                    <a onclick="showInPopup('@Url.Action("AddOrEdit", "ItemCategoryMaster", new {id = item.Nbr, page = pageCurrent}, Context.Request.Scheme)', 'Update ItemCategory')" class="btn btn-info text-white"><i class="fas fa-pencil-alt"></i> Edit</a>
+
+                                    <form asp-action="Delete" asp-route-id="@item.Nbr" asp-route-page="@ViewBag.pageCurrent" onsubmit="return jQueryAjaxDelete(this)" class="d-inline">
+
+                                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</button>
+
+
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+        <div class="text-right">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        </div>
+    </div>
 </div>

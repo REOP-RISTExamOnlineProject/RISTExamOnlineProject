@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewData["Title"] = "ExamResultMonitor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <h2>ExamResultMonitor</h2> 
+    <div>
+        @*<div class="form-row">
+                <div class="col-xl-auto">
+                    @Html.DropDownList("ddlCateg", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlCateg", @class = "form-control", width = "300px", describedby = "emailHelp", placeholder = "Last name" })
+                </div>
+                <div class="col-xl-auto">
+                    <input type="text" class="form-control" placeholder="Last name">
+                </div>
+                <div class="col-xl-auto">
+                    <input type="text" class="form-control" placeholder="Last name">
+                </div>
+                <div class="col-xl-auto">
+                    <input type="text" class="form-control" placeholder="Last name">
+                </div>
+                <div class="col-xl-auto">
+                    <input type="text" class="form-control" placeholder="Last name">
+                </div>
+            </div>
+        </div>*@
+        <form class="form-inline" action="/action_page.php">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+            <label for="pwd">Password:</label>
+            <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" name="remember"> Remember me
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+

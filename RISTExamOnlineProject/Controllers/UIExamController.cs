@@ -34,8 +34,11 @@ namespace RISTExamOnlineProject.Controllers
         {
             return View();
         }
+        public IActionResult ExamResultMonitor()
+        {
+            return View();
+        }
 
-       
 
         public IActionResult ModeExemList(string ItemCateg)
         {
@@ -107,12 +110,8 @@ namespace RISTExamOnlineProject.Controllers
             string strEndTime = DateTime.Now.ToString();
             string IP = Request.HttpContext.Connection.RemoteIpAddress.ToString();
             _ExamCommitResult dt = new _ExamCommitResult();
-            dt = ObjRun.CommitExam(strOPID, ItemCateg, ItemInput, strStartTime, strEndTime, ArrAns, IP); 
-
-
-
-
-            var jsonResult = Json(new { data = dt.strResult,dataResult = dt.strMgs, dataBool = dt.BoolResult  });
+            dt = ObjRun.CommitExam(strOPID, ItemCateg, ItemInput, strStartTime, strEndTime, ArrAns, IP);  
+            var jsonResult = Json(new { data = dt.strResult,dataResult = dt.strMgs, dataBool = dt.BoolResult});
             return jsonResult;
         }
         

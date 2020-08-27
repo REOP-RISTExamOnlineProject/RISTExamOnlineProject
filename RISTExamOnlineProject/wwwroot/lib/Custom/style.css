@@ -51,17 +51,16 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'JetBrainsMono';
-
-    
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #F8FAFD;
+    /*background-color: #F8FAFD;*/
     /* background: url(/Content/img/bg.jpg) no-repeat; */
     /* background-position: center;
     background-size: cover;
     height: 100vh;
     transition: all .5s; */
-
+    background: rgb(252,251,251);
+    background: linear-gradient(130deg, rgba(252,251,251,1) 11%, rgba(241,241,242,1) 55%, rgba(200,214,217,1) 78%, rgba(242,242,242,1) 86%) fixed;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -335,6 +334,7 @@ table tbody tr td {
     font-size: 18px;
     margin: 5px 15px 0px 10px;
     cursor: pointer;
+    color: #FFF;
 }
 
 .menu-icon:first-child {
@@ -457,10 +457,24 @@ table tbody tr td {
     transition: all .5s ease;
 }
 
-.sidebar > .inner-sidebar {
-    height: 100%;
-    background: #042331;
+    .sidebar > .inner-sidebar {
+        height: 100%;
+        background: rgb(4,35,49);
+        background: linear-gradient(49deg, rgba(4,35,49,1) 7%, rgba(42,63,86,1) 54%, rgba(86,91,123,1) 100%);
+    }
+
+.parent:hover {
+
+    height: 120%;
+    background: rgb(207,230,151);
+    background: linear-gradient(309deg, rgba(207,230,151,1) 12%, rgba(168,209,129,1) 24%, rgba(98,152,122,1) 87%);
 }
+.child:hover {
+    height: 120%;
+    background: rgb(136,150,101);
+    background: linear-gradient(309deg, rgba(136,150,101,1) 17%, rgba(113,142,86,1) 24%, rgba(26,71,83,1) 87%);
+}
+
 
 .avatar img {
     width: 75px;
@@ -473,6 +487,9 @@ table tbody tr td {
 .avatar > p {
     color: #fff;
 }
+
+
+
 
 .sidebar-menu {
     padding: 0;
@@ -859,7 +876,7 @@ table tbody tr td {
     display: inline-block;
     width: 40px;
     height: 40px;
-    background-color: #0D47A1;
+    background-color: #FFF;
     box-shadow: 0px 0px 0px 3px #ccc;
     border-radius: 50%;
     margin-left: -1rem;
@@ -1709,18 +1726,14 @@ span.tag.label.label-info {
 /*========Profile page CSS Rules=========*/
 
 .profile-bg {
-    background-image: url('../img/bg-profileheader.jpg');
+    background-image: url('../img/264.jpg');
     background-size: cover;
     background-position-y: 60%;
     background-repeat: no-repeat;
-    height: 150px;
+    height: 30vh;
 }
 
-.profile-img {
-    position: absolute;
-    bottom: 40px;
-    z-index: 100;
-}
+
 
 .bio-header h3 {
     margin-bottom: 0 !important;
@@ -2217,8 +2230,16 @@ span.tag.label.label-info {
     }
 
     .profile-img {
-        top: 100px;
+        top: 120px;
+        position: absolute;
+        bottom: 0px;
+        z-index: 100;
     }
+    .profile-img {
+       
+    }
+
+    
 
     .bio-header {
         margin-left: 0px;
@@ -2363,12 +2384,77 @@ span.tag.label.label-info {
         opacity: 1;
     }
 }
- 
 
 
 
 
 
 
+.fb-profile img.fb-image-lg {
+    z-index: 0;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.fb-image-profile {
+    margin: -90px 10px 0px 50px;
+    z-index: 9;
+    width: 10%; 
+    border: 5px solid white;
+}
+
+@media (max-width:768px) {
+
+    .fb-profile-text > h1 {
+        font-weight: 700;
+        font-size: 16px;
+    }
+
+    .fb-image-profile {
+        margin: -45px 10px 0px 25px;
+        z-index: 9;
+        width: 10%;
+    }
+}
+.nav-item:hover {
+    background: rgb(186,186,186);
+    background: radial-gradient(circle, rgba(186,186,186,1) 15%, rgba(186,186,186,1) 92%);
+}
+.profile-bgx {
+    background-image: url('../img/bg.jpg');
+    background-size: cover;
+    background-position-y: 60%;
+    background-repeat: no-repeat;
+    height: 30vh;
+}
 
 
+.button {
+    /*background-color: #4CAF50;*/
+    background: #C8C8C7;
+    border: none;
+    color: #343434;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    /*display: inline-block;*/
+    font-size: 20px;
+    margin: 4px 2px;
+}
+.button5 {
+    border-radius: 50%;
+}
+
+.Icons {
+    border-radius: 50%;
+    background-color: #d6d6d6;
+    padding: 12px;
+    color: #606060;
+}
+
+    .Icons:hover {
+        border-radius: 50%;
+        background-color: #9e9e9e;
+        padding: 12px;
+        color: #606060;
+    }

@@ -5,84 +5,53 @@
 }
 
 <div class="container-fluid">
-    <div class=" row mb-4">
-        <div class="col-7">
-            <h5 class=" mb-0"><strong> Request Inquiry</strong></h5>
-            <span class="text-secondary">User In-Charge <i class="fa fa-angle-right"></i> Request Inquiry</span>
+    <div class="card">
+        <div class="fb-image-lg profile-bgx">
         </div>
-    </div>
-    @*<div class="card">
         <div class="card-body">
-            <h5 class="text-secondary">Search Control</h5>
-            <hr />
-            <div class=" row mb-4">
-                <div class="col-sm">
-                    <label for="NameEng" class="mb-0">Document No.</label>
-                    @Html.TextBox("txtDocNo", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Document No..", id = "txtDocNo" })
-                </div>
-                <div class="col-sm">
-                    <label for="NameEng" class="mb-0">OperatorRequest</label>
-                    @Html.TextBox("txtOpId", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "OperatorNo..", id = "txtOpId" })
-                </div>
-                <div class="col-sm">
-                    <label for="NameEng" class="mb-0">Name - Surname</label>
-                    @Html.TextBox("txtSectionCode", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "SectionCode..", id = "txtSectionCode" })
-                </div>
-                <div class="col-sm">
-                    <label for="NameEng" class="mb-0">Requester</label>
-                    @Html.TextBox("txtReqID", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Requester..", id = "txtReqID" })
-                </div>
-
-                <div class="col-sm">
-                    <label for="NameEng" class="mb-0">Operator Approved</label>
-                    @Html.TextBox("txtOpAppID", null, new { @class = "form-control form-control-sm shadow-sm", placeholder = "Operator Approved..", id = "txtOpAppID" })
-                </div>
+            <div class="row justify-content-center">
+                <h1>USER REQUEST INQUIRY</h1>
             </div>
-            <div class=" row">
-                <div class="col-sm">
-                    <button class="btn bg-info" id="btnSearch"><i class="fa fa-search"></i> Search</button>
-                    <button class="btn bg-warning" id="btnClear"><i class="fa fa-undo"></i> reset</button>
+            <div class="row">
+                <div class="col">
+                    <div class="  table-responsive">
+                        @* <h6 class="m-3">Additional Department</h6>*@
+                        <br />
+                        <table class="table   table-striped table-sm nowrap" id="myTables">
+                            <thead class="bg-dark text-white">
+                                <tr>
+                                    <th>DocNo</th>
+                                    <th>OperatorID</th>
+                                    <th>SectionCode</th>
+                                    <th>SectionAttribute</th>
+                                    <th>OperatorGroup</th>
+                                    <th>License</th>
+                                    <th>Active</th>
+                                    <th>ReqOperatorID</th>
+                                    <th>ReqDate</th>
+                                    <th>ChangeOperatorID</th>
+                                    <th>ChangeDate</th>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size:xx-small"></tbody>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>*@
-    <div class="row">
-        <div class="col">
-            <div class="  table-responsive">
-                <h6 class="m-3">Additional Department</h6>
-                <table class="table table-bordered table-striped table-sm nowrap" id="myTables">
-                    <thead class="bg-dark text-white">
-                        <tr>
-                            <th>DocNo</th>
-                            <th>OperatorID</th>
-                            <th>SectionCode</th>
-                            <th>SectionAttribute</th>
-                            <th>OperatorGroup</th>
-                            <th>License</th>
-                            <th>Active</th>
-                            <th>ReqOperatorID</th>
-                            <th>ReqDate</th>
-                            <th>ChangeOperatorID</th>
-                            <th>ChangeDate</th>
-                        </tr>
-                    </thead>
-                    <tbody style="font-size:xx-small"></tbody>
-                    <tfoot>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </tfoot>
-                </table>
             </div>
         </div>
     </div>
@@ -154,7 +123,7 @@
                 ],
                 order: [1, "asc"],
                 fnInitComplete: function (oSettings, json, sData) {
-                    addSearchControl(json); 
+                    addSearchControl(json);
                     return true;
                 },
             });
@@ -185,7 +154,7 @@
 
         }
 
-        function addSearchControl(event) { 
+        function addSearchControl(event) {
             $("#myTables thead").append($("#myTables thead tr:first").clone());
             $("#myTables thead tr:eq(1) th").each(function (index) {
                 if (index != 100) {
@@ -233,6 +202,6 @@
                 }
             });
         }
-     
+
     </script>
 }

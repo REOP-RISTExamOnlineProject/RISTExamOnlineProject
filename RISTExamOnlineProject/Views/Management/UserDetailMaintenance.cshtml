@@ -5,92 +5,85 @@
 }
 
 <style>
-    .active{
-        color:red;
+    .active {
+        color: red;
     }
-</style>
-<h5 class="mb-0">
-    <strong>User profile</strong>
-</h5>
-<span class="text-secondary">Employee Management <i class="fa fa-angle-right"></i> User profile</span>
+</style> 
 
-<div class="row mt-3">
-    <div class="col-sm-12">
-        <!--User profile header-->
-        <div class="mt-1 mb-3 button-container bg-white border shadow-sm">
-            <div class="profile-bg p-5">
-                <img src="@ViewBag.imgProfileUserDetail" height="125px" width="125px" class="rounded-circle shadow profile-img" id="imgUserProfile"/>
+<div class="mt-1 mb-3 button-container bg-white border shadow-sm">
+     
+    <div class="row  ">
+        <div class="col-12 ">
+            <div class="fb-profile bg-white mt-3">
+                <div  class="fb-image-lg profile-bgx"> 
+                </div>
+                <img align="left" class="fb-image-profile thumbnail shadow-sm p-0" src="@ViewBag.imgProfileUserDetail" style="" alt="Profile  image example" id="imgUserProfile" />
+                <div class="fb-profile-text">
+                    <h1 id="NameUserProfile">@ViewBag.NameEngUserDetail</h1>
+                    <p id="jobUserProfile">@ViewBag.JobTitleUserDetail</p>
+                </div>
             </div>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-5 offset-md-3 col-sm-12 offset-sm-0 col-12 bio-header">
-                        <h3 class="mt-4" id="NameUserProfile">@ViewBag.NameEngUserDetail</h3>
-                        @*<h3 class="mt-4">Wittaya Suttisak</h3>*@
-                        <span class="text-muted mt-0" id="jobUserProfile">@ViewBag.JobTitleUserDetail</span>
-                        @*  <span class="text-muted mt-0">System Development 2</span>*@
-                    </div>
-                    <div class="col-md-4 col-sm-2 col-12 px-5 text-right pt-4 bio-comment">
-                        <div class="container">
-                            <div class="col-sm-12">
-                                <div class="mb-4">
-                                    <div class="input-group mt-2">
-                                        @Html.TextBox("strOPNo", null, new { @class = "form-control shadow-sm", placeholder = "Search Staff Code..", id = "strOPNo" })
 
-                                        <div class="input-group-append">
-                                            @*<button class="btn btn-theme" type="submit" id="button-addon2" formaction="@Url.Action("UserDetailMaintenance")">Search</button>*@
+        </div>
+    </div>
+     
+    <div class="row  text-center">
 
-                                            <button class="btn btn-theme" type="button" onclick="" id="btnSearch" style="display:none;"   >Search</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <div class="col-8">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white">
+                <a class="navbar-brand" href="#">Menu</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a onclick="switchMenu('_partsUserInfo');" value="_partsAdditional" id="_partsUserInfo" class="nav-link active">Info</a>
+                        </li>
+                        <li class="nav-item  ">
+                            <a onclick="switchMenu('_partsUserDetail');" value="_partsAdditional" id="_partsUserDetail" class=" nav-link">UserDetail</a>
+                        </li>
+                        <li class="nav-item  ">
+                            <a onclick="switchMenu('_partsAdditional');" value="_partsAdditional" id="_partsAdditional" class=" nav-link">AdditionDepartment</a>
+                        </li>
+                        <li class="nav-item  ">
+                            <a onclick="switchMenu('_partsTrainning');" value="_partsAdditional" id="_partsTrainning" class=" nav-link">Trainingrecords</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+        </div>
+        <div class="col-4">
+            <div class="input-group form-inline my-2 my-lg-0 float-right">
+                @Html.TextBox("strOPNo", null, new { @class = "form-control  ", placeholder = "Search Staff Code..", id = "strOPNo" })
+                <div class="input-group-append">
+                    <button class="btn btn-theme btn-sm" type="button" onclick="" id="btnSearch" style="display:none;">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="form-row ">
+            <div class="col">
+                <div id="DestinationLayoutDiv">
+                    @await Html.PartialAsync("/Views/Shared/_partsUserManage/_partsUserInfo.cshtml")
                 </div>
             </div>
         </div>
 
-        <!--/User profile header-->
-    </div>
 
-</div>
-<nav class="navbar navbar-expand-sm bg-dark shadow   navbar-dark mb-1" id="NavAdminBar" style="display:none;">
-    <ul class="navbar-nav">
-        <li class="nav-item mr-1">
-            <button onclick="switchMenu('_partsUserInfo');" value="_partsAdditional" id="_partsUserInfo" class="btn btn-dark nav-link active">Info</button>
-        </li>
-        <li class="nav-item mr-1">
-            <button onclick="switchMenu('_partsUserDetail');" value="_partsAdditional" id="_partsUserDetail" class="btn btn-dark nav-link">User Detail</button>
-        </li>
-        <li class="nav-item mr-1">
-            <button onclick="switchMenu('_partsAdditional');" value="_partsAdditional" id="_partsAdditional" class="btn btn-dark nav-link">Addition Department</button>
-        </li>
-        <li class="nav-item mr-1">
-            <button onclick="switchMenu('_partsTrainning');" value="_partsAdditional" id="_partsTrainning" class="btn btn-dark nav-link">Training records</button>
-        </li>
-    </ul>
-</nav> 
- 
-<div class="form-row ">
-    <div class="col">
-        <div id="DestinationLayoutDiv">
-            @await Html.PartialAsync("/Views/Shared/_partsUserManage/_partsUserInfo.cshtml")
-        </div>
-    </div>
-</div>
+        @section scripts{
 
 
-@section scripts{
+            <link href="~/lib/datatables/Css/jquery.dataTables.min.css" rel="stylesheet" />
+            <script src="~/lib/datatables/Js/jquery.dataTables.min.js"></script>
+            <script src="~/lib/CustomJS/ScriptUserManage/Additional.js"></script>
+            <script src="~/lib/CustomJS/ScriptUserManage/UserManagemant.js"></script>
 
+            <script type="text/javascript">
 
-    <link href="~/lib/datatables/Css/jquery.dataTables.min.css" rel="stylesheet" />
-    <script src="~/lib/datatables/Js/jquery.dataTables.min.js"></script>
-    <script src="~/lib/CustomJS/ScriptUserManage/Additional.js"></script>
-    <script src="~/lib/CustomJS/ScriptUserManage/UserManagemant.js"></script>
-
-    <script type="text/javascript">
-
-        $(document).ready(function () { 
+        $(document).ready(function () {
             $("#strOPNo").on("keyup", function (event) {
                 if (event.keyCode == 13) {
                     $("#btnSearch").click();
@@ -100,10 +93,10 @@
 
             $("#btnSearch").on("click", function (event) {
                 GetuserDetail();
-            }); 
+            });
 
             if ("@User.FindFirst(claim => claim.Type == ClaimTypes.Role)?.Value" == "User") {
-             
+
                 $("#strOPNo").attr("readonly", "readonly")
 
                 $("#strOPNo").val("@User.Identity.Name");
@@ -129,5 +122,5 @@
             });
         }
 
-    </script>
-}
+            </script>
+        }
