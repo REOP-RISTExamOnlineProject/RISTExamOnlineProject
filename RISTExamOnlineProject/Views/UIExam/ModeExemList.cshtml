@@ -5,17 +5,20 @@
 }
 
 <div class="container-fluid">
-    <div class="mb-4">
+    @*<div class="mb-4">
         <h1>Licensure Examination</h1>
         <p>การสอบใบอนุญาต</p>
     </div>
-    <hr />
+    <hr />*@
     <div class="card shadow">
-        <div class="card-body fade-in">
-            <h4 class="text-uppercase ml-4 font-weight-lighter">
-                Exam category  : @ViewBag.Itemcateg @ViewBag.ItemCateName
-            </h4>
-            <hr />
+        <div class="fb-image-lg profile-bgExam   ">
+        </div>
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="fb-image-profilex">
+                    <h1 class="text-uppercase">Licensure Examination set</h1>
+                </div>
+            </div>
             <div class=" p-3">
                 <table class="table table-hover table-sm bg-white w-100" id="tbItemCatg">
                     <thead class="bg-light">
@@ -27,8 +30,8 @@
                         </tr>
                     </thead>
                     <tbody></tbody>
-                </table> 
-            </div> 
+                </table>
+            </div>
             <a href="@Url.Action("LicenceList")" class="btn  btn-link"> Back</a>
         </div>
     </div>

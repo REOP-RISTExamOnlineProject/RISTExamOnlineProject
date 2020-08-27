@@ -2403,6 +2403,32 @@ span.tag.label.label-info {
     border: 5px solid white;
 }
 
+.fb-image-profilex {
+    margin: -150px 0px 50px 50px;
+    padding: 20px;
+    z-index: 9;
+    background: rgb(244,244,244);
+    background: linear-gradient(279deg, rgba(244,244,244,0.8183648459383753) 12%, rgba(242,242,242,0.5858718487394958) 100%);
+    border: 5px solid white;
+    color: #4C4C4C;
+}
+
+.profile-bg2 {
+    background-image: url('../img/bg.jpg');
+    background-size: cover;
+    background-position-y: 60%;
+    background-repeat: no-repeat;
+    height: 20vh;
+}
+.profile-bgExam {
+    background-image: url('../img/nick-morrison-FHnnjk1Yj7Y-unsplash.jpg');
+    background-size: cover;
+    background-position-y: 80%;
+    background-repeat: no-repeat;
+    height: 20vh;
+}
+
+
 @media (max-width:768px) {
 
     .fb-profile-text > h1 {
