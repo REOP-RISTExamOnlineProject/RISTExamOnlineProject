@@ -73,7 +73,7 @@
 
                             <table class="table table-sm table-bordered table-striped " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable">
 
-                                <thead class="thead-dark">
+                                <thead class="bg-light">
                                     <tr>
                                         @*<td>Edit</td>*@
                                         <th class="text-wrap text-center" ><h6>ItemCode</h6>  </th>
@@ -449,8 +449,8 @@
 
 
                                 return "<div class='row justify-content-center m-2'>" +
-                                    "<div class='col-6'> <a href='#' class='btn btn-info w-100 text-white' onclick=EditItem('" + encodeURIComponent(itemCode) + "','" + encodeURIComponent(itemName) + "','" + timeLimit + "','" + nbr + "','" + encodeURIComponent(valueCodeQuestion) + "','" + encodeURIComponent(valueCodeAnswer) + "') ><i class='fas fa-pencil-alt'></i> Edit</a> </div> " +
-                                    "<div class='col-6'><a href='#' class='btn btn-danger w-100 text-white' onclick=DeleteItemCode('" + nbr + "') ><i class='fas fa-trash-alt'></i> Delete </a> </div>" +
+                                    "<div class='col-6'> <a href='#' class='btn btn-info btn-sm  w-100 text-white' onclick=EditItem('" + encodeURIComponent(itemCode) + "','" + encodeURIComponent(itemName) + "','" + timeLimit + "','" + nbr + "','" + encodeURIComponent(valueCodeQuestion) + "','" + encodeURIComponent(valueCodeAnswer) + "') ><i class='fas fa-pencil-alt'></i> Edit</a> </div> " +
+                                    "<div class='col-6'><a href='#' class='btn btn-danger btn-sm  w-100 text-white' onclick=DeleteItemCode('" + nbr + "') ><i class='fas fa-trash-alt'></i> Delete </a> </div>" +
                                     "</div>";
 
                             }, class: "text-wrap text-center"

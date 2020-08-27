@@ -332,7 +332,7 @@ function toggle_sidebar() {
 /*==== Header menu toggle navigation show and hide =====*/
 
 function toggle_dropdown(elem) {
-    $(elem).parent().children('.dropdown').slideToggle("fast");
+    $(elem).parent().children('.dropdown').slideToggle("slow");
     $(elem).parent().children('.dropdown').toggleClass("animated flipInY");
 }
 
@@ -413,5 +413,7 @@ if($('.js-small').length) {
     var switcheryLg = new Switchery(document.querySelector('.js-large'), { size: 'large' });
     var switcheryMd = new Switchery(document.querySelector('.js-medium'), { size: 'medium' });
 }
+
+
 
 /*===============Switchery ====================*/
