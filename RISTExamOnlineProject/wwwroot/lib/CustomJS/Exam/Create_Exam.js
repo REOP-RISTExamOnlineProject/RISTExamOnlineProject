@@ -47,7 +47,7 @@ function GetExamName(Category) {
 
 
 function GetExamDetail(Itemcode) {
- 
+ debugger
     $.ajax({
         type: 'POST',
         url: '../Exam/GetExamDetail',
@@ -65,6 +65,7 @@ function GetExamDetail(Itemcode) {
                 $('#LB_Exam_Name').text(ItemName);              
                 MakeTable(Detail);
                 $('#Display').show();
+
             } else {
             }
         },
@@ -81,6 +82,7 @@ function Add_Detail_Display(DisplayID, SummernoteID) {
     InputHTML(DisplayID, markup)
     Reset_Summernote(SummernoteID)
 };
+
 
 function Show_Summernote(DisplayID) {
 
@@ -424,11 +426,26 @@ function Save() {
     DeleteHTML(TempDisplayID);
     InputHTML(TempDisplayID, HTMLText); 
 };
-function DeleteQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq) {
+
+
+
+function DeleteQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq, ValueStatus) {
+    var Job;
+    var TextAleart;
+    if (ValueStatus == 'NEW') {
+        Job = 'REJ'
+        TextAleart = 'This question has not been approved.If deleted, it cannot be recovered.'
+
+    }
+
+    else {
+        TextAleart = 'Are you sure you want to Delete Question ?'
+        Job = 'DEL'
+    }
     Swal.fire({
         icon: 'warning',
         title: 'Are you sure?',
-        text: "Are you sure you want to Delete Question ?",
+        text: TextAleart,
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -442,25 +459,15 @@ function DeleteQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq) {
                 type: 'POST',
                 url: '../Exam/Valueslist',
                 dataType: 'json',
-
-
-
-
                 data: {
 
                     Max_Seq: 0, QuestionCount: 0, ValueCodeQuestion: ValueCodeQuestion, ValueCodeAnswer: ValueCodeAnswer,
                     Ans_TextDisplay: "", Ans_Text_HTML_Display: "", Ans_Value: "0", Need_value: "0",
-                    Text_Question: "", TextHTML_Question: "", job: "DEL", OP_UPD: OP_UPD, DisplayOrder: Seq
-
-                  //  ValueCodeAnswer: ValueCodeAnswer, ValueCodeQuestion: ValueCodeQuestion, Seq: Seq
+                    Text_Question: "", TextHTML_Question: "", job: Job, OP_UPD: OP_UPD, DisplayOrder: Seq     
                 },
-
-
 
                 success: function (response) {
                     if (response.success == true) {
-
-
                         Swal.fire({
                             position: 'top-mid',
                             icon: 'success',
@@ -484,6 +491,58 @@ function DeleteQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq) {
     });
 
 };
+
+
+function RestoreQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq) {
+    Swal.fire({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: "Are you sure you want to Rrestore Question ?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Do it!'
+
+    }).then(function (result) {
+        if (result.value) {
+
+            $.ajax({
+                type: 'POST',
+                url: '../Exam/Valueslist',
+                dataType: 'json',
+                data: {
+                    Max_Seq: 0, QuestionCount: 0, ValueCodeQuestion: ValueCodeQuestion, ValueCodeAnswer: ValueCodeAnswer,
+                    Ans_TextDisplay: "", Ans_Text_HTML_Display: "", Ans_Value: "0", Need_value: "0",
+                    Text_Question: "", TextHTML_Question: "", job: "RES", OP_UPD: OP_UPD, DisplayOrder: Seq
+                },
+
+                success: function (response) {
+                    if (response.success == true) {
+                        Swal.fire({
+                            position: 'top-mid',
+                            icon: 'success',
+                            title: ("Restore  Question  success "),
+                            showConfirmButton: true,
+                            //   timer: 1700
+                        }).then(function (result) {
+
+                            var ExamCode = $("#DDL_ExamName").val();
+                            GetExamDetail(ExamCode)
+
+                        });
+                    }
+
+                }
+
+            });
+
+
+        }
+    });
+
+};
+
 
 
 function NewQuestion() {
@@ -534,6 +593,7 @@ function EditQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq, Max_Seq) {
 
 
 function Manage_Exam() {
+    debugger
     var ExamCode = $("#DDL_ExamName").val();
     if (ExamCode != '' && ExamCode != null) {
 
@@ -576,6 +636,7 @@ function MakeTable(Detail) {
 
             { data: "question", name: "question", class: "text-wrap text-left" },
             { data: "ans_Count", name: "ans_Count", class: "text-wrap text-center" },
+            { data: "valueStatus", name: "valueStatus", class: "text-wrap text-center" },
             {
                 data: null,
                 render: function (data, type, row) {
@@ -583,11 +644,22 @@ function MakeTable(Detail) {
                     var ValueCodeAnswer = row.valueCodeAnswer.trim();
                     var Seq = row.seq;
                     var Max_Seq_ = row.max_Seq.trim();
+                    var ValueStatus = row.valueStatus.trim();
 
-                    return "<div class='row justify-content-center m-2'>" +
-                        "<div class='col-5'> <a href='#' class='btn btn-info w-100 text-white' onclick=EditQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "','" + Max_Seq_ + "') > <i class='fas fa-pencil-alt'></i> Edit</a> </div> " +
-                        "<div class='col-5'>  <a href='#' class='btn btn-danger w-100 text-white' onclick=DeleteQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "') > <i class='fas fa-trash-alt'></i> Delete </a> </div>" +
-                        "</div>";
+                    if (ValueStatus != 'DEL') {
+
+                        return "<div class='row justify-content-center m-2'>" +
+                            "<div class='col-5'> <a href='#' class='btn btn-info w-100 text-white' onclick=EditQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "','" + Max_Seq_ + "') > <i class='fas fa-pencil-alt'></i> Edit</a> </div> " +
+                            "<div class='col-5'>  <a href='#' class='btn btn-danger w-100 text-white' onclick=DeleteQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "','" + ValueStatus +"') > <i class='fas fa-trash-alt'></i> Delete </a> </div>" +
+                            "</div>";
+                    } else {
+
+                        return "<div class='row justify-content-center m-2'>" +
+                         
+                            "<div class='col-5'>  <a href='#' class='btn btn-secondary w-100 text-white' onclick=RestoreQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "') > <i class='fas fa-trash-restore-alt'></i> Restore </a> </div>" +
+                            "</div>";
+                    }
+
 
                 }, class: "text-wrap text-center"
             },

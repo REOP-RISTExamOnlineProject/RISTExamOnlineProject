@@ -66,9 +66,9 @@ namespace RISTExamOnlineProject.Models.TSQL
         public DataTable Get_ExamDetail(string Itemcode)
         {
             var ObjRun = new mgrSQLConnect(_configuration);
-            strSQL = " select[ItemCode],ItemCategName,[ValueCodeQuestion],[ValueCodeAnswer],ISNULL(Seq,0) as Seq  ,ISNULL([Question],'') as [Question]  ,[InputItemName] ,count(*) as Ans_Count  ";
-            strSQL += ",ISNULL((select max(Seq) FROM   [SPTOSystem].[dbo].[vewQuestionAll]   where[ItemCode] = '" + Itemcode.Trim() + "'),0)  As Max_Seq  FROM[SPTOSystem].[dbo].[vewQuestionAll] where[ItemCode] = '" + Itemcode.Trim() + "' ";
-            strSQL += "   group by[ItemCode], ItemCategName,[ValueCodeQuestion],[ValueCodeAnswer],[Question],[Seq],[InputItemName] order by[ValueCodeQuestion], Seq";
+            strSQL = " select [ItemCode],ItemCategName,[ValueCodeQuestion],[ValueCodeAnswer],ISNULL(Seq,0) as Seq  ,ISNULL([Question],'') as [Question]  ,[InputItemName] ,count(*) as Ans_Count  ";
+            strSQL += ",ISNULL((select max(Seq)    FROM   [SPTOSystem].[dbo].[vewQuestionAll]   where[ItemCode] = '" + Itemcode.Trim() + "'),0)  As Max_Seq ,[ValueStatus] FROM[SPTOSystem].[dbo].[vewQuestionAll] where[ItemCode] = '" + Itemcode.Trim() + "' ";
+            strSQL += "   group by[ItemCode], ItemCategName,[ValueCodeQuestion],[ValueCodeAnswer],[Question],[Seq],[InputItemName] ,[ValueStatus] order by[ValueCodeQuestion], Seq";
 
             dt = ObjRun.GetDatatables(strSQL);
             return dt;
