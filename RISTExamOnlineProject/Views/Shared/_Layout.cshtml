@@ -74,12 +74,14 @@
                 </div>
                 <!--Menu Icons-->
                 <!--Search box and avatar-->
+               
                 <div class="col-sm-8 col-xl-8 col-4 text-right flex-header-menu justify-content-end">
+                    
                     <div class=" ">
-                        <a class="nav-link" href="#" role="button" id="dropdownMenuLink" onclick="toggle_dropdown(this);return false;" data-toggle="dropdownx" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link" href="#" role="button" id="dropdownMenuLink" onclick="toggle_dropdown(this);return false;" data-toggle="dropdownx" aria-haspopup="true" aria-expanded="false" title="Account">
                             @* <img src="@ViewBag.imgProfile" alt="#" class="rounded-circle profiles" width="40px" height="40px">*@
                             <i class="fas fa-ellipsis-h Icons"></i>
-                            
+
                         </a>
                         <div class="dropdown dropdown-right text-left bg-white shadow border mt-13" style="width:333px; border-radius: 5px;" aria-labelledby="dropdownMenuLink">
                             <div class="dropdown-item">
@@ -98,8 +100,8 @@
                                     </div>
                                 </div>
                             </div>
-                             
-                           @* <div class="dropdown-divider"></div>*@
+
+                            @* <div class="dropdown-divider"></div>*@
 
                             <a href="@Url.Action("Logout", "Account")" class="dropdown-item">
                                 <div class="pt-3 pb-3   ">
@@ -129,13 +131,12 @@
                     <!--Image Avatar-->
                     <div class="avatar text-center">
 
-                      @*  <img src="~/lib/img/Logo_ROHM.png"style="width:8vw; height:70%;" />*@
-                        <img src="@ViewBag.imgProfile" alt="" class="rounded-circle profiles"  style="width:5vw; height:70%;"/>
-                        <br />
-                        <p>HI! <strong id="strName">@ViewBag.NameEng</strong></p>
+                
+                        <img src="@ViewBag.imgProfile" alt="" class="rounded-circle   profiles"  style="width:5vw; height:70%;" />
+                         
+                        <p>HI! <strong id="strName1">@ViewBag.NameEng</strong></p>
                         <span class="text-primary small"><strong id="strJobTitle" class="text-white">@ViewBag.JobTitle</strong></span>
-                        @*<p><strong>Mr.Wittaya S.</strong></p>
-                        <span class="text-primary small"><strong>System Dev.</strong></span>*@
+                 
                     </div>
                     <!--Image Avatar-->
                     <!--Sidebar Navigation Menu-->
@@ -321,22 +322,7 @@
         $(document).ready(function () {
 
             Profile();
-            $('.hideme').addClass("active");
-
-            //$(window).scroll(function () {
-
-            //    $('.hideme').each(function (i) {
-
-            //        var bottom_of_object = $(this).offset().top + $(this).outerHeight();
-
-            //        var bottom_of_window = $(window).scrollTop() + $(window).height();
-
-            //        if (bottom_of_window > bottom_of_object) {
-            //            $(this).addClass("active");
-            //        }
-            //    });
-            //});
-
+         
         });
 
 
@@ -351,6 +337,7 @@
 
                     $(".profiles").attr("src", Data.data);/*text(Data.data);*/
                     $("#strName").text(Data.strName);
+                    $("#strName1").text(Data.strName);
                     $("#strJobTitle").text(Data.strJobTitle);
                 },
                 error: function (ex) {

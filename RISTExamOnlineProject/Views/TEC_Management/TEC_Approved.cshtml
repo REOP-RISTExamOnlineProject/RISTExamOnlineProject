@@ -24,7 +24,7 @@
 
 
             <table class="table table-hover table-sm bg-white w-100"   id="MyTable">
-                <thead class="bg-dark text-white">
+                <thead class="bg-light">
                     <tr>
                         <th style="text-align:center;" class="text-wrap">DocNo</th>
                         <th style="text-align:center;" class="text-wrap"> ReqOperatorID </th>
@@ -62,7 +62,7 @@
 
                         <table class="table table-sm table-bordered table-striped " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable_Compare">
 
-                            <thead>
+                            <thead class="bg-light">
                                 <tr>
                                     <th class="text-wrap"> Catagory </th>
                                     <th class="text-wrap text-dark"> New </th>
@@ -116,11 +116,11 @@
 
 
                                 <table class="table table-sm table-bordered table-striped  " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable_Detail">
-                                    <thead>
+                                    <thead class="bg-light">
                                         <tr>
 
                                             @*<th style="text-align:center;" class="text-wrap">nbr</th>
-                                                <th style="text-align:center;" class="text-wrap"> docNo </th>*@
+            <th style="text-align:center;" class="text-wrap"> docNo </th>*@
 
                                             <th><input class="select-checkbox" value="1" id="CB_select_all" type="checkbox" /> All </th>
                                             <th style="text-align:center;" class="text-wrap"> Nbr </th>
@@ -307,7 +307,7 @@
                                     var Target = row.docNo
 
 
-                                    return "<a href='#' class='btn btn-info text-white' onclick=showdetail('" + encodeURIComponent(Target) + "'); >Detail</a>";
+                                    return "<a href='#' class='btn btn-info  btn-sm text-white' onclick=showdetail('" + encodeURIComponent(Target) + "'); >Detail</a>";
 
                                 }, class: "text-wrap text-center"
                             },
@@ -409,7 +409,7 @@
                                     var Target = row.nbr
 
 
-                                    return "<a href='#' class='btn btn-info text-white'   onclick=ShowComepare('" + Target + "'); >Compare</a>";
+                                    return "<a href='#' class='btn btn-info btn-sm text-white'   onclick=ShowComepare('" + Target + "'); >Compare</a>";
 
                                 }, class: "text-wrap text-center"
                             },

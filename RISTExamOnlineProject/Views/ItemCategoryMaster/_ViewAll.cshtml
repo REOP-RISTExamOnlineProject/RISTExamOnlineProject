@@ -19,7 +19,7 @@
         <div class="mt-1 mb-3  bg-white border shadow table-responsive">
 
             <table class="table">
-                <thead class="table-dark">
+                <thead class="bg-light">
                     <tr>
                         <th>
                             @Html.DisplayNameFor(model => model.First().ItemCateg)
@@ -68,11 +68,11 @@
                             </td>
                             <td>
                                 <div>
-                                    <a onclick="showInPopup('@Url.Action("AddOrEdit", "ItemCategoryMaster", new {id = item.Nbr, page = pageCurrent}, Context.Request.Scheme)', 'Update ItemCategory')" class="btn btn-info text-white"><i class="fas fa-pencil-alt"></i> Edit</a>
+                                    <a onclick="showInPopup('@Url.Action("AddOrEdit", "ItemCategoryMaster", new {id = item.Nbr, page = pageCurrent}, Context.Request.Scheme)', 'Update ItemCategory')" class="btn btn-info btn-sm text-white"><i class="fas fa-pencil-alt"></i> Edit</a>
 
                                     <form asp-action="Delete" asp-route-id="@item.Nbr" asp-route-page="@ViewBag.pageCurrent" onsubmit="return jQueryAjaxDelete(this)" class="d-inline">
 
-                                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</button>
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Delete</button>
 
 
                                     </form>
