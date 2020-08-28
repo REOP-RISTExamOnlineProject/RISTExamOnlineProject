@@ -475,19 +475,42 @@ table tbody tr td {
     background: linear-gradient(309deg, rgba(136,150,101,1) 17%, rgba(113,142,86,1) 24%, rgba(26,71,83,1) 87%);
 }
 
+.avatar {
+    
+    
+    background: url('../img/pexels-eberhard-grossgasteiger-1366919.jpg');
+    background-position-y: 20%;
+    background-size: cover;
+}
 
+
+.avatarX {
+    height: 100%;
+    /*background: rgb(116,117,117);
+    background: linear-gradient(45deg, rgba(116,117,117,0.30) 4%, rgba(64,66,66,0.30) 87%);*/
+    background: rgb(4,35,49);
+    background: linear-gradient(49deg, rgba(4,35,49,0.30)4%, rgba(42,63,86,0.30) 54%, rgba(86,91,123,0.30) 87%);
+}
+ 
 .avatar img {
-    width: 75px;
-    height: 75px;
+    width: 100px;
+    height: 110px;
     margin-top: 25px;
     margin-bottom: 10px;
     border: 3px solid #fff;
 }
-
-.avatar > p {
-    color: #fff;
+.avatarY {
+    
+    height: 30vh;
+}
+.avatarY > span {
+    color: #FFF;
 }
 
+.avatarY > p {
+    font-size: 2vh;
+    color: #FFF;
+}
 
 
 
@@ -2404,26 +2427,26 @@ span.tag.label.label-info {
 }
 
 .fb-image-profilex {
-    margin: -150px 0px 50px 50px;
+    margin: -120px 0px 50px 50px;
     padding: 20px;
     z-index: 9;
     background: rgb(244,244,244);
-    background: linear-gradient(279deg, rgba(244,244,244,0.8183648459383753) 12%, rgba(242,242,242,0.5858718487394958) 100%);
-    border: 5px solid white;
+    background: linear-gradient(279deg, rgba(244,244,244,0.7) 12%, rgba(242,242,242,0.7) 100%);
+    /*border: 5px solid white;*/
     color: #4C4C4C;
 }
 
 .profile-bg2 {
-    background-image: url('../img/bg.jpg');
+    background-image: url('../img/nick-morrison-FHnnjk1Yj7Y-unsplash.jpg');
     background-size: cover;
-    background-position-y: 60%;
+    background-position-y: 80%;
     background-repeat: no-repeat;
     height: 20vh;
 }
 .profile-bgExam {
-    background-image: url('../img/nick-morrison-FHnnjk1Yj7Y-unsplash.jpg');
+    background-image: url('../img/imac_apple_computer_brand_logo_92308_1920x1080.jpg');
     background-size: cover;
-    background-position-y: 80%;
+    background-position-y: 60%;
     background-repeat: no-repeat;
     height: 20vh;
 }
