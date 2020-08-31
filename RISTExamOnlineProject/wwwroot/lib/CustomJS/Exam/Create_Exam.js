@@ -475,7 +475,6 @@ function DeleteQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq, ValueStatus) {
                             showConfirmButton: true,
                             //   timer: 1700
                         }).then(function (result) {
-
                             var ExamCode = $("#DDL_ExamName").val();
                             GetExamDetail(ExamCode)
 
@@ -649,8 +648,15 @@ function MakeTable(Detail) {
                     if (ValueStatus != 'DEL') {
 
                         return "<div class='row justify-content-center m-2'>" +
+
+
                             "<div class='col-5'> <a href='#' class='btn btn-info w-100 text-white' onclick=EditQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "','" + Max_Seq_ + "') > <i class='fas fa-pencil-alt'></i> Edit</a> </div> " +
-                            "<div class='col-5'>  <a href='#' class='btn btn-danger w-100 text-white' onclick=DeleteQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "','" + ValueStatus +"') > <i class='fas fa-trash-alt'></i> Delete </a> </div>" +
+
+                            "<div class='col-5'>  <a href='#' class='btn btn-danger w-100 text-white' onclick=DeleteQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "','" + ValueStatus + "') > <i class='fas fa-trash-alt'></i> Delete </a> </div>" +
+
+
+
+
                             "</div>";
                     } else {
 

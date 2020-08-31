@@ -12,9 +12,11 @@
         .initiallyHidden {
             display: none;
         }
+
         .modal {
             overflow-y: auto;
         }
+
         .note-group-select-from-files {
             display: none;
         }
@@ -51,48 +53,45 @@
                     <div class="card-body">
 
                         <br />
+                        <div class="row justify-content-lg-center ">
+
+                            <div class="col col-lg-8">
+
+                                <form>
+
+                                    <div class="form-group">
+                                        <label for="DDL_ExamCategory"><b>Exam Category :</b></label>
+                                        @Html.DropDownList("DDL_ExamCategory", new SelectList("", ""), new { @id = "DDL_ExamCategory", @class = "custom-select h-100 " })
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="DDL_ExamName"><b> Exam Name :</b></label>
+                                        @Html.DropDownList("DDL_ExamName", new SelectList("", ""), new { @id = "DDL_ExamName", @class = "custom-select h-100 " })
+                                    </div>
+                                   
+                                </form>
+
+                            </div>
+                        </div>
                         <div class="row justify-content-lg-start ">
-
-                            <div class="col-2 text-right">
-
-                                <b>  Exam Category :</b>
-                            </div>
-                            <div class="col-3">
-                                @Html.DropDownList("DDL_ExamCategory", new SelectList("", ""), new { @id = "DDL_ExamCategory", @class = "custom-select " })
-                            </div>
-
-                            <div class="col-2 text-right">
-                                <b>
-                                    Exam Name :
-                                </b>
-                            </div>
-                            <div class="col-3">
-                                @Html.DropDownList("DDL_ExamName", new SelectList("", ""), new { @id = "DDL_ExamName", @class = "custom-select " })
-                            </div>
-
-                            <div class="col-2">
-
-                                <button class="btn btn-success btn-sm " onclick="Manage_Exam()"><i class="fas fa-search"></i> Search </button>
+                            <div class="col col-lg-2 offset-2">
+                                <button class="btn btn-success" onclick="Manage_Exam()"><i class="fas fa-search"></i> Search </button>
 
                             </div>
+                        </div>
+                            <br />                   
+
+
+
 
                         </div>
-                        <br />
-                        @*<div class="row justify-content-center">
-                      
-
-
-
-                        </div>*@
-
                     </div>
-                </div>
 
             </div>
         </div>
 
 
-        <br/>
+        <br />
 
 
 
@@ -113,41 +112,38 @@
 
                     </div>
 
-                    @*<div id="collapse_Question_List" class="collapse show" aria-labelledby="heading_Question_List" data-parent="#QuestionList_Form">*@
-                    @*<div id="collapse_Question_List" class="collapse show">*@
-
                     <div class="card-body">
 
                         <div class="row justify-content-start m-auto">
-                            <div class="col-2">
+                            <div class="col col-12">
                                 <h6> <b>  Total : <label id="LB_Exam_Count"></label> </b></h6>
                             </div>
                         </div>
-                        <table class="table table-sm table-bordered table-striped " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable">
-
-                            <thead class="bg-light">
-                                <tr>
-                                    <th>Question</th>
-                                    <th>Ans Count</th>
-                                    <th>Status</th>                                    
-
-                                    <th>
-                                        <button class="btn btn-success" onclick="NewQuestion()">
-                                            <i class="fas fa-plus"></i>    New Question
-                                        </button>
-                                    </th>
-                                </tr>
-                            </thead>
-                        </table>
 
 
+                        <div class="row justify-content-center m-auto">
+                            <div class="col-12 overflow-auto">
+                                <table class="table table-sm table-bordered table-striped " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable">
 
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th>Question</th>
+                                            <th>Ans Count</th>
+                                            <th>Status</th>
+                                            <th>  
+                                                <button class="btn btn-success" onclick="NewQuestion()">
+                                                    <i class="fas fa-plus"></i>    New Question
+                                                </button>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>                   
 
-
-
+                        </div>
+                     </div>
+                        @*</div>*@
                     </div>
-                    @*</div>*@
-                </div>
             </div>
         </div>
 

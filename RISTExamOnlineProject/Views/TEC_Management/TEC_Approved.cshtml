@@ -444,7 +444,7 @@
             }
 
             $('#CB_select_all').click(function () {
-                debugger
+       
                 if ($(this).is(":checked")) {
                     $("#CB_Approve.CB").prop("checked", true)
                 }
@@ -457,15 +457,10 @@
 
             function ShowComepare(Nbr) {
 
-
-               debugger
-
                 try {
-
                     if (TableTarget != null) {
                         TableTarget.destroy();
                     }
-
                 
                 TableTarget = $("#MyTable_Compare").DataTable({
 
@@ -518,7 +513,7 @@
 
 
             function CB_Change() {
-                debugger
+              
                 $("#CB_select_all").prop("checked", false)
 
             }
@@ -561,7 +556,6 @@
 
             function ApproveData(MakerID) {
 
-                debugger
 
 
                 var arrdata = TableApprove.$('input, select').serializeArray();
@@ -581,7 +575,7 @@
 
 
                     for (i = 0; i < arrdata.length; i++) {
-                        debugger
+                       
 
                         arrtemp = arrdata[i].value.split(',');
                         Nbr_Array.push(arrtemp[0]);
@@ -630,7 +624,7 @@
 
                         },
                         error: function (ex) {
-                            debugger
+                      
                             Swal.fire({
                                 text: ('MakeDataTemp :' + ex.statusText),
                                 icon: 'error',

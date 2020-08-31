@@ -32,17 +32,22 @@
                         <h3><b>Select    ItemCatagory  </b></h3>
                     </div>
 
-                    <div class="card-body">                
-                        <div class="row justify-content-center ">
-                            <div class="col-3">
-                                ItemCatagory :
-                            </div>
-                            <div class="col-5">
-                                @Html.DropDownList("DDL_Category", new SelectList("", ""), new { @id = "DDL_Category", @class = "custom-select " })
+                    <div class="card-body">
+                        <div class="row justify-content-center">
+
+
+                            <div class="col-10">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">  ItemCatagory :</label>
+                                    @Html.DropDownList("DDL_Category", new SelectList("", ""), new { @id = "DDL_Category", @class = "custom-select" })
+
+                                </div>
 
                             </div>
 
-                        </div>
+                        </div>                     
+
+
                     </div>
                 </div>
             </div>
@@ -62,33 +67,35 @@
                     </div>
 
                     <div class="card-body">
-                        @*<div class="row justify-content-end m-2">
-                            <div class="col-2">
-                                <button type="button" class="btn btn-success" id="BTN_NEW" onclick="Modal_setup('new','','','')">New Item</button>
-                            </div>
-                        </div>*@
-
-
+                   
                         <div class="row justify-content-center m-2">
+                            <div class="col-11 overflow-auto">
+                                <table class="table table-sm table-bordered table-striped " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            @*<td>Edit</td>*@
+                                            <th class="text-wrap text-center"><h6>ItemCode</h6>  </th>
+                                            <th class="text-wrap text-center"><h6>ItemName</h6>  </th>
+                                            <th class="text-wrap text-center"><h6>Question</h6>  </th>
+                                            <th class="text-wrap text-center"><h6>Answer</h6>  </th>
+                                            <th class="text-wrap text-center"><h6>Display</h6>  </th>
+                                            <th class="text-wrap text-center"><h6>Time</h6> </th>
 
-                            <table class="table table-sm table-bordered table-striped " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable">
-
-                                <thead class="bg-light">
-                                    <tr>
-                                        @*<td>Edit</td>*@
-                                        <th class="text-wrap text-center" ><h6>ItemCode</h6>  </th>
-                                        <th class="text-wrap text-center" ><h6>ItemName</h6>  </th>
-                                        <th class="text-wrap text-center" ><h6>Question</h6>  </th>
-                                        <th class="text-wrap text-center" ><h6>Answer</h6>  </th>
-                                        <th class="text-wrap text-center" ><h6>Display</h6>  </th>
-                                        <th class="text-wrap text-center" ><h6>Time</h6> </th>
-                                        <th class="text-wrap text-center" > <button type="button" class="btn btn-success w-auto" id="BTN_NEW" onclick="Modal_setup('new','','','')"><i class="fas fa-plus"></i> New Item</button>       </th>
-                                    </tr>
+                                            <th class="text-wrap text-center">
+                                                <button type="button" class="btn btn-success w-auto text-nowrap" id="BTN_NEW"
+                                                        onclick="Modal_setup('new','','','')">
+                                                    <i class="fas fa-plus"></i><span>New Item </span>
+                                                </button>
+                               
 
 
-                                </thead>
-                            </table>
+                                            </th>
+                                        </tr>
 
+
+                                    </thead>
+                                </table>
+                            </div>
 
                         </div>
 
@@ -449,8 +456,8 @@
 
 
                                 return "<div class='row justify-content-center m-2'>" +
-                                    "<div class='col-6'> <a href='#' class='btn btn-info btn-sm  w-100 text-white' onclick=EditItem('" + encodeURIComponent(itemCode) + "','" + encodeURIComponent(itemName) + "','" + timeLimit + "','" + nbr + "','" + encodeURIComponent(valueCodeQuestion) + "','" + encodeURIComponent(valueCodeAnswer) + "') ><i class='fas fa-pencil-alt'></i> Edit</a> </div> " +
-                                    "<div class='col-6'><a href='#' class='btn btn-danger btn-sm  w-100 text-white' onclick=DeleteItemCode('" + nbr + "') ><i class='fas fa-trash-alt'></i> Delete </a> </div>" +
+                                    "<div class='col-6'> <a href='#' class='btn_response btn btn-info btn-sm  w-100 text-white text-nowrap '  onclick=EditItem('" + encodeURIComponent(itemCode) + "','" + encodeURIComponent(itemName) + "','" + timeLimit + "','" + nbr + "','" + encodeURIComponent(valueCodeQuestion) + "','" + encodeURIComponent(valueCodeAnswer) + "') ><i class='fas fa-pencil-alt'></i> Edit</a> </div> " +
+                                    "<div class='col-6'><a href='#' class='btn_response btn btn-danger btn-sm  w-100 text-white text-nowrap '  onclick=DeleteItemCode('" + nbr + "') ><i class='fas fa-trash-alt'></i> Delete </a> </div>" +
                                     "</div>";
 
                             }, class: "text-wrap text-center"

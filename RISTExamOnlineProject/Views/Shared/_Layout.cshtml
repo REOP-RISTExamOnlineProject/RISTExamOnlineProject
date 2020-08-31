@@ -32,7 +32,7 @@
         <!-- tempusdominus-bootstrap-4 datetimepicker -->
         <link rel="stylesheet" href="~/lib/datepicker/css/tempusdominus-bootstrap-4.css">
         <!-- tempusdominus-bootstrap-4 -->
-
+     
 
         <link href="~/lib/XpageList/PagedList.css" rel="stylesheet" />
 
@@ -40,6 +40,16 @@
 
     </environment>
     @await RenderSectionAsync("Styles", false)
+
+
+    <style>
+        .btn_response {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+
 
 </head>
 <body>
@@ -191,8 +201,10 @@
 
                                             <li class="child"><a href="@Url.Action("Index","ItemCategoryMaster")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> License Master</a></li>
                                             <li class="child"><a href="@Url.Action("ItemCode_Management","ItemCodeMaster")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Itemcode Master</a></li>
-                                            <li class="child"><a href="@Url.Action("Exam_maintenance","exam")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam Management</a></li>
+                                            <li class="child"><a href="@Url.Action("Exam_maintenance","exam")" class="ml-4"><i class="fa fa-angle-right mr-2"></i>Exam Management</a></li>
+                                            <li class="child"><a href="@Url.Action("Exam_Approved","exam")" class="ml-4"><i class="fa fa-angle-right mr-2"></i>Exam Approved</a></li>                                         
                                             <li class="child"><a href="@Url.Action("ExamResultMonitor","UIExam")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam Result Monitoring</a></li>
+
                                         </ul>
                                     </li>
 
