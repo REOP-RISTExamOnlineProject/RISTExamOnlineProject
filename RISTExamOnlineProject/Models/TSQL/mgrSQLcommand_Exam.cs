@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
+using RISTExamOnlineProject.Models.db;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -63,7 +64,7 @@ namespace RISTExamOnlineProject.Models.TSQL
 
 
 
-        public DataTable Get_ExamDetail(string Itemcode)
+        public     DataTable Get_ExamDetail(string Itemcode)
         {
             var ObjRun = new mgrSQLConnect(_configuration);
             strSQL = " select [ItemCode],ItemCategName,[ValueCodeQuestion],[ValueCodeAnswer],ISNULL(Seq,0) as Seq  ,ISNULL([Question],'') as [Question]  ,[InputItemName] ,count(*) as Ans_Count  ";
@@ -76,28 +77,57 @@ namespace RISTExamOnlineProject.Models.TSQL
 
 
 
-        public List<SelectListItem> GetCategory()
-        {
-
+        public List<ExamApproved_Detail> Get_ExamDetail_Approved(string ValueCodeQuestion) {
             var ObjRun = new mgrSQLConnect(_configuration);
-            strSQL = "  SELECT[ItemCateg],[ItemCategName]  FROM[SPTOSystem].[dbo].[vewQuestionCateg] group by[ItemCateg],[ItemCategName] order by ItemCateg asc";
-
+            List<ExamApproved_Detail> Detail = new List<ExamApproved_Detail>();
+            strSQL = "SELECT  [Seq],[Question],count(*) as  Total_ANS ,[ValueStatus] FROM [SPTOSystem].[dbo].[vewQuestionAll]"+
+            " where [ValueCodeQuestion] ='"+ ValueCodeQuestion + "' and[ValueStatus] != 'RUN'   group by[Seq] ,[Question] ,[ValueStatus]";
             dt = ObjRun.GetDatatables(strSQL);
-            List<SelectListItem> listItems = new List<SelectListItem>();
+            if (dt.Rows.Count != 0)
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    Detail.Add(new ExamApproved_Detail()
+                    {
 
+                        Seq =  Convert.ToInt32( row["Seq"].ToString()),
+                        Question = row["Question"].ToString(),
+                        Total_ANS = Convert.ToInt32(row["Total_ANS"].ToString()),
+                        ValueStatus = row["ValueStatus"].ToString(),
+
+
+
+
+                    });
+
+                }
+            
+            }
+                return Detail;
+        }
+
+
+
+
+        public List<SelectListItem> GetItemDropDownList(string StrSQL,string TextDisplay)
+        {
+           
+            var ObjRun = new mgrSQLConnect(_configuration);      
+            dt = ObjRun.GetDatatables(StrSQL);
+            List<SelectListItem> listItems = new List<SelectListItem>();
             if (dt.Rows.Count != 0)
             {
                 listItems.Add(new SelectListItem()
                 {
-                    Text = "--- Choose Category ---",
+                    Text = "-- Choose "+ TextDisplay + " --",
                     Value = ""
                 });
                 foreach (DataRow row in dt.Rows)
                 {
                     listItems.Add(new SelectListItem()
                     {
-                        Text = row["ItemCateg"].ToString().Trim() + "-" + row["ItemCategName"].ToString().Trim(),
-                        Value = row["ItemCateg"].ToString().Trim(),
+                        Text = row[0].ToString().Trim() ,
+                        Value = row[1].ToString().Trim(),
 
                     });
                 }
@@ -106,40 +136,7 @@ namespace RISTExamOnlineProject.Models.TSQL
             return listItems;
 
         }
-
-        public List<SelectListItem> GetExamName(string ItemCateg)
-        {
-
-            var ObjRun = new mgrSQLConnect(_configuration);
-            strSQL = "SELECT    [ItemCode],[ItemName]   FROM [SPTOSystem].[dbo].[vewQuestionCateg] where[ItemCateg] = '" + ItemCateg + "' group by[ItemName],[ItemCode]";
-
-            dt = ObjRun.GetDatatables(strSQL);
-            List<SelectListItem> listItems = new List<SelectListItem>();
-
-            if (dt.Rows.Count != 0)
-            {
-                listItems.Add(new SelectListItem()
-                {
-                    Text = "--- Choose Exam name ---",
-                    Value = ""
-                });
-                foreach (DataRow row in dt.Rows)
-                {
-                    listItems.Add(new SelectListItem()
-                    {
-                        Text = row["ItemCode"].ToString().Trim() + "-" + row["ItemName"].ToString().Trim(),
-                        Value = row["ItemCode"].ToString().Trim(),
-
-                    });
-                }
-            }
-
-            return listItems;
-
-        }
- 
-
-         
+            
 
 
 
@@ -169,6 +166,19 @@ namespace RISTExamOnlineProject.Models.TSQL
 
         }
 
+        public string View_Question(int seq, string ValueCodeQuestion, string ValueCodeAnswer ,string ValueStatus) {
+            string MS = "";
+            var ObjRun = new mgrSQLConnect(_configuration);
+            strSQL = "[dbo].[srpMakeHTMLQuestion_NEW] '" + seq.ToString() + "','"+ ValueCodeQuestion + "','"+ ValueCodeAnswer + "','"+ ValueStatus + "'";
 
+            dt = ObjRun.GetDatatables(strSQL);
+            MS =  dt.Rows[0][0].ToString();
+
+
+            return MS;
+
+        
+        
+        }
     }
 }

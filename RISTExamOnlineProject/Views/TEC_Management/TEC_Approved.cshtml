@@ -29,21 +29,28 @@
                     <h1 class="text-uppercase">TEC APPROVED</h1>
                 </div>
             </div>
-            <table class="table table-hover table-sm bg-white w-100" id="MyTable">
-                <thead class="bg-light">
-                    <tr>
-                        <th style="text-align:center;" class="text-wrap">DocNo</th>
-                        <th style="text-align:center;" class="text-wrap"> ReqOperatorID </th>
-                        <th style="text-align:center;" class="text-wrap"> ReqDate </th>
-                        <th style="text-align:center;" class="text-wrap"> Total Job </th>
-                        <th style="text-align:center;" class="text-wrap"> Detail </th>
 
-                    </tr>
-                </thead>
-                <tbody></tbody>
+            <div class="row justify-content-center">
+                <div class="col justify-content-center overflow-auto">
 
-            </table>
 
+
+                    <table class="table table-hover table-sm bg-white w-100" id="MyTable">
+                        <thead class="bg-light">
+                            <tr>
+                                <th style="text-align:center;" class="text-wrap">DocNo</th>
+                                <th style="text-align:center;" class="text-wrap"> Req OperatorID </th>
+                                <th style="text-align:center;" class="text-wrap"> Req Date </th>
+                                <th style="text-align:center;" class="text-wrap"> Total Job </th>
+                                <th style="text-align:center;" class="text-wrap"> Detail </th>
+
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -117,40 +124,43 @@
 
 
 
-                        <div class="card-body justify-content-center overflow-auto" style="height:400px;">
-                            <div class="col   justify-content-center pl-md-10 pr-md-10 pt-2 pb-2" id="DetailMain">
+                        <div class="card-body justify-content-center" style="height:400px;">
+                         
 
 
-                                <table class="table table-sm table-bordered table-striped  " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable_Detail">
-                                    <thead class="bg-light">
-                                        <tr>
+                                <div class="col  justify-content-center pl-md-10 pr-md-10 pt-2 pb-2 " id="DetailMain">
 
-                                            @*<th style="text-align:center;" class="text-wrap">nbr</th>
-            <th style="text-align:center;" class="text-wrap"> docNo </th>*@
+                                    <table class="table table-sm table-bordered table-striped " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable_Detail">
+                                        <thead class="bg-light">
+                                            <tr>
 
-                                            <th><input class="select-checkbox" value="1" id="CB_select_all" type="checkbox" /> All </th>
-                                            <th style="text-align:center;" class="text-wrap"> Nbr </th>
-                                            <th style="text-align:center;" class="text-wrap"> operatorID </th>
-                                            <th style="text-align:center;" class="text-wrap text-dark"> sectionCode </th>
-                                            <th style="text-align:center;" class="text-wrap text-dark">sectionAttribute</th>
-                                            <th style="text-align:center;" class="text-wrap text-dark"> operatorGroup </th>
-                                            <th style="text-align:center;" class="text-wrap text-dark"> license </th>
-                                            <th style="text-align:center;" class="text-wrap text-dark"> active </th>
-                                            <th style="text-align:center;" class="text-wrap"> reqOperatorID </th>
-                                            <th style="text-align:center;" class="text-wrap"> reqDate </th>
-                                            <th style="text-align:center;" class="text-wrap">  </th>
+                                                @*<th style="text-align:center;" class="text-wrap">nbr</th>
+                        <th style="text-align:center;" class="text-wrap"> docNo </th>*@
 
-
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-
-                                </table>
+                                                <th><input class="select-checkbox" value="1" id="CB_select_all" type="checkbox" /> All </th>
+                                                <th style="text-align:center;" class="text-wrap"> Nbr </th>
+                                                <th style="text-align:center;" class="text-wrap"> operatorID </th>
+                                                <th style="text-align:center;" class="text-wrap text-dark"> sectionCode </th>
+                                                <th style="text-align:center;" class="text-wrap text-dark">sectionAttribute</th>
+                                                <th style="text-align:center;" class="text-wrap text-dark"> operatorGroup </th>
+                                                <th style="text-align:center;" class="text-wrap text-dark"> license </th>
+                                                <th style="text-align:center;" class="text-wrap text-dark"> active </th>
+                                                <th style="text-align:center;" class="text-wrap"> reqOperatorID </th>
+                                                <th style="text-align:center;" class="text-wrap"> reqDate </th>
+                                                <th style="text-align:center;" class="text-wrap">  </th>
 
 
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
 
-                            </div>
+                                    </table>
 
+
+
+                                </div>
+
+                         
 
 
 
@@ -165,7 +175,7 @@
 
                             <div class="col-5 text-center">*@
 
-                        <button class="btn btn-success   " id="BTN_Approved">
+                        <button class="btn btn-success  btn_response " id="BTN_Approved">
                             <i class="fas fa-search"></i> Approve
                         </button>
 
@@ -274,7 +284,7 @@
 
 
             function ShowGrid() {
-
+                debugger
 
                 if (TableTarget != null) {
                     TableTarget.destroy();
@@ -313,7 +323,7 @@
                                     var Target = row.docNo
 
 
-                                    return "<a href='#' class='btn btn-info  btn-sm text-white' onclick=showdetail('" + encodeURIComponent(Target) + "'); >Detail</a>";
+                                    return "<a href='#' class='btn btn-info  btn-sm text-white btn_response' onclick=showdetail('" + encodeURIComponent(Target) + "'); >Detail</a>";
 
                                 }, class: "text-wrap text-center"
                             },
@@ -415,7 +425,7 @@
                                     var Target = row.nbr
 
 
-                                    return "<a href='#' class='btn btn-info btn-sm text-white'   onclick=ShowComepare('" + Target + "'); >Compare</a>";
+                                    return "<a href='#' class='btn btn-info btn-sm text-white btn_response'   onclick=ShowComepare('" + Target + "'); >Compare</a>";
 
                                 }, class: "text-wrap text-center"
                             },

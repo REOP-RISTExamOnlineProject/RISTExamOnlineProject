@@ -110,8 +110,8 @@ namespace RISTExamOnlineProject.Models.db
 
         public DbSet<ItemCategoryModel> ItemCategory { get; set; }
         public DbSet<ItemCode_Detail> ItemCode_Detail { get; set; }
-
-        
+        public DbSet<ExamApproved_Detail> ExamApproved_Detail { get; set; }
+      
 
     }
 }

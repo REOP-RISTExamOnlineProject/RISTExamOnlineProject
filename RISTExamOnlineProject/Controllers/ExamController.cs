@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -37,14 +38,14 @@ namespace RISTExamOnlineProject.Controllers
         {
             return View();
         }
-
+        [Authorize]
         public IActionResult Index()
         {
             return View();
         }
 
 
-
+        [Authorize]
         public IActionResult Exam_maintenance(string Itemcode)
         {
 
@@ -54,7 +55,7 @@ namespace RISTExamOnlineProject.Controllers
         }
 
 
-
+        [Authorize]
         public IActionResult Examination(string Itemcode)
         {
 
@@ -65,14 +66,14 @@ namespace RISTExamOnlineProject.Controllers
 
         }
 
-
+        [Authorize]
         public IActionResult GetExamDetail(string Itemcode)
         {
             DataTable dt = new DataTable();
             string ValueCodeQuestion = "";
             string ValueCodeAnswer;
             int QuestionCount = 0;
-  
+
             string ItemName;
             int Max_Seq;
 
@@ -81,7 +82,7 @@ namespace RISTExamOnlineProject.Controllers
 
 
             dt = ObjRun.Get_ExamDetail(Itemcode);
-        
+
             if (dt.Rows.Count != 0)
             {
                 Max_Seq = Convert.ToInt16(dt.Rows[0]["Max_Seq"].ToString());
@@ -110,11 +111,11 @@ namespace RISTExamOnlineProject.Controllers
                     }
                 }
                 //else { 
-                
-                
+
+
                 //}
 
-                                        
+
 
                 ValueCodeQuestion = dt.Rows[0]["ValueCodeQuestion"].ToString();
                 ValueCodeAnswer = dt.Rows[0]["ValueCodeAnswer"].ToString();
@@ -123,30 +124,30 @@ namespace RISTExamOnlineProject.Controllers
                 //   QuestionCount = Convert.ToInt32(dt.Rows.Count);         
 
 
-             
+
                 ItemName = dt.Rows[0]["ItemName"].ToString();
                 ItemName = Itemcode + "-" + ItemName;
 
                 if (Max_Seq == 0)
                 {
                     QuestionCount = 0;
-        
-                }            
+
+                }
                 else
                 {
                     QuestionCount = Convert.ToInt32(dt.Rows.Count);
-                   
+
                 }
 
 
-                return Json(new { success = true, ValueCodeQuestion = ValueCodeQuestion, ValueCodeAnswer = ValueCodeAnswer, QuestionCount = QuestionCount, Max_Seq = Max_Seq, ItemName = ItemName  , Detail = Detail });
+                return Json(new { success = true, ValueCodeQuestion = ValueCodeQuestion, ValueCodeAnswer = ValueCodeAnswer, QuestionCount = QuestionCount, Max_Seq = Max_Seq, ItemName = ItemName, Detail = Detail });
 
 
 
             }
             else
             {
-          
+
                 return Json(new { success = false });
             }
 
@@ -160,7 +161,7 @@ namespace RISTExamOnlineProject.Controllers
 
         }
 
-
+        [Authorize]
         public IActionResult GetHTML(string ItemCateg, string ItemCode)
         {
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
@@ -168,70 +169,75 @@ namespace RISTExamOnlineProject.Controllers
             return Json(new { success = true, HTMLTEXT = HTMLTEXT });
         }
 
+        [Authorize]
         public IActionResult GetCategory()
         {
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
             List<SelectListItem> listItems = new List<SelectListItem>();
-            listItems = ObjRun.GetCategory();
+            string Strsql = "  SELECT  ItemCateg +' - '+[ItemCategName],[ItemCateg] FROM[SPTOSystem].[dbo].[vewQuestionCateg] group by[ItemCateg],[ItemCategName] order by ItemCateg asc";
+            listItems = ObjRun.GetItemDropDownList(Strsql, "Category");
             return Json(new SelectList(listItems, "Value", "Text"));
 
         }
 
-
+        [Authorize]
         public IActionResult GetExamname(string Category)
         {
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
             List<SelectListItem> listItems = new List<SelectListItem>();
-            listItems = ObjRun.GetExamName(Category);
+            string Strsql = "SELECT    [ItemCode] +' - '+ [ItemName] ,ItemCode  FROM [SPTOSystem].[dbo].[vewQuestionCateg] where[ItemCateg] = '" + Category + "' group by[ItemName],[ItemCode]";
+            listItems = ObjRun.GetItemDropDownList(Strsql, "Exam");
             return Json(new SelectList(listItems, "Value", "Text"));
         }
 
 
-
-        public IActionResult Valueslist(int Max_Seq , int QuestionCount, string ValueCodeQuestion, string ValueCodeAnswer, string[] Ans_TextDisplay, string[] Ans_Text_HTML_Display
-          , string[] Ans_Value, string Need_value, string Text_Question, string TextHTML_Question,string Job,string OP_UPD,int DisplayOrder)
+        [Authorize]
+        public IActionResult Valueslist(int Max_Seq, int QuestionCount, string ValueCodeQuestion, string ValueCodeAnswer, string[] Ans_TextDisplay, string[] Ans_Text_HTML_Display
+          , string[] Ans_Value, string Need_value, string Text_Question, string TextHTML_Question, string Job, string OP_UPD, int DisplayOrder)
         {
 
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
 
-   
+
             string IP = Request.HttpContext.Connection.RemoteIpAddress.ToString();
             string MS;
-             
+
             try
             {
                 if (Job == "DEL" || Job == "RES" || Job == "REJ")
                 {
                     ObjRun.Valueslist_Management(Job, "", DisplayOrder, "", "", "0", "", IP, OP_UPD, ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim());
                 }
-                else {
+                else
+                {
                     if (Job == "UPD")
                     {
                         ObjRun.Valueslist_Management("BK", "", DisplayOrder, "", "", "0", "", IP, OP_UPD, ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim());
                         Max_Seq = DisplayOrder;
                     }
-                    else {
+                    else
+                    {
                         Max_Seq = Max_Seq + 1;
                     }
 
                     //----------- inseart Qeustion ----  
-                            MS = ObjRun.Valueslist_Management(Job, ValueCodeQuestion, Max_Seq, TextHTML_Question, Text_Question, "0", Need_value, IP, OP_UPD, "", "");
-                            if (MS != "OK")
-                            {
-                                return Json(new { success = false, responseText = MS });
-                            }
-                            //----------- inseart Anser ----
+                    MS = ObjRun.Valueslist_Management(Job, ValueCodeQuestion, Max_Seq, TextHTML_Question, Text_Question, "0", Need_value, IP, OP_UPD, "", "");
+                    if (MS != "OK")
+                    {
+                        return Json(new { success = false, responseText = MS });
+                    }
+                    //----------- inseart Anser ----
 
-                            for (int i = 0; i < Ans_TextDisplay.Length; i++)
-                            {
-                                MS = ObjRun.Valueslist_Management(Job, ValueCodeAnswer, Max_Seq, Ans_Text_HTML_Display[i].Trim(), Ans_TextDisplay[i].Trim(), Ans_Value[i].Trim(), "0", IP, OP_UPD, "", "");
-                                                    
+                    for (int i = 0; i < Ans_TextDisplay.Length; i++)
+                    {
+                        MS = ObjRun.Valueslist_Management(Job, ValueCodeAnswer, Max_Seq, Ans_Text_HTML_Display[i].Trim(), Ans_TextDisplay[i].Trim(), Ans_Value[i].Trim(), "0", IP, OP_UPD, "", "");
 
-                                if (MS != "OK")
-                                {
-                                    return Json(new { success = false, responseText = MS });
-                                }
-                            }
+
+                        if (MS != "OK")
+                        {
+                            return Json(new { success = false, responseText = MS });
+                        }
+                    }
                 }
 
 
@@ -247,11 +253,12 @@ namespace RISTExamOnlineProject.Controllers
 
             return Json(new { success = true });
 
-        }    
-        public JsonResult Get_HTML_Question_Detail(string ValueCodeAnswer, string ValueCodeQuestion, int Seq,string Job) {
+        }
+        public JsonResult Get_HTML_Question_Detail(string ValueCodeAnswer, string ValueCodeQuestion, int Seq, string Job)
+        {
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
             string HTML_Text = ObjRun.HTML_Question_Detail(ValueCodeQuestion, ValueCodeAnswer, Seq, Job);
-            return Json(new { success = true ,HTML = HTML_Text});            
+            return Json(new { success = true, HTML = HTML_Text });
         }
 
 
@@ -259,7 +266,7 @@ namespace RISTExamOnlineProject.Controllers
 
 
 
-
+        [Authorize]
         public ActionResult Exam_Approved()
         {
 
@@ -269,6 +276,66 @@ namespace RISTExamOnlineProject.Controllers
 
 
 
+        [HttpPost]
+
+
+        public IActionResult GetCategory_Approved()
+        {
+            mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            string Strsql = "select DISTINCT [ItemCateg] + ' - ' + [ItemCategName] as [ItemCategName]      ,[ItemCateg]        FROM [SPTOSystem].[dbo].[vewExamApproved_New]";
+            listItems = ObjRun.GetItemDropDownList(Strsql, "Category ");
+            return Json(new SelectList(listItems, "Value", "Text"));
+
+        }
+
+
+        public IActionResult GetExamname_Approved(string Category)
+        {
+            mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            string Strsql = "	select DISTINCT  [ItemName],[ValueCodeQuestion]+'-' +[ValueCodeAnswer] FROM [SPTOSystem].[dbo].[vewExamApproved_New] where[ItemCateg] = '" + Category + "' ";
+            listItems = ObjRun.GetItemDropDownList(Strsql, "Exam ");
+            return Json(new SelectList(listItems, "Value", "Text"));
+
+        }
+
+        [HttpPost]
+        public JsonResult Approved_Detail(string ValueCodeQuestion)
+        {
+
+            DataTable dt = new DataTable();
+            mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
+            List<ExamApproved_Detail> Detail = new List<ExamApproved_Detail>();
+            var draw = HttpContext.Request.Form["draw"].FirstOrDefault();
+            var start = Request.Form["start"].FirstOrDefault();
+            var length = Request.Form["length"].FirstOrDefault();
+            var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"]
+                .FirstOrDefault();
+            var sortColumnDir = Request.Form["order[0][dir]"].FirstOrDefault();
+            var searchValue = Request.Form["search[value]"].FirstOrDefault();
+            var pageSize = length != null ? Convert.ToInt32(length) : 10;
+            var skip = start != null ? Convert.ToInt32(start) : 0;
+            var recordsTotal = 0;
+
+
+            Detail = ObjRun.Get_ExamDetail_Approved(ValueCodeQuestion);
+
+
+  
+
+
+
+            var data = Detail.ToList();
+
+            recordsTotal = data.Count();
+
+            return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
+
+
+            //----
+
+            //   
 
 
 
@@ -279,6 +346,28 @@ namespace RISTExamOnlineProject.Controllers
 
 
 
+        }
+
+
+        public JsonResult View_QuestionDetail(int seq,string ValueCodeQuestion,string ValueCodeAnswer,string ValueStatus) {
+            string StrHTML = "";
+            mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
+            StrHTML = ObjRun.View_Question(seq, ValueCodeQuestion, ValueCodeAnswer, ValueStatus);
+
+            if (StrHTML != "") {
+
+                return Json(new { success = true, responseText = StrHTML });
+
+            }
+            else {
+                return Json(new { success = false});
+            }
+
+         
+
+
+
+        }
 
 
     }

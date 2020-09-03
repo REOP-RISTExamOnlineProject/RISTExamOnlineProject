@@ -1,12 +1,13 @@
 ﻿
 
 
-function GetExamCategory(Job) {
+function GetExamCategory() {
     $.ajax({
         type: 'POST',
         url: '../Exam/GetCategory',
         dataType: 'json',
-        data: {Job:Job},
+
+       // data: {Job:Job},
         success: function (Divisions) {
             if (Divisions.length != 0) {
                 $.each(Divisions, function (i, div) {
@@ -650,9 +651,9 @@ function MakeTable(Detail) {
                         return "<div class='row justify-content-center m-2'>" +
 
 
-                            "<div class='col-5'> <a href='#' class='btn btn-info w-100 text-white btn_response' onclick=EditQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "','" + Max_Seq_ + "') > <i class='fas fa-pencil-alt'></i> Edit</a> </div> " +
+                            "<div class='col-5'> <a href='#' class='btn_response btn btn-info w-100 text-white ' onclick=EditQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "','" + Max_Seq_ + "') > <i class='fas fa-pencil-alt'></i> Edit</a> </div> " +
 
-                            "<div class='col-5'>  <a href='#' class='btn btn-danger w-100 text-white btn_response' onclick=DeleteQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "','" + ValueStatus + "') > <i class='fas fa-trash-alt'></i> Delete </a> </div>" +
+                            "<div class='col-5'>  <a href='#' class='btn_response btn btn-danger w-100 text-white ' onclick=DeleteQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "','" + ValueStatus + "') > <i class='fas fa-trash-alt'></i> Delete </a> </div>" +
 
 
 
@@ -662,7 +663,7 @@ function MakeTable(Detail) {
 
                         return "<div class='row justify-content-center m-2'>" +
                          
-                            "<div class='col-5'>  <a href='#' class='btn btn-secondary w-100 text-white btn_response' onclick=RestoreQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "') > <i class='fas fa-trash-restore-alt'></i> Restore </a> </div>" +
+                            "<div class='col-5'>  <a href='#' class='btn_response btn btn-secondary w-100 text-white ' onclick=RestoreQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "') > <i class='fas fa-trash-restore-alt'></i> Restore </a> </div>" +
                             "</div>";
                     }
 

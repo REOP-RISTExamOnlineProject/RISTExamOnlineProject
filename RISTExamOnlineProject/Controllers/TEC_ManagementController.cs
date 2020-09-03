@@ -33,7 +33,7 @@ namespace RISTExamOnlineProject.Controllers
             this.httpContextAccessor = httpContextAccessor;
 
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult TEC_Approved()
         {
