@@ -475,9 +475,8 @@ table tbody tr td {
     background: linear-gradient(309deg, rgba(136,150,101,1) 17%, rgba(113,142,86,1) 24%, rgba(26,71,83,1) 87%);
 }
 
+ 
 .avatar {
-    
-    
     background: url('../img/pexels-eberhard-grossgasteiger-1366919.jpg');
     background-position-y: 20%;
     background-size: cover;
@@ -2511,3 +2510,8 @@ span.tag.label.label-info {
 
 
 
+.modal-o-bg {
+    color: #FFF;
+    background: rgb(68,98,128);
+    background: linear-gradient(228deg, rgba(68,98,128,1) 0%, rgba(135,173,170,1) 29%, rgba(189,195,203,1) 80%, rgba(102,118,130,1) 100%);
+}
