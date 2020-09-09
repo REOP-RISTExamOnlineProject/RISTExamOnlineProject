@@ -79,15 +79,28 @@
             <br />
 
             <div class="card  rounded shadow m-auto" id="Display">
-                <div class="card-header bg-dark badge-dark">
+                <div class="card-header bg-dark badge-dark ">
 
                     <h3 class="text-white">  Exam Name :   <label class="text-white" id="LB_ExamName"></label>  </h3>
                 </div>
                 <div class="card-body">
                     <div class="overflow-auto">
+                        <div class="row justify-content-lg-start m-2">
+                            <div class="col col-2">
+                                <button class="btn_response btn btn-success w-100" onclick="DataApproved();"> <i class="fas fa-thumbs-up"></i> Approved</button>
+                            </div>
+
+                            <div class="col col-2">
+                                <button class="btn_response btn btn-danger w-100" onclick="DataReject();"> <i class="fas fa-thumbs-down"></i> Reject</button>
+                            </div>
+
+                        </div>
+
                         <table class="table table-sm table-bordered table-striped  " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable">
 
                             <thead class="bg-light">
+
+
                                 <tr>
                                     <th><input name="select_all" value="1" id="example-select-all" type="checkbox" /></th>
                                     <th>seq</th>
@@ -96,6 +109,7 @@
                                     <th>Status</th>
                                     <th>Detail</th>
                                 </tr>
+
                             </thead>
                         </table>
                     </div>
@@ -118,16 +132,43 @@
                     <h4 class="modal-title"><label id="LB_title" class="text-white"> Detail </label></h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-
                 <div class="modal-body" id="Modal_body_ShowDetail" style="overflow:auto">
 
+
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="Detail-tab" data-toggle="tab" href="#Detail" role="tab" aria-controls="Detail" aria-selected="true">Detail</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="Edit-tab" data-toggle="tab" href="#EditQuestion" role="tab" aria-controls="EditQuestion" aria-selected="false">Edit Question</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="myTabContent">
+
+                        <div class="tab-pane fade show active" id="Detail" role="tabpanel" aria-labelledby="Detail-tab">
+
+
+
+
+                        </div>
+
+                        <div class="tab-pane fade" id="EditQuestion" role="tabpanel" aria-labelledby="Edit-tab">
+
+
+
+                        </div>
+
+
+
+                    </div>
 
 
 
                 </div>
                 @*<div class="modal-footer">*@
-       
-          
+
+
                 @*</div>*@
             </div>
 
@@ -235,14 +276,16 @@
             });
 
             $('#example-select-all').on('click', function () {
-                debugger
+
                 // Check/uncheck all checkboxes in the table
+
                 var rows = TableTarget.rows({ 'search': 'applied' }).nodes();
                 $('input[type="checkbox"]', rows).prop('checked', this.checked);
+
             });
 
             $('#MyTable tbody').on('change', 'input[type="checkbox"]', function () {
-                debugger
+
                 // If checkbox is not checked
                 if (!this.checked) {
                     var el = $('#example-select-all').get(0);
@@ -256,6 +299,16 @@
             });
 
 
+
+            $('#Modal_ShowDetail').on('hidden.bs.modal', function (e) {
+
+                $('#Edit-tab').removeClass("active");
+                $('#Edit-tab').attr("aria-expanded", "false");
+
+                $('#Detail-tab').addClass("active");
+                $('#Detail-tab').attr("aria-expanded", "true");
+
+            })
 
 
 

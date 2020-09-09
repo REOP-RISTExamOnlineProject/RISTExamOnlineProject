@@ -1002,7 +1002,7 @@ namespace RISTExamOnlineProject.Controllers
 
 
                 //Get Running No.
-                string runningno;
+             //   string runningno;
                 var progdesc = new SqlParameter("Progdesc", "OPUPD");
                 var runningNo = new SqlParameter("RunningNo", "")
                 {

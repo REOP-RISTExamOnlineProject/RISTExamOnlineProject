@@ -90,7 +90,8 @@ namespace RISTExamOnlineProject.Models.TSQL
                     Detail.Add(new ExamApproved_Detail()
                     {
 
-                        Seq =  Convert.ToInt32( row["Seq"].ToString()),
+                        Seq = Convert.ToInt32(row["Seq"].ToString()),
+                    
                         Question = row["Question"].ToString(),
                         Total_ANS = Convert.ToInt32(row["Total_ANS"].ToString()),
                         ValueStatus = row["ValueStatus"].ToString(),
@@ -98,7 +99,7 @@ namespace RISTExamOnlineProject.Models.TSQL
 
 
 
-                    });
+                    }); 
 
                 }
             
@@ -180,5 +181,32 @@ namespace RISTExamOnlineProject.Models.TSQL
         
         
         }
+
+
+        public string Get_ValueCodeAnswer(string valueCodeQuestion) {
+
+            string valueCodeAnswer;
+            var ObjRun = new mgrSQLConnect(_configuration);
+            strSQL = "  select top 1  [ValueCodeAnswer]  FROM [SPTOSystem].[dbo].[vewQuestionAll] where  [ValueCodeQuestion] = '"+ valueCodeQuestion.Trim() + "'";
+            dt = ObjRun.GetDatatables(strSQL);
+            valueCodeAnswer = dt.Rows[0][0].ToString();
+            return valueCodeAnswer;
+        }
+
+
+
+        public string Approved_Reject_Question(string Job,int seq, string ValueCodeQuestion, string ValueCodeAnswer, string ValueStatus)
+        {
+            string MS = "";
+            var ObjRun = new mgrSQLConnect(_configuration);
+            strSQL = "[dbo].[srpApproved_Reject_Question] '"+ Job + "','"+ ValueStatus + "','"+ seq.ToString() + "','"+ ValueCodeQuestion + "','"+ ValueCodeAnswer + "'";
+
+            dt = ObjRun.GetDatatables(strSQL);
+            MS = dt.Rows[0][1].ToString();  
+            return MS;
+
+        }
+
+
     }
 }

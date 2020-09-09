@@ -322,7 +322,7 @@ namespace RISTExamOnlineProject.Controllers
             Detail = ObjRun.Get_ExamDetail_Approved(ValueCodeQuestion);
 
 
-  
+
 
 
 
@@ -333,42 +333,54 @@ namespace RISTExamOnlineProject.Controllers
             return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
 
 
-            //----
-
-            //   
-
-
-
-
-
-
-
 
 
 
         }
 
 
-        public JsonResult View_QuestionDetail(int seq,string ValueCodeQuestion,string ValueCodeAnswer,string ValueStatus) {
+        public JsonResult View_QuestionDetail(int seq, string ValueCodeQuestion, string ValueCodeAnswer, string ValueStatus)
+        {
             string StrHTML = "";
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
             StrHTML = ObjRun.View_Question(seq, ValueCodeQuestion, ValueCodeAnswer, ValueStatus);
 
-            if (StrHTML != "") {
+            if (StrHTML != "")
+            {
 
                 return Json(new { success = true, responseText = StrHTML });
 
             }
-            else {
-                return Json(new { success = false});
+            else
+            {
+                return Json(new { success = false });
             }
-
-         
-
 
 
         }
 
+
+        public JsonResult Job_Reject_And_Approved(string Job, string[] valueStatus_Array, int[] seq_Array, string valueCodeQuestion)
+        {
+            mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
+            int seq;
+            string valueCodeAnswer = ObjRun.Get_ValueCodeAnswer(valueCodeQuestion);
+
+            int Count = 0;
+            string ms;
+
+            foreach (string Status in valueStatus_Array)
+            {
+                seq = seq_Array[Count];
+                ms = ObjRun.Approved_Reject_Question(Job, seq, valueCodeQuestion, valueCodeAnswer, Status);
+                Count = Count+1;
+            }
+
+
+            return Json(new { success = true });
+
+
+        }
 
     }
 }

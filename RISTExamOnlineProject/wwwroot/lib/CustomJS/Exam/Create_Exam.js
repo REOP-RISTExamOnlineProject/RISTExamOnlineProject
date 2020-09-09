@@ -48,7 +48,7 @@ function GetExamName(Category) {
 
 
 function GetExamDetail(Itemcode) {
- debugger
+ 
     $.ajax({
         type: 'POST',
         url: '../Exam/GetExamDetail',
@@ -143,11 +143,12 @@ function Clear_Display(DisplayID) {
 };
 
 
-$(document).on('click', 'button.remove-new', function (e) {
-  
+$(document).on('click', 'button.remove-NewQuestion', function (e) {
+
+  debugger
     var parent = document.getElementById("FormDisplay_Answer_New");
     var nodesSameClass = 0
-    nodesSameClass = parent.getElementsByClassName("ANS");
+    nodesSameClass = parent.getElementsByClassName("ANS_New");
 
     if (nodesSameClass.length > 1) {
 
@@ -161,7 +162,9 @@ $(document).on('click', 'button.remove-new', function (e) {
 
 });
 
-$(document).on('click', 'button.remove-edit', function (e) {
+$(document).on('click', 'button.remove-EditQuestion', function (e) {
+
+    debugger
 
     var parent = document.getElementById("FormDisplay_Answer_Edit");
     var nodesSameClass = 0
@@ -593,7 +596,7 @@ function EditQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq, Max_Seq) {
 
 
 function Manage_Exam() {
-    debugger
+  
     var ExamCode = $("#DDL_ExamName").val();
     if (ExamCode != '' && ExamCode != null) {
 
@@ -621,7 +624,7 @@ function MakeTable(Detail) {
     if (TableTarget != null) {
         TableTarget.destroy();
     }
-    debugger
+   
     TableTarget = $("#MyTable").DataTable({
         //searching: false,
         ordering: false,

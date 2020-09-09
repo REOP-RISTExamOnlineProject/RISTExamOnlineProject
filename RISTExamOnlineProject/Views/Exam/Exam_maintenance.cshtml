@@ -192,6 +192,9 @@
                 <div class="modal-body">
 
                     <div id="Display_Modal" class="border border-dark rounded m-3 p-3" style="min-height:30px; max-height:150px; overflow:auto;">
+
+
+
                     </div>
                     <textarea class="form-control " id="Summernote_modal" name="" style="height:150px; overflow:auto;"></textarea>
                     <br />
@@ -310,7 +313,7 @@
             var OP_UPD;
 
             $(document).ready(function () {
-                debugger
+            
                 $('#Display').hide();
 
                 OP_UPD = '@User.Identity.Name';
@@ -348,7 +351,7 @@
             $("#DDL_ExamName").on("change", function () {
 
                 var ItemCode = $("#DDL_ExamName").val()
-             debugger
+   
                 if (ItemCode != 0) {
                     GetExamDetail(ItemCode)
                

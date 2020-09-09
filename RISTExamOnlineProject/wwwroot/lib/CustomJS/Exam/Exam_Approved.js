@@ -1,7 +1,6 @@
 ﻿
 
 
-
 function GetExamCategory_Approved() {
    
     $.ajax({
@@ -46,8 +45,6 @@ function GetExamname_Approved(Category) {
 
 function GetTableDetail(ValueCodeQuestion, ValueCodeAnswer) {
 
-
-
     if (TableTarget != null) {
         TableTarget.destroy();
     }
@@ -69,20 +66,8 @@ function GetTableDetail(ValueCodeQuestion, ValueCodeAnswer) {
 
             }),
 
-            //dom: '<"top"B>rt<"bottom">ip<"clear">',
+            dom: '<"top">rtl<"bottom">ip<"clear">',
 
-
-            dom: '<"top"B>rt<"bottom"lip><"clear">',
-      
-            buttons: [
-                {
-                    text: "My button",
-               className:"btn btn-dark m-2",
-                    action: function (e, dt, node, config) {
-                        alert('Button activated');
-                    }
-                }
-            ],
         
             columns: [
                 {
@@ -91,9 +76,10 @@ function GetTableDetail(ValueCodeQuestion, ValueCodeAnswer) {
                     data: null,
                     className: "center",
                     "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                        //var Target = oData.WFLotNo + "," + oData.LotsCount
 
-                        $(nTd).html('<input type="checkbox"   class="editor-active" id="CB_Delete"  name="CB_Delete" value=""  />');
+                        var Target =  oData.seq + "," + oData.valueStatus
+                
+                        $(nTd).html('<input type="checkbox"   class="editor-active" id="CB_Delete"  name="CB_Delete" value="' + Target +'"  />');
 
                     }, className: "text-center"
                 },
@@ -113,8 +99,8 @@ function GetTableDetail(ValueCodeQuestion, ValueCodeAnswer) {
                         } else if (valueStatus == 'DEL') {
                             return "<label  class='text-danger font-weight-bold'>" + valueStatus + "</label>";
                         } else {
-                            return "";
-                        }                    
+                           return "";
+                        }                  
 
 
                     }, class: "text-wrap text-center"
@@ -150,7 +136,7 @@ function GetTableDetail(ValueCodeQuestion, ValueCodeAnswer) {
     finally {
 
         $('#Display').show();
-
+        $("#example-select-all").prop("checked", false);
     }
 };
 
@@ -170,13 +156,39 @@ function ViewDetail(seq, ValueCodeQuestion, ValueCodeAnswer, ValueStatus) {
         data: { seq: seq, ValueCodeQuestion: ValueCodeQuestion, ValueCodeAnswer: ValueCodeAnswer, ValueStatus: ValueStatus},
         success: function (response) {
             if (response.success == true) {
-                debugger
+      
+
+
+                if (ValueStatus == "DEL") {
+                    $('#Edit-tab').addClass("disabled");
+
+
+
+                } else {
+                    $('#Edit-tab').removeClass("disabled");
+                }
+
+
+
                 var text = response.responseText;
-                DeleteHTML('Modal_body_ShowDetail');
-                InputHTML('Modal_body_ShowDetail', text)
+                DeleteHTML('Detail');
+                InputHTML('Detail', text)
+
+                $('#Edit').removeClass("active");
+                $('#Edit').removeClass("show");
+                $('#Edit-tab').removeClass("active");
+                $('#Edit-tab').attr("aria-expanded", "false");
+
+                $('#Detail-tab').addClass("active");             
+                $('#Detail-tab').attr("aria-expanded", "true");
+                $('#Detail').addClass("active show");
+
 
                 $('#Modal_ShowDetail').modal('show');
 
+           
+
+   
               
             }
         },
@@ -186,3 +198,127 @@ function ViewDetail(seq, ValueCodeQuestion, ValueCodeAnswer, ValueStatus) {
         }
     });
 };
+
+
+function DataApproved() {
+
+    var arrdata = TableTarget.$('input, select').serializeArray();
+    var seq_Array = new Array();
+    var valueStatus_Array = new Array();
+
+    if (arrdata.length != 0) {
+
+        Swal.fire({
+            title: "Are you sure you want to approve?",
+            html: "The total number of questions to be approved is <b class='text-danger'> " + arrdata.length + " </b> . Are you sure you want to <b class='text-success'>Approve ?<b/>",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Approve it!'
+
+        }).then(function (result) {
+            if (result.value) {
+
+                for (i = 0; i < arrdata.length; i++) {         
+                    arrtemp = arrdata[i].value.split(','); 
+                    seq_Array.push(arrtemp[0]);
+                    valueStatus_Array.push(arrtemp[1]);
+                    arrtemp = [];
+                }
+                Approved_And_Reject('APP', valueStatus_Array, seq_Array, ValueCodeQuestion);     
+            }
+        });
+
+
+    } else    {
+
+        Swal.fire({
+            title: "Opss..!!",
+            text: "Plase Select Question",
+            icon: 'error',
+        });
+    }
+
+
+  
+
+}
+
+
+
+
+
+function DataReject() {
+
+    var arrdata = TableTarget.$('input, select').serializeArray();
+    var seq_Array = new Array();
+    var valueStatus_Array = new Array();
+
+    if (arrdata.length != 0) {
+
+        Swal.fire({
+            title: "Are you sure you want to reject?",
+            html: "The total number of questions to be approved is <b class='text-danger'> " + arrdata.length + " </b> . Are you sure you want to <b class='text-danger'>Reject ?<b/>",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Do it!'
+
+        }).then(function (result) {
+            if (result.value) {
+
+                for (i = 0; i < arrdata.length; i++) {
+                    arrtemp = arrdata[i].value.split(',');
+                    seq_Array.push(arrtemp[0]);
+                    valueStatus_Array.push(arrtemp[1]);
+                    arrtemp = [];
+                }
+                Approved_And_Reject('REJ', valueStatus_Array, seq_Array, ValueCodeQuestion);
+            }
+        });
+
+
+    } else {
+
+        Swal.fire({
+            title: "Opss..!!",
+            text: "Plase Select Question",
+            icon: 'error',
+        });
+    }
+
+
+
+
+}
+
+
+
+
+
+function Approved_And_Reject(Job, valueStatus_Array, seq_Array, ValueCodeQuestion) {
+
+    $.ajax({
+        type: 'POST',
+        url: '../Exam/Job_Reject_And_Approved',
+        dataType: 'json',
+        data: { Job: Job, valueStatus_Array: valueStatus_Array, seq_Array: seq_Array, valueCodeQuestion: ValueCodeQuestion },
+        success: function (response) {
+            if (response.success == true) {
+
+
+                GetTableDetail(ValueCodeQuestion, ValueCodeAnswer);
+
+
+            }
+        },
+        error: function (ex) {
+            alert('Failed to retrieve states.' + ex);
+        }
+    });
+
+
+
+}
