@@ -459,10 +459,14 @@ table tbody tr td {
 
     .sidebar > .inner-sidebar {
         height: 100%;
-        background: rgb(4,35,49);
-        background: linear-gradient(49deg, rgba(4,35,49,1) 7%, rgba(42,63,86,1) 54%, rgba(86,91,123,1) 100%);
+        background: rgb(68,98,128);
+        background: linear-gradient(228deg, rgba(68,98,128,1) 0%, rgba(135,173,170,1) 29%, rgba(189,195,203,1) 80%, rgba(102,118,130,1) 100%);
     }
-
+.parent {
+  
+    background: rgb(4,35,49);
+    background: linear-gradient(49deg, rgba(4,35,49,1) 7%, rgba(42,63,86,1) 54%, rgba(86,91,123,1) 100%);
+}
 .parent:hover {
 
     height: 120%;
@@ -475,9 +479,8 @@ table tbody tr td {
     background: linear-gradient(309deg, rgba(136,150,101,1) 17%, rgba(113,142,86,1) 24%, rgba(26,71,83,1) 87%);
 }
 
+ 
 .avatar {
-    
-    
     background: url('../img/pexels-eberhard-grossgasteiger-1366919.jpg');
     background-position-y: 20%;
     background-size: cover;
@@ -2511,3 +2514,10 @@ span.tag.label.label-info {
 
 
 
+.modal-o-bg {
+    color: #ffd138;
+    /*background: rgb(68,98,128);
+    background: linear-gradient(228deg, rgba(68,98,128,1) 0%, rgba(135,173,170,1) 29%, rgba(189,195,203,1) 80%, rgba(102,118,130,1) 100%);*/
+    background: rgb(72,102,112);
+    background: linear-gradient(317deg, rgba(72,102,112,1) 5%, rgba(125,151,170,1) 17%, rgba(255,236,218,1) 28%, rgba(125,151,170,1) 56%, rgba(32,37,41,1) 100%);
+}
