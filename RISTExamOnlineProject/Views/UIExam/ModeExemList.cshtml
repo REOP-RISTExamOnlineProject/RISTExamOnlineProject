@@ -4,12 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container-fluid">
-    @*<div class="mb-4">
-        <h1>Licensure Examination</h1>
-        <p>การสอบใบอนุญาต</p>
-    </div>
-    <hr />*@
+<div class="container-fluid"> 
     <div class="card shadow">
         <div class="fb-image-lg profile-bgExam   ">
         </div>
@@ -53,8 +48,7 @@
 
         function InitTable() {
 
-            myTables1 = $("#tbItemCatg").DataTable({
-                // searching: false,
+            myTables1 = $("#tbItemCatg").DataTable({ 
                 ordering: true,
                 processing: true,
                 dom: '<"top"l>rt<"bottom"ip><"clear">',
@@ -67,13 +61,8 @@
                         className: "center",
                         "fnCreatedCell": function (nTd, oData) {
                             var itemCateg = oData.itemCateg;
-                            var HTMLTag="";
-                            //if (itemCateg == 'AH002') {
-                            //    HTMLTag = '<h3><i class=" text-success  fas fa-check-circle"></i></h3>';
-                            //} else {
-                                HTMLTag = '<h3><i class="text-primary fas fa-edit"></i></h3>';
-                        //    }
-
+                            var HTMLTag=""; 
+                                HTMLTag = '<h3><i class="text-primary fas fa-edit"></i></h3>'; 
 
                             $(nTd).html(HTMLTag);
                         }, className: "dt-body-center"
@@ -85,17 +74,8 @@
                         "fnCreatedCell": function (nTd, oData) {
                             var itemCateg = oData.itemCateg;
                             var HTMLTag = "";
-                            var TEST = "@ViewBag.Itemcateg";
-                           // if (itemCateg == 'AH002') {
-                              //  HTMLTag = '<a href="../UIExam/Examexamination?ItemInput=' + itemCateg + '"  class="btn btn-success btn">    <span class="badge badge-danger">4</span>SELECT</a>';
-
-                            HTMLTag = '<a href="@Url.Action("Examexamination")?ItemInput=' + itemCateg + '&ItemCateg=' + TEST+'"  class="btn btn-success btn">    SELECT</a>';
-
-
-
-                            //} else {
-                            //    HTMLTag = '';
-                            //}
+                            var TEST = "@ViewBag.Itemcateg"; 
+                            HTMLTag = '<a href="@Url.Action("Examexamination")?ItemInput=' + itemCateg + '&ItemCateg=' + TEST+'"  class="btn btn-success btn">    SELECT</a>'; 
                             $(nTd).html(HTMLTag);
                         }, className: "dt-body-center"
                     },
