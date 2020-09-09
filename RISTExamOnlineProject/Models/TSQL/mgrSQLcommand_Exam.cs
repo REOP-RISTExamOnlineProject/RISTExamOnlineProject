@@ -26,7 +26,7 @@ namespace RISTExamOnlineProject.Models.TSQL
             string HTMLTEXT = "";
 
             var ObjRun = new mgrSQLConnect(_configuration);
-            strSQL = " [dbo].[srpMakeHTMLQuestion]	'" + ItemCateg + "', '" + ItemCode + " '";
+            strSQL = " [dbo].[srpMakeHTMLExam]	'" + ItemCateg + "', '" + ItemCode + " '";
 
             dt = ObjRun.GetDatatables(strSQL);
 
@@ -170,7 +170,7 @@ namespace RISTExamOnlineProject.Models.TSQL
         public string View_Question(int seq, string ValueCodeQuestion, string ValueCodeAnswer ,string ValueStatus) {
             string MS = "";
             var ObjRun = new mgrSQLConnect(_configuration);
-            strSQL = "[dbo].[srpMakeHTMLQuestion_NEW] '" + seq.ToString() + "','"+ ValueCodeQuestion + "','"+ ValueCodeAnswer + "','"+ ValueStatus + "'";
+            strSQL = "[dbo].[srpMakeHTMLQuestion] '" + seq.ToString() + "','"+ ValueCodeQuestion + "','"+ ValueCodeAnswer + "','"+ ValueStatus + "'";
 
             dt = ObjRun.GetDatatables(strSQL);
             MS =  dt.Rows[0][0].ToString();
