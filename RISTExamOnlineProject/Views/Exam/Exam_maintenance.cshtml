@@ -20,7 +20,12 @@
         .note-group-select-from-files {
             display: none;
         }
-       
+
+        div:empty:before {
+            content: attr(data-placeholder);
+            color: gray
+        }
+
     </style>
 
 </head>
