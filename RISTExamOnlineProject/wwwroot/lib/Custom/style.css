@@ -2515,9 +2515,9 @@ span.tag.label.label-info {
 
 
 .modal-o-bg {
-    color: #ffd138;
+    color: #fff;
     /*background: rgb(68,98,128);
     background: linear-gradient(228deg, rgba(68,98,128,1) 0%, rgba(135,173,170,1) 29%, rgba(189,195,203,1) 80%, rgba(102,118,130,1) 100%);*/
-    background: rgb(72,102,112);
-    background: linear-gradient(317deg, rgba(72,102,112,1) 5%, rgba(125,151,170,1) 17%, rgba(255,236,218,1) 28%, rgba(125,151,170,1) 56%, rgba(32,37,41,1) 100%);
+    background: rgb(62,76,103);
+    background: linear-gradient(90deg, rgba(62,76,103,1) 0%, rgba(137,184,185,1) 32%, rgba(182,210,185,1) 93%);
 }

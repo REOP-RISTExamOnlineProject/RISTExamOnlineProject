@@ -280,10 +280,7 @@ namespace RISTExamOnlineProject.Models.TSQL
             {
 
 
-                strSQL = "";
-                //strSQL += "SELECT * FROM [SPTOSystem].[dbo].[vewItemCategPlanMode]";
-                // strSQL += "  where ItemCateg ='" + strItemCateg + "'";
-
+                strSQL = ""; 
                 strSQL += "sprGetExamMode";
                 strSQL += "'"+ strItemCateg + "'";
                 strSQL += ",'"+ OPID + "'";
