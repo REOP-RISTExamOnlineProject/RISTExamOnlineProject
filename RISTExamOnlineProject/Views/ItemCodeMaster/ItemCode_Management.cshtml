@@ -36,7 +36,18 @@
                         <div class="row justify-content-center">
 
 
-                            <div class="col-10">
+                            <div class="col-5">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">  ItemCatagory Type :</label>
+                                    @Html.DropDownList("DDL_CategoryType", new SelectList("", ""), new { @id = "DDL_CategoryType", @class = "custom-select" })
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="col-5">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">  ItemCatagory :</label>
                                     @Html.DropDownList("DDL_Category", new SelectList("", ""), new { @id = "DDL_Category", @class = "custom-select" })
@@ -243,6 +254,7 @@
 
             var OP_UPD;
             var ItemCateg;
+            var ItemCategType;
             var TableTarget;
             var DisplayOrder;
             var Nbr;
@@ -254,8 +266,8 @@
             $(document).ready(function () {
                 CheckRole()
                 OP_UPD = '@User.Identity.Name';
-                GetExamCategory_();
-
+              //  GetExamCategory_();
+                GetExamCategory_Type();
 
                 $("#Table_Display").hide();
 
@@ -542,16 +554,31 @@
                 }
             });
 
+            $("#DDL_CategoryType").on("change", function () {
+                debugger
+                ItemCategType = $("#DDL_CategoryType").val()
+                $("#DDL_Category").empty();
+                $("#Table_Display").hide();
+                if (ItemCategType != 0) {  
+                    GetExamCategory_(ItemCategType);  
+                } else {
+               
+                    $("#Table_Display").hide();
+
+                }
+            });
 
 
-            function GetExamCategory_() {
+
+            function GetExamCategory_(Category_Type) {
                 $.ajax({
                     type: 'POST',
                     url: '../ItemCodeMaster/GetCategory',
                     dataType: 'json',
-                    success: function (Divisions) {
-                        if (Divisions.length != 0) {
-                            $.each(Divisions, function (i, div) {
+                    data: { ItemCategType: Category_Type},
+                    success: function (respond) {
+                        if (respond.length != 0) {
+                            $.each(respond, function (i, div) {
                                 $("#DDL_Category").append('<option value="' + div.value + '">' + div.text + '</option>');
                             });
                         }
@@ -563,6 +590,23 @@
             }
 
 
+            function GetExamCategory_Type() {
+                $.ajax({
+                    type: 'POST',
+                    url: '../ItemCodeMaster/GetCategType',
+                    dataType: 'json',
+                    success: function (respond) {
+                        if (respond.length != 0) {
+                            $.each(respond, function (i, div) {
+                                $("#DDL_CategoryType").append('<option value="' + div.value + '">' + div.text + '</option>');
+                            });
+                        }
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+            }
 
 
         </script>

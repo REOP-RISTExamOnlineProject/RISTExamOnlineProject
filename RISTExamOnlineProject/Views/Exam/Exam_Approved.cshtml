@@ -52,10 +52,25 @@
                 <div class="card-body">
 
                     <div class="row justify-content-lg-center ">
-                        <div class="col col-lg-5">
+
+
+                        <div class="col col-lg-4">
                             <form>
                                 <div class="form-group">
-                                    <label for="DDL_ExamCategory"><b>Exam Category :</b></label>
+                                    <label for="DDL_ExamCategoryType_Approved"><b>Exam Category :</b></label>
+                                    @Html.DropDownList("DDL_ExamCategoryType_Approved", new SelectList("", ""), new { @id = "DDL_ExamCategoryType_Approved", @class = "custom-select h-100 " })
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+
+                        <div class="col col-lg-4">
+                            <form>
+                                <div class="form-group">
+                                    <label for="DDL_ExamCategory_Approved"><b>Exam Category :</b></label>
                                     @Html.DropDownList("DDL_ExamCategory_Approved", new SelectList("", ""), new { @id = "DDL_ExamCategory_Approved", @class = "custom-select h-100 " })
 
                                 </div>
@@ -64,10 +79,10 @@
 
                         </div>
 
-                        <div class="col col-lg-5">
+                        <div class="col col-lg-4">
                             <form>
                                 <div class="form-group">
-                                    <label for="DDL_ExamName"><b> Exam Name :</b></label>
+                                    <label for="DDL_ExamName_Approved"><b> Exam Name :</b></label>
                                     @Html.DropDownList("DDL_ExamName_Approved", new SelectList("", ""), new { @id = "DDL_ExamName_Approved", @class = "custom-select h-100 " })
                                 </div>
                             </form>
@@ -135,7 +150,7 @@
                 <div class="modal-body" id="Modal_body_ShowDetail" style="overflow:auto">
 
 
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    @*<ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="Detail-tab" data-toggle="tab" href="#Detail" role="tab" aria-controls="Detail" aria-selected="true">Detail</a>
                         </li>
@@ -144,7 +159,7 @@
                         </li>
                     </ul>
 
-                    <div class="tab-content" id="myTabContent">
+                    <div class="tab-content  overflow-auto" id="myTabContent" >
 
                         <div class="tab-pane fade show active" id="Detail" role="tabpanel" aria-labelledby="Detail-tab">
 
@@ -153,7 +168,7 @@
 
                         </div>
 
-                        <div class="tab-pane fade" id="EditQuestion" role="tabpanel" aria-labelledby="Edit-tab">
+                        <div class="tab-pane fade overflow-auto" id="EditQuestion" role="tabpanel" aria-labelledby="Edit-tab" >
 
 
 
@@ -161,7 +176,7 @@
 
 
 
-                    </div>
+                    </div>*@
 
 
 
@@ -176,7 +191,62 @@
 
 
     </div>
+    <div class="modal hide fade" id="Modal_Summernote" tabindex="-1" data-focus-on="input:first">
+        <div class="modal-dialog modal-dialog-centered modal-lg  ">
+            <div class="modal-content border border-dark shadow shadow-lg rounded ">
+                <!-- Modal Header -->
+                <div class="modal-header modal-o-bg">
+                    <h4 class="modal-title">Input Detail</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
 
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <div id="Display_Modal" class="border border-dark rounded m-3 p-3" style="min-height:30px; max-height:150px; overflow:auto;">
+
+
+
+                    </div>
+                    <textarea class="form-control " id="Summernote_modal" name="" style="height:150px; overflow:auto;"></textarea>
+                    <br />
+
+                    <div class="row justify-content-end m-3">
+                        <div class="col-2">
+                            <button class="btn btn-info w-100 btn-sm " id="BTN_Add" onclick="Add_Detail_Display('Display_Modal','Summernote_modal')">
+                                <i class="fas fa-plus"></i>     Add
+                            </button>
+
+                        </div>
+                        <div class="col-2">
+                            <button class="btn btn-info w-100 btn-sm " id="BTN_Edit" onclick="Edit_Detail_Display('Display_Modal','Summernote_modal')">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+
+                        </div>
+
+                        <div class="col-2">
+                            <button class="btn btn-danger w-100 btn-sm " id="BTN_Reset" onclick="Reset_Summernote('Summernote_modal')">
+                                <i class="fas fa-trash-alt"></i> Reset
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-sm " id="BTN_Save" onclick="Save()">
+                        <i class="fas fa-save"></i> Save Edit
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-sm " data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
 
 
     @*------------------------------------------------------------------------------*@
@@ -227,6 +297,10 @@
 
         <script src="~/lib/CustomJS/Exam/CommonJS.js"></script>
         <script src="~/lib/CustomJS/Exam/Exam_Approved.js"></script>
+        <script src="~/lib/CustomJS/Exam/Create_Exam.js"></script>
+
+
+
 
 
         <script>
@@ -238,8 +312,31 @@
             $(document).ready(function () {
                 OP_UPD = '@User.Identity.Name';
                 $('#Display').hide();
-                GetExamCategory_Approved();
+                GetExamCategoryType_Approved();
             });
+
+
+
+         
+
+
+
+
+
+            $("#DDL_ExamCategoryType_Approved").on("change", function () {
+                var CategoryType = $("#DDL_ExamCategoryType_Approved").val()
+
+                $('#Display').hide();
+                if (CategoryType != 0) {
+                    $("#DDL_ExamCategory_Approved option").remove();
+                    $("#DDL_ExamName_Approved option").remove();
+                    GetExamCategory_Approved(CategoryType);
+                } else {
+                    $("#DDL_ExamCategory_Approved option").remove();
+                    $("#DDL_ExamName_Approved option").remove();
+                }
+            });
+
 
 
 

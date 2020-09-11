@@ -1,17 +1,37 @@
 ﻿
 
 
-function GetExamCategory() {
+function GetExamCategory(Type) {
+    debugger
     $.ajax({
         type: 'POST',
         url: '../Exam/GetCategory',
         dataType: 'json',
-
-       // data: {Job:Job},
-        success: function (Divisions) {
-            if (Divisions.length != 0) {
-                $.each(Divisions, function (i, div) {
+        data: { CategoryType: Type },
+        success: function (respond) {
+            if (respond.length != 0) {
+                $.each(respond, function (i, div) {
                     $("#DDL_ExamCategory").append('<option value="' + div.value + '">' + div.text + '</option>');
+                });
+            }
+        },
+        error: function (ex) {
+            alert('Failed to retrieve states.' + ex);
+        }
+    });
+};
+
+
+function GetExamCategoryType() {
+    $.ajax({
+        type: 'POST',
+        url: '../Exam/GetCategType',
+        dataType: 'json',
+     //   data: { Job: Type },
+        success: function (respond) {
+            if (respond.length != 0) {
+                $.each(respond, function (i, div) {
+                    $("#DDL_CategoryType").append('<option value="' + div.value + '">' + div.text + '</option>');
                 });
             }
         },
@@ -30,9 +50,9 @@ function GetExamName(Category) {
         url: '../Exam/GetExamname',
         dataType: 'json',
         data: { Category: Category },
-        success: function (Divisions) {
-            if (Divisions.length != 0) {
-                $.each(Divisions, function (i, div) {
+        success: function (respond) {
+            if (respond.length != 0) {
+                $.each(respond, function (i, div) {
                     $("#DDL_ExamName").append('<option value="' + div.value + '">' + div.text + '</option>');
                 });
             }
@@ -571,6 +591,7 @@ function NewQuestion() {
 };
 
 function EditQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq, Max_Seq) {
+    debugger
     Max_Seq = Max_Seq;
     DisplayOrder = Seq;
     var HTML_TEXT;
@@ -581,8 +602,10 @@ function EditQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq, Max_Seq) {
         data: { ValueCodeAnswer: ValueCodeAnswer, ValueCodeQuestion: ValueCodeQuestion, Seq: Seq, Job: "upd" },
         success: function (response) {
             if (response.success == true) {
+                debugger
 
                 $('#LB_title').text('Edit Question');
+
                 HTML_TEXT = response.html;
                 DeleteHTML('Modal_body_Form_Main');
                 InputHTML('Modal_body_Form_Main', HTML_TEXT);

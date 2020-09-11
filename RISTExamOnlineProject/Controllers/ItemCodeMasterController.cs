@@ -34,11 +34,25 @@ namespace RISTExamOnlineProject.Controllers
 
 
 
-        public IActionResult GetCategory()
+        public IActionResult GetCategory(string ItemCategType)
         {
             mgrSQLcommand_ItemCode ObjRun = new mgrSQLcommand_ItemCode(_configuration);
             List<SelectListItem> listItems = new List<SelectListItem>();
-            listItems = ObjRun.GetCategory();
+          string Strsql =" SELECT[ItemCateg],[ItemCateg]+' - '+[ItemCategName]  as [ItemCategName] FROM[SPTOSystem].[dbo].[ItemCategory] where ItemCategType = '"+ItemCategType.Trim()+"'group by[ItemCateg],[ItemCategName] order by ItemCateg asc";
+
+            listItems = ObjRun.GetItemDropDownList(Strsql,"Category");
+            //  listItems = ObjRun.GetCategory(ItemCategType);
+            return Json(new SelectList(listItems, "Value", "Text"));
+
+        }
+
+        public IActionResult GetCategType()
+        {
+            mgrSQLcommand_ItemCode ObjRun = new mgrSQLcommand_ItemCode(_configuration);
+            List<SelectListItem> listItems = new List<SelectListItem>();
+
+         string Strsql = "  SELECT ItemCategType as TextValues ,ItemCategType as Values_  from [SPTOSystem].[dbo].[ItemCategory]  group by ItemCategType order by ItemCategType asc";
+            listItems = ObjRun.GetItemDropDownList(Strsql, "Type");
             return Json(new SelectList(listItems, "Value", "Text"));
 
         }

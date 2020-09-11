@@ -169,12 +169,27 @@ namespace RISTExamOnlineProject.Controllers
             return Json(new { success = true, HTMLTEXT = HTMLTEXT });
         }
 
+
         [Authorize]
-        public IActionResult GetCategory()
+        public IActionResult GetCategType()
         {
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
             List<SelectListItem> listItems = new List<SelectListItem>();
-            string Strsql = "  SELECT  ItemCateg +' - '+[ItemCategName],[ItemCateg] FROM[SPTOSystem].[dbo].[vewQuestionCateg] group by[ItemCateg],[ItemCategName] order by ItemCateg asc";
+
+            string Strsql = " SELECT ItemCategType as TextValues ,ItemCategType as Values_  from [SPTOSystem].[dbo].[ItemCategory]  group by ItemCategType order by ItemCategType asc";
+            listItems = ObjRun.GetItemDropDownList(Strsql, "Category Type");   
+            return Json(new SelectList(listItems, "Value", "Text"));
+
+        }
+
+
+        [Authorize]
+        public IActionResult GetCategory(string CategoryType)
+        {
+
+            mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            string Strsql = "  SELECT  ItemCateg +' - '+[ItemCategName],[ItemCateg] FROM[SPTOSystem].[dbo].[vewQuestionCateg]  where [ItemCategType] ='"+ CategoryType.Trim() + "' group by[ItemCateg],[ItemCategName] order by ItemCateg asc";
             listItems = ObjRun.GetItemDropDownList(Strsql, "Category");
             return Json(new SelectList(listItems, "Value", "Text"));
 
@@ -262,6 +277,20 @@ namespace RISTExamOnlineProject.Controllers
         }
 
 
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
         //----------------------------------------------- Exam Approved -------------------------------------
 
 
@@ -279,11 +308,23 @@ namespace RISTExamOnlineProject.Controllers
         [HttpPost]
 
 
-        public IActionResult GetCategory_Approved()
+
+        public IActionResult GetCategoryType_Approved()
         {
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
             List<SelectListItem> listItems = new List<SelectListItem>();
-            string Strsql = "select DISTINCT [ItemCateg] + ' - ' + [ItemCategName] as [ItemCategName]      ,[ItemCateg]        FROM [SPTOSystem].[dbo].[vewExamApproved_New]";
+            string Strsql = "select DISTINCT [ItemCategType] as Text    ,[ItemCategType]    as Values_   FROM [SPTOSystem].[dbo].[vewExamApproved_New]";
+            listItems = ObjRun.GetItemDropDownList(Strsql, "Category ");
+            return Json(new SelectList(listItems, "Value", "Text"));
+
+        }
+
+
+        public IActionResult GetCategory_Approved(string ItemCategType)
+        {
+            mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            string Strsql = "select DISTINCT [ItemCateg] + ' - ' + [ItemCategName] as [ItemCategName]      ,[ItemCateg]        FROM [SPTOSystem].[dbo].[vewExamApproved_New] where [ItemCategType] = '"+ItemCategType.Trim() + "'";
             listItems = ObjRun.GetItemDropDownList(Strsql, "Category ");
             return Json(new SelectList(listItems, "Value", "Text"));
 
@@ -318,16 +359,8 @@ namespace RISTExamOnlineProject.Controllers
             var skip = start != null ? Convert.ToInt32(start) : 0;
             var recordsTotal = 0;
 
-
             Detail = ObjRun.Get_ExamDetail_Approved(ValueCodeQuestion);
-
-
-
-
-
-
             var data = Detail.ToList();
-
             recordsTotal = data.Count();
 
             return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });

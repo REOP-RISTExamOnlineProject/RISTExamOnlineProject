@@ -121,7 +121,7 @@ namespace RISTExamOnlineProject.Models.TSQL
                 listItems.Add(new SelectListItem()
                 {
                     Text = "-- Choose "+ TextDisplay + " --",
-                    Value = ""
+                    Value = "0"
                 });
                 foreach (DataRow row in dt.Rows)
                 {

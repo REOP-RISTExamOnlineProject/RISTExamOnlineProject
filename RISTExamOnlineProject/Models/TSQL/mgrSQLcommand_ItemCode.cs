@@ -20,34 +20,95 @@ namespace RISTExamOnlineProject.Models.TSQL
             _configuration = configuration;
         }
 
-        public List<SelectListItem> GetCategory() {
+        public List<SelectListItem> GetItemDropDownList(string StrSQL, string TextDisplay)
+        {
 
             var ObjRun = new mgrSQLConnect(_configuration);
-            strSQL = "    SELECT[ItemCateg],[ItemCateg]+' - '+[ItemCategName]  as [ItemCategName] FROM[SPTOSystem].[dbo].[ItemCategory] group by[ItemCateg],[ItemCategName] order by ItemCateg asc";
-
-            dt = ObjRun.GetDatatables(strSQL);
+            dt = ObjRun.GetDatatables(StrSQL);
             List<SelectListItem> listItems = new List<SelectListItem>();
-
             if (dt.Rows.Count != 0)
             {
                 listItems.Add(new SelectListItem()
                 {
-                    Text = "--- Choose Category ---",
-                    Value = ""
+                    Text = "-- Choose " + TextDisplay + " --",
+                    Value = "0"
                 });
                 foreach (DataRow row in dt.Rows)
                 {
                     listItems.Add(new SelectListItem()
                     {
-                        Text =  row["ItemCategName"].ToString().Trim(),
-                        Value = row["ItemCateg"].ToString().Trim(),
+                        Text = row[0].ToString().Trim(),
+                        Value = row[1].ToString().Trim(),
 
                     });
                 }
             }
 
             return listItems;
+
         }
+
+
+
+        //public List<SelectListItem> GetCategory(string ItemCategType) {
+
+        //    var ObjRun = new mgrSQLConnect(_configuration);
+        //    strSQL = "    SELECT[ItemCateg],[ItemCateg]+' - '+[ItemCategName]  as [ItemCategName] FROM[SPTOSystem].[dbo].[ItemCategory] where ItemCategType ='"+ItemCategType.Trim()+"'group by[ItemCateg],[ItemCategName] order by ItemCateg asc";
+
+        //    dt = ObjRun.GetDatatables(strSQL);
+        //    List<SelectListItem> listItems = new List<SelectListItem>();
+
+        //    if (dt.Rows.Count != 0)
+        //    {
+        //        listItems.Add(new SelectListItem()
+        //        {
+        //            Text = "--- Choose Category ---",
+        //            Value = "0"
+        //        });
+        //        foreach (DataRow row in dt.Rows)
+        //        {
+        //            listItems.Add(new SelectListItem()
+        //            {
+        //                Text =  row["ItemCategName"].ToString().Trim(),
+        //                Value = row["ItemCateg"].ToString().Trim(),
+
+        //            });
+        //        }
+        //    }
+
+        //    return listItems;
+        //}
+
+        //public List<SelectListItem> GetCategType()
+        //{
+
+        //    var ObjRun = new mgrSQLConnect(_configuration);
+        //    strSQL = "    SELECT ItemCategType FROM [SPTOSystem].[dbo].[ItemCategory]  group by ItemCategType order by ItemCategType asc";
+
+        //    dt = ObjRun.GetDatatables(strSQL);
+        //    List<SelectListItem> listItems = new List<SelectListItem>();
+
+        //    if (dt.Rows.Count != 0)
+        //    {
+        //        listItems.Add(new SelectListItem()
+        //        {
+        //            Text = "--- Choose Type ---",
+        //            Value = ""
+        //        });
+        //        foreach (DataRow row in dt.Rows)
+        //        {
+        //            listItems.Add(new SelectListItem()
+        //            {
+        //                Text = row["ItemCategType"].ToString().Trim(),
+        //                Value = row["ItemCategType"].ToString().Trim(),
+
+        //            });
+        //        }
+        //    }
+
+        //    return listItems;
+        //}
+       
 
 
 

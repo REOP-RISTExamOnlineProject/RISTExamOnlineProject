@@ -58,7 +58,19 @@
 
                       
                         <div class="row justify-content-lg-center ">
-                            <div class="col col-lg-5">
+
+
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">  ItemCatagory Type :</label>
+                                    @Html.DropDownList("DDL_CategoryType", new SelectList("", ""), new { @id = "DDL_CategoryType", @class = "custom-select" })
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col col-lg-4">
                                 <form>
                                     <div class="form-group">
                                         <label for="DDL_ExamCategory"><b>Exam Category :</b></label>
@@ -70,12 +82,12 @@
 
                             </div>
 
-                            <div class="col col-lg-5">
+                            <div class="col col-lg-4">
                                 <form>
                                     <div class="form-group">
                                         <label for="DDL_ExamName"><b> Exam Name :</b></label>
                                         @Html.DropDownList("DDL_ExamName", new SelectList("", ""), new { @id = "DDL_ExamName", @class = "custom-select h-100 " })
-                                   
+
                                     </div>
                                 </form>
                             </div>
@@ -323,8 +335,8 @@
                 $('#Display').hide();
 
                 OP_UPD = '@User.Identity.Name';
-                GetExamCategory();
-
+             //  GetExamCategory();
+                GetExamCategoryType();
             });
 
 
@@ -340,6 +352,21 @@
             //            return a;
             //      };
 
+            $("#DDL_CategoryType").on("change", function () {
+                debugger
+                var CategoryType = $("#DDL_CategoryType").val()
+
+                $('#Display').hide();
+                if (CategoryType != 0) {
+                    $("#DDL_ExamCategory option").remove();
+                    $("#DDL_ExamName option").remove();
+            
+                    GetExamCategory(CategoryType);
+                } else {
+                    $("#DDL_ExamName option").remove();
+                    $("#DDL_ExamCategory option").remove();
+                }
+            });
 
 
 

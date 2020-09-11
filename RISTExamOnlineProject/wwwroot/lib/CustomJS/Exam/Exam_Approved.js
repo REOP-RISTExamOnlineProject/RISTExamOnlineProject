@@ -1,12 +1,31 @@
 ﻿
+function GetExamCategoryType_Approved() {
+
+    $.ajax({
+        type: 'POST',
+        url: '../Exam/GetCategoryType_Approved',
+        dataType: 'json',      
+        success: function (response) {
+            if (response.length != 0) {
+                $.each(response, function (i, div) {
+                    $("#DDL_ExamCategoryType_Approved").append('<option value="' + div.value + '">' + div.text + '</option>');
+                });
+            }
+        },
+        error: function (ex) {
+            alert('Failed to retrieve states.' + ex);
+        }
+    });
+};
 
 
-function GetExamCategory_Approved() {
+function GetExamCategory_Approved(ItemCategType) {
    
     $.ajax({
         type: 'POST',
         url: '../Exam/GetCategory_Approved',
-        dataType: 'json',       
+        dataType: 'json',  
+        data: { ItemCategType: ItemCategType},
         success: function (response) {
             if (response.length != 0) {
                 $.each(response, function (i, div) {
@@ -159,29 +178,31 @@ function ViewDetail(seq, ValueCodeQuestion, ValueCodeAnswer, ValueStatus) {
       
 
 
-                if (ValueStatus == "DEL") {
-                    $('#Edit-tab').addClass("disabled");
+                //if (ValueStatus == "DEL") {
+                //    $('#Edit-tab').addClass("disabled");
 
 
 
-                } else {
-                    $('#Edit-tab').removeClass("disabled");
-                }
+                //} else {
+
+                //    Edit_Question_Approved(ValueCodeAnswer, ValueCodeQuestion, seq);
 
 
+                //    $('#Edit-tab').removeClass("disabled");
+                //}
 
                 var text = response.responseText;
-                DeleteHTML('Detail');
-                InputHTML('Detail', text)
+                DeleteHTML('Modal_body_ShowDetail');
+                InputHTML('Modal_body_ShowDetail', text)
 
-                $('#Edit').removeClass("active");
-                $('#Edit').removeClass("show");
-                $('#Edit-tab').removeClass("active");
-                $('#Edit-tab').attr("aria-expanded", "false");
+                //$('#Edit').removeClass("active");
+                //$('#Edit').removeClass("show");
+                //$('#Edit-tab').removeClass("active");
+                //$('#Edit-tab').attr("aria-expanded", "false");
 
-                $('#Detail-tab').addClass("active");             
-                $('#Detail-tab').attr("aria-expanded", "true");
-                $('#Detail').addClass("active show");
+                //$('#Detail-tab').addClass("active");             
+                //$('#Detail-tab').attr("aria-expanded", "true");
+                //$('#Detail').addClass("active show");
 
 
                 $('#Modal_ShowDetail').modal('show');
@@ -296,8 +317,6 @@ function DataReject() {
 
 
 
-
-
 function Approved_And_Reject(Job, valueStatus_Array, seq_Array, ValueCodeQuestion) {
 
     $.ajax({
@@ -307,11 +326,7 @@ function Approved_And_Reject(Job, valueStatus_Array, seq_Array, ValueCodeQuestio
         data: { Job: Job, valueStatus_Array: valueStatus_Array, seq_Array: seq_Array, valueCodeQuestion: ValueCodeQuestion },
         success: function (response) {
             if (response.success == true) {
-
-
                 GetTableDetail(ValueCodeQuestion, ValueCodeAnswer);
-
-
             }
         },
         error: function (ex) {
@@ -322,3 +337,6 @@ function Approved_And_Reject(Job, valueStatus_Array, seq_Array, ValueCodeQuestio
 
 
 }
+
+
+
