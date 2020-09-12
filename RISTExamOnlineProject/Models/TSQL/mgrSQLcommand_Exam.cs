@@ -68,8 +68,8 @@ namespace RISTExamOnlineProject.Models.TSQL
         {
             var ObjRun = new mgrSQLConnect(_configuration);
             strSQL = " select [ItemCode],ItemCategName,[ValueCodeQuestion],[ValueCodeAnswer],ISNULL(Seq,0) as Seq  ,ISNULL([Question],'') as [Question]  ,[InputItemName] ,count(*) as Ans_Count  ";
-            strSQL += ",ISNULL((select max(Seq)    FROM   [SPTOSystem].[dbo].[vewQuestionAll]   where[ItemCode] = '" + Itemcode.Trim() + "'),0)  As Max_Seq ,[ValueStatus] FROM[SPTOSystem].[dbo].[vewQuestionAll] where[ItemCode] = '" + Itemcode.Trim() + "' ";
-            strSQL += "   group by[ItemCode], ItemCategName,[ValueCodeQuestion],[ValueCodeAnswer],[Question],[Seq],[InputItemName] ,[ValueStatus] order by[ValueCodeQuestion], Seq";
+            strSQL += ",ISNULL((select max(Seq)    FROM   [SPTOSystem].[dbo].[vewQuestionAll]   where[ItemCode] = '" + Itemcode.Trim() + "' and (Rewrite_ValueList = Rewrite_Master or Rewrite_ValueList = 0)),0)  As Max_Seq ,[ValueStatus],Rewrite_Master,[Rewrite_ValueList]  FROM[SPTOSystem].[dbo].[vewQuestionAll] where[ItemCode] = '" + Itemcode.Trim() + "' ";
+            strSQL += "  and (Rewrite_ValueList = Rewrite_Master or Rewrite_ValueList = 0)   group by[ItemCode], ItemCategName,[ValueCodeQuestion],[ValueCodeAnswer],[Question],[Seq],[InputItemName] ,[ValueStatus],Rewrite_Master,[Rewrite_ValueList] order by[ValueStatus],[ValueCodeQuestion], Seq";
 
             dt = ObjRun.GetDatatables(strSQL);
             return dt;
@@ -154,11 +154,11 @@ namespace RISTExamOnlineProject.Models.TSQL
 
 
 
-        public string Valueslist_Management(string Job,string ValueCode,int Seq,string Value_HTML, string Value_TEXT, string Answer, string Need, string ComputerName, string OPID, string ValueQuestion, string ValueAnswer) {
+        public string Valueslist_Management(string Job,string ValueCode,int Seq,string Value_HTML, string Value_TEXT, string Answer, string Need, string ComputerName, string OPID, string ValueQuestion, string ValueAnswer,int Rewrite) {
             string MS;
             var ObjRun = new mgrSQLConnect(_configuration);
             strSQL = " [dbo].[sprValueList_Management] '"+ Job + "', '"+ ValueCode + "', '"+ Seq + "', N'"+ Value_HTML + "', N'"+ Value_TEXT + "', " +
-                "'"+ Answer + "', '"+ Need + "', '"+ ComputerName + "', '"+ OPID + "', '"+ ValueQuestion + "', '" + ValueAnswer + "'  ";        
+                "'"+ Answer + "', '"+ Need + "', '"+ ComputerName + "', '"+ OPID + "', '"+ ValueQuestion + "', '" + ValueAnswer + "','"+Rewrite.ToString()+"'  ";        
             
             dt = ObjRun.GetDatatables(strSQL);
             MS = dt.Rows[0][1].ToString();

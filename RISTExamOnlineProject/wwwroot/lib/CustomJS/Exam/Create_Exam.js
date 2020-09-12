@@ -2,7 +2,7 @@
 
 
 function GetExamCategory(Type) {
-    debugger
+    
     $.ajax({
         type: 'POST',
         url: '../Exam/GetCategory',
@@ -165,7 +165,7 @@ function Clear_Display(DisplayID) {
 
 $(document).on('click', 'button.remove-NewQuestion', function (e) {
 
-  debugger
+  
     var parent = document.getElementById("FormDisplay_Answer_New");
     var nodesSameClass = 0
     nodesSameClass = parent.getElementsByClassName("ANS_New");
@@ -184,7 +184,7 @@ $(document).on('click', 'button.remove-NewQuestion', function (e) {
 
 $(document).on('click', 'button.remove-EditQuestion', function (e) {
 
-    debugger
+    
 
     var parent = document.getElementById("FormDisplay_Answer_Edit");
     var nodesSameClass = 0
@@ -591,7 +591,7 @@ function NewQuestion() {
 };
 
 function EditQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq, Max_Seq) {
-    debugger
+    
     Max_Seq = Max_Seq;
     DisplayOrder = Seq;
     var HTML_TEXT;
@@ -602,7 +602,7 @@ function EditQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq, Max_Seq) {
         data: { ValueCodeAnswer: ValueCodeAnswer, ValueCodeQuestion: ValueCodeQuestion, Seq: Seq, Job: "upd" },
         success: function (response) {
             if (response.success == true) {
-                debugger
+                
 
                 $('#LB_title').text('Edit Question');
 
@@ -662,7 +662,28 @@ function MakeTable(Detail) {
 
             { data: "question", name: "question", class: "text-wrap text-left" },
             { data: "ans_Count", name: "ans_Count", class: "text-wrap text-center" },
-            { data: "valueStatus", name: "valueStatus", class: "text-wrap text-center" },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    var valueStatus = row.valueStatus.trim();
+                    
+                    if (valueStatus == 'NEW') {
+                        return " <label  class='text-success font-weight-bold'>" + valueStatus + "</label> ";
+                    }
+                    else if (valueStatus == 'UPD') {
+                        return "<label  class='text-primary font-weight-bold'>" + valueStatus + "</label>";
+                    }
+                    else if (valueStatus == 'DEL') {
+                        return "<label  class='text-danger font-weight-bold'>" + valueStatus + "</label>";
+                    }
+                    else {
+                         return "<label  class='text-dark font-weight-bold'>" + valueStatus + "</label>";;
+                    }
+
+
+                }, class: "text-wrap text-center"
+
+            },
             {
                 data: null,
                 render: function (data, type, row) {
@@ -677,9 +698,9 @@ function MakeTable(Detail) {
                         return "<div class='row justify-content-center m-2'>" +
 
 
-                            "<div class='col-5'> <a href='#' class='btn_response btn btn-info w-100 text-white ' onclick=EditQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "','" + Max_Seq_ + "') > <i class='fas fa-pencil-alt'></i> Edit</a> </div> " +
+                            "<div class='col-5'> <a href='#' class='btn_response btn btn-info w-100 text-white ' title='Edit' onclick=EditQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "','" + Max_Seq_ + "') > <i class='fas fa-pencil-alt'></i> Edit</a> </div> " +
 
-                            "<div class='col-5'>  <a href='#' class='btn_response btn btn-danger w-100 text-white ' onclick=DeleteQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "','" + ValueStatus + "') > <i class='fas fa-trash-alt'></i> Delete </a> </div>" +
+                            "<div class='col-5'>  <a href='#' class='btn_response btn btn-danger w-100 text-white' title='Delete' onclick=DeleteQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "','" + ValueStatus + "') > <i class='fas fa-trash-alt'></i> Delete </a> </div>" +
 
 
 
@@ -689,7 +710,7 @@ function MakeTable(Detail) {
 
                         return "<div class='row justify-content-center m-2'>" +
                          
-                            "<div class='col-5'>  <a href='#' class='btn_response btn btn-secondary w-100 text-white ' onclick=RestoreQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "') > <i class='fas fa-trash-restore-alt'></i> Restore </a> </div>" +
+                            "<div class='col-5'>  <a href='#' class='btn_response btn btn-secondary w-100 text-white ' title='Restore Question' onclick=RestoreQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "') > <i class='fas fa-trash-restore-alt'></i> Restore </a> </div>" +
                             "</div>";
                     }
 

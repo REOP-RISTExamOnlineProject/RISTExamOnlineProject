@@ -62,7 +62,7 @@
 
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">  ItemCatagory Type :</label>
+                                    <label for="exampleInputEmail1">  <b>Type :</b></label>
                                     @Html.DropDownList("DDL_CategoryType", new SelectList("", ""), new { @id = "DDL_CategoryType", @class = "custom-select" })
 
                                 </div>
@@ -73,7 +73,7 @@
                             <div class="col col-lg-4">
                                 <form>
                                     <div class="form-group">
-                                        <label for="DDL_ExamCategory"><b>Exam Category :</b></label>
+                                        <label for="DDL_ExamCategory"><b> Category :</b></label>
                                         @Html.DropDownList("DDL_ExamCategory", new SelectList("", ""), new { @id = "DDL_ExamCategory", @class = "custom-select h-100 " })
 
                                     </div>
@@ -120,13 +120,28 @@
                         </div>
 
                     </div>
-                    
-                    <div class="card-body">
-                        <div class="row justify-content-start m-auto">
-                            <div class="col col-12">
-                                <h6> <b>  Total : <label id="LB_Exam_Count"></label> </b></h6>
+                    <div class="card-header ">
+
+                        <div class="row ">
+
+                       
+                            <div class="col-4 text-center">
+
+                                <b> Rewrie : 10 </b>
+                            </div>
+                            <div class="col-4 text-center" >
+
+                                <b> Update : 2020-09-09 15:00:00 </b>
+                            </div>
+                            <div class="col-4 text-center">
+                                <h6> <b>  Total :  </b><label id="LB_Exam_Count" class="font-weight-bold"></label></h6>
+
                             </div>
                         </div>
+
+                    </div>
+
+                    <div class="card-body">
 
 
                         <div class="row justify-content-center m-auto">
@@ -171,19 +186,24 @@
         <div class="modal-dialog modal-lg " style="max-width:1200px;max-height:300px;">
 
             <div class="modal-content">
+
                 <div class="modal-header modal-o-bg">
                     <h4 class="modal-title "><label id="LB_title" class="text-white"></label></h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
 
                 </div>
+         
+
                 <div class="modal-body" id="Modal_body_Form_Main" style="overflow:auto">
 
 
 
                 </div>
+
+
                 <div class="modal-footer">
 
-
+                      
 
                 </div>
             </div>
@@ -353,7 +373,7 @@
             //      };
 
             $("#DDL_CategoryType").on("change", function () {
-                debugger
+                
                 var CategoryType = $("#DDL_CategoryType").val()
 
                 $('#Display').hide();

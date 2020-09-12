@@ -95,9 +95,7 @@ namespace RISTExamOnlineProject.Controllers
                     foreach (DataRow row in dt.Rows)
                     {
                         Detail.Add(new Exam_QuestionDetail()
-                        {
-
-                            ItemCode = row["ItemCode"].ToString(),
+                        {                            ItemCode = row["ItemCode"].ToString(),
                             ItemCategName = row["ItemCategName"].ToString(),
                             ValueCodeQuestion = row["ValueCodeQuestion"].ToString(),
                             ValueCodeAnswer = row["ValueCodeAnswer"].ToString(),
@@ -221,13 +219,13 @@ namespace RISTExamOnlineProject.Controllers
             {
                 if (Job == "DEL" || Job == "RES" || Job == "REJ")
                 {
-                    ObjRun.Valueslist_Management(Job, "", DisplayOrder, "", "", "0", "", IP, OP_UPD, ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim());
+                    ObjRun.Valueslist_Management(Job, "", DisplayOrder, "", "", "0", "", IP, OP_UPD, ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(),0);
                 }
                 else
                 {
                     if (Job == "UPD")
                     {
-                        ObjRun.Valueslist_Management("BK", "", DisplayOrder, "", "", "0", "", IP, OP_UPD, ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim());
+                        ObjRun.Valueslist_Management("BK", "", DisplayOrder, "", "", "0", "", IP, OP_UPD, ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(),0);
                         Max_Seq = DisplayOrder;
                     }
                     else
@@ -236,7 +234,7 @@ namespace RISTExamOnlineProject.Controllers
                     }
 
                     //----------- inseart Qeustion ----  
-                    MS = ObjRun.Valueslist_Management(Job, ValueCodeQuestion, Max_Seq, TextHTML_Question, Text_Question, "0", Need_value, IP, OP_UPD, "", "");
+                    MS = ObjRun.Valueslist_Management(Job, ValueCodeQuestion, Max_Seq, TextHTML_Question, Text_Question, "0", Need_value, IP, OP_UPD, "", "",0);
                     if (MS != "OK")
                     {
                         return Json(new { success = false, responseText = MS });
@@ -245,7 +243,7 @@ namespace RISTExamOnlineProject.Controllers
 
                     for (int i = 0; i < Ans_TextDisplay.Length; i++)
                     {
-                        MS = ObjRun.Valueslist_Management(Job, ValueCodeAnswer, Max_Seq, Ans_Text_HTML_Display[i].Trim(), Ans_TextDisplay[i].Trim(), Ans_Value[i].Trim(), "0", IP, OP_UPD, "", "");
+                        MS = ObjRun.Valueslist_Management(Job, ValueCodeAnswer, Max_Seq, Ans_Text_HTML_Display[i].Trim(), Ans_TextDisplay[i].Trim(), Ans_Value[i].Trim(), "0", IP, OP_UPD, "", "",0);
 
 
                         if (MS != "OK")

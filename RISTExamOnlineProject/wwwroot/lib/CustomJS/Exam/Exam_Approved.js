@@ -105,22 +105,28 @@ function GetTableDetail(ValueCodeQuestion, ValueCodeAnswer) {
                 { data: "seq", name: "seq", class: "text-wrap text-center" },
                 { data: "question", name: "question", class: "text-wrap text-center" },
                 { data: "total_ANS", name: "total_ANS", class: "text-wrap text-center" },
-                {
-                    //data: "valueStatus", name: "valueStatus", class: "text-wrap text-center"
-
+                {                 
                     data: null,
                     render: function (data, type, row) {
-                        var valueStatus = row.valueStatus.trim();                   
-                        if (valueStatus == 'NEW') {
-                            return " <label  class='text-success font-weight-bold'>" + valueStatus +"</label> ";                              
-                        } else if (valueStatus == 'UPD') {
-                            return "<label  class='text-primary font-weight-bold'>" + valueStatus + "</label>";
-                        } else if (valueStatus == 'DEL') {
-                            return "<label  class='text-danger font-weight-bold'>" + valueStatus + "</label>";
-                        } else {
-                           return "";
-                        }                  
+                        var valueStatus = row.valueStatus.trim();
 
+                        if (valueStatus == 'NEW')
+                        {
+                            return " <label  class='text-success font-weight-bold'>" + valueStatus + "</label> ";
+                        }
+                        else if (valueStatus == 'UPD')
+                        {
+                            return "<label  class='text-primary font-weight-bold'>" + valueStatus + "</label>";
+                        }
+                        else if (valueStatus == 'DEL')
+                        {
+                            return "<label  class='text-danger font-weight-bold'>" + valueStatus + "</label>";
+                        }
+                        else
+                        {
+                            return "";
+                        }
+                   
 
                     }, class: "text-wrap text-center"
 
@@ -131,7 +137,7 @@ function GetTableDetail(ValueCodeQuestion, ValueCodeAnswer) {
                         var Seq_ = row.seq;
                         var valueStatus = row.valueStatus;
 
-                        return "<a href='#' class='btn_response btn btn-info w-auto text-white ' onclick=ViewDetail('" + encodeURIComponent(Seq_) + "','" + encodeURIComponent(ValueCodeQuestion) + "','" + encodeURIComponent(ValueCodeAnswer) + "','" + encodeURIComponent(valueStatus)+"'); > " +
+                        return "<a href='#' class='btn_response btn btn-info w-auto text-white 'title='View Detail' onclick=ViewDetail('" + encodeURIComponent(Seq_) + "','" + encodeURIComponent(ValueCodeQuestion) + "','" + encodeURIComponent(ValueCodeAnswer) + "','" + encodeURIComponent(valueStatus)+"'); > " +
                             "<i class='fas fa-book'></i>" +
                             " Detail </a>";                     
 
