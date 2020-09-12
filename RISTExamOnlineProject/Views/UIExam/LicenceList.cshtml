@@ -21,16 +21,17 @@
         <div class="card-body">
             <div class="row justify-content-center">
                 <div class="fb-image-profilex">
-                    <h1 class="text-uppercase">Licensure Examination topic</h1>
+                    <h1 class="text-uppercase">หัวข้อข้อสอบ</h1>
                 </div>
             </div>
             <div class="text-center bg-white p-3">
                 <table class="table table-hover table-sm bg-white w-100" id="tbItemCatg">
                     <thead class="bg-light">
                         <tr>
-                            <td>licensure Code</td>
-                            <td>licensure Name</td>
-                            <td>Mode/โหมด</td>
+                            <td>รหัสหัวข้อข้อสอบ</td>
+                            <td>ชื่อหัวข้อข้อสอบ</td>
+                            <td>ยังไม่ได้สอบ</td>
+                            <td>เลือกหัวข้อ</td>
                         </tr>
                     </thead>
                     <tbody class="small"></tbody>
@@ -71,6 +72,18 @@
                 columns: [
                     { data: "itemCateg", name: "itemCateg", class: "text-wrap text-center" },
                     { data: "itemCategName", name: "itemCategName", class: "text-wrap text-center" },
+                   {
+                       data: null,
+                       name: null,
+                       className: "center",
+                       "fnCreatedCell": function (nTd, oData) {
+                           var cntItemCateg = oData.cntItemCateg;
+                           var HTMLTag = "";
+                        
+                           HTMLTag = '<h6><span class="badge badge-danger"> ' + cntItemCateg + ' ชุด</span></h3>';
+                           $(nTd).html(HTMLTag);
+                       }, className: "dt-body-center"
+                   },
                     {
                         data: null,
                         name: null,
@@ -79,7 +92,7 @@
 
                             var cntItemCateg = oData.cntItemCateg;
                             var ItemCateg = oData.itemCateg;
-                            $(nTd).html('<a href="../UIExam/ModeExemList?ItemCateg=' + ItemCateg + ' " class="btn btn-success btn-sm"> SELECT   <span class="badge badge-danger">' + cntItemCateg + '</span></a>');
+                            $(nTd).html('<a href="../UIExam/ModeExemList?ItemCateg=' + ItemCateg + ' " class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> เลือกข้อสอบ</a>');
                         }, className: "dt-body-center"
                     },
                 ],

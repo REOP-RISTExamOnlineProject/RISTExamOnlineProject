@@ -11,7 +11,7 @@
         <div class="card-body">
             <div class="row justify-content-center">
                 <div class="fb-image-profilex">
-                    <h1 class="text-uppercase">Licensure Examination set</h1>
+                    <h1 class="text-uppercase">ชุดข้อสอบ</h1>
                 </div>
             </div>
             <div class=" p-3">
@@ -20,7 +20,7 @@
                         <tr>
                             <th class="text-center">รหัสชุดข้อสอบ</th>
                             <th class="text-center">ชื่อข้อสอบ</th>
-                            <th class="text-center">Status</th>
+                            <th class="text-center">จำกัดเวลา</th>
                             <th class="text-center">เลือกทำ</th>
                         </tr>
                     </thead>
@@ -56,17 +56,16 @@
                     { data: "itemCateg", name: "itemCateg", class: "text-wrap  " },
                     { data: "itemCategName", name: "itemCategName", class: "text-wrap  " },
                     {
-                        data: null,
-                        name: null,
-                        className: "center",
-                        "fnCreatedCell": function (nTd, oData) {
-                            var itemCateg = oData.itemCateg;
-                            var HTMLTag=""; 
-                                HTMLTag = '<h3><i class="text-primary fas fa-edit"></i></h3>'; 
-
-                            $(nTd).html(HTMLTag);
-                        }, className: "dt-body-center"
-                    },
+                       data: null,
+                       name: null,
+                       className: "center",
+                       "fnCreatedCell": function (nTd, oData) {
+                           var cntItemCateg = oData.cntItemCateg;
+                           var HTMLTag = ""; 
+                           HTMLTag = '<h6><span class="badge badge-warning text-lg"> <i class="far fa-clock"></i> ' + cntItemCateg + ' นาที</span></h3>';
+                           $(nTd).html(HTMLTag);
+                       }, className: "dt-body-center"
+                   },
                     {
                         data: null,
                         name: null,
@@ -75,7 +74,7 @@
                             var itemCateg = oData.itemCateg;
                             var HTMLTag = "";
                             var TEST = "@ViewBag.Itemcateg"; 
-                            HTMLTag = '<a href="@Url.Action("Examexamination")?ItemInput=' + itemCateg + '&ItemCateg=' + TEST+'"  class="btn btn-success btn">    SELECT</a>'; 
+                            HTMLTag = '<a href="@Url.Action("Examexamination")?ItemInput=' + itemCateg + '&ItemCateg=' + TEST +'"  class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> เลือกทำข้อสอบ</a>'; 
                             $(nTd).html(HTMLTag);
                         }, className: "dt-body-center"
                     },

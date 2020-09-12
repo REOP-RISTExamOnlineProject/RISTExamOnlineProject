@@ -1,16 +1,13 @@
 ﻿
 @{
-    ViewData["Title"] = "Examexamination";
+    ViewData["Title"] = "Examination";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div id="element" class="  container" style="background-color:#F5F5F5;">
-    <div class="card card-body">
-        <h1>Examexamination</h1>
+    <div class="card card-body"> 
         <div class="row border-danger border-left  ">
-            <div class="col-12 text-center">
-            
-                    <H1 id="demo" class="display-1"> เริ่มทำข้อสอบ</H1>
-              
+            <div class="col-12 text-center"> 
+                    <H1 id="demo" class="display-1"> เริ่มทำข้อสอบ</H1> 
                 <span style="font: bold 12px; color:red; display:none;" id="Massaging">
                     ห้ามออกจากหน้าจอจนกว่าจะข้อสอบจบ
                 </span>
@@ -63,6 +60,7 @@
     <script type="text/javascript">
         var distance;
         var myTables1;
+        var strHTMLresult = "";
         $(document).ready(function () {
             $('#exampleModalCenter').modal('show');
         });
@@ -98,10 +96,14 @@
                   dataType: 'json',
                   success: function (Data) {
                       $("#DivContents").html(Data._strResult);
+                      
                       TESTRedio();
-                      Gettime(2);
+                      Gettime(Data._strMinute);
                       $("#btndemo").attr("disabled", 'disabled');
                       $("#btnSubmit").removeAttr("disabled", 'disabled');
+                      if (Data._strResult == "Error") {
+                          strHTMLresult = Data._strResult;
+                      }
 
                   },
                   error: function (ex) {
@@ -237,7 +239,7 @@
             }
         });
 
-        $("#btnSubmit").on("click", function () { 
+        $("#btnSubmit").on("click", function () {   
             if (IsFullScreenCurrently()) {  
                 GoOutFullscreen();   
             } else {
@@ -245,7 +247,21 @@
             } 
         });
 
-        function CommitExam() {
+        function CommitExam() { 
+            if (strHTMLresult == "Error") {
+                Swal.fire({
+                    icon: 'error',
+                    title: strHTMLresult,
+                    text: "ระบบขัดข้องกรุณาติดต่อ TEC ",
+                    type: "warning",
+                    //timer: 1700,
+                }).then(function () {
+                    return false;
+                });
+                return false;
+            }
+
+
 
                $.ajax({
                 type: 'POST',
@@ -297,10 +313,9 @@
             if (IsFullScreenCurrently()) {
                 return false;
             }
-            else {
-               
+            else { 
                 clearInterval(x);
-                alert('The exam is over'); 
+                //alert('The exam is over'); 
                 $("#DivContents").html("<div class='text-center m-4'><H1 class='text-danger'>TEST END</H1><H1 class='text-danger'><i class='fas fa-check-circle'></i></H1> <br/> <a href='@Url.Action("LicenceList")' class='btn  btn-link'> MainMenu</a></div>" );
                 $("#ftExam").css("display", "none");
                 CommitExam();

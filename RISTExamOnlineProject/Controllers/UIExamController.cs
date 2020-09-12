@@ -93,10 +93,23 @@ namespace RISTExamOnlineProject.Controllers
         }  
         public JsonResult GetExamList(string itemCateg, string InputItem)
         {
-            mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration); 
+            mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
+            DataTable dt = new DataTable();
+
+
+            int strMinute = 0;
+
             string Result = ObjRun.MakingExam(itemCateg, InputItem);
+            if (Result != "Error")
+            {
+                dt = ObjRun.GetInputItems(InputItem); 
+                if (dt.Rows.Count != 0)
+                {
+                    strMinute = Convert.ToInt32(dt.Rows[0]["TimeLimit"].ToString());
+                }
+            }
             TempData["GG"] = DateTime.Now.ToString();
-            var jsonResult = Json(new { data = "OK", _strResult = Result }); 
+            var jsonResult = Json(new { data = "OK", _strResult = Result ,_strMinute = strMinute }); 
             return jsonResult;
         }
 

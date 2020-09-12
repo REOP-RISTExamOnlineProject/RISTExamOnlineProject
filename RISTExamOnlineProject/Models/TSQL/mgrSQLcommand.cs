@@ -297,6 +297,7 @@ namespace RISTExamOnlineProject.Models.TSQL
                         {
                             ItemCateg = row["ItemCode"].ToString().Trim(),
                             ItemCategName = row["ItemName"].ToString().Trim(),
+                            cntItemCateg = row["TimeLimit"].ToString().Trim(),
                         });
                     }
 
@@ -328,15 +329,7 @@ namespace RISTExamOnlineProject.Models.TSQL
                 strSQL = "";
                 strSQL += "SELECT * FROM [SPTOSystem].[dbo].[InputItemList]";
                 strSQL += "  where ItemCode ='" + strItemCode + "'";
-                dt = ObjRun.GetDatatables(strSQL);
-                if (dt.Rows.Count != 0)
-                {
-                    strSQL = "XX";
-                }
-                else
-                {
-                    strSQL = "aaa";
-                }
+                dt = ObjRun.GetDatatables(strSQL); 
             }
             catch (Exception e)
             {

@@ -30,11 +30,7 @@
                             <label for="ddlLicence">Licence</label>
                             @Html.DropDownList("ddlLicence", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlLicence", @class = "form-control", width = "300px", describedby = "emailHelp" })
 
-                        </div>
-                        @*<div class="form-group col-md-3">
-                            <label for="inputPassword4">EndDate</label>
-                            <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-                        </div>*@
+                        </div> 
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-3">
@@ -101,13 +97,14 @@
                        name: null,
                        className: "center",
                        "fnCreatedCell": function (nTd, oData) {
-                           var itemCateg = oData.itemCateg;
-                           var HTMLTag="";
-                               HTMLTag = '<h3><i class="text-primary fas fa-edit"></i></h3>';
-
+                           var cntItemCateg = oData.cntItemCateg;
+                           var HTMLTag = "";
+                         //  var TEST = "@ViewBag.Itemcateg";
+                           HTMLTag = '<span class="badge badge-secondary">' + cntItemCateg + '</span>';
                            $(nTd).html(HTMLTag);
                        }, className: "dt-body-center"
                    },
+                  
                    {
                        data: null,
                        name: null,
@@ -116,7 +113,7 @@
                            var itemCateg = oData.itemCateg;
                            var HTMLTag = "";
                            var TEST = "@ViewBag.Itemcateg";
-                           HTMLTag = '<a href="@Url.Action("Examexamination")?ItemInput=' + itemCateg + '&ItemCateg=' + TEST+'"  class="btn btn-success btn">    SELECT</a>';
+                           HTMLTag = '<a href="@Url.Action("Examexamination")?ItemInput=' + itemCateg + '&ItemCateg=' + TEST+'"  class="btn btn-warning btn">    SELECT</a>';
                            $(nTd).html(HTMLTag);
                        }, className: "dt-body-center"
                    },
