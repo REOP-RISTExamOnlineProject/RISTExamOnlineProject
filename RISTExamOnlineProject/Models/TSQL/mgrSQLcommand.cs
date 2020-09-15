@@ -16,7 +16,7 @@ namespace RISTExamOnlineProject.Models.TSQL
         public mgrSQLcommand(IConfiguration configuration)
         {
             _configuration = configuration;
-        } 
+        }
         public DataTable GetSectionCode(string strDivision, string strDepartment)
         {
             var ObjRun = new mgrSQLConnect(_configuration);
@@ -38,9 +38,9 @@ namespace RISTExamOnlineProject.Models.TSQL
 
                 strSQL += "Substring(sectionCode,1,2) = '" + strDepartment + "'";
                 Chk++;
-            } 
-            strSQL += "group by  [SectionCode],[Section],[Department],[Division]  "; 
-            dt = ObjRun.GetDatatables(strSQL); 
+            }
+            strSQL += "group by  [SectionCode],[Section],[Department],[Division]  ";
+            dt = ObjRun.GetDatatables(strSQL);
             return dt;
         }
 
@@ -55,8 +55,8 @@ namespace RISTExamOnlineProject.Models.TSQL
 
             if (strDivision != "" && strDivision != null)
             {
-                strSQL += Chk == 0 ? " Where  " : " and  "; 
-                strSQL += "Substring(sectionCode,1,1) = '" + strDivision + "'"; 
+                strSQL += Chk == 0 ? " Where  " : " and  ";
+                strSQL += "Substring(sectionCode,1,1) = '" + strDivision + "'";
                 Chk++;
             }
             strSQL += "group by Substring(sectionCode,1,2),[Department] ";
@@ -82,7 +82,7 @@ namespace RISTExamOnlineProject.Models.TSQL
 
         public DataTable GetGroupName()
         {
-         
+
             mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
             dt = new DataTable();
             strSQL = "";
@@ -97,21 +97,21 @@ namespace RISTExamOnlineProject.Models.TSQL
 
         public List<vewOperatorLicense> GetUserLicense(string Opid)
         {
-            
+
             mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
             List<vewOperatorLicense> dataList = new List<vewOperatorLicense>();
             dt = new DataTable();
             strSQL = "";
-            strSQL += "SELECT * FROM [SPTOSystem].[dbo].vewOperatorLicense  where OperatorID ='"+ Opid + "'";
-            dt = ObjRun.GetDatatables(strSQL); 
+            strSQL += "SELECT * FROM [SPTOSystem].[dbo].vewOperatorLicense  where OperatorID ='" + Opid + "'";
+            dt = ObjRun.GetDatatables(strSQL);
             if (dt.Rows.Count != 0)
-            { 
+            {
                 foreach (DataRow row in dt.Rows)
                 {
                     dataList.Add(new vewOperatorLicense()
                     {
                         OperatorID = row["OperatorID"].ToString().Trim(),
-                        License = row["License"].ToString().Trim(), 
+                        License = row["License"].ToString().Trim(),
                     });
                 }
             }
@@ -119,11 +119,11 @@ namespace RISTExamOnlineProject.Models.TSQL
 
         }
 
-        public string[] GetUpdUserdetail(vewOperatorAlls _Data, List<vewOperatorLicense> _DataLicense,string OpNo,string strIpAddress)
+        public string[] GetUpdUserdetail(vewOperatorAlls _Data, List<vewOperatorLicense> _DataLicense, string OpNo, string strIpAddress)
         {
             mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
             dt = new DataTable();
-            string DataMgs,strFlag;
+            string DataMgs, strFlag;
             var results = true;
             strSQL = "";
             string[] Result;
@@ -131,10 +131,10 @@ namespace RISTExamOnlineProject.Models.TSQL
             try
             {
                 string DataLicense = "";
-                foreach(vewOperatorLicense i in _DataLicense)
+                foreach (vewOperatorLicense i in _DataLicense)
                 {
                     DataLicense += ";" + i.License;
-                   
+
                 }
 
 
@@ -156,12 +156,12 @@ namespace RISTExamOnlineProject.Models.TSQL
                 strSQL += "'" + OpNo + "',";
                 strSQL += "'" + strIpAddress + "';";
 
-                
-               
+
+
 
 
                 strSQL += "   Exec [sprOperatorLicense]";
-                strSQL += "'"+_Data.OperatorID+"'";
+                strSQL += "'" + _Data.OperatorID + "'";
                 strSQL += ",'" + DataLicense.Substring(1) + "'";
                 strSQL += ",'" + OpNo + "'";
                 strSQL += ",'" + strIpAddress + "';";
@@ -169,7 +169,7 @@ namespace RISTExamOnlineProject.Models.TSQL
 
 
                 dt = ObjRun.GetDatatables(strSQL);
-                if(dt.Rows.Count > 0)
+                if (dt.Rows.Count > 0)
                 {
                     Result = new[] { dt.Rows[0][0].ToString(), dt.Rows[0][1].ToString() };
                 }
@@ -177,14 +177,14 @@ namespace RISTExamOnlineProject.Models.TSQL
                 {
                     results = false;
                     Result = new[] { results.ToString(), "Error " };
-                } 
-            } 
+                }
+            }
             catch (Exception e)
             {
                 DataMgs = e.Message + ":" + strSQL;
                 results = false;
                 Result = new[] { results.ToString(), DataMgs };
-            } 
+            }
             return Result;
         }
 
@@ -197,10 +197,11 @@ namespace RISTExamOnlineProject.Models.TSQL
             ResultItemCateg ResultOPcateg = new ResultItemCateg();
             List<_OperatorItemCateg> dataList = new List<_OperatorItemCateg>();
 
-            try { 
+            try
+            {
 
 
-            strSQL = "";
+                strSQL = "";
                 //strSQL += "SELECT * FROM [SPTOSystem].[dbo].[vewItemCategPlan]";
                 //    strSQL += "  where OperatorID ='" + Opid + "'";
 
@@ -211,35 +212,36 @@ namespace RISTExamOnlineProject.Models.TSQL
                 strSQL += ",'" + Opid + "'";
                 strSQL += ",'Licence'";
                 dt = ObjRun.GetDatatables(strSQL);
-            if (dt.Rows.Count != 0)
-            {
-                foreach (DataRow row in dt.Rows)
+                if (dt.Rows.Count != 0)
                 {
-                    dataList.Add(new _OperatorItemCateg()
+                    foreach (DataRow row in dt.Rows)
                     {
-                        ItemCateg = row["ItemCateg"].ToString().Trim(),
-                        ItemCategName = row["ItemCategName"].ToString().Trim(),
-                        cntItemCateg = row["cntItemCateg"].ToString().Trim(),
-                    });
-                }
+                        dataList.Add(new _OperatorItemCateg()
+                        {
+                            ItemCateg = row["ItemCateg"].ToString().Trim(),
+                            ItemCategName = row["ItemCategName"].ToString().Trim(),
+                            cntItemCateg = row["cntItemCateg"].ToString().Trim(),
+                        });
+                    }
 
-                ResultOPcateg._listOpCateg = dataList;
-                ResultOPcateg.strResult = "OK";
+                    ResultOPcateg._listOpCateg = dataList;
+                    ResultOPcateg.strResult = "OK";
+                }
+                else
+                {
+                    ResultOPcateg.strResult = "No exam found <br/> ไม่พบข้อสอบ";
+                }
             }
-            else
+            catch (Exception e)
             {
-                ResultOPcateg.strResult = "No exam found <br/> ไม่พบข้อสอบ" ;
-            }
-            }catch(Exception e)
-            {
-                ResultOPcateg.strResult = e.Message +" :: "+ strSQL;
+                ResultOPcateg.strResult = e.Message + " :: " + strSQL;
             }
 
             return ResultOPcateg;
         }
 
 
-        public DataTable GetItemCateg(string strItemCateg) 
+        public DataTable GetItemCateg(string strItemCateg)
         {
             dt = new DataTable();
             mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
@@ -247,7 +249,7 @@ namespace RISTExamOnlineProject.Models.TSQL
             List<_OperatorItemCateg> dataList = new List<_OperatorItemCateg>();
 
             try
-            { 
+            {
                 strSQL = "";
                 strSQL += "SELECT * FROM [SPTOSystem].[dbo].[ItemCategory]";
                 strSQL += "  where ItemCateg ='" + strItemCateg + "'";
@@ -280,11 +282,11 @@ namespace RISTExamOnlineProject.Models.TSQL
             {
 
 
-                strSQL = ""; 
+                strSQL = "";
                 strSQL += "sprGetExamMode";
-                strSQL += "'"+ strItemCateg + "'";
-                strSQL += ",'"+ OPID + "'";
-                  strSQL += ",'Mode'";
+                strSQL += "'" + strItemCateg + "'";
+                strSQL += ",'" + OPID + "'";
+                strSQL += ",'Mode'";
 
 
 
@@ -329,7 +331,7 @@ namespace RISTExamOnlineProject.Models.TSQL
                 strSQL = "";
                 strSQL += "SELECT * FROM [SPTOSystem].[dbo].[InputItemList]";
                 strSQL += "  where ItemCode ='" + strItemCode + "'";
-                dt = ObjRun.GetDatatables(strSQL); 
+                dt = ObjRun.GetDatatables(strSQL);
             }
             catch (Exception e)
             {
@@ -339,7 +341,7 @@ namespace RISTExamOnlineProject.Models.TSQL
         }
 
 
-        public string MakingExam(string strItemCateg,string strItemCode)
+        public string MakingExam(string strItemCateg, string strItemCode)
         {
             dt = new DataTable();
             mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
@@ -369,7 +371,7 @@ namespace RISTExamOnlineProject.Models.TSQL
             return Result;
         }
 
-        public _ExamCommitResult CommitExam(string Opid, string strItemCateg, string strItemInput, string strStartTime, string strEndTime, List<_ExamQuestionAnswer> ArrAns,string IpAddress)
+        public _ExamCommitResult CommitExam(string Opid, string strItemCateg, string strItemInput, string strStartTime, string strEndTime, List<_ExamQuestionAnswer> ArrAns, string IpAddress)
         {
             mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
             _ExamCommitResult EXresult = new _ExamCommitResult();
@@ -382,41 +384,52 @@ namespace RISTExamOnlineProject.Models.TSQL
             string strLevel = null;
             double Standard = 0;
             Boolean Result = true;
-            try { 
-            foreach (_ExamQuestionAnswer rows in ArrAns)
+            try
             {
+                foreach (_ExamQuestionAnswer rows in ArrAns)
+                {
+                    strSQL = "";
+                    strSQL += "[sprExamAnswerCheck] '" + rows.strQuestion + "','" + rows.strAnswer + "','CheckAns'";
+                    dt = ObjRun.GetDatatables(strSQL);
+                    if (dt.Rows.Count > 0)
+                    {
+                        Correct += Convert.ToDouble(dt.Rows[0][0].ToString());
+                    }
+                }
                 strSQL = "";
-                strSQL += "[sprExamAnswerCheck] '" + rows.strQuestion + "','" + rows.strAnswer + "','CheckAns'";
+                strSQL += "[sprExamAnswerCheck] '" + strItemCateg + "','" + strItemInput + "','TatalExam'";
                 dt = ObjRun.GetDatatables(strSQL);
                 if (dt.Rows.Count > 0)
                 {
-                    Correct += Convert.ToDouble(dt.Rows[0][0].ToString());
+                    TatalExam += Convert.ToDouble(dt.Rows[0][0].ToString());
                 }
-            }
-            strSQL = "";
-            strSQL += "[sprExamAnswerCheck] '" + strItemCateg + "','" + strItemInput + "','TatalExam'";
-            dt = ObjRun.GetDatatables(strSQL);
-            if (dt.Rows.Count > 0)
-            {
-                TatalExam += Convert.ToDouble(dt.Rows[0][0].ToString()); 
-            }
                 Wrong = TatalExam - Correct;
                 Average = (Correct / TatalExam) * 100;
                 strSQL = "";
-            strSQL += "select * from vewItemCategPlan";
-                strSQL += " where OperatorID = '"+ Opid + "' and ItemCateg = '"+ strItemCateg + "'";
+                strSQL += "select * from vewItemCategPlan";
+                strSQL += " where OperatorID = '" + Opid + "' and ItemCateg = '" + strItemCateg + "'";
 
                 dt = ObjRun.GetDatatables(strSQL);
-            if (dt.Rows.Count > 0)
-            {
-                strPlan = dt.Rows[0]["Plan"].ToString();
-                strLevel = "";
-                Standard = Convert.ToDouble(dt.Rows[0]["Standard"].ToString());
-            }
+                if (dt.Rows.Count > 0)
+                {
+                    strPlan = dt.Rows[0]["Plan"].ToString();
+                    strLevel = "";
+                    Standard = Convert.ToDouble(dt.Rows[0]["Standard"].ToString());
+                }
 
-                Result = (Average > Standard) ? true : false;
+                if(Average >= Standard)
+                {
+                    Result = true;
+                }
+                else
+                {
+                    Result = false;
+                }
 
-            strSQL = "";
+
+               // Result = (Average > Standard) ? true : false;
+
+                strSQL = "";
                 strSQL += "[sprExamResults] ";
                 strSQL += " '" + strPlan + "' ";
                 strSQL += ",'" + Opid + "' ";
@@ -430,15 +443,18 @@ namespace RISTExamOnlineProject.Models.TSQL
                 strSQL += ",'" + TatalExam + "' ";
                 strSQL += ",'" + Result + "' ";
                 strSQL += ",'" + Opid + "' ";
-                strSQL += ",'"+ IpAddress + "' ";
+                strSQL += ",'" + IpAddress + "' ";
                 dt = ObjRun.GetDatatables(strSQL);
 
 
-                if(dt.Rows.Count > 0)
+                if (dt.Rows.Count > 0)
                 {
-                    if (dt.Rows[0][1].ToString()=="OK")
+                    if (dt.Rows[0][1].ToString() == "OK")
                     {
-                        string ExNbr = dt.Rows[0]["ExNbr"].ToString(); 
+                        string ExNbr = dt.Rows[0]["ExNbr"].ToString();
+
+                        if(ArrAns.Count != 0) { 
+
                         foreach (_ExamQuestionAnswer rows in ArrAns)
                         {
                             strSQL = "";
@@ -446,10 +462,17 @@ namespace RISTExamOnlineProject.Models.TSQL
                             dt = ObjRun.GetDatatables(strSQL);
                             if (dt.Rows.Count > 0)
                             {
-                                EXresult.BoolResult = Convert.ToBoolean( dt.Rows[0][0].ToString());
-                                EXresult.strMgs = Convert.ToString( Result); //dt.Rows[0][1].ToString();
+                                EXresult.BoolResult = Convert.ToBoolean(dt.Rows[0][0].ToString());
+                                EXresult.strMgs = Convert.ToString(Result); //dt.Rows[0][1].ToString();
                                 EXresult.strResult = dt.Rows[0][1].ToString();
                             }
+                        }
+                        }
+                        else
+                        {
+                            EXresult.BoolResult = false;
+                            EXresult.strMgs = "คุณไม่เลือกคำตอบ";
+                            EXresult.strResult = "Error";
                         }
                     }
                     else
@@ -467,17 +490,17 @@ namespace RISTExamOnlineProject.Models.TSQL
                     EXresult.strMgs = "ExamResult";
                     EXresult.strResult = "Error";
                 }
-                 
+
 
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 EXresult.BoolResult = false;
                 EXresult.strMgs = e.Message.ToString();
                 EXresult.strResult = "Error";
             }
 
-             
+
 
 
 

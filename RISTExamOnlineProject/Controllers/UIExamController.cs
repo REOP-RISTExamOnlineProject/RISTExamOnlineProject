@@ -113,13 +113,17 @@ namespace RISTExamOnlineProject.Controllers
             return jsonResult;
         }
 
-        public JsonResult CommitExam(List<_ExamQuestionAnswer> ArrAns,string strItemCateg,string strItemInput,string OPID)
+        public JsonResult CommitExam(List<_ExamQuestionAnswer> ArrAns,string strItemCateg,string strItemInput,string OPID,string strStart)
         {
             string ItemCateg = strItemCateg;
             string ItemInput = strItemInput;
             string strOPID = OPID;
             mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
-            string strStartTime = TempData["GG"].ToString(); 
+            DateTime _strStartTime = Convert.ToDateTime(strStart);
+
+            string strStartTime = strStart;
+
+
             string strEndTime = DateTime.Now.ToString();
             string IP = Request.HttpContext.Connection.RemoteIpAddress.ToString();
             _ExamCommitResult dt = new _ExamCommitResult();

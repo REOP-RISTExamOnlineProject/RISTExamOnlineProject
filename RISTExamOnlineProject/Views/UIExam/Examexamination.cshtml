@@ -3,37 +3,35 @@
     ViewData["Title"] = "Examination";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div id="element" class="  container" style="background-color:#F5F5F5;">
-    <div class="card card-body"> 
-        <div class="row border-danger border-left  ">
-            <div class="col-12 text-center"> 
-                    <H1 id="demo" class="display-1"> เริ่มทำข้อสอบ</H1> 
-                <span style="font: bold 12px; color:red; display:none;" id="Massaging">
-                    ห้ามออกจากหน้าจอจนกว่าจะข้อสอบจบ
+<div id="element" class="container" style="background-color:#F5F5F5;">
+    <div class="card card-body " id="cHeader">
+        <div class="row">
+            <div class="col-12 text-center ">   
+                    <H1 id="demo" class="display-1">เริ่มทำข้อสอบ</H1> 
+                <span style="font: bold 12px;  display:none;" id="Massaging">
+                    *ห้ามออกจากหน้าจอจนกว่าจะข้อสอบจบ
                 </span>
             </div>
         </div>
-    @*    <hr class="m-4" />*@
     </div>
-   
+
 
     <div class="offset-1 col-11 table-responsive " style="overflow-y:scroll; height:70%">
         <div class="m-2" id="DivContents"></div>
-        <div class="text-center" id="ftExam"  style="display:none;">
-            <span style="font: bold 12px; color:red;  "  >
-               กรุณาตรวจคำตอบให้แน่ใจก่อนกดปุ่ม SUBMIT
+        <div class="text-center" id="ftExam" style="display:none;">
+            <span style="font: bold 12px; color:red;">
+                กรุณาตรวจคำตอบให้แน่ใจก่อนกดปุ่ม SUBMIT
             </span>
-            <button class="btn btn-success btn-lg btn-block text-uppercase" id="btnSubmit" disabled> Submit</button>
+            <button class="btn btn-success btn-lg btn-block text-uppercase" id="btnSubmit" disabled>ส่งคำตอบ</button>
         </div>
     </div>
-
 </div>
 
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered  modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">กฏการทำข้อสอบ</h5>
+                <h2 class="modal-title text-warning" id="exampleModalLongTitle"><i class="fas fa-exclamation-circle"></i> กฏการทำข้อสอบ</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -60,14 +58,16 @@
     <script type="text/javascript">
         var distance;
         var myTables1;
-        var strHTMLresult = "";
+        var startTime = new Date();
+        var strHTMLresult = "GG";
+        var Arrs = [];
         $(document).ready(function () {
             $('#exampleModalCenter').modal('show');
         });
         onReady(function () {
 
 
-        }); 
+        });
 
         document.addEventListener("keydown", function (e) {
             //tab keyCode===9
@@ -89,6 +89,9 @@
 
 
         function GetData() {
+
+            $("#demo").text("กำลังเตรียมข้อสอบ..");
+            $("#stImg").css("display", "block");
               $.ajax({
                 type: 'POST',
                   url: "../UIExam/GetExamList",
@@ -96,11 +99,12 @@
                   dataType: 'json',
                   success: function (Data) {
                       $("#DivContents").html(Data._strResult);
-                      
+
                       TESTRedio();
                       Gettime(Data._strMinute);
                       $("#btndemo").attr("disabled", 'disabled');
                       $("#btnSubmit").removeAttr("disabled", 'disabled');
+
                       if (Data._strResult == "Error") {
                           strHTMLresult = Data._strResult;
                       }
@@ -109,42 +113,50 @@
                   error: function (ex) {
 
                   },
+                  complete: function (data) {
+                    //  console.log("SEMPRE FUNFA!");
+                      $("#stImg").css("display", "none");
+                      //A function to be called when the request finishes
+                      // (after success and error callbacks are executed).
+                  }
                 });
         }
 
-        var Arrs = [];
+
         function TESTRedio() {
 
-          
+
             var ArrCompl = [];
 
 
             $('input[type="radio"]').click(function () {
-                 
+
                 if ($(this).is(':checked')) {
                     var Quest = $(this).attr("name");
 
-                     
+
                     var x = ArrCompl.indexOf($(this).attr("name"));
-                    
-                    var Ans = $(this).val(); 
+
+                    var Ans = $(this).val();
                     var GroupItem = { strQuestion: Quest, strAnswer: Ans };
 
-                    if (x < 0) { 
+                    if (x < 0) {
                         Arrs.push(GroupItem);
                         ArrCompl.push(Quest);
                     } else {
                         Arrs.splice(x, 1, GroupItem);
-                    } 
+                    }
                 }
             });
         }
-
-
+         
         var x
         function Gettime(strTime) {
             // Set the date we're counting down to
 
+            startTime = new Date();
+
+            //startTime = new Date().getTime();
             var now = new Date();
             now.setMinutes(now.getMinutes() + strTime); // timestamp
             now = new Date(now);
@@ -167,11 +179,22 @@
                 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
                 // Display the result in the element with id="demo"
-                document.getElementById("demo").innerHTML =   hours + "h "
-                    + minutes + "m " + seconds + "s ";
+                document.getElementById("demo").innerHTML =   hours + "ชม. "
+                    + minutes + "น. " + seconds + "วิ. ";
 
-                if (minutes == 0) { 
-                    $("#demo").css("color", "#f00");
+                if (minutes == 0) {
+                    $("#Massaging").css("color", "#fff");
+                    $("#demo").css("color", "#fff");
+                    $("#cHeader").css("background-color", "#FF0808");
+                } else if (minutes <= 3) {
+                    $("#Massaging").css("color", "##3CB175");
+                    $("#demo").css("color", "#fff");
+                    $("#cHeader").css("background-color", "#FFDC3E");
+                }
+                else {
+                    $("#Massaging").css("color", "#f00");
+                   // $("#demo").css("color", "#fff");
+                    $("#cHeader").css("background-color", "#BDFFB2");
                 }
                 // If the count down is finished, write some text
                 if (distance < 0) {
@@ -185,12 +208,12 @@
                         title: 'TIME OUT!!',
                         type: 'error',
                         timer: 1700,
-                    }).then(function () { 
+                    }).then(function () {
                         return true;
                     });
                 }
-            }, 1000); 
-        } 
+            }, 1000);
+        }
 
         /* Get into full screen */
             function GoInFullscreen(element) {
@@ -228,9 +251,9 @@
             else
                 return true;
         }
-        $("#testtest").on("click", function () { 
+        $("#testtest").on("click", function () {
             if (IsFullScreenCurrently()) {
-                GoOutFullscreen(); 
+                GoOutFullscreen();
             } else {
                 GoInFullscreen($("#element").get(0));
                 GetData();
@@ -239,15 +262,16 @@
             }
         });
 
-        $("#btnSubmit").on("click", function () {   
-            if (IsFullScreenCurrently()) {  
-                GoOutFullscreen();   
+        $("#btnSubmit").on("click", function () {
+            if (IsFullScreenCurrently()) {
+                GoOutFullscreen();
             } else {
                 GoInFullscreen($("#element").get(0));
-            } 
+            }
         });
 
-        function CommitExam() { 
+        function CommitExam() {
+
             if (strHTMLresult == "Error") {
                 Swal.fire({
                     icon: 'error',
@@ -258,39 +282,52 @@
                 }).then(function () {
                     return false;
                 });
-                return false;
-            }
+
+            } else {
 
 
 
+                var day = startTime.getDate();       // yields date
+                var month = startTime.getMonth() + 1;    // yields month (add one as '.getMonth()' is zero indexed)
+                var year = startTime.getFullYear();  // yields year
+                var hour = startTime.getHours();     // yields hours
+                var minute = startTime.getMinutes(); // yields minutes
+                var second = startTime.getSeconds(); // yields seconds
+
+
+                strHTMLresult = month + "/" + day + "/" +year + " " + hour + ':' + minute + ':' + second;
+
+
+
+                //alert(strHTMLresult+" : "+"@ViewBag.Itemcateg" + ": "+"@ViewBag.InputItem"+ ": "+"@User.Identity.Name");
                $.ajax({
                 type: 'POST',
                    url: "../UIExam/CommitExam",
-                   data: { ArrAns: Arrs ,strItemCateg: "@ViewBag.Itemcateg",strItemInput:"@ViewBag.InputItem",OPID:"@User.Identity.Name"},
+                   data: { ArrAns: Arrs, strItemCateg: "@ViewBag.Itemcateg", strItemInput: "@ViewBag.InputItem", OPID: "@User.Identity.Name", strStart: strHTMLresult},
                   dataType: 'json',
                    success: function (Data) {
-                         
+
                        var strTitle = "";
                        var strText = "";
                        var strCateg = "";
                        if (Data.dataBool == true && Data.data == "OK") {
-                           
+
                            if (Data.dataResult == "True") {
-                               strTitle = "PASS <i class='fas fa-thumbs-up'></i>";
-                               strText = "congratulation!! :>";
+                               strTitle = "คุณทำข้อสอบผ่าน";
+                               strText = "ยินดีด้วยครับ";
                                strCateg = "success";
-                           } else { 
-                               strTitle = "FAIL <i class='fas fa-thumbs-down'></i>";
-                               strText = "Please context to TEC ";
+                           } else {
+                               strTitle = "คุณทำข้อสอบไม่ผ่าน";
+                               strText = "กรุณาติดต่อ TEC เพื่อทำการสอบใหม่";
                                strCateg = "error";
                            }
                        } else {
-                            
+
                            strTitle = Data.data;
                            strText = Data.dataResult;
                            strCateg = "error";
                        }
-                       
+
                       Swal.fire({
                           icon: strCateg,
                           title: strTitle,
@@ -302,21 +339,21 @@
                       });
                   },
                   error: function (ex) {
-
+                      //alert(ex.responseText);
+                      $("body").html(ex.responseText);
                   },
                 });
-
-
+            }
         }
 
         $(document).on('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', function () {
             if (IsFullScreenCurrently()) {
                 return false;
             }
-            else { 
+            else {
                 clearInterval(x);
-                //alert('The exam is over'); 
-                $("#DivContents").html("<div class='text-center m-4'><H1 class='text-danger'>TEST END</H1><H1 class='text-danger'><i class='fas fa-check-circle'></i></H1> <br/> <a href='@Url.Action("LicenceList")' class='btn  btn-link'> MainMenu</a></div>" );
+                alert('The exam is over');
+                $("#DivContents").html("<div class='text-center m-4'><H1 class='text-danger'>จบการสอบ</H1><H1 class='text-danger'> </H1> <br/> <a href='@Url.Action("LicenceList")' class='btn  btn-link'> MainMenu</a></div>" );
                 $("#ftExam").css("display", "none");
                 CommitExam();
                 return false;
@@ -325,25 +362,17 @@
 
 
         window.onbeforeunload = function (event) {
-             
             var message = 'Important: Please click on \'Save\' button to leave this page.';
             if (typeof event == 'undefined') {
-               // CommitExam();
                 event = window.event;
-               
             }
-            if (event) { 
+            if (event) {
                 event.returnValue = message;
             }
             return message;
-           
         };
-
         $(window).on("beforeunload", function () {
             return inFormOrLink ? "Do you really want to close?" : null;
-        })
-
-       
-
+        });
     </script>
 } 
