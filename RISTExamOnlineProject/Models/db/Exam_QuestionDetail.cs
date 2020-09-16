@@ -17,8 +17,8 @@ namespace RISTExamOnlineProject.Models.db
         public string Question { get; set; }
         public string Ans_Count { get; set; }
         public string Max_Seq { get; set; }
-
         public string ValueStatus { get; set; }
+     
 
     }
 }

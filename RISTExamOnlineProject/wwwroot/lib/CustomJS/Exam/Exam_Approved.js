@@ -1,6 +1,6 @@
 ﻿
 function GetExamCategoryType_Approved() {
-
+   
     $.ajax({
         type: 'POST',
         url: '../Exam/GetCategoryType_Approved',
@@ -82,11 +82,16 @@ function GetTableDetail(ValueCodeQuestion, ValueCodeAnswer) {
                 dataSrc: "data",
                 data: { ValueCodeQuestion: ValueCodeQuestion },
                 dataType: "json",
-
+                //success: function (response) {
+                //    if (response.length != 0) {
+                        
+                //        Rewrite_Master = response.rewrite_Master
+                //    }
+                //},
             }),
 
             dom: '<"top">rtl<"bottom">ip<"clear">',
-
+            
         
             columns: [
                 {
@@ -96,8 +101,8 @@ function GetTableDetail(ValueCodeQuestion, ValueCodeAnswer) {
                     className: "center",
                     "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
 
-                        var Target =  oData.seq + "," + oData.valueStatus
-                
+                        var Target = oData.seq + "," + oData.valueStatus + "," + oData.rewrite_Master;
+            
                         $(nTd).html('<input type="checkbox"   class="editor-active" id="CB_Delete"  name="CB_Delete" value="' + Target +'"  />');
 
                     }, className: "text-center"
@@ -109,7 +114,7 @@ function GetTableDetail(ValueCodeQuestion, ValueCodeAnswer) {
                     data: null,
                     render: function (data, type, row) {
                         var valueStatus = row.valueStatus.trim();
-
+                         
                         if (valueStatus == 'NEW')
                         {
                             return " <label  class='text-success font-weight-bold'>" + valueStatus + "</label> ";
@@ -227,66 +232,63 @@ function ViewDetail(seq, ValueCodeQuestion, ValueCodeAnswer, ValueStatus) {
 };
 
 
-function DataApproved() {
 
-    var arrdata = TableTarget.$('input, select').serializeArray();
-    var seq_Array = new Array();
-    var valueStatus_Array = new Array();
 
-    if (arrdata.length != 0) {
 
-        Swal.fire({
-            title: "Are you sure you want to approve?",
-            html: "The total number of questions to be approved is <b class='text-danger'> " + arrdata.length + " </b> . Are you sure you want to <b class='text-success'>Approve ?<b/>",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Approve it!'
 
-        }).then(function (result) {
-            if (result.value) {
 
-                for (i = 0; i < arrdata.length; i++) {         
-                    arrtemp = arrdata[i].value.split(','); 
-                    seq_Array.push(arrtemp[0]);
-                    valueStatus_Array.push(arrtemp[1]);
-                    arrtemp = [];
-                }
-                Approved_And_Reject('APP', valueStatus_Array, seq_Array, ValueCodeQuestion);     
+
+
+
+
+function Approved_And_Reject(Job, valueStatus_Array, seq_Array, ValueCodeQuestion, Rewrite_Master) {
+    debugger
+    Rewrite_Master
+    $.ajax({
+        type: 'POST',
+        url: '../Exam/Job_Reject_And_Approved',
+        dataType: 'json',
+        data: { Job: Job, valueStatus_Array: valueStatus_Array, seq_Array: seq_Array, valueCodeQuestion: ValueCodeQuestion, Rewrite_Master: Rewrite_Master },
+        success: function (response) {
+            if (response.success == true) {
+                GetTableDetail(ValueCodeQuestion, ValueCodeAnswer);
             }
-        });
+        },
+        error: function (ex) {
+            alert('Failed to retrieve states.' + ex);
+        }
+    });
 
 
-    } else    {
 
-        Swal.fire({
-            title: "Opss..!!",
-            text: "Plase Select Question",
-            icon: 'error',
-        });
+};
+
+
+
+
+function SubmitData(Job) {
+    debugger
+    var text_class;
+    var text_Job;
+    if (Job == 'Reject') {
+        text_class = 'text-danger';
+        text_Job = 'REJ'
+    } else {
+        text_class = 'text-success';
+        text_Job = 'APP'
     }
 
 
-  
-
-}
-
-
-
-
-
-function DataReject() {
-
     var arrdata = TableTarget.$('input, select').serializeArray();
     var seq_Array = new Array();
     var valueStatus_Array = new Array();
 
+    debugger
     if (arrdata.length != 0) {
 
         Swal.fire({
             title: "Are you sure you want to reject?",
-            html: "The total number of questions to be approved is <b class='text-danger'> " + arrdata.length + " </b> . Are you sure you want to <b class='text-danger'>Reject ?<b/>",
+            html: "The total number of questions to be " + Job + " is <b class='text-danger'> " + arrdata.length + " </b> . Are you sure you want to <b class='" + text_class+"'>" + Job + " ?<b/>",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -295,14 +297,21 @@ function DataReject() {
 
         }).then(function (result) {
             if (result.value) {
-
+                debugger
                 for (i = 0; i < arrdata.length; i++) {
                     arrtemp = arrdata[i].value.split(',');
+                    debugger
                     seq_Array.push(arrtemp[0]);
                     valueStatus_Array.push(arrtemp[1]);
+                    Rewrite_Master = arrtemp[2].toString();
                     arrtemp = [];
                 }
-                Approved_And_Reject('REJ', valueStatus_Array, seq_Array, ValueCodeQuestion);
+
+                var Status = valueStatus_Array.toString();
+                var seq_String = seq_Array.toString();
+                debugger
+                Approved_And_Reject(text_Job, Status, seq_String, ValueCodeQuestion, Rewrite_Master);
+
             }
         });
 
@@ -319,30 +328,6 @@ function DataReject() {
 
 
 
-}
-
-
-
-function Approved_And_Reject(Job, valueStatus_Array, seq_Array, ValueCodeQuestion) {
-
-    $.ajax({
-        type: 'POST',
-        url: '../Exam/Job_Reject_And_Approved',
-        dataType: 'json',
-        data: { Job: Job, valueStatus_Array: valueStatus_Array, seq_Array: seq_Array, valueCodeQuestion: ValueCodeQuestion },
-        success: function (response) {
-            if (response.success == true) {
-                GetTableDetail(ValueCodeQuestion, ValueCodeAnswer);
-            }
-        },
-        error: function (ex) {
-            alert('Failed to retrieve states.' + ex);
-        }
-    });
-
-
-
-}
-
+};
 
 

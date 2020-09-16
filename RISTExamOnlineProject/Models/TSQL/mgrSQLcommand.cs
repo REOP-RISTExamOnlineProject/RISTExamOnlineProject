@@ -261,7 +261,7 @@ namespace RISTExamOnlineProject.Models.TSQL
                     strSQL = "aaa";
                 }
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 dt = null;
             }
@@ -331,7 +331,7 @@ namespace RISTExamOnlineProject.Models.TSQL
                 strSQL += "  where ItemCode ='" + strItemCode + "'";
                 dt = ObjRun.GetDatatables(strSQL); 
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 dt = null;
             }

@@ -13,5 +13,6 @@ namespace RISTExamOnlineProject.Models.db
         public string Question { get; set; }
         public int Total_ANS { get; set; }
         public string ValueStatus { get; set; }
+        public int Rewrite_Master { get; set; }
     }
 }

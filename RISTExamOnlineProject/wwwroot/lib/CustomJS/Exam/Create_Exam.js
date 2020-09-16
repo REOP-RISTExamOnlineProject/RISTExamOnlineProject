@@ -1,6 +1,5 @@
 ﻿
 
-
 function GetExamCategory(Type) {
     
     $.ajax({
@@ -81,7 +80,13 @@ function GetExamDetail(Itemcode) {
                 QuestionCount = response.questionCount
                 ValueCodeQuestion = response.valueCodeQuestion
                 ValueCodeAnswer = response.valueCodeAnswer
-                ItemName = response.itemName        
+                ItemName = response.itemName    
+                Rewrite_ValueList = response.rewrite_ValueList
+                Rewrite_Master = response.rewrite_Master
+                UpdDate = response.updDate
+                debugger
+                $('#LB_Rewrie').text(Rewrite_Master);
+                $('#LB_Update').text(UpdDate);
                 $('#LB_Exam_Count').text(QuestionCount);
                 $('#LB_Exam_Name').text(ItemName);              
                 MakeTable(Detail);
@@ -315,7 +320,7 @@ function Insert_Exam(job) {
             data: {
                 Max_Seq: Max_Seq, QuestionCount: QuestionCount, ValueCodeQuestion: ValueCodeQuestion, ValueCodeAnswer: ValueCodeAnswer,
                 Ans_TextDisplay: Ans_TextDisplay, Ans_Text_HTML_Display: Ans_Text_HTML_Display, Ans_Value: Ans_Value, Need_value: Need_value,
-                Text_Question: Text_Question, TextHTML_Question: TextHTML_Question, job: job, OP_UPD: OP_UPD, DisplayOrder: DisplayOrder
+                Text_Question: Text_Question, TextHTML_Question: TextHTML_Question, job: job, OP_UPD: OP_UPD, DisplayOrder: DisplayOrder, Rewrite_Master: Rewrite_Master
             },
             success: function (response) {
                 if (response.success == true) {
@@ -692,18 +697,13 @@ function MakeTable(Detail) {
                     var Seq = row.seq;
                     var Max_Seq_ = row.max_Seq.trim();
                     var ValueStatus = row.valueStatus.trim();
-
+                    
                     if (ValueStatus != 'DEL') {
 
                         return "<div class='row justify-content-center m-2'>" +
-
-
                             "<div class='col-5'> <a href='#' class='btn_response btn btn-info w-100 text-white ' title='Edit' onclick=EditQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "','" + Max_Seq_ + "') > <i class='fas fa-pencil-alt'></i> Edit</a> </div> " +
 
                             "<div class='col-5'>  <a href='#' class='btn_response btn btn-danger w-100 text-white' title='Delete' onclick=DeleteQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "','" + ValueStatus + "') > <i class='fas fa-trash-alt'></i> Delete </a> </div>" +
-
-
-
 
                             "</div>";
                     } else {

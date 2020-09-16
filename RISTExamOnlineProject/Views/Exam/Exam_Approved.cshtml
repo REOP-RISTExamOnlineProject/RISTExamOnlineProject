@@ -102,11 +102,11 @@
                     <div class="overflow-auto">
                         <div class="row justify-content-lg-start m-2">
                             <div class="col col-2">
-                                <button class="btn_response btn btn-success w-100" onclick="DataApproved();"> <i class="fas fa-thumbs-up"></i> Approved</button>
+                                <button class="btn_response btn btn-success w-100" onclick="SubmitData('Approved')"> <i class="fas fa-thumbs-up"></i> Approved</button>
                             </div>
 
                             <div class="col col-2">
-                                <button class="btn_response btn btn-danger w-100" onclick="DataReject();"> <i class="fas fa-thumbs-down"></i> Reject</button>
+                                <button class="btn_response btn btn-danger w-100" onclick="SubmitData('Reject')"> <i class="fas fa-thumbs-down"></i> Reject</button>
                             </div>
 
                         </div>
@@ -299,7 +299,7 @@
         <script src="~/lib/CustomJS/Exam/Exam_Approved.js"></script>
         <script src="~/lib/CustomJS/Exam/Create_Exam.js"></script>
 
-
+ 
 
 
 
@@ -308,7 +308,7 @@
 
             var ValueCodeQuestion;
             var ValueCodeAnswer;
-
+            var Rewrite_Master;
             $(document).ready(function () {
                 OP_UPD = '@User.Identity.Name';
                 $('#Display').hide();

@@ -76,7 +76,9 @@ namespace RISTExamOnlineProject.Controllers
 
             string ItemName;
             int Max_Seq;
-
+            int Rewrite_ValueList;
+            int Rewrite_Master;
+            string UpdDate;
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
 
 
@@ -86,7 +88,9 @@ namespace RISTExamOnlineProject.Controllers
             if (dt.Rows.Count != 0)
             {
                 Max_Seq = Convert.ToInt16(dt.Rows[0]["Max_Seq"].ToString());
-
+                Rewrite_ValueList = Convert.ToInt16(dt.Rows[0]["Rewrite_ValueList"].ToString());
+                Rewrite_Master = Convert.ToInt16(dt.Rows[0]["Rewrite_Master"].ToString());
+                UpdDate = dt.Rows[0]["UpdDate"].ToString();
                 List<Exam_QuestionDetail> Detail = new List<Exam_QuestionDetail>();
 
                 if (Max_Seq != 0)
@@ -104,6 +108,8 @@ namespace RISTExamOnlineProject.Controllers
                             Ans_Count = row["Ans_Count"].ToString(),
                             Max_Seq = row["Max_Seq"].ToString(),
                             ValueStatus = row["ValueStatus"].ToString(),
+                         
+                            
                         });
 
                     }
@@ -138,25 +144,18 @@ namespace RISTExamOnlineProject.Controllers
                 }
 
 
-                return Json(new { success = true, ValueCodeQuestion = ValueCodeQuestion, ValueCodeAnswer = ValueCodeAnswer, QuestionCount = QuestionCount, Max_Seq = Max_Seq, ItemName = ItemName, Detail = Detail });
+                return Json(new { success = true, ValueCodeQuestion = ValueCodeQuestion, ValueCodeAnswer = ValueCodeAnswer,
+                    QuestionCount = QuestionCount, Max_Seq = Max_Seq, ItemName = ItemName, Detail = Detail, Rewrite_ValueList = Rewrite_ValueList ,
+                    Rewrite_Master = Rewrite_Master ,
+                    UpdDate= UpdDate                });
 
 
 
             }
             else
             {
-
                 return Json(new { success = false });
             }
-
-
-
-
-
-
-
-
-
         }
 
         [Authorize]
@@ -206,7 +205,7 @@ namespace RISTExamOnlineProject.Controllers
 
         [Authorize]
         public IActionResult Valueslist(int Max_Seq, int QuestionCount, string ValueCodeQuestion, string ValueCodeAnswer, string[] Ans_TextDisplay, string[] Ans_Text_HTML_Display
-          , string[] Ans_Value, string Need_value, string Text_Question, string TextHTML_Question, string Job, string OP_UPD, int DisplayOrder)
+          , string[] Ans_Value, string Need_value, string Text_Question, string TextHTML_Question, string Job, string OP_UPD, int DisplayOrder,int Rewrite_Master)
         {
 
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
@@ -225,7 +224,7 @@ namespace RISTExamOnlineProject.Controllers
                 {
                     if (Job == "UPD")
                     {
-                        ObjRun.Valueslist_Management("BK", "", DisplayOrder, "", "", "0", "", IP, OP_UPD, ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(),0);
+                        ObjRun.Valueslist_Management("BK", "", DisplayOrder, "", "", "0", "", IP, OP_UPD, ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(), Rewrite_Master);
                         Max_Seq = DisplayOrder;
                     }
                     else
@@ -234,7 +233,7 @@ namespace RISTExamOnlineProject.Controllers
                     }
 
                     //----------- inseart Qeustion ----  
-                    MS = ObjRun.Valueslist_Management(Job, ValueCodeQuestion, Max_Seq, TextHTML_Question, Text_Question, "0", Need_value, IP, OP_UPD, "", "",0);
+                    MS = ObjRun.Valueslist_Management(Job, ValueCodeQuestion, Max_Seq, TextHTML_Question, Text_Question, "0", Need_value, IP, OP_UPD, "", "", Rewrite_Master);
                     if (MS != "OK")
                     {
                         return Json(new { success = false, responseText = MS });
@@ -243,7 +242,7 @@ namespace RISTExamOnlineProject.Controllers
 
                     for (int i = 0; i < Ans_TextDisplay.Length; i++)
                     {
-                        MS = ObjRun.Valueslist_Management(Job, ValueCodeAnswer, Max_Seq, Ans_Text_HTML_Display[i].Trim(), Ans_TextDisplay[i].Trim(), Ans_Value[i].Trim(), "0", IP, OP_UPD, "", "",0);
+                        MS = ObjRun.Valueslist_Management(Job, ValueCodeAnswer, Max_Seq, Ans_Text_HTML_Display[i].Trim(), Ans_TextDisplay[i].Trim(), Ans_Value[i].Trim(), "0", IP, OP_UPD, "", "", Rewrite_Master);
 
 
                         if (MS != "OK")
@@ -306,7 +305,7 @@ namespace RISTExamOnlineProject.Controllers
         [HttpPost]
 
 
-
+        [Authorize]
         public IActionResult GetCategoryType_Approved()
         {
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
@@ -317,7 +316,7 @@ namespace RISTExamOnlineProject.Controllers
 
         }
 
-
+        [Authorize]
         public IActionResult GetCategory_Approved(string ItemCategType)
         {
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
@@ -328,17 +327,17 @@ namespace RISTExamOnlineProject.Controllers
 
         }
 
-
+        [Authorize]
         public IActionResult GetExamname_Approved(string Category)
         {
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
             List<SelectListItem> listItems = new List<SelectListItem>();
-            string Strsql = "	select DISTINCT  [ItemName],[ValueCodeQuestion]+'-' +[ValueCodeAnswer] FROM [SPTOSystem].[dbo].[vewExamApproved_New] where[ItemCateg] = '" + Category + "' ";
+            string Strsql = " select DISTINCT  [ItemName],[ValueCodeQuestion]+'-' +[ValueCodeAnswer] FROM [SPTOSystem].[dbo].[vewExamApproved_New] where[ItemCateg] = '" + Category + "' ";
             listItems = ObjRun.GetItemDropDownList(Strsql, "Exam ");
             return Json(new SelectList(listItems, "Value", "Text"));
 
         }
-
+        [Authorize]
         [HttpPost]
         public JsonResult Approved_Detail(string ValueCodeQuestion)
         {
@@ -360,15 +359,16 @@ namespace RISTExamOnlineProject.Controllers
             Detail = ObjRun.Get_ExamDetail_Approved(ValueCodeQuestion);
             var data = Detail.ToList();
             recordsTotal = data.Count();
+          //  string Rewrite_Master = Detail[0].Rewrite_Master.ToString();
 
+            // return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data ,Rewrite_Master = Rewrite_Master });
             return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
 
 
 
 
-
         }
-
+        [Authorize]
 
         public JsonResult View_QuestionDetail(int seq, string ValueCodeQuestion, string ValueCodeAnswer, string ValueStatus)
         {
@@ -391,21 +391,38 @@ namespace RISTExamOnlineProject.Controllers
         }
 
 
-        public JsonResult Job_Reject_And_Approved(string Job, string[] valueStatus_Array, int[] seq_Array, string valueCodeQuestion)
-        {
-            mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
-            int seq;
-            string valueCodeAnswer = ObjRun.Get_ValueCodeAnswer(valueCodeQuestion);
 
-            int Count = 0;
+        [Authorize]
+        public JsonResult Job_Reject_And_Approved(string Job, string valueStatus_Array, string seq_Array, string valueCodeQuestion,int Rewrite_Master)
+        {
+
+
+
+           
+            mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);     
+         
             string ms;
 
-            foreach (string Status in valueStatus_Array)
+
+            if (Job == "APP") 
             {
-                seq = seq_Array[Count];
-                ms = ObjRun.Approved_Reject_Question(Job, seq, valueCodeQuestion, valueCodeAnswer, Status);
-                Count = Count+1;
-            }
+
+
+
+
+             }
+
+     
+
+
+                ms = ObjRun.Approved_Reject_Question_( Job,  valueStatus_Array,  seq_Array,  valueCodeQuestion, Rewrite_Master);
+
+
+           
+
+
+            //--------------  if 
+
 
 
             return Json(new { success = true });
