@@ -17,41 +17,59 @@
             <div class="row">
                 <div class=" col">
                     <div class="form-row">
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-2">
                             <label for="ddlPlanNo">PlanNo</label>
                             @*<input type="email" class="form-control" id="inputEmail4" placeholder="Email">*@
-                            @Html.DropDownList("ddlPlanNo", new MultiSelectList(string.Empty, "Value", "Text"),   new{@id = "ddlPlanNo", @class = "form-control",width = "300px", describedby = "emailHelp"})
+                            @Html.DropDownList("ddlPlanNo", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlPlanNo", @class = "custom-select custom-select-sm", width = "300px", describedby = "emailHelp" })
                         </div>
-                        <div class="form-group col-md-3">
-                            <label for="ddlOperator">Operator</label>
-                            @Html.DropDownList("ddlOperator", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlOperator", @class = "form-control", width = "300px", describedby = "emailHelp" })
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="ddlLicence">Licence</label>
-                            @Html.DropDownList("ddlLicence", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlLicence", @class = "form-control", width = "300px", describedby = "emailHelp" })
 
-                        </div> 
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-2">
+                            <label for="ddlTopic">ExamTopicNo.</label>
+                            @Html.DropDownList("ddlTopic", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlTopic", @class = "custom-select custom-select-sm", width = "300px", describedby = "emailHelp" })
+
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="ddlExamSet">ExamSet.</label>
+                            @Html.DropDownList("ddlExamSet", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlExamSet", @class = "custom-select custom-select-sm", width = "300px", describedby = "dd/mm/yyyy" })
+
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="ddlOperator">Operator</label>
+                            @Html.DropDownList("ddlOperator", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "ddlOperator", @class = "custom-select custom-select-sm", width = "300px", describedby = "dd/mm/yyyy" })
+                        </div>
+
+                        @*</div>
+                            <div class="form-row">*@
+                        <div class="form-group col-md-2">
                             <label for="inputEmail4">StartDate</label>
-                            <input type="text" class="form-control datepikers" id="inputEmail4" placeholder="Email">
+                            <input type="text" class="form-control  form-control-sm datepikers" id="txtStartTime" placeholder="dd/mm/yyyy">
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-2">
                             <label for="inputPassword4">EndDate</label>
-                            <input type="text" class="form-control datepikers" id="inputPassword4" placeholder="Password">
+                            <input type="text" class="form-control  form-control-sm datepikers" id="txtEndTime" placeholder="dd/mm/yyyy">
                         </div>
                     </div>
+                    <button class="btn btn-success" id="btnSearch"> <i class="fa fa-search"></i> search</button>
+                    <button class="btn btn-warning" id="btnClear"> <i class="fas fa-sync-alt"></i> clear</button>
                 </div>
+
             </div>
+
             <div class=" p-3">
                 <table class="table table-hover table-sm bg-white w-100" id="tbItemCatg">
                     <thead class="bg-light">
                         <tr>
-                            <th class="text-center">รหัสชุดข้อสอบ</th>
-                            <th class="text-center">ชื่อข้อสอบ</th>
-                            <th class="text-center">Status</th>
-                            <th class="text-center">เลือกทำ</th>
+                            <th class="text-center">planNo</th>
+                            <th class="text-center">Topic</th>
+                            <th class="text-center">Set</th>
+                            <th class="text-center">Name</th>
+                            <th class="text-center">timeuse</th>
+                            <th class="text-center">startTime</th>
+                            <th class="text-center">Endtime</th>
+                            <th class="text-center">Correct</th>
+                            <th class="text-center">Wrong</th>
+                            <th class="text-center">Total</th>
+                            <th class="text-center">result</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -70,16 +88,17 @@
 
 
     <script type="text/javascript">
-       var myTables1;
+        var myTables1;
+        var Arrs = [];
        $(document).ready(function () {
            InitTable();
            GetData();
        });
-
-       function InitTable() {
+        function InitTable() {
+            GetDDL();
            datePickersSE = $('.datepikers').datepicker({
                language: 'en',
-               dateFormat: 'yyyy mm dd',
+               dateFormat: 'dd/M/yyyy',
                minView: 'days',
                view: 'days',
                maxDate: new Date()
@@ -90,22 +109,20 @@
                processing: true,
                dom: '<"top"l>rt<"bottom"ip><"clear">',
                columns: [
-                   { data: "itemCateg", name: "itemCateg", class: "text-wrap  " },
-                   { data: "itemCategName", name: "itemCategName", class: "text-wrap  " },
-                   {
-                       data: null,
-                       name: null,
-                       className: "center",
-                       "fnCreatedCell": function (nTd, oData) {
-                           var cntItemCateg = oData.cntItemCateg;
-                           var HTMLTag = "";
-                         //  var TEST = "@ViewBag.Itemcateg";
-                           HTMLTag = '<span class="badge badge-secondary">' + cntItemCateg + '</span>';
-                           $(nTd).html(HTMLTag);
-                       }, className: "dt-body-center"
-                   },
-                  
-                   {
+                   { data: "planRefID", name: "PlanRefID", class: "text-wrap  " },
+                   { data: "itemCategName", name: "ItemCategName", class: "text-wrap  " },
+                   { data: "itemName", name: "ItemName", class: "text-wrap  " },
+                   { data: "operatorName", name: "OperatorName", class: "text-wrap  " },
+                   { data: "minutes", name: "Minutes", class: "text-wrap  " },
+                   { data: "startTime", name: "StartTime", class: "text-wrap  " },
+                   { data: "endTime", name: "EndTime", class: "text-wrap  " },
+                   { data: "correct", name: "Correct", class: "text-wrap  " },
+                   { data: "wrong", name: "Wrong", class: "text-wrap  " },
+                   { data: "total", name: "Total", class: "text-wrap  " },
+                   { data: "results", name: "Results", class: "text-wrap  " },
+
+
+                   @*{
                        data: null,
                        name: null,
                        className: "center",
@@ -116,54 +133,79 @@
                            HTMLTag = '<a href="@Url.Action("Examexamination")?ItemInput=' + itemCateg + '&ItemCateg=' + TEST+'"  class="btn btn-warning btn">    SELECT</a>';
                            $(nTd).html(HTMLTag);
                        }, className: "dt-body-center"
-                   },
+                   },*@
                ],
                order: [0, "asc"],
            });
-       }
 
-                        @*function GetData() {
-
-        $.ajax({
-            type: 'POST',
-            url: "../UIExam/GetInputItem",
-              data: { itemCateg : "@ViewBag.Itemcateg" },
-            dataType: 'json',
-            success: function (Data) {
-
-                myTables1.clear().draw();
-                if (Data._strResult == "OK") {
-
-                    myTables1.rows.add(Data.data).draw();
-
-                } else {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: Data.dataLabel,
-                        type: 'error',
-                        timer: 1700,
-                    }).then(function () {
-                        return false;
-                    });
-
-                };
-            },
-            error: function (ex) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Failed to retrieve states.' + ex,
-                    type: 'error',
-                    timer: 1700,
-                }).then(function () {
-                    return false;
-                });
-
-            },
+        }
+        function GetDDL() {
+            GetDataDDL("PlanRefID", "#ddlPlanNo");
+            GetDataDDL("ItemCateg", "#ddlTopic");
+            GetDataDDL("ItemCode", "#ddlExamSet");
+            GetDataDDL("OperatorID", "#ddlOperator");
+        }
+        function GetDataDDL(_strCriteria,_control) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetComtrolddl", "UIExam")',
+                dataType: 'json',
+                data: { strCriteria: _strCriteria },
+                success: function (citys) {
+                    var Listdata = citys.data;
+                    if (Listdata.length != 0) {
+                        $.each(Listdata, function (i, city) {
+                            $(_control).append('<option value="' + city.value + '">' + city.text + '</option>');
+                        });
+                    }
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+        }
+        $("#btnSearch").on("click", function () { 
+            GetDates();
         });
-
-    }*@
-/**/
-
-
+        $("#btnClear").on("click", function () {
+            $(".custom-select").val("");
+            $("input:text").val("");
+            myTables1.clear().draw();
+        });
+        function GetDates() {
+               Arrs = [{
+                PlanRefID: $("#ddlPlanNo").val()
+                , ItemCateg: $("#ddlTopic").val()
+                , ItemCode: $("#ddlExamSet").val()
+                , OperatorID: $("#ddlOperator").val()
+                , StartTime: $("#txtStartTime").val()
+                , EndTime: $("#txtEndTime").val()
+            }];
+             
+           $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetExamResultList", "UIExam")',
+                dataType: 'json',
+               data: { strCtrl: Arrs[0] },
+               success: function (Data) { 
+                    myTables1.clear().draw();
+                    if ( Data.strResult == "OK") {
+                        myTables1.rows.add(Data.data).draw(); 
+                    } else {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: Data.dataLabel,
+                            type: 'error',
+                            timer: 1700,
+                        }).then(function () {
+                            return false;
+                        }); 
+                    }; 
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+        }
     </script>
 }

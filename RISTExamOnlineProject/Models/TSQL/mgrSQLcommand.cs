@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using RISTExamOnlineProject.Models.db;
 
@@ -472,7 +473,7 @@ namespace RISTExamOnlineProject.Models.TSQL
                         {
                             EXresult.BoolResult = false;
                             EXresult.strMgs = "คุณไม่เลือกคำตอบ";
-                            EXresult.strResult = "Error";
+                            EXresult.strResult = "คุณทำข้อสอบไม่ผ่าน";
                         }
                     }
                     else
@@ -509,6 +510,165 @@ namespace RISTExamOnlineProject.Models.TSQL
 
             return EXresult;
         }
+        public ListSelectList_ GetPlaning(string strCriteria)
+        {
+            ListSelectList_ resultList = new ListSelectList_(); 
+            mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            dt = new DataTable();
+            strSQL = "";
+            string strItemText = "";
+            string strItemVal = "";
+            try
+            {
+                if(strCriteria == "ItemCateg")
+                {
+                    strCriteria = "ItemCateg,ItemCategName ";
+                    strItemText = "ItemCategName";
+                    strItemVal = "ItemCateg";
+                }
+                else if(strCriteria == "ItemCode")
+                {
+                    strCriteria = "ItemCode,ItemName ";
+                    strItemText = "ItemName";
+                    strItemVal = "ItemCode";
+                }
+                else if (strCriteria == "OperatorID")
+                {
+                    strCriteria = "OperatorID,OperatorName ";
+                    strItemText = "OperatorName";
+                    strItemVal = "OperatorID";
+                }
+                else
+                {
+                   
+                    strItemText = strCriteria;
+                    strItemVal = strCriteria;
+                }
+
+
+
+
+
+
+
+                strSQL = "select "; 
+                strSQL += " " + strCriteria + " ";
+                strSQL += " from vewExamResults ";
+                strSQL += " group by " + strCriteria + " ";
+                strSQL += " order by " + strCriteria + " ";
+
+                dt = ObjRun.GetDatatables(strSQL);
+                if (dt.Rows.Count != 0)
+                {
+                    listItems.Add(new SelectListItem()
+                    {
+                        Text = "- ALL -",
+                        Value = "",
+                    });
+                    foreach (DataRow row in dt.Rows)
+                    {
+
+
+                        string strTxt = (strItemVal == strItemText ? row[strItemText].ToString().Trim() : row[strItemVal].ToString().Trim() + " : " + row[strItemText].ToString().Trim());
+
+
+                        listItems.Add(new SelectListItem()
+                        {
+                            Text = strTxt,
+                            Value = row[strItemVal].ToString().Trim(),
+                        });
+                    }
+                    resultList._ListSelectList = listItems;
+                    resultList.strResult = "OK";
+                }
+                else
+                {
+                    resultList.strResult = "Data "+ strCriteria + " not found";
+                }
+
+               
+            }
+            catch (Exception e)
+            {
+                resultList.strResult = e.Message;
+            }
+
+            return resultList;
+
+
+        }
+
+        public _ExamResultList GetDataExamResultList(_excamResultCtrl strCtrl)
+        {
+            _ExamResultList resultList = new _ExamResultList();
+            mgrSQLConnect ObjRun = new mgrSQLConnect(_configuration);
+            List<_ExamResultDetail> listItems = new List<_ExamResultDetail>();
+            dt = new DataTable();
+            strSQL = ""; 
+            try
+            {
+                  strSQL = "sprExamResultInquiry ";
+                strSQL += " '" + strCtrl.PlanRefID + "',";
+                strSQL += " '" + strCtrl.ItemCateg + "',";
+                strSQL += " '" + strCtrl.ItemCode + "',";
+                strSQL += " '" + strCtrl.OperatorID + "',";
+                strSQL += " '" + strCtrl.StartTime + "',";
+                strSQL += " '" + strCtrl.EndTime + "'";
+                
+
+                dt = ObjRun.GetDatatables(strSQL);
+                if (dt.Rows.Count != 0)
+                {
+                     
+                    foreach (DataRow row in dt.Rows)
+                    {
+
+
+                       
+
+                        listItems.Add(new _ExamResultDetail()
+                        {
+                            PlanRefID = row["PlanRefID"].ToString().Trim(),
+                            ItemCateg = row["ItemCateg"].ToString().Trim(),
+                            ItemCategName = row["ItemCategName"].ToString().Trim(),
+                            ItemCode = row["ItemCode"].ToString().Trim(),
+                            ItemName = row["ItemName"].ToString().Trim(),
+                            OperatorID = row["OperatorID"].ToString().Trim(),
+                            OperatorName = row["OperatorName"].ToString().Trim(),
+                            Minutes = row["Minutes"].ToString().Trim(),
+                            StartTime = row["StartTime"].ToString().Trim(),
+                            EndTime = row["EndTime"].ToString().Trim(),
+                            Level = row["Level"].ToString().Trim(),
+                            Correct = row["Correct"].ToString().Trim(),
+                            Wrong = row["Wrong"].ToString().Trim(),
+                            Total = row["Total"].ToString().Trim(),
+                            Results = row["Results"].ToString().Trim(),
+                            AddDate = row["AddDate"].ToString().Trim(),
+
+                        });
+                    }
+                    resultList.DataExamReultList = listItems;
+                    resultList.strResult = "OK";
+                }
+                else
+                {
+                    resultList.strResult = "Data not found";
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                resultList.strResult = "Error : "+e.Message;
+            }
+
+            return resultList;
+
+
+        }
+
+
 
     }
 }
