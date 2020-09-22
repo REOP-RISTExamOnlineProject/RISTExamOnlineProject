@@ -32,8 +32,9 @@
         <!-- tempusdominus-bootstrap-4 datetimepicker -->
         <link rel="stylesheet" href="~/lib/datepicker/css/tempusdominus-bootstrap-4.css">
         <!-- tempusdominus-bootstrap-4 -->
-     
 
+
+        <link href="~/lib/Custom/datepicker.css" rel="stylesheet" />
         <link href="~/lib/XpageList/PagedList.css" rel="stylesheet" />
 
 
@@ -84,12 +85,12 @@
                 </div>
                 <!--Menu Icons-->
                 <!--Search box and avatar-->
-               
+
                 <div class="col-sm-8 col-xl-8 col-4 text-right flex-header-menu justify-content-end">
-                    
+
                     <div class=" ">
                         <a class="nav-link" href="#" role="button" id="dropdownMenuLink" onclick="toggle_dropdown(this);return false;" data-toggle="dropdownx" aria-haspopup="true" aria-expanded="false" title="Account">
-                           <i class="fas fa-ellipsis-h Icons"></i>
+                            <i class="fas fa-ellipsis-h Icons"></i>
 
                         </a>
                         <div class="dropdown dropdown-right text-left bg-white shadow border mt-13" style="width:333px; border-radius: 5px;" aria-labelledby="dropdownMenuLink">
@@ -129,133 +130,133 @@
     </div>
     <!--Header-->
     <!--Main Content-->
-   
 
 
-        <div class="row">
 
-            <!--Sidebar left-->
-            <div class="col-sm-3 col-md-6 col-lg-4 col-xl-3  sidebar pl-0">
-                <div class="inner-sidebar mr-3 ">
-                    <!--Image Avatar-->
-                    <div class="avatar text-center  ">
-                        <div class="avatarX avatarProfile ">
-                            <div class="avatarY">
-                                <img src="@ViewBag.imgProfile" alt="" class="rounded-circle profiles " />
+    <div class="row">
 
-                                <p><strong id="strName1">@ViewBag.NameEng</strong></p>
-                                <span class="  small"><strong id="strJobTitle">@ViewBag.JobTitle</strong></span>
-                            </div>
+        <!--Sidebar left-->
+        <div class="col-sm-3 col-md-6 col-lg-4 col-xl-3  sidebar pl-0">
+            <div class="inner-sidebar mr-3 ">
+                <!--Image Avatar-->
+                <div class="avatar text-center  ">
+                    <div class="avatarX avatarProfile ">
+                        <div class="avatarY">
+                            <img src="@ViewBag.imgProfile" alt="" class="rounded-circle profiles " />
+
+                            <p><strong id="strName1">@ViewBag.NameEng</strong></p>
+                            <span class="  small"><strong id="strJobTitle">@ViewBag.JobTitle</strong></span>
                         </div>
                     </div>
-                    <!--Image Avatar-->
-                    <!--Sidebar Navigation Menu-->
-                    <div class="sidebar-menu-container ">
-                        <ul class="sidebar-menu   mb-4">
-                            <li class="parent hideme">
-                                <a href="@Url.Action("index","Home")" class="">
-                                    <i class="fa fa-qrcode mr-3"> </i>
-                                    <span class="none">Dashboard </span>
-                                </a>
-                            </li>
+                </div>
+                <!--Image Avatar-->
+                <!--Sidebar Navigation Menu-->
+                <div class="sidebar-menu-container ">
+                    <ul class="sidebar-menu   mb-4">
+                        <li class="parent hideme">
+                            <a href="@Url.Action("index","Home")" class="">
+                                <i class="fa fa-qrcode mr-3"> </i>
+                                <span class="none">Dashboard </span>
+                            </a>
+                        </li>
 
-                            @if (User.Identity.IsAuthenticated)
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            var userRoles = "";
+                            @if (User.IsInRole("Admin"))
                             {
-                                var userRoles = "";
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    userRoles = "Admin";
-                                }
-                                else
-                                {
-                                    userRoles = "User";
-                                }
-
-                                @if (userRoles == "Admin")
-                                {
-
-                                    <li class="parent hideme">
-                                        <a href="#" class=" " onclick="toggle_menu('Shortcuts');return false;">
-                                            <i class="fas fa-link mr-3"></i>
-                                            <span class="none no-arrow ">UserManagement <i class="fa fa-angle-down pull-right align-bottom"></i></span>
-                                        </a>
-
-                                        @{
-                                            var opno = @User.Identity.Name;
-                                        }
-                                        <ul class="#" id="Shortcuts">
-                                            <li class="child "><a href="@Url.Action("UserDetailMaintenance","Management")" class="ml-4"><i class="fa fa-angle-right mr-2 "></i> Edit User detail</a></li>
-                                            <li class="child"><a href="@Url.Action("UserInCharge", "Management" , new { opno=$"{opno.Trim()}"})" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Request Change</a></li>
-                                            <li class="child"><a href="@Url.Action("TEC_Approved","TEC_Management")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> TEC Approved</a></li>
-                                            <li class="child"><a href="@Url.Action("UserReqeustInqury","Management")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Request Inquiry</a></li>
-                                        </ul>
-                                    </li> 
-                                    <li class="parent hideme">
-                                        <a href="#" class=" " onclick="toggle_menu('Shortcuts_exam');return false;">
-                                            <p style="white-space:nowrap;">
-                                                <i class="fas fa-tasks mr-3"></i>
-                                                <span class="none no-arrow">ExamManagement <i class="fa fa-angle-down pull-right align-bottom"></i></span>
-                                            </p>
-                                        </a>
-                                        <ul class="#" id="Shortcuts_exam">
-
-                                            <li class="child"><a href="@Url.Action("Index","ItemCategoryMaster")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> License Master</a></li>
-                                            <li class="child"><a href="@Url.Action("ItemCode_Management","ItemCodeMaster")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Itemcode Master</a></li>
-                                            <li class="child"><a href="@Url.Action("Exam_maintenance","exam")" class="ml-4"><i class="fa fa-angle-right mr-2"></i>Exam Management</a></li>
-                                            <li class="child"><a href="@Url.Action("Exam_Approved","exam")" class="ml-4"><i class="fa fa-angle-right mr-2"></i>Exam Approved</a></li>                                         
-                                            <li class="child"><a href="@Url.Action("ExamResultMonitor","UIExam")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam Result Monitoring</a></li>
-
-                                        </ul>
-                                    </li>
-
-
-                                            }
+                                userRoles = "Admin";
                             }
-                            <li class="parent hideme">
-                                <a href="@Url.Action("LicenceList","UIExam")">
-                                    <i class="fas fa-stream mr-3"></i> <span class="none">Examexamination</span>
-                                </a>
-                            </li>
+                            else
+                            {
+                                userRoles = "User";
+                            }
+
+                            @if (userRoles == "Admin")
+                            {
+
+                                <li class="parent hideme">
+                                    <a href="#" class=" " onclick="toggle_menu('Shortcuts');return false;">
+                                        <i class="fas fa-link mr-3"></i>
+                                        <span class="none no-arrow ">UserManagement <i class="fa fa-angle-down pull-right align-bottom"></i></span>
+                                    </a>
+
+                                    @{
+                                        var opno = @User.Identity.Name;
+                                    }
+                                    <ul class="#" id="Shortcuts">
+                                        <li class="child "><a href="@Url.Action("UserDetailMaintenance","Management")" class="ml-4"><i class="fa fa-angle-right mr-2 "></i> Edit User detail</a></li>
+                                        <li class="child"><a href="@Url.Action("UserInCharge", "Management" , new { opno=$"{opno.Trim()}"})" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Request Change</a></li>
+                                        <li class="child"><a href="@Url.Action("TEC_Approved","TEC_Management")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> TEC Approved</a></li>
+                                        <li class="child"><a href="@Url.Action("UserReqeustInqury","Management")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Request Inquiry</a></li>
+                                    </ul>
+                                </li>
+                                <li class="parent hideme">
+                                    <a href="#" class=" " onclick="toggle_menu('Shortcuts_exam');return false;">
+                                        <p style="white-space:nowrap;">
+                                            <i class="fas fa-tasks mr-3"></i>
+                                            <span class="none no-arrow">ExamManagement <i class="fa fa-angle-down pull-right align-bottom"></i></span>
+                                        </p>
+                                    </a>
+                                    <ul class="#" id="Shortcuts_exam">
+
+                                        <li class="child"><a href="@Url.Action("Index","ItemCategoryMaster")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> License Master</a></li>
+                                        <li class="child"><a href="@Url.Action("ItemCode_Management","ItemCodeMaster")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Itemcode Master</a></li>
+                                        <li class="child"><a href="@Url.Action("Exam_maintenance","exam")" class="ml-4"><i class="fa fa-angle-right mr-2"></i>Exam Management</a></li>
+                                        <li class="child"><a href="@Url.Action("Exam_Approved","exam")" class="ml-4"><i class="fa fa-angle-right mr-2"></i>Exam Approved</a></li>
+                                        <li class="child"><a href="@Url.Action("ExamResultMonitor","UIExam")" class="ml-4"><i class="fa fa-angle-right mr-2"></i> Exam Result Monitoring</a></li>
+
+                                    </ul>
+                                </li>
+
+
+                            }
+                        }
+                        <li class="parent hideme">
+                            <a href="@Url.Action("LicenceList","UIExam")">
+                                <i class="fas fa-stream mr-3"></i> <span class="none">Examexamination</span>
+                            </a>
+                        </li>
 
 
 
-                        </ul>
-                    
+                    </ul>
 
+
+
+                </div>
+                <!--Sidebar Naigation Menu-->
+            </div>
+        </div>
+        <!--Sidebar left-->
+        <!--Content right-->
+        <div class="col-sm-10 col-md-6 col-lg-8 col-xl-9  content pt-3 pl-0">
+
+
+            <div class="container-fluid fade-in">
+                @RenderBody()
+            </div>
+
+
+
+        </div>
+        <div class="modal" tabindex="-1" role="dialog" id="form-modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
 
                     </div>
-                    <!--Sidebar Naigation Menu-->
                 </div>
             </div>
-            <!--Sidebar left-->
-            <!--Content right-->
-            <div class="col-sm-10 col-md-6 col-lg-8 col-xl-9  content pt-3 pl-0">
-
-
-                <div class="container-fluid fade-in">
-                    @RenderBody()
-                </div>
-
-
-
-            </div>
-            <div class="modal" tabindex="-1" role="dialog" id="form-modal">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title"></h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--Footer-->
-            @*<div class="row mt-5 mb-4 footer">
+        </div>
+        <!--Footer-->
+        @*<div class="row mt-5 mb-4 footer">
                 <div class="col-sm-8">
                     <span>&copy; All rights reserved 2020 designed by <a class="text-theme" href="#">IS-SYSTEM</a></span>
                 </div>
@@ -264,23 +265,21 @@
                     <a href="#" class="ml-2">Support</a>
                 </div>
             </div>*@
-            <!--Footer-->
-            @*<div class="loaderbody" id="loaderbody">
+        <!--Footer-->
+        @*<div class="loaderbody" id="loaderbody">
                 <div class="loader"></div>
             </div>*@
 
-        </div>
-   
-    <!--Main Content-->
-   
+    </div>
 
+    <!--Main Content-->
     <!--Page Wrapper-->
 
 
     <environment include="Development">
         <!-- Page JavaScript Files-->
         @*<script src="~/lib/js/jquery.min.js"></script>
-            <script src="~/lib/js/jquery-1.12.4.min.js"></script>*@
+        <script src="~/lib/js/jquery-1.12.4.min.js"></script>*@
         <script src="~/lib/jquery/jquery.js"></script>
 
         <!--Popper JS-->
@@ -309,9 +308,9 @@
         <script src="~/lib/js/custom.js"></script>
         <!--Custom Js Script-->
         @*<script>
-                //Nice select
-                $('.bulk-actions').niceSelect();
-            </script>*@
+                        //Nice select
+                        $('.bulk-actions').niceSelect();
+                    </script>*@
         <!-- tempusdominus-bootstrap-4 -->
         <script src="~/lib/datepicker/jquery/jquery.js"></script>
         <script src="~/lib/datepicker/momentjs/moment.js"></script>
@@ -324,7 +323,7 @@
     <script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="~/lib/js/site.js"></script>
     <script src="~/lib/js/notify.min.js"></script>
-
+    <script src="~/lib/js/datepicker.js"></script>
     @*<script src="~/lib/js/site.js" asp-append-version="true"></script>
         <script src="~/lib/js/notify.min.js" asp-append-version="true"></script>*@
 
@@ -334,7 +333,7 @@
         $(document).ready(function () {
 
             Profile();
-         
+
         });
 
 

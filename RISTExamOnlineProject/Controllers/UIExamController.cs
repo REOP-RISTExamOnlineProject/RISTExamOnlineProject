@@ -53,10 +53,10 @@ namespace RISTExamOnlineProject.Controllers
             return View();
         }
 
-        public IActionResult Examexamination(string ItemInput , string ItemCateg)
-        { 
+        public IActionResult Examexamination(string ItemInput, string ItemCateg)
+        {
             ViewBag.Itemcateg = ItemCateg;
-            ViewBag.InputItem = ItemInput; 
+            ViewBag.InputItem = ItemInput;
 
             return View();
         }
@@ -88,9 +88,9 @@ namespace RISTExamOnlineProject.Controllers
             ResultOPcateg = ObjRun.GetInputItemList(itemCateg, UserName);
 
 
-            var jsonResult = Json(new { data = ResultOPcateg._listOpCateg, _strResult = ResultOPcateg.strResult }); 
+            var jsonResult = Json(new { data = ResultOPcateg._listOpCateg, _strResult = ResultOPcateg.strResult });
             return jsonResult;
-        }  
+        }
         public JsonResult GetExamList(string itemCateg, string InputItem)
         {
             mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
@@ -102,18 +102,18 @@ namespace RISTExamOnlineProject.Controllers
             string Result = ObjRun.MakingExam(itemCateg, InputItem);
             if (Result != "Error")
             {
-                dt = ObjRun.GetInputItems(InputItem); 
+                dt = ObjRun.GetInputItems(InputItem);
                 if (dt.Rows.Count != 0)
                 {
                     strMinute = Convert.ToInt32(dt.Rows[0]["TimeLimit"].ToString());
                 }
             }
             TempData["GG"] = DateTime.Now.ToString();
-            var jsonResult = Json(new { data = "OK", _strResult = Result ,_strMinute = strMinute }); 
+            var jsonResult = Json(new { data = "OK", _strResult = Result, _strMinute = strMinute });
             return jsonResult;
         }
 
-        public JsonResult CommitExam(List<_ExamQuestionAnswer> ArrAns,string strItemCateg,string strItemInput,string OPID,string strStart)
+        public JsonResult CommitExam(List<_ExamQuestionAnswer> ArrAns, string strItemCateg, string strItemInput, string OPID, string strStart)
         {
             string ItemCateg = strItemCateg;
             string ItemInput = strItemInput;
@@ -127,10 +127,53 @@ namespace RISTExamOnlineProject.Controllers
             string strEndTime = DateTime.Now.ToString();
             string IP = Request.HttpContext.Connection.RemoteIpAddress.ToString();
             _ExamCommitResult dt = new _ExamCommitResult();
-            dt = ObjRun.CommitExam(strOPID, ItemCateg, ItemInput, strStartTime, strEndTime, ArrAns, IP);  
-            var jsonResult = Json(new { data = dt.strResult,dataResult = dt.strMgs, dataBool = dt.BoolResult});
+            dt = ObjRun.CommitExam(strOPID, ItemCateg, ItemInput, strStartTime, strEndTime, ArrAns, IP);
+            var jsonResult = Json(new { data = dt.strResult, dataResult = dt.strMgs, dataBool = dt.BoolResult });
             return jsonResult;
         }
-        
+
+        public JsonResult GetComtrolddl(string strCriteria)
+        {
+            ListSelectList_ listItems = new ListSelectList_();
+            mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
+            string strresult = "";
+            try
+            {
+                listItems = ObjRun.GetPlaning(strCriteria);
+            }
+            catch (Exception e)
+            {
+                strresult = e.Message;
+            }
+            var jsonResult = Json(new { data = new MultiSelectList(listItems._ListSelectList, "Value", "Text"), dataResult = listItems.strResult });
+            return jsonResult;
+        }
+
+
+
+        public JsonResult GetExamResultList(_excamResultCtrl strCtrl)
+        {
+            DateTime test = Convert.ToDateTime(strCtrl.EndTime);
+            mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
+            _ExamResultList listItems = new _ExamResultList();
+
+
+
+
+            string strresult = "";
+            try
+            {
+                listItems = ObjRun.GetDataExamResultList(strCtrl);
+            }
+            catch (Exception e)
+            {
+                strresult = e.Message;
+            }
+            var jsonResult = Json(new { data = listItems.DataExamReultList, strResult = listItems.strResult });
+
+            //var jsonResult = Json(new { data="" });
+            return jsonResult;
+        }
+
     }
-} 
+}
