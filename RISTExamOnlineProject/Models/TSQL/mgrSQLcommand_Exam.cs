@@ -63,9 +63,15 @@ namespace RISTExamOnlineProject.Models.TSQL
         }
 
 
+        public DataTable InputItem_Detail(string Itemcode)
+        {
+            var ObjRun = new mgrSQLConnect(_configuration);
+            strSQL = "  select  top 1 [ItemCode],[ValueCodeQuestion], [ValueCodeAnswer],[Rewrite]  ,Convert(nvarchar(16),[UpdDate],120) as [UpdDate]   FROM [SPTOSystem].[dbo].[InputItem] where [ItemCode] = '" + Itemcode.Trim() + "' order by [UpdDate] desc";         
+            dt = ObjRun.GetDatatables(strSQL);
+            return dt;
+        }
 
-
-        public DataTable Get_ExamDetail(string Itemcode)
+        public DataTable Get_ExamDetail (string Itemcode)
         {
             var ObjRun = new mgrSQLConnect(_configuration);
             strSQL = " select [ItemCode],ItemCategName,[ValueCodeQuestion],[ValueCodeAnswer],ISNULL(Seq,0) as Seq  ,ISNULL([Question],'') as [Question]  ,[InputItemName] ,count(*) as Ans_Count  ";
@@ -75,6 +81,9 @@ namespace RISTExamOnlineProject.Models.TSQL
             dt = ObjRun.GetDatatables(strSQL);
             return dt;
         }
+
+
+
 
 
 
@@ -227,39 +236,67 @@ namespace RISTExamOnlineProject.Models.TSQL
             var ObjRun = new mgrSQLConnect(_configuration);
             int Intpro = 0;
             string StrSql = "";
-            string MS;
+            string MS = "";
             string ValueCodeAnswer = Get_ValueCodeAnswer(ValueCodeQuestion);
 
-            if (Rewrite_Master > 0)
+
+
+            if (Job == "APP")
             {
-                //------------------ Back up The last Exam -------
-                 StrSql = @"insert into  [SPTOSystem].[dbo].[ValueList]  
+
+
+                if (Rewrite_Master > 0)
+                {
+                    //------------------ Back up The last Exam -------
+                    StrSql = @"insert into  [SPTOSystem].[dbo].[ValueList]  
 	                            ([ValueCode],[DisplayOrder],[Value_HTML],[Value_TEXT],[Answer],[Need]
                                  ,[ValueStatus],[Rewrite],[AddDate],[UpdDate],[UserName],[ComputerName])
                                 select [ValueCode],[DisplayOrder],[Value_HTML],[Value_TEXT],[Answer],[Need]
                                 ,'OLD',[Rewrite],[AddDate],[UpdDate],[UserName],[ComputerName] from [SPTOSystem].[dbo].[ValueList]
-                                 where(ValueCode = '" + ValueCodeQuestion + "' or ValueCode = '"+ ValueCodeAnswer + "') and [ValueStatus] != 'OLD' and Rewrite = '"+ Rewrite_Master .ToString() + "' ";
-                Intpro = ObjRun.ExecProc(StrSql);
-                if (Intpro < 0) {
+                                 where(ValueCode = '" + ValueCodeQuestion + "' or ValueCode = '" + ValueCodeAnswer + "') and  [ValueStatus] != 'NEW'    and Rewrite = '" + Rewrite_Master.ToString() + "' ";
+                    Intpro = ObjRun.ExecProc(StrSql);
+                    if (Intpro < 0)
+                    {
+                        return "False";
+                    }
+
+                }
+
+
+                //--------------- Update -----------------
+                StrSql = strSQL = "[dbo].[srpApproved_Reject_Question] '" + Job + "','" + valueStatus_Array + "','" + seq_Array + "','" + ValueCodeQuestion + "','" + ValueCodeAnswer + "','" + Rewrite_Master.ToString() + "'";
+                dt = ObjRun.GetDatatables(strSQL);
+                MS = dt.Rows[0][1].ToString();
+
+                if (MS != "OK")
+                {
+                    StrSql = @"delete [SPTOSystem].[dbo].[ValueList]  where
+                         (ValueCode = '" + ValueCodeQuestion + "' or ValueCode = '" + ValueCodeAnswer + "') and ValueStatus ='OLD' and Rewrite = '" + Rewrite_Master.ToString() + "'  ";
+                    Intpro = ObjRun.ExecProc(StrSql);
+
                     return "False";
                 }
-          
+                else
+                {
+                    Rewrite_Master = Rewrite_Master + 1;
+                    StrSql = @" update [SPTOSystem].[dbo].[InputItem] set [Rewrite] = '" + Rewrite_Master.ToString() + "' ,  [UpdDate] = getdate() where [ValueCodeQuestion]='" + ValueCodeQuestion + "' and [ValueCodeAnswer] = '" + ValueCodeAnswer + "' ";
+                    Intpro = ObjRun.ExecProc(StrSql);
+                }
+
+
             }
-
-            //--------------- Update -----------------
-            StrSql = strSQL = "[dbo].[srpApproved_Reject_Question] '" + Job + "','" + valueStatus_Array + "','" + seq_Array + "','" + ValueCodeQuestion + "','" + ValueCodeAnswer + "','" + Rewrite_Master.ToString() + "'"; ;
-            dt = ObjRun.GetDatatables(strSQL);
-            MS = dt.Rows[0][1].ToString();
+            else {
 
 
-            if (MS != "OK") {
+                //--------------- Update -----------------
+                  strSQL = "[dbo].[srpApproved_Reject_Question] '" + Job + "','" + valueStatus_Array + "','" + seq_Array + "','" + ValueCodeQuestion + "','" + ValueCodeAnswer + "','" + Rewrite_Master.ToString() + "'";
+                dt = ObjRun.GetDatatables(strSQL);
+                MS = dt.Rows[0][1].ToString();
 
-                StrSql = @"delete [SPTOSystem].[dbo].[ValueList]  where
-                         (ValueCode = '" + ValueCodeQuestion + "' or ValueCode = '" + ValueCodeAnswer + "') and Rewrite= '"+ Rewrite_Master + "' ";
-                Intpro = ObjRun.ExecProc(StrSql);
 
-                return "False";
+
             }
+                  
 
             return MS;
 
@@ -267,8 +304,6 @@ namespace RISTExamOnlineProject.Models.TSQL
 
         public string Approved_Reject_Question(string Job, string[] valueStatus_Array, int[] seq_Array, string ValueCodeQuestion, int Rewrite_Master)
         {
-
-
 
             var ObjRun = new mgrSQLConnect(_configuration);
 
@@ -298,7 +333,6 @@ namespace RISTExamOnlineProject.Models.TSQL
 
                         objSqlCmd.CommandType = CommandType.StoredProcedure;
                         objSqlCmd.CommandText = "srpApproved_Reject_Question";
-
                         objSqlCmd.Connection = connection;
                         objSqlCmd.Parameters.Clear();
                         objSqlCmd.Parameters.Add("@Job", SqlDbType.VarChar).Value = Job;
@@ -307,6 +341,7 @@ namespace RISTExamOnlineProject.Models.TSQL
                         objSqlCmd.Parameters.Add("@valueCodeQuestion", SqlDbType.VarChar).Value = ValueCodeQuestion;
                         objSqlCmd.Parameters.Add("@valueCodeAnswer", SqlDbType.VarChar).Value = ValueCodeAnswer;
                         objSqlCmd.Transaction = transaction;
+
                         dt = ObjRun.GetDataTable(objSqlCmd);
                     }
                     catch (Exception e)
@@ -314,9 +349,6 @@ namespace RISTExamOnlineProject.Models.TSQL
                         var dsa = e;
                         transaction.Rollback();
                     }
-
-
-
                     Count = Count + 1;
                 }
 

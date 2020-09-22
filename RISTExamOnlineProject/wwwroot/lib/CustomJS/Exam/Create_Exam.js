@@ -67,7 +67,7 @@ function GetExamName(Category) {
 
 
 function GetExamDetail(Itemcode) {
- 
+
     $.ajax({
         type: 'POST',
         url: '../Exam/GetExamDetail',
@@ -84,7 +84,7 @@ function GetExamDetail(Itemcode) {
                 Rewrite_ValueList = response.rewrite_ValueList
                 Rewrite_Master = response.rewrite_Master
                 UpdDate = response.updDate
-                debugger
+     
                 $('#LB_Rewrie').text(Rewrite_Master);
                 $('#LB_Update').text(UpdDate);
                 $('#LB_Exam_Count').text(QuestionCount);
@@ -93,6 +93,23 @@ function GetExamDetail(Itemcode) {
                 $('#Display').show();
 
             } else {
+         
+                TableTarget = $("#MyTable").DataTable()
+
+
+                if (TableTarget != null) {
+                    TableTarget.destroy();
+                }
+                TableTarget.clear().draw();
+
+                $('#Display').show();
+                UpdDate = response.updDate
+                ValueCodeQuestion = response.valueCodeQuestion
+                ValueCodeAnswer = response.valueCodeAnswer
+                Rewrite_Master = response.rewrite_Master
+                $('#LB_Rewrie').text(Rewrite_Master);
+                $('#LB_Update').text(UpdDate);
+                $('#LB_Exam_Count').text('0');
             }
         },
         error: function (ex) {
@@ -113,14 +130,19 @@ function Add_Detail_Display(DisplayID, SummernoteID) {
 function Show_Summernote(DisplayID) {
 
     TempDisplayID = DisplayID
-    $('#Summernote_modal').summernote({ height: 150 });
-    Reset_Summernote('Summernote_modal')
+
+    $('#Summernote_modal').summernote({ height: 150 }); 
+    Reset_Summernote('Summernote_modal');
+    var range = document.getElementById('Summernote_modal');
+
     DeleteHTML('Display_Modal')
     var HTMLText = document.getElementById(DisplayID).innerHTML
     InputHTML('Display_Modal', HTMLText)
     $('#BTN_Edit').attr('disabled', false);
     $('#BTN_Save').attr('disabled', false);
-    $('#Modal_Summernote').modal('show')
+    $('#Modal_Summernote').modal('show');  
+    $('#Summernote_modal').summernote('focus');
+
 };
 
 function Edit_Detail_Display(DisplayID, SummernoteID) {
@@ -136,17 +158,18 @@ function Edit_Detail_Display(DisplayID, SummernoteID) {
 
 
 function CountAns(type) {
+
     if (type == 'NEW') {
         var parent = document.getElementById("FormDisplay_Answer_New");
-        var eee = 0
-        eee = parent.getElementsByClassName("ANS_New");
-        var count = eee.length
+        var Elements_obj = 0
+        Elements_obj = parent.getElementsByClassName("ANS_New");
+        var count = Elements_obj.length
         $('#LB_Ans_Count_New').text(count);
     } else {
         var parent = document.getElementById("FormDisplay_Answer_Edit");
-        var eee = 0
-        eee = parent.getElementsByClassName("ANS_Edit");
-        var count = eee.length
+        var Elements_obj = 0
+        Elements_obj = parent.getElementsByClassName("ANS_Edit");
+        var count = Elements_obj.length
         $('#LB_Ans_Count_Edit').text(count);
     } 
 
@@ -169,7 +192,7 @@ function Clear_Display(DisplayID) {
 
 
 $(document).on('click', 'button.remove-NewQuestion', function (e) {
-
+   
   
     var parent = document.getElementById("FormDisplay_Answer_New");
     var nodesSameClass = 0

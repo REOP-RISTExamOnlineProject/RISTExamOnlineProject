@@ -71,16 +71,31 @@ namespace RISTExamOnlineProject.Controllers
         {
             DataTable dt = new DataTable();
             string ValueCodeQuestion = "";
-            string ValueCodeAnswer;
+            string ValueCodeAnswer = "";
             int QuestionCount = 0;
 
             string ItemName;
             int Max_Seq;
-            int Rewrite_ValueList;
-            int Rewrite_Master;
-            string UpdDate;
+            int Rewrite_ValueList = 0;
+            int Rewrite_Master = 0;
+            string UpdDate = "";
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
 
+
+            //------------------ Get Rewrite Action  -------------------------
+            dt = ObjRun.InputItem_Detail(Itemcode);
+            if (dt.Rows.Count != 0)
+            {
+                Rewrite_Master = Convert.ToInt16(dt.Rows[0]["Rewrite"].ToString());
+                ValueCodeQuestion = dt.Rows[0]["ValueCodeQuestion"].ToString();
+                ValueCodeAnswer = dt.Rows[0]["ValueCodeAnswer"].ToString();
+                UpdDate = dt.Rows[0]["UpdDate"].ToString();
+            }
+            //else { 
+
+            // }
+
+            //----------------------------------------------------------------
 
 
             dt = ObjRun.Get_ExamDetail(Itemcode);
@@ -88,8 +103,8 @@ namespace RISTExamOnlineProject.Controllers
             if (dt.Rows.Count != 0)
             {
                 Max_Seq = Convert.ToInt16(dt.Rows[0]["Max_Seq"].ToString());
-                Rewrite_ValueList = Convert.ToInt16(dt.Rows[0]["Rewrite_ValueList"].ToString());
-                Rewrite_Master = Convert.ToInt16(dt.Rows[0]["Rewrite_Master"].ToString());
+                //  Rewrite_ValueList = Convert.ToInt16(dt.Rows[0]["Rewrite_ValueList"].ToString());
+                //   Rewrite_Master = Convert.ToInt16(dt.Rows[0]["Rewrite_Master"].ToString());
                 UpdDate = dt.Rows[0]["UpdDate"].ToString();
                 List<Exam_QuestionDetail> Detail = new List<Exam_QuestionDetail>();
 
@@ -99,7 +114,8 @@ namespace RISTExamOnlineProject.Controllers
                     foreach (DataRow row in dt.Rows)
                     {
                         Detail.Add(new Exam_QuestionDetail()
-                        {                            ItemCode = row["ItemCode"].ToString(),
+                        {
+                            ItemCode = row["ItemCode"].ToString(),
                             ItemCategName = row["ItemCategName"].ToString(),
                             ValueCodeQuestion = row["ValueCodeQuestion"].ToString(),
                             ValueCodeAnswer = row["ValueCodeAnswer"].ToString(),
@@ -108,21 +124,16 @@ namespace RISTExamOnlineProject.Controllers
                             Ans_Count = row["Ans_Count"].ToString(),
                             Max_Seq = row["Max_Seq"].ToString(),
                             ValueStatus = row["ValueStatus"].ToString(),
-                         
-                            
+
                         });
 
                     }
                 }
-                //else { 
-
-
-                //}
 
 
 
-                ValueCodeQuestion = dt.Rows[0]["ValueCodeQuestion"].ToString();
-                ValueCodeAnswer = dt.Rows[0]["ValueCodeAnswer"].ToString();
+                //  ValueCodeQuestion = dt.Rows[0]["ValueCodeQuestion"].ToString();
+                // ValueCodeAnswer = dt.Rows[0]["ValueCodeAnswer"].ToString();
                 dt = ObjRun.Get_ValueCount(ValueCodeQuestion);
 
                 //   QuestionCount = Convert.ToInt32(dt.Rows.Count);         
@@ -144,17 +155,26 @@ namespace RISTExamOnlineProject.Controllers
                 }
 
 
-                return Json(new { success = true, ValueCodeQuestion = ValueCodeQuestion, ValueCodeAnswer = ValueCodeAnswer,
-                    QuestionCount = QuestionCount, Max_Seq = Max_Seq, ItemName = ItemName, Detail = Detail, Rewrite_ValueList = Rewrite_ValueList ,
-                    Rewrite_Master = Rewrite_Master ,
-                    UpdDate= UpdDate                });
+                return Json(new
+                {
+                    success = true,
+                    ValueCodeQuestion = ValueCodeQuestion,
+                    ValueCodeAnswer = ValueCodeAnswer,
+                    QuestionCount = QuestionCount,
+                    Max_Seq = Max_Seq,
+                    ItemName = ItemName,
+                    Detail = Detail,
+                    Rewrite_ValueList = Rewrite_ValueList,
+                    Rewrite_Master = Rewrite_Master,
+                    UpdDate = UpdDate
+                });
 
 
 
             }
             else
             {
-                return Json(new { success = false });
+                return Json(new { success = false, Rewrite_Master = Rewrite_Master, ValueCodeQuestion = ValueCodeQuestion, ValueCodeAnswer = ValueCodeAnswer, UpdDate = UpdDate });
             }
         }
 
@@ -174,7 +194,7 @@ namespace RISTExamOnlineProject.Controllers
             List<SelectListItem> listItems = new List<SelectListItem>();
 
             string Strsql = " SELECT ItemCategType as TextValues ,ItemCategType as Values_  from [SPTOSystem].[dbo].[ItemCategory]  group by ItemCategType order by ItemCategType asc";
-            listItems = ObjRun.GetItemDropDownList(Strsql, "Category Type");   
+            listItems = ObjRun.GetItemDropDownList(Strsql, "Category Type");
             return Json(new SelectList(listItems, "Value", "Text"));
 
         }
@@ -186,7 +206,7 @@ namespace RISTExamOnlineProject.Controllers
 
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
             List<SelectListItem> listItems = new List<SelectListItem>();
-            string Strsql = "  SELECT  ItemCateg +' - '+[ItemCategName],[ItemCateg] FROM[SPTOSystem].[dbo].[vewQuestionCateg]  where [ItemCategType] ='"+ CategoryType.Trim() + "' group by[ItemCateg],[ItemCategName] order by ItemCateg asc";
+            string Strsql = "  SELECT  ItemCateg +' - '+[ItemCategName],[ItemCateg] FROM[SPTOSystem].[dbo].[vewQuestionCateg]  where [ItemCategType] ='" + CategoryType.Trim() + "' group by[ItemCateg],[ItemCategName] order by ItemCateg asc";
             listItems = ObjRun.GetItemDropDownList(Strsql, "Category");
             return Json(new SelectList(listItems, "Value", "Text"));
 
@@ -205,7 +225,7 @@ namespace RISTExamOnlineProject.Controllers
 
         [Authorize]
         public IActionResult Valueslist(int Max_Seq, int QuestionCount, string ValueCodeQuestion, string ValueCodeAnswer, string[] Ans_TextDisplay, string[] Ans_Text_HTML_Display
-          , string[] Ans_Value, string Need_value, string Text_Question, string TextHTML_Question, string Job, string OP_UPD, int DisplayOrder,int Rewrite_Master)
+          , string[] Ans_Value, string Need_value, string Text_Question, string TextHTML_Question, string Job, string OP_UPD, int DisplayOrder, int Rewrite_Master)
         {
 
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
@@ -218,7 +238,7 @@ namespace RISTExamOnlineProject.Controllers
             {
                 if (Job == "DEL" || Job == "RES" || Job == "REJ")
                 {
-                    ObjRun.Valueslist_Management(Job, "", DisplayOrder, "", "", "0", "", IP, OP_UPD, ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(),0);
+                    ObjRun.Valueslist_Management(Job, "", DisplayOrder, "", "", "0", "", IP, OP_UPD, ValueCodeQuestion.Trim(), ValueCodeAnswer.Trim(), Rewrite_Master);
                 }
                 else
                 {
@@ -274,7 +294,7 @@ namespace RISTExamOnlineProject.Controllers
         }
 
 
-  
+
 
 
 
@@ -321,7 +341,7 @@ namespace RISTExamOnlineProject.Controllers
         {
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
             List<SelectListItem> listItems = new List<SelectListItem>();
-            string Strsql = "select DISTINCT [ItemCateg] + ' - ' + [ItemCategName] as [ItemCategName]      ,[ItemCateg]        FROM [SPTOSystem].[dbo].[vewExamApproved_New] where [ItemCategType] = '"+ItemCategType.Trim() + "'";
+            string Strsql = "select DISTINCT [ItemCateg] + ' - ' + [ItemCategName] as [ItemCategName]      ,[ItemCateg]        FROM [SPTOSystem].[dbo].[vewExamApproved_New] where [ItemCategType] = '" + ItemCategType.Trim() + "'";
             listItems = ObjRun.GetItemDropDownList(Strsql, "Category ");
             return Json(new SelectList(listItems, "Value", "Text"));
 
@@ -359,7 +379,7 @@ namespace RISTExamOnlineProject.Controllers
             Detail = ObjRun.Get_ExamDetail_Approved(ValueCodeQuestion);
             var data = Detail.ToList();
             recordsTotal = data.Count();
-          //  string Rewrite_Master = Detail[0].Rewrite_Master.ToString();
+            //  string Rewrite_Master = Detail[0].Rewrite_Master.ToString();
 
             // return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data ,Rewrite_Master = Rewrite_Master });
             return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
@@ -393,39 +413,38 @@ namespace RISTExamOnlineProject.Controllers
 
 
         [Authorize]
-        public JsonResult Job_Reject_And_Approved(string Job, string valueStatus_Array, string seq_Array, string valueCodeQuestion,int Rewrite_Master)
+        public JsonResult Job_Reject_And_Approved(string Job, string valueStatus_Array, string seq_Array, string valueCodeQuestion, int Rewrite_Master)
         {
 
 
 
-           
-            mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);     
-         
+
+            mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
+
             string ms;
+            string TextAlert;
+
+            if (Job == "APP") TextAlert = "Approved"; else TextAlert = "Reject";
 
 
-            if (Job == "APP") 
+
+            ms = ObjRun.Approved_Reject_Question_(Job, valueStatus_Array, seq_Array, valueCodeQuestion, Rewrite_Master);
+
+
+            if (ms == "OK")
             {
-
-
-
-
-             }
-
-     
-
-
-                ms = ObjRun.Approved_Reject_Question_( Job,  valueStatus_Array,  seq_Array,  valueCodeQuestion, Rewrite_Master);
-
-
-           
-
+                return Json(new { success = true, textresponse = "The question was successfully " + TextAlert + " " });
+            }
+            else
+            {
+                return Json(new { success = false, textresponse = TextAlert + "Error" });
+            }
 
             //--------------  if 
 
 
 
-            return Json(new { success = true });
+
 
 
         }

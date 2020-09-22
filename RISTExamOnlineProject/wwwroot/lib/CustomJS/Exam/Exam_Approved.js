@@ -242,7 +242,7 @@ function ViewDetail(seq, ValueCodeQuestion, ValueCodeAnswer, ValueStatus) {
 
 
 function Approved_And_Reject(Job, valueStatus_Array, seq_Array, ValueCodeQuestion, Rewrite_Master) {
-    debugger
+ 
     Rewrite_Master
     $.ajax({
         type: 'POST',
@@ -251,7 +251,21 @@ function Approved_And_Reject(Job, valueStatus_Array, seq_Array, ValueCodeQuestio
         data: { Job: Job, valueStatus_Array: valueStatus_Array, seq_Array: seq_Array, valueCodeQuestion: ValueCodeQuestion, Rewrite_Master: Rewrite_Master },
         success: function (response) {
             if (response.success == true) {
-                GetTableDetail(ValueCodeQuestion, ValueCodeAnswer);
+              
+                Swal.fire({
+                    icon: 'success',
+                    title: response.textresponse,
+                 
+                }).then(function (result) {
+                    GetTableDetail(ValueCodeQuestion, ValueCodeAnswer);
+                });
+
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: response.textresponse,
+                })
             }
         },
         error: function (ex) {
@@ -267,7 +281,7 @@ function Approved_And_Reject(Job, valueStatus_Array, seq_Array, ValueCodeQuestio
 
 
 function SubmitData(Job) {
-    debugger
+    
     var text_class;
     var text_Job;
     if (Job == 'Reject') {
@@ -283,7 +297,7 @@ function SubmitData(Job) {
     var seq_Array = new Array();
     var valueStatus_Array = new Array();
 
-    debugger
+
     if (arrdata.length != 0) {
 
         Swal.fire({
@@ -297,10 +311,10 @@ function SubmitData(Job) {
 
         }).then(function (result) {
             if (result.value) {
-                debugger
+           
                 for (i = 0; i < arrdata.length; i++) {
                     arrtemp = arrdata[i].value.split(',');
-                    debugger
+                 
                     seq_Array.push(arrtemp[0]);
                     valueStatus_Array.push(arrtemp[1]);
                     Rewrite_Master = arrtemp[2].toString();
@@ -309,7 +323,7 @@ function SubmitData(Job) {
 
                 var Status = valueStatus_Array.toString();
                 var seq_String = seq_Array.toString();
-                debugger
+            
                 Approved_And_Reject(text_Job, Status, seq_String, ValueCodeQuestion, Rewrite_Master);
 
             }
