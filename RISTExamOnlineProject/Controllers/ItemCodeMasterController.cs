@@ -38,7 +38,7 @@ namespace RISTExamOnlineProject.Controllers
         {
             mgrSQLcommand_ItemCode ObjRun = new mgrSQLcommand_ItemCode(_configuration);
             List<SelectListItem> listItems = new List<SelectListItem>();
-          string Strsql =" SELECT[ItemCateg],[ItemCateg]+' - '+[ItemCategName]  as [ItemCategName] FROM[SPTOSystem].[dbo].[ItemCategory] where ItemCategType = '"+ItemCategType.Trim()+"'group by[ItemCateg],[ItemCategName] order by ItemCateg asc";
+          string Strsql = " SELECT [ItemCateg]+'-'+[ItemCategName]  as [ItemCategName],[ItemCateg] FROM[SPTOSystem].[dbo].[ItemCategory] where ItemCategType = '" + ItemCategType.Trim()+"'group by[ItemCateg],[ItemCategName] order by ItemCateg asc";
 
             listItems = ObjRun.GetItemDropDownList(Strsql,"Category");
             //  listItems = ObjRun.GetCategory(ItemCategType);

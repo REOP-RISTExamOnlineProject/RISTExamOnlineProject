@@ -543,7 +543,7 @@
             $("#DDL_Category").on("change", function () {
 
                 ItemCateg = $("#DDL_Category").val()
-
+                debugger
                 if (ItemCateg != 0) {
                     MakeTable_ItemCode(ItemCateg)
                     $("#LB_Name").text($("#DDL_Category option:selected").text());
@@ -571,6 +571,7 @@
 
 
             function GetExamCategory_(Category_Type) {
+
                 $.ajax({
                     type: 'POST',
                     url: '../ItemCodeMaster/GetCategory',
