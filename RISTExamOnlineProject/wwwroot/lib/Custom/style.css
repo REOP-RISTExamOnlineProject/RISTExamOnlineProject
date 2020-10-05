@@ -2062,10 +2062,10 @@ span.tag.label.label-info {
     .sidebar.sidebar.shrink-sidebar {
         max-width: 250px !important;
         min-width: 250px !important;
-        z-index: 1000;
+        z-index: 99;
         position: absolute;
-        bottom: -20px;
-        top: 0px;
+        bottom: -20px; 
+        top: 59px;
         height: 100%;
     }
     
@@ -2176,12 +2176,12 @@ span.tag.label.label-info {
         width: 0px !important;
         min-height: 100%;
         overflow: hidden;
-        height: 100%;
+        height: auto;
         padding: 0px;
         margin: 0px;
         z-index: 1000;
         position: absolute;
-        top: 0px;
+        top: 59px;
         bottom: 0px !important;
     }
 
@@ -2228,7 +2228,17 @@ span.tag.label.label-info {
 }
 
 @media only screen and (max-width: 868px) {
-    
+
+    .sidebar.sidebar.shrink-sidebar {
+        max-width: 250px !important;
+        min-width: 250px !important;
+        z-index: 99;
+        position: absolute;
+        bottom: -20px;
+        top: 59px;
+        height: 100%;
+    }
+
     .cont-1, .cont-2, .cont-3, .cont-4 {
         display: initial;
     }
@@ -2322,6 +2332,15 @@ span.tag.label.label-info {
     .sidebar {
         top: 0px;
     }
+        .sidebar.sidebar.shrink-sidebar {
+            max-width: 250px !important;
+            min-width: 250px !important;
+            z-index: 99;
+            position: absolute;
+            bottom: -20px;
+            top: 135px;
+            height: 100%;
+        }
 
     .sidebar.shrink-sidebar .sidebar-menu li a {
         padding-left: 25px !important;
@@ -2337,6 +2356,15 @@ span.tag.label.label-info {
 }
 
 @media only screen and (max-width: 580px) {
+    .sidebar.sidebar.shrink-sidebar {
+        max-width: 250px !important;
+        min-width: 250px !important;
+        z-index: 99;
+        position: absolute;
+        bottom: -20px;
+        top: 139px;
+        height: 100%;
+    }
     .search-box {
         display: none;
     }
