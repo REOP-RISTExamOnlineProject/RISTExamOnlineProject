@@ -1,0 +1,221 @@
+	  /* Flat UI Colors */
+	  .alizarin {
+		background: #e74c3c !important;
+	  }
+	  
+	  .sun-flower {
+		background: #f1c40f !important;
+	  }
+	  
+	  .emerald {
+		background: #2ecc71 !important;
+	  }
+	  
+	  /* Font with fallback */
+	  /*--------*/
+	  /* Mixins */
+	  /*--------*/
+	  /* Transition */
+	  /* Border Radius */
+	  /* Box-shadow */
+	  /* User Select */
+	  /* Filter */
+	  /* Appearance */
+	  /* Aspect Ratio */
+	  /* Transform Base */
+	  /* Transform - Scale */
+	  /* Transform - Translate */
+	  /* Transform - Skew */
+	  /* Transform - Origin */
+	  /* Linear Gradient */
+	  /* Calculate REM */
+	  /*---------*/
+	  /* Presets */
+	  /*---------*/
+	  /* body */
+
+	  /*body {
+		background: #ecf0f1;
+		font-family: "proxima-nova", "Lato", "Source Sans Pro", "Raleway", Arial, sans-serif;
+		height: 100vh;
+		width: 100vw;
+	  }*/
+	  
+	  /* Float: left/right */
+	  .pull-left {
+		float: left;
+	  }
+	  
+	  .pull-right {
+		float: right;
+	  }
+	  
+	  /* Flex center */
+	  .flex-center {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+		-webkit-flex-align: center;
+		-ms-flex-align: center;
+		-webkit-align-items: center;
+		align-items: center;
+		justify-content: center;
+	  }
+	  
+	  /* Flex */
+	  .flex {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+	  }
+	  
+	  /* Outline none */
+	  *, *:focus, *:active {
+		outline: none;
+	  }
+	  
+	  .clearfix:after {
+		content: "";
+		display: table;
+		clear: both;
+	  }
+	  
+	  /*body {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100vh;
+		width: 100vw;
+		background: #ecf0f1;
+		font-family: "proxima-nova", "Lato", "Source Sans Pro", "Raleway", Arial, sans-serif;
+	  }*/
+	  
+	  div#wrapper {
+		width: 80%;
+		max-width: 700px;
+		padding-top: 48px;
+		position: relative;
+	  }
+	  
+	  /*h2 {
+		text-align: center;
+		font-size: 3em;
+		font-weight: 600;
+		font-feature-settings: "tnum" on;
+		font-variant-numeric: tabular-nums;
+	  }*/
+	  
+	  #stopwatch {
+		text-align: center;
+	  }
+	  
+	  p {
+		display: inline-block;
+		font-size: 6em;
+		font-weight: 600;
+		font-feature-settings: "tnum" on;
+		font-variant-numeric: tabular-nums;
+		position: relative;
+	  }
+	  p::after {
+		color: #859fa5;
+		font-size: 0.18em;
+		font-weight: 600;
+		letter-spacing: 1px;
+		position: absolute;
+		left: 50%;
+		-moz-transform: translate(-50%, 0);
+		-o-transform: translate(-50%, 0);
+		-ms-transform: translate(-50%, 0);
+		-webkit-transform: translate(-50%, 0);
+		transform: translate(-50%, 0);
+		text-transform: uppercase;
+		top: 100px;
+	  }
+	  p#days::after {
+		content: 'Days';
+	  }
+	  p#hours::after {
+		content: 'Hours';
+	  }
+	  p#minutes::after {
+		content: 'Minutes';
+	  }
+	  p#seconds::after {
+		content: 'Seconds';
+	  }
+	  
+	  span.divider {
+		color: #859fa5;
+		font-size: 6em;
+		font-weight: 400;
+		margin: 0 10px;
+	  }
+	  
+	  #button-wrap {
+		margin: 80px auto 0;
+		max-width: 200px;
+		text-align: center;
+		width: 80%;
+	  }
+	  #button-wrap button {
+		color: white;
+		cursor: pointer;
+		border: none;
+		border-radius: 100px;
+		font-family: "proxima-nova", "Lato", "Source Sans Pro", "Raleway", Arial, sans-serif;
+		font-size: 1.25em;
+		font-weight: 700;
+		letter-spacing: 1px;
+		padding: 12px 12px;
+		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+		-webkit-transition: background 0.3s ease;
+		-moz-transition: background 0.3s ease;
+		-ms-transition: background 0.3s ease;
+		-o-transition: background 0.3s ease;
+		transition: background 0.3s ease;
+	  }
+	  #button-wrap button:active {
+		top: 3px;
+	  }
+	  #button-wrap button i {
+		margin-right: 8px;
+	  }
+	  #button-wrap button.no-text i {
+		margin-right: 0;
+	  }
+	  #button-wrap button#start, #button-wrap button#pause, #button-wrap button#resume {
+		display: block;
+		background: #2ecc71;
+		padding: 12px 0;
+		width: calc(100%);
+	  }
+	  #button-wrap button#start:hover, #button-wrap button#pause:hover, #button-wrap button#resume:hover {
+		background: #2cc26b;
+	  }
+	  #button-wrap button#pause, #button-wrap button#resume {
+		padding: 12px 32px;
+	  }
+	  #button-wrap button#reset, #button-wrap button#stop {
+		margin: 20px 6px 0 6px;
+		opacity: 0;
+		-webkit-transition: opacity 0.5s ease;
+		-moz-transition: opacity 0.5s ease;
+		-ms-transition: opacity 0.5s ease;
+		-o-transition: opacity 0.5s ease;
+		transition: opacity 0.5s ease;
+	  }
+	  #button-wrap button#reset {
+		background: #3498db;
+	  }
+	  #button-wrap button#reset:hover {
+		background: #2993d9;
+	  }
+	  #button-wrap button#stop {
+		background: #e74c3c;
+	  }
+	  #button-wrap button#stop:hover {
+		background: #e64231;
+	  }

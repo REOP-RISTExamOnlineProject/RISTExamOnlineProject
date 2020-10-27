@@ -27,7 +27,7 @@ namespace RISTExamOnlineProject.Models.TSQL
             string HTMLTEXT = "";
 
             var ObjRun = new mgrSQLConnect(_configuration);
-            strSQL = " [dbo].[srpMakeHTMLExam]	'" + ItemCateg + "', '" + ItemCode + " '";
+            strSQL = " [dbo].[sprMakeHTMLExam]	'" + ItemCateg + "', '" + ItemCode + " '";
 
             dt = ObjRun.GetDatatables(strSQL);
 
@@ -184,7 +184,7 @@ namespace RISTExamOnlineProject.Models.TSQL
         {
             string MS = "";
             var ObjRun = new mgrSQLConnect(_configuration);
-            strSQL = "[dbo].[srpMakeHTMLQuestion] '" + seq.ToString() + "','" + ValueCodeQuestion + "','" + ValueCodeAnswer + "','" + ValueStatus + "'";
+            strSQL = "[dbo].[sprMakeHTMLQuestion] '" + seq.ToString() + "','" + ValueCodeQuestion + "','" + ValueCodeAnswer + "','" + ValueStatus + "'";
 
             dt = ObjRun.GetDatatables(strSQL);
             MS = dt.Rows[0][0].ToString();
@@ -264,7 +264,7 @@ namespace RISTExamOnlineProject.Models.TSQL
 
 
                 //--------------- Update -----------------
-                StrSql = strSQL = "[dbo].[srpApproved_Reject_Question] '" + Job + "','" + valueStatus_Array + "','" + seq_Array + "','" + ValueCodeQuestion + "','" + ValueCodeAnswer + "','" + Rewrite_Master.ToString() + "'";
+                StrSql = strSQL = "[dbo].[sprApproved_Reject_Question] '" + Job + "','" + valueStatus_Array + "','" + seq_Array + "','" + ValueCodeQuestion + "','" + ValueCodeAnswer + "','" + Rewrite_Master.ToString() + "'";
                 dt = ObjRun.GetDatatables(strSQL);
                 MS = dt.Rows[0][1].ToString();
 
@@ -289,7 +289,7 @@ namespace RISTExamOnlineProject.Models.TSQL
 
 
                 //--------------- Update -----------------
-                  strSQL = "[dbo].[srpApproved_Reject_Question] '" + Job + "','" + valueStatus_Array + "','" + seq_Array + "','" + ValueCodeQuestion + "','" + ValueCodeAnswer + "','" + Rewrite_Master.ToString() + "'";
+                  strSQL = "[dbo].[sprApproved_Reject_Question] '" + Job + "','" + valueStatus_Array + "','" + seq_Array + "','" + ValueCodeQuestion + "','" + ValueCodeAnswer + "','" + Rewrite_Master.ToString() + "'";
                 dt = ObjRun.GetDatatables(strSQL);
                 MS = dt.Rows[0][1].ToString();
 
@@ -332,7 +332,7 @@ namespace RISTExamOnlineProject.Models.TSQL
                         objSqlCmd.Transaction = transaction;
 
                         objSqlCmd.CommandType = CommandType.StoredProcedure;
-                        objSqlCmd.CommandText = "srpApproved_Reject_Question";
+                        objSqlCmd.CommandText = "sprApproved_Reject_Question";
                         objSqlCmd.Connection = connection;
                         objSqlCmd.Parameters.Clear();
                         objSqlCmd.Parameters.Add("@Job", SqlDbType.VarChar).Value = Job;

@@ -115,7 +115,7 @@ namespace RISTExamOnlineProject.Models.TSQL
         public string Itemcode_Management(string Job, string ItemCateg, string ItemCode, string ItemName, int time, int Nbr,string IP,string OPID,string ValueCodeQuestion, string ValueCodeAnswer) {
             string MS;
             var ObjRun = new mgrSQLConnect(_configuration);
-            strSQL = "EXEC [dbo].[srpItemCode_Management] '"+ Job + "', '" + ItemCateg + "','" + ItemCode + "','" + ItemName + "','" + Nbr + "','" + time + "','" + OPID + "','" + IP + "' ,'"+ ValueCodeQuestion + "'  ,'" + ValueCodeAnswer + "'   ";
+            strSQL = "EXEC [dbo].[sprItemCode_Management] '"+ Job + "', '" + ItemCateg + "','" + ItemCode + "','" + ItemName + "','" + Nbr + "','" + time + "','" + OPID + "','" + IP + "' ,'"+ ValueCodeQuestion + "'  ,'" + ValueCodeAnswer + "'   ";
       
             dt = ObjRun.GetDatatables(strSQL);
         

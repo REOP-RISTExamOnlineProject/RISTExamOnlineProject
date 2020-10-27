@@ -59,6 +59,7 @@ body {
     background-size: cover;
     height: 100vh;
     transition: all .5s; */
+    height:auto;
     background: rgb(252,251,251);
     background: linear-gradient(130deg, rgba(252,251,251,1) 11%, rgba(241,241,242,1) 55%, rgba(200,214,217,1) 78%, rgba(242,242,242,1) 86%) fixed;
 }

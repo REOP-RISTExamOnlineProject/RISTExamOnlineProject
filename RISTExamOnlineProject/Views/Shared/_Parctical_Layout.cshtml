@@ -1,0 +1,245 @@
+﻿@using System.Security.Claims
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--Meta Responsive tag-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="~/lib/img/Logo_ROHM.png">
+    <title>@ViewBag.Title</title>
+
+
+    <environment include="Development">
+        <!--Bootstrap CSS-->
+        <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+        <!--Custom style.css-->
+        <link href="~/lib/Custom/style.css" rel="stylesheet" />
+        <!--Font Awesome-->
+
+        <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+        <script src="~/lib/js/sweetalert.min.js"></script>
+
+        <!--FOR IE9-->
+        <script src="~/lib/html5shiv/html5shiv.js"></script>
+        <script src="~/lib/respond.js/respond.js"></script>
+
+        <!-- tempusdominus-bootstrap-4 datetimepicker -->
+        <link rel="stylesheet" href="~/lib/datepicker/css/tempusdominus-bootstrap-4.css">
+        <!-- tempusdominus-bootstrap-4 -->
+
+
+        <link href="~/lib/Custom/datepicker.css" rel="stylesheet" />
+        <link href="~/lib/XpageList/PagedList.css" rel="stylesheet" />
+
+
+
+    </environment>
+    @await RenderSectionAsync("Styles", false)
+
+
+    <style type="text/css">
+        .btn_response {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+
+</head>
+<body>
+    <partial name="_CookieConsentPartial" />
+    <!--Header-->
+    <div class="row header shadow-sm">
+
+        <!--Logo-->
+        <div class="col-sm-3 col-md-6 col-lg-4 col-xl-3 pl-0 text-center header-logo">
+            <div class="bg-theme mr-3 pt-3 pb-2 mb-0">
+                <h3 class="logo">
+                    <a href="@Url.Action("index","Home")" class="text-secondary logo"><i class="fa fa-book"></i> Skill Test<span class="small"> Online</span></a>
+                </h3>
+            </div>
+        </div>
+        <!--Logo-->
+        <!--Header Menu-->
+        <div class="col-sm-9 col-md-6 col-lg-8 col-xl-9">
+            <div class="row">
+                <!--Menu Icons-->
+                <div class="col-sm-4 col-xl-4 col-8 pl-0">
+                    <!--Toggle sidebar-->
+                    @*<div class="   ">
+                            <span class="menu-icon bg-white  text-white" style=" padding: 6px;   border-radius: 50%;  height: 37px;  width: 37px; " onclick="toggle_sidebar()">
+                                <span id="sidebar-toggle-btn" class="text-white"></span>
+                            </span>
+                        </div>*@
+                </div>
+                <!--Menu Icons-->
+                <!--Search box and avatar-->
+
+                <div class="col-sm-8 col-xl-8 col-4 text-right flex-header-menu justify-content-end">
+
+                    <div class=" ">
+                        <a class="nav-link" href="#" role="button" id="dropdownMenuLink" onclick="toggle_dropdown(this);return false;" data-toggle="dropdownx" aria-haspopup="true" aria-expanded="false" title="Account">
+                            <i class="fas fa-ellipsis-h Icons"></i>
+
+                        </a>
+                        <div class="dropdown dropdown-right text-left bg-white shadow border mt-13" style="width:333px; border-radius: 5px;" aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-item">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <img src="@ViewBag.imgProfile" alt="" class="mt-2 profiles shadow-sm" style="width:60px;   border:3px solid white" />
+                                    </div>
+                                    <div class="col-9">
+                                        <div class="pt-3">
+                                            <span class=""><strong id="strName">@ViewBag.NameEng</strong></span>
+                                            <p class="font-weight-bold small">@User.Identity.Name   @User.FindFirst(claim => claim.Type == ClaimTypes.Role)?.Value</p>
+                                            <a class="btn btn-light btn-sm" href="@Url.Action("UserDetailMaintenance","Management")">
+                                                <span class="small"> View profile</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @* <div class="dropdown-divider"></div>*@
+
+                            <a href="@Url.Action("Logout", "Account")" class="dropdown-item">
+                                <div class="pt-3 pb-3   ">
+                                    <i class="  fas fa-power-off  Icons"></i> Logout
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!--Search box and avatar-->
+            </div>
+        </div>
+        <!--Header Menu-->
+    </div>
+    <!--Header-->
+    <!--Main Content-->
+
+
+
+    <div class="container-fluid">
+        @RenderBody()
+    </div>
+
+    <div class="footer">
+        <div class="row justify-content-lg-start  justify-content-md-start m-lg-5  m-md-5">
+
+            <div class="col col-lg-3 col-md-3">
+                <button class="btn btn-primary" onclick="goBack()"> <i class="fas fa-arrow-left"></i> Back</button>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <environment include="Development">
+        <!-- Page JavaScript Files-->
+        @*<script src="~/lib/js/jquery.min.js"></script>
+            <script src="~/lib/js/jquery-1.12.4.min.js"></script>*@
+        <script src="~/lib/jquery/jquery.js"></script>
+
+        <!--Popper JS-->
+        <script src="~/lib/js/popper.min.js"></script>
+        <!--Bootstrap-->
+        @*<script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>*@
+        <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+        <!--Sweet alert JS-->
+        <script src="~/lib/js/sweetalert.js"></script>
+        <!--Progressbar JS-->
+        <script src="~/lib/js/progressbar.min.js"></script>
+        <!--Flot.JS-->
+        <script src="~/lib/js/charts/jquery.flot.min.js"></script>
+        <script src="~/lib/js/charts/jquery.flot.pie.min.js"></script>
+        <script src="~/lib/js/charts/jquery.flot.categories.min.js"></script>
+        <script src="~/lib/js/charts/jquery.flot.stack.min.js"></script>
+        <!--Chart JS-->
+        <script src="~/lib/js/charts/chart.min.js"></script>
+        <!--Chartist JS-->
+        <script src="~/lib/js/charts/chartist.min.js"></script>
+        <script src="~/lib/js/charts/chartist-data.js"></script>
+        <script src="~/lib/js/charts/demo.js"></script>
+
+
+        <!--Custom Js Script-->
+        <script src="~/lib/js/custom.js"></script>
+        <!--Custom Js Script-->
+        @*<script>
+                //Nice select
+                $('.bulk-actions').niceSelect();
+            </script>*@
+        <!-- tempusdominus-bootstrap-4 -->
+
+
+
+        <script src="~/lib/datepicker/jquery/jquery.js"></script>
+        <script src="~/lib/datepicker/momentjs/moment.js"></script>
+        <script src="~/lib/datepicker/js/tempusdominus-bootstrap-4.js"></script>
+
+
+        <!-- tempusdominus-bootstrap-4 -->
+        <!--bootstrap-select-->
+        @*<script src="~/lib/bootstrap-select/js/bootstrap-select.js"></script>*@
+    </environment>
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="~/lib/js/site.js"></script>
+    <script src="~/lib/js/notify.min.js"></script>
+
+
+    <script src="~/lib/js/datepicker.js"></script>
+
+
+
+    @*<script src="~/lib/js/site.js" asp-append-version="true"></script>
+        <script src="~/lib/js/notify.min.js" asp-append-version="true"></script>*@
+
+    @RenderSection("Scripts", required: false)
+    @* @await RenderSectionAsync("Scripts", false)*@
+    <script>
+        $(document).ready(function () {
+
+            Profile();
+
+        });
+        function goBack() {
+            window.history.back();
+        };
+
+
+        function Profile() {
+
+            $.ajax({
+                type: 'POST',
+                url: "../Home/Profile",
+                   data: { OPID: "@User.Identity.Name" },
+                dataType: 'json',
+                success: function (Data) {
+
+                    $(".profiles").attr("src", Data.data);/*text(Data.data);*/
+                    $("#strName").text(Data.strName);
+                    $("#strName1").text(Data.strName);
+                    $("#strJobTitle").text(Data.strJobTitle);
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+
+        }
+    </script>
+
+</body>
+</html>

@@ -63,7 +63,7 @@ namespace RISTExamOnlineProject.Models.TSQL
             }
         }
 
- 
+
 
         public DataTable GetDataTable(SqlCommand objCmd)
         {
@@ -72,14 +72,14 @@ namespace RISTExamOnlineProject.Models.TSQL
             //SqlConnection Con;        
 
             var constr = configuration.GetConnectionString("CONSPTO");
-            try            
+            try
             {
                 // make result DataTable instance
                 objDataTbl = new DataTable();
                 using (var connection = new SqlConnection(constr))
                 {
 
-                 
+
 
 
                     //if (connection.State == ConnectionState.Open)
