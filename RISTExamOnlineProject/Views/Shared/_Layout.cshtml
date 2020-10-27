@@ -60,7 +60,7 @@
 
     <partial name="_CookieConsentPartial" />
     <!--Header-->
-    <div class="row header shadow-sm">
+    <div class="row header shadow-sm" style="z-index:5;">
 
         <!--Logo-->
         <div class="col-sm-3 col-md-6 col-lg-4 col-xl-3 pl-0 text-center header-logo">
@@ -387,7 +387,10 @@
 
 
         function Profile() {
-
+            if ("@User.Identity.Name" == "") {
+                window.location.href = "@Url.Action("Logout", "Account")";
+                return true;
+            }
             $.ajax({
                 type: 'POST',
                 url: "../Home/Profile",

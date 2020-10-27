@@ -417,6 +417,13 @@ namespace RISTExamOnlineProject.Models.TSQL
                     strLevel = "";
                     Standard = Convert.ToDouble(dt.Rows[0]["Standard"].ToString());
                 }
+                else
+                {
+
+                    EXresult.BoolResult = false;
+                    EXresult.strMgs = "vewItemCategPlan";
+                    EXresult.strResult = "Error";
+                }
 
                 if(Average >= Standard)
                 {
