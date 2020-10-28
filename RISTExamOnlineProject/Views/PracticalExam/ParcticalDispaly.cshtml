@@ -20,9 +20,9 @@
 </head>
 
 <body>
-    <div class="container">       
+    <div class="container " >       
 
-        <div class="row " id="Main_Display">           
+        <div class="row pt-lg-4 pt-md-4 " id="Main_Display">           
 
 
         </div>
@@ -70,38 +70,95 @@
 
                 MakeDisplayPractical();
 
-                //onReady(function () {          
-              
-                ////$("#pause_1, #resume_1").hide();
-                ////$("#start_1").show();
-                ////$("#reset_1, #stop_1, #DIV_Forward_and_Back_1").hide();  
-                                   
+                onReady(function () {  
+                    var timeout, interval;
 
-                //  //  $('.timestop').hide(); 
-                //});
+                    [].forEach.call(document.querySelectorAll('.Time_Forward'), function (button) {
+                        button.addEventListener('mousedown', function () {
+
+                            var id = button.dataset.target;
+                            incrementValue(id, '1');
+
+                            timeout = setTimeout(function () {
+                                interval = setInterval(function () {
+                                    incrementValue(id, '1');
+                                }, 50);
+                            }, 300);
+                        });
+
+                        button.addEventListener('mouseup', clearTimers);
+                        button.addEventListener('mouseleave', clearTimers);
+
+                        function clearTimers() {
+                            clearTimeout(timeout);
+                            clearInterval(interval);
+                        }
+                    });
+
+                    [].forEach.call(document.querySelectorAll('.Time_Backward'), function (button) {
+                        button.addEventListener('mousedown', function () {
+
+                            var id = button.dataset.target;
+                            incrementValue(id, '0');
+
+                            timeout = setTimeout(function () {
+                                interval = setInterval(function () {
+                                    incrementValue(id, '0');
+                                }, 50);
+                            }, 300);
+                        });
+
+                        button.addEventListener('mouseup', clearTimers);
+                        button.addEventListener('mouseleave', clearTimers);
+
+                        function clearTimers() {
+                            clearTimeout(timeout);
+                            clearInterval(interval);
+                        }
+
+
+                    });
+
+
+                   
+
+
+
+                    function incrementValue(Index_, Job_) {
+
+                        if (Job_ == '1') {
+                            forward(Index_);
+
+                        } else {
+
+                            backward(Index_);
+                        }
+
+                    }
+            
+                });
 
          
             });
 
 
+       
 
-
-            function CheckTime(){
-
-
-            };
-
-            //function onReady(callback) {
-            //    var intervalId = window.setInterval(function () {
-            //        if (document.getElementsByTagName('body')[0] !== undefined) {
-            //            window.clearInterval(intervalId);
-            //            callback.call(this);
-            //        }
-            //    }, 1000);
-            //}
+            function onReady(callback) {
+                var intervalId = window.setInterval(function () {
+                    if (document.getElementsByTagName('body')[0] !== undefined) {
+                        window.clearInterval(intervalId);
+                        callback.call(this);
+                    }
+                }, 1000);
+            }
 
     
 
+            //-------------
+
+
+        
 
         </script>
 

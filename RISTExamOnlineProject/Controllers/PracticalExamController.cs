@@ -35,8 +35,13 @@ namespace RISTExamOnlineProject.Controllers
 
 
 
+        [Authorize]
+        public IActionResult ForTest()
+        {
 
+            return View();
 
+        }
         [Authorize]
         public IActionResult Index()
         {
@@ -164,7 +169,7 @@ namespace RISTExamOnlineProject.Controllers
                 }
                 else
                 {
-                    return Json(new { success = false, responetext = "Data Is duplicate plase check data in below table " });
+                    return Json(new { success = false, responetext = "รหัสพนักงานนี้ ถูกทดสอบไปแล้ว  หรือ ถูกสร้างแผนข้อสอบไปแล้ว กรุณเช็คข้อมูลที่ตารางด้านล่าง   " });
 
                 }
 
@@ -172,7 +177,7 @@ namespace RISTExamOnlineProject.Controllers
             else
             {
 
-                return Json(new { success = false, responetext = "Plan Pratical Not foud " });
+                return Json(new { success = false, responetext = "ไม่พบแผนการสอบ" });
             }
 
 
@@ -199,7 +204,7 @@ namespace RISTExamOnlineProject.Controllers
             else
             {
 
-                return Json(new { success = false, responetext = "Plan Pratical Not foud " });
+                return Json(new { success = false, responetext = "ไม่พบแผนการสอบ" });
             }
 
 
@@ -244,7 +249,10 @@ namespace RISTExamOnlineProject.Controllers
                 string MS = dt.Rows[0][1].ToString();
                 if (MS == "OK")
                 {
-                    return Json(new { success = true, responetext = "Successfully saved data" , Judge  = Judge });
+                    return Json(new { success = true, responetext = "บันทึกข้อมูลเรียบร้อยแล้ว", Judge = Judge, finish = false });
+                }
+                else if (MS == "Finish") {
+                    return Json(new { success = true, responetext = " บันทึกข้อมูลเรียบร้อยแล้ว", Judge = Judge , finish = true});
                 }
                 else
                 {
@@ -253,7 +261,7 @@ namespace RISTExamOnlineProject.Controllers
 
             }
             else {
-                return Json(new { success = false, responetext = "Failed to save data" });
+                return Json(new { success = false, responetext = "บันทึกข้อมูลไม่สำเร็จ" });
 
             }
 

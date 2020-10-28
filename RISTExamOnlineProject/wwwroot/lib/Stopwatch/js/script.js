@@ -1,8 +1,6 @@
+
 var counter = 0;
 var isPaused = true;
-
-
-
 var Index;
 
 
@@ -10,16 +8,15 @@ var Index;
 
 
 
-//$("#pause, #resume").hide();
-//$("#days, #hours, #first-divider, #second-divider").hide();
-//$("#start").show();
+
+
 
 
 
 
 
 var t = window.setInterval(function () {
-	
+
 	if (!isPaused) {
 		counter++;
 		var s = counter;
@@ -28,31 +25,6 @@ var t = window.setInterval(function () {
 }, 1000);
 
 
-
-function forward(Index_) {	
-
-
-	Index = Index_;
-	counter++;
-	var s = counter;
-	convertSeconds(Math.floor(s));
-
-	//Caltime(Index_)
-}
-
-function backward(Index_) {
-
-	Index = Index_;
-	if (counter != 0) {
-		counter--;
-		var s = counter;
-		convertSeconds(Math.floor(s));
-
-	}
-//	Caltime(Index_)
-	
-
-}
 
 
 function Caltime(Index_) {
@@ -82,10 +54,10 @@ function Caltime(Index_) {
 	if ((ActualTime_Seconds < Max_time_Seconds) && (ActualTime_Seconds > Min_time_Seconds)) {
 		$('#ActualTime_' + Index_).removeClass("bg-danger ").addClass("bg-success text-white");
 
-	//	$('#Minutes_' + Index_ + '').removeClass("text-white");
-    //		$('#Seconds_' + Index_ + '').removeClass("text-white");
+		//	$('#Minutes_' + Index_ + '').removeClass("text-white");
+		//		$('#Seconds_' + Index_ + '').removeClass("text-white");
 
-	} else{
+	} else {
 
 		$('#ActualTime_' + Index_).removeClass("bg-success text-white").addClass("bg-danger text-white");
 
@@ -93,39 +65,22 @@ function Caltime(Index_) {
 		$('#Seconds_' + Index_ + '').addClass("text-white");
 		$('#LB_ActualTime_' + Index_ + '').addClass("text-white");
 
-		
+
 	}
 
 
 }
- 
-	
 
 
-	
-
-
-	
-
-// Button Click Events
-
-//$("#start").click(function () {
-//	startClock();
-//	$(this).hide();
-//	$("#pause").show();
-//	$("#reset, #stop").show();
-//	$("#DIV_Forward_and_Back").hide();
-
-//});
 
 
 function start(Index_) {
-	
+
 	Index = Index_;
 	reset(Index_)
 	startClock();
 
-	
+
 	$('#BTN_Save_' + Index).hide();
 
 	$('#start_' + Index).hide();
@@ -138,7 +93,7 @@ function start(Index_) {
 }
 
 function pause(Index_) {
-	
+
 	Index = Index_;
 	$('#BTN_Save_' + Index).hide();
 	pauseClock();
@@ -154,7 +109,7 @@ function resume(Index_) {
 }
 
 function reset(Index_) {
-	debugger
+
 	Index = Index_;
 	resetClock();
 	$('#BTN_Save_' + Index).hide();
@@ -163,16 +118,16 @@ function reset(Index_) {
 }
 
 function stop(Index_) {
-	
+
 	Index = Index_;
 	pauseClock();
 	//resetClock();
 	$('#BTN_Save_' + Index).show();
 	$("#pause_" + Index + ", #resume_" + Index + "").hide();
 
-	$("#start_" + Index ).show();
+	$("#start_" + Index).show();
 
-	$("#BTN_Backward_" + Index+", #BTN_Forward_" + Index).show();
+	$("#BTN_Backward_" + Index + ", #BTN_Forward_" + Index).show();
 
 
 	$("#reset_" + Index + ", #stop_" + Index + "").hide();
@@ -210,22 +165,21 @@ function stop(Index_) {
 //});
 
 
-function startClock() { 
+function startClock() {
 	isPaused = false;
 }
-function pauseClock() { 
+function pauseClock() {
 	isPaused = true;
 }
 function resumeClock() { isPaused = false; }
 
 
 function resetClock() {
-
 	counter = 0;
 	$("#days_" + Index).html("00");
 	$("#hours_" + Index).html("00");
 	$("#Minutes_" + Index).html("00");
-	$("#Seconds_"+Index).html("00");
+	$("#Seconds_" + Index).html("00");
 }
 function stopClock() {
 	resetClock();
@@ -233,24 +187,24 @@ function stopClock() {
 }
 
 function convertSeconds(s) {
-	
+
 	var days = Math.floor(s / 86400)
 	var hours = Math.floor((s % 86400) / 3600);
 	var minutes = Math.floor(((s % 86400) % 3600) / 60);
 	var seconds = ((s % 86400) % 3600) % 60;
-	
-	if (days		< 10) {days 	 = "0" + days}
-	if (hours 	< 10) {hours 	 = "0" + hours;}
-	if (minutes < 10) {minutes = "0" + minutes;}
-	if (seconds < 10) {seconds = "0" + seconds;}
-	
+
+	if (days < 10) { days = "0" + days }
+	if (hours < 10) { hours = "0" + hours; }
+	if (minutes < 10) { minutes = "0" + minutes; }
+	if (seconds < 10) { seconds = "0" + seconds; }
+
 	$("#days_" + Index).html(days);
 	$("#hours_" + Index).html(hours);
 	$("#Minutes_" + Index).html(minutes);
 	$("#Seconds_" + Index).html(seconds);
-	
+
 	if (days == 0 && hours == 0) {
-		$("#days_" + Index + ", #hours_" + Index+"").hide();
+		$("#days_" + Index + ", #hours_" + Index + "").hide();
 		$("#first-divider, #second-divider").hide();
 	} else if (days == 0) {
 		$("#days").hide();
@@ -259,6 +213,24 @@ function convertSeconds(s) {
 	} else {
 		$("p, .divider").show();
 	}
-	Caltime(Index) 
+	Caltime(Index)
+
+}
+
+function forward(Index_) {
+	Index = Index_;
+	counter++;
+	var s = counter;
+	convertSeconds(Math.floor(s));
+}
+
+function backward(Index_) {
+	Index = Index_;
+	if (counter != 0) {
+		counter--;
+		var s = counter;
+		convertSeconds(Math.floor(s));
+
+	}
 
 }

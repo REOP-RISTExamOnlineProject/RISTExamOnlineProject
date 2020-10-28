@@ -26,14 +26,14 @@ function SaveDetail(QuestionNo_) {
 
     Swal.fire({
         icon: 'warning',
-        title: 'Are you sure?',
-        text: "Are you sure you want to Save  ?",
+        title: 'คุณแน่ใจไหม?',
+        text: "คุณแน่ใจไหม ที่จะบันทึกผลการทอดสอบ ?",
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Do it!'
-
+        confirmButtonText: 'ใช่, บันทึกผล!',
+        cancelButtonText : 'ไม่ใช่',
     }).then(function (result) {
         if (result.value) {
 
@@ -92,12 +92,12 @@ function SaveDetail(QuestionNo_) {
                             debugger
 
                             if (Judge == 1) {
-                                CodeHTML = "<h2 class='font-weight-bold text-success'> Pass</h2>";
+                                CodeHTML = "<h2 class='font-weight-bold text-success'> ผ่าน </h2>";
                                 $('#LINK_' + QuestionNo_).addClass("bg-success text-white badge-success");
 
 
                             } else {
-                                CodeHTML = "<h2 class='font-weight-bold text-danger'> No Pass </h2>";
+                                CodeHTML = "<h2 class='font-weight-bold text-danger'> ไม่ผ่าน </h2>";
                                 $('#LINK_' + QuestionNo_).addClass("bg-danger text-white badge-danger");
                             }
 
@@ -109,7 +109,7 @@ function SaveDetail(QuestionNo_) {
                                 position: 'top-mid',
                                 icon: 'success',
                                 title: response.responetext,
-                                html: CodeHTML,
+                                html: "<h2 class='font-weight-bold'>  ผลการทดสอบ </h2>  " + CodeHTML,
                                 showConfirmButton: true,
                           
                             }).then(function (result) {
@@ -124,7 +124,7 @@ function SaveDetail(QuestionNo_) {
 
                                 DeleteHTML('button_wrap_' + QuestionNo_);                            
                 
-                                InputHTML('button_wrap_' + QuestionNo_, CodeHTML)       
+                                InputHTML('button_wrap_' + QuestionNo_, CodeHTML);      
                                 $('input[name=Hearing_' + QuestionNo_ + ']').prop('disabled', true);
                                 $('input[name=Practical_' + QuestionNo_ + ']').prop('disabled', true);                                               
                        
@@ -159,7 +159,7 @@ function SaveDetail(QuestionNo_) {
             } else {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Oops...',
+                    title: 'อุ๊ป!!...',
                     text: ("กรุณเลือกคำตอบให้ครบทุกข้อ")
                 })
 
@@ -282,6 +282,9 @@ function MakeDisplayPractical() {
 
 
 }
+
+
+
 
 
 function SwithNO(Index_,Judge_) {

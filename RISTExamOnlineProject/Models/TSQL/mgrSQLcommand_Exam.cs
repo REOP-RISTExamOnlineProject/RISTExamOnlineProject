@@ -157,7 +157,7 @@ namespace RISTExamOnlineProject.Models.TSQL
 
             string HTML_Test;
             var ObjRun = new mgrSQLConnect(_configuration);
-            strSQL = "[dbo].[srpEditQuestion_SelectHTML] '" + ValueQuestion.Trim() + "','" + ValueAnswer.Trim() + "','" + Seq.ToString() + "','0','" + Job + "' ";
+            strSQL = "[dbo].[sprEditQuestion_SelectHTML] '" + ValueQuestion.Trim() + "','" + ValueAnswer.Trim() + "','" + Seq.ToString() + "','0','" + Job + "' ";
             dt = ObjRun.GetDatatables(strSQL);
             HTML_Test = dt.Rows[0][0].ToString();
             return HTML_Test;
