@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
+using Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore;
 using Newtonsoft.Json;
 using RISTExamOnlineProject.Models.db;
 using RISTExamOnlineProject.Models.TSQL;
@@ -104,10 +105,26 @@ namespace RISTExamOnlineProject.Controllers
         public IActionResult GetPlanID(string OPID, string Staffcode)
         {
             mgrSQL_ObjCommand ObjRun = new mgrSQL_ObjCommand(_configuration);
-            List<SelectListItem> listItems = new List<SelectListItem>();
+            DataTable dt = new DataTable();
             string Strsql = "SELECT  [PlanID],[LicenseName]  FROM [dbo].[vewPracticalSnapshotRemainList] where Staffcode = '" + Staffcode + "' and Trianer = '" + OPID + "' group by [PlanID],[LicenseName]  ";
-            listItems = ObjRun.GetItemDropDownList(Strsql, "PlanID");
-            return Json(new SelectList(listItems, "Value", "Text"));
+           
+            SqlCommand SqlCMD = new SqlCommand();
+            SqlCMD = new SqlCommand();
+            SqlCMD.CommandType = CommandType.Text;
+            SqlCMD.CommandText = Strsql;
+
+            dt = ObjRun.GetDataTable(SqlCMD);
+
+
+            if (dt.Rows.Count != 0) {
+
+
+
+
+                return Json(new { success = true, planID = dt.Rows[0]["PlanID"].ToString(), licenseName = dt.Rows[0]["LicenseName"].ToString() });
+            }
+            
+            return Json(new { success = false });
 
         }
 

@@ -1,6 +1,5 @@
 ﻿
-function GetPlanID(Staffcode_) {
-    
+function GetPlanID(Staffcode_) {   
 
 
 
@@ -11,10 +10,13 @@ function GetPlanID(Staffcode_) {
         dataType: 'json',
         data: { OPID: OPID, Staffcode: Staffcode_ },
         success: function (response) {
-            if (response.length != 0) {
-                $.each(response, function (i, div) {
-                    $("#DDL_PlanID").append('<option value="' + div.value + '">' + div.text + '</option>');
-                });
+            if (response.success == true)
+            {
+                
+                PlanID_List = response.planID;
+                LicenseName_List = response.licenseName;
+
+
             }
         },
         error: function (ex) {
