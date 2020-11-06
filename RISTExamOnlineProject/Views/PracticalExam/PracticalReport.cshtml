@@ -1,0 +1,229 @@
+﻿
+@{
+    ViewData["Title"] = "PracticalReport";
+    Layout = "~/Views/Shared/_Parctical_Layout.cshtml";
+}
+
+<html>
+<head>
+
+
+
+</head>
+<body>
+
+    <div class="container">
+
+
+
+        <div class="row  justify-content-lg-center  justify-content-md-center  m-5 ">
+
+            <div class="col col-lg-5 col-md-5">
+
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control-lg " id="TB_OPID"  maxlength="6" placeholder="OPID" aria-label="OPID" aria-describedby="basic-addon1">
+                    <div class="input-group-append ">
+                        <button class="btn btn-success m-0 pt-0 pb-0"  type="button" onclick="SearchOPID();">Search</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <div class="row  justify-content-lg-center  justify-content-md-center  m-5 " id="DIV_DDL" style="display: none;">
+
+            <div class="col col-lg-5 col-md-5">
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend shadow-lg">
+                        <label class="input-group-text m-0 pt-0 pb-0 " for="DDL_PlanID">Plan ID</label>
+                    </div>
+                    @Html.DropDownList("DDL_PlanID", new SelectList("", ""), new { @id = "DDL_PlanID", @class = "custom-select h-100 shadow-lg " })
+                </div>
+            </div>
+
+            <div class="col col-lg-5 col-md-5">
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend shadow-lg">
+                        <label class="input-group-text m-0 pt-0 pb-0" for="DDL_License_Name">License Name</label>
+                    </div>
+                    @Html.DropDownList("DDL_License_Name", new SelectList("", ""), new { @id = "DDL_License_Name", @class = "custom-select h-100 shadow-lg " })
+                </div>
+            </div>
+
+            <div class="col col-lg-2 col-md-2">
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+    </div>
+
+    @section scripts{
+
+
+
+
+        <script>
+            var Staffcode;
+            var PlanID;
+            var License_Name;
+
+
+            $(document).ready(function () {
+
+                 $("#DDL_License_Name").prop('disabled', true)
+
+            });
+
+
+
+
+            function SearchOPID() {
+
+                Staffcode = $('#TB_OPID').val();
+
+                if (Staffcode != "") {
+
+                   $("#DDL_PlanID option").remove();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '../PracticalExam/GetPlanIDReport',
+                        dataType: 'json',
+                        data: { Staffcode: Staffcode },
+                        success: function (response) {
+                            if (response.length != 0) {
+                                debugger
+                                $.each(response, function (i, div) {
+                                    $("#DDL_PlanID").append('<option value="' + div.value + '">' + div.text + '</option>');
+                                });
+
+                                $('#DIV_DDL').show();
+                            }
+                            else {
+                                $('#DIV_DDL').hide();
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: ("OPID Not Found"),
+                                });
+
+                          
+                            }
+                        },
+                        error: function (ex) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: ('Failed to retrieve states.' + ex)
+                            });
+                            $('#DIV_DDL').hide();
+                        }
+                    });
+
+
+                } else {
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: ("plass Input OPID")
+                    })
+
+
+                }
+
+
+
+            }
+
+            $("#DDL_PlanID").change(function () {
+
+                PlanID = this.value;
+                $("#DDL_License_Name option").remove();               
+
+                debugger
+
+                if (PlanID != "0") {
+                    $("#DDL_License_Name").prop('disabled', false)
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '../PracticalExam/GetLicense_NameReport',
+                        dataType: 'json',
+                        data: { Staffcode: Staffcode, PlanID: PlanID},
+                        success: function (response) {
+                            debugger
+                            if (response.length != 0) {
+                                debugger
+                                $.each(response, function (i, div) {
+                                    $("#DDL_License_Name").append('<option value="' + div.value + '">' + div.text + '</option>');
+                                });
+
+                               // $('#DIV_DDL').show();
+                            }
+                            else {
+
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: ("OPID Not Found"),
+                                });
+
+                              //  $('#DIV_DDL').hide();
+                            }
+                        },
+                        error: function (ex) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: ('Failed to retrieve states.' + ex)
+                            });
+                        //    $('#DIV_DDL').hide();
+                        }
+                    });
+
+                }
+                else {
+                    $("#DDL_License_Name").prop('disabled', true)
+                    $("#DDL_License_Name option").remove();
+                }
+
+
+
+
+            });
+
+
+
+
+
+
+
+
+
+        </script>
+
+
+
+
+    }
+
+
+
+    </body>
+
+
+
+</html>

@@ -125,15 +125,17 @@ namespace RISTExamOnlineProject.Controllers
                 ModelState.AddModelError("", "Invalid Operator No. or Password");
                 return View();
             }
+           
+ 
 
 
-            if (!isAuthenticated) return View();
+                if (!isAuthenticated) return View();
             var principal = new ClaimsPrincipal(identity);
 
             var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
             return RedirectToLocal(returnUrl);
             //return RedirectToAction("Index", "Home");
-
+        
         }
 
         public IActionResult Logout()

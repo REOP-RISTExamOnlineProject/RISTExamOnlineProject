@@ -235,7 +235,7 @@
 
             function continuity(Staffcode) {
 
-                 location.href = '@Url.Action("PraticalList", "PracticalExam")?Staffcode=' + Staffcode;
+                 location.href = '@Url.Action("PracticalList", "PracticalExam")?Staffcode=' + Staffcode;
             }
 
 
@@ -255,7 +255,7 @@
                         success: function (response) {
                             if (response.success == true) {
                                 Staffcode = response.responetext
-                                location.href = '@Url.Action("PraticalList", "PracticalExam")?Staffcode=' + Staffcode;
+                                location.href = '@Url.Action("PracticalList", "PracticalExam")?Staffcode=' + Staffcode;
                             } else {
 
                                 Swal.fire({

@@ -96,7 +96,7 @@ namespace RISTExamOnlineProject.Controllers
         }
 
         [Authorize]
-        public IActionResult PraticalList(string Staffcode)
+        public IActionResult PracticalList(string Staffcode)
         {
 
             return View();
@@ -345,13 +345,35 @@ namespace RISTExamOnlineProject.Controllers
 
         }
 
+        public IActionResult PracticalReport() {
 
 
+            return View();
+        }
+
+        public IActionResult GetPlanIDReport(string Staffcode)
+        {
+
+            mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            string Strsql = "select[PlanID],[PlanID] from  (select[PlanID] FROM [SPTOSystem].[dbo].[Z_001]  where[Staffcode] = '"+ Staffcode + "' group by [PlanID]) as e";
+            listItems = ObjRun.GetItemDropDownList(Strsql, "PlanID");
+            
+
+            return Json(new SelectList(listItems, "Value", "Text"));
+        }
+        public IActionResult GetLicense_NameReport(string Staffcode,string PlanID) {
+
+            mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            string Strsql = "select [LicenseName],[LicenseName] from (select[LicenseName] FROM [SPTOSystem].[dbo].[Z_001]  where[Staffcode]= '" + Staffcode + "' and [PlanID] = '"+ PlanID + "' group by [LicenseName]) as e";
+            listItems = ObjRun.GetItemDropDownList(Strsql, "LicenseName");
 
 
+            return Json(new SelectList(listItems, "Value", "Text"));
 
+        }
 
-
-
+        
     }
 }
