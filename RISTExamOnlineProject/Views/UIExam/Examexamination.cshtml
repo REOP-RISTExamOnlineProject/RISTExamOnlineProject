@@ -1,18 +1,49 @@
 ﻿
 @{
-    ViewData["Title"] = "Examexamination";
+    ViewData["Title"] = "Examination";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<div id="myvideo"></div>
-<div id="xxxxxx" class="bg-white container">
-    <h1>Examexamination</h1>
-    <div class="row">
-        <div class="col-12"> <button id="btndemo" class="btn btn-warning float-lg-none"><span id="demo"> เริ่มทำข้อสอบ</span></button></div>
+<div id="element" class="container" style="background-color:#F5F5F5;">
+    <div class="card card-body " id="cHeader">
+        <div class="row">
+            <div class="col-12 text-center ">   
+                    <H1 id="demo" class="display-1">เริ่มทำข้อสอบ</H1> 
+                <span style="font: bold 12px;  display:none;" id="Massaging">
+                    *ห้ามออกจากหน้าจอจนกว่าจะข้อสอบจบ
+                </span>
+            </div>
+        </div>
     </div>
-    <hr class="m-4" />
-    <div id="DivContents"></div>
-    <button class="btn btn-success text-uppercase" id="btnSubmit" disabled> Submit</button>
+
+
+    <div class="offset-1 col-11 table-responsive " style="overflow-y:scroll; height:70%">
+        <div class="m-2" id="DivContents"></div>
+        <div class="text-center" id="ftExam" style="display:none;">
+            <span style="font: bold 12px; color:red;">
+                กรุณาตรวจคำตอบให้แน่ใจก่อนกดปุ่ม SUBMIT
+            </span>
+            <button class="btn btn-success btn-lg btn-block text-uppercase" id="btnSubmit" disabled>ส่งคำตอบ</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered  modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title text-warning" id="exampleModalLongTitle"><i class="fas fa-exclamation-circle"></i> กฏการทำข้อสอบ</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                กฏการทำข้อสอบ
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="testtest" class="btn btn-warning" data-dismiss="modal">START</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -20,42 +51,32 @@
 
 
 
-
-
-
-
- 
-
-
-
 @section scripts{
     <link href="~/lib/datatables/Css/jquery.dataTables.min.css" rel="stylesheet" />
     <script src="~/lib/datatables/Js/jquery.dataTables.min.js"></script>
 
-
-
     <script type="text/javascript">
+        var distance;
         var myTables1;
-        $(document).ready(function () {  
-            //var elem = document.getElementById("xxxxxx");
-            //var elemx = document.getElementById("btndemo");
-            //elemx.onclick = function () {
-            //    GetData() 
-            //    req = elem.requestFullScreen || elem.webkitRequestFullScreen || elem.mozRequestFullScreen;
-            //    req.call(elem);
-               
-            //}
-
-
-
-
-
-
-            return false;
+        var startTime = new Date();
+        var strHTMLresult = "GG";
+        var Arrs = [];
+        $(document).ready(function () {
+            $('#exampleModalCenter').modal('show');
         });
- 
+        onReady(function () {
 
-      
+
+        });
+
+        document.addEventListener("keydown", function (e) {
+            //tab keyCode===9
+            //I hope to prevent alt+tab event action in windows
+            if (e.altKey && e.keyCode === 9) {
+                e.preventDefault(); //why not come in?
+            }
+        }, false)
+
 
         function onReady(callback) {
             var intervalId = window.setInterval(function () {
@@ -68,40 +89,88 @@
 
 
         function GetData() {
+
+            $("#demo").text("กำลังเตรียมข้อสอบ..");
+            $("#stImg").css("display", "block");
               $.ajax({
                 type: 'POST',
                   url: "../UIExam/GetExamList",
                   data: { itemCateg: "@ViewBag.Itemcateg", InputItem : "@ViewBag.InputItem" },
                   dataType: 'json',
-                  success: function (Data) { 
-                      $("#DivContents").html(Data._strResult); 
-                      Gettime();
+                  success: function (Data) {
+                      $("#DivContents").html(Data._strResult);
+
+                      TESTRedio();
+                      Gettime(Data._strMinute);
                       $("#btndemo").attr("disabled", 'disabled');
-                      $("#btnSubmit").removeAttr("disabled", 'disabled'); 
-                  },
-                  error: function (ex) { 
+                      $("#btnSubmit").removeAttr("disabled", 'disabled');
+
+                      if (Data._strResult == "Error") {
+                          strHTMLresult = Data._strResult;
+                      }
 
                   },
-                }); 
-        } 
+                  error: function (ex) {
 
-        function Gettime() {
+                  },
+                  complete: function (data) {
+                    //  console.log("SEMPRE FUNFA!");
+                      $("#stImg").css("display", "none");
+                      //A function to be called when the request finishes
+                      // (after success and error callbacks are executed).
+                  }
+                });
+        }
+
+
+        function TESTRedio() {
+
+
+            var ArrCompl = [];
+
+
+            $('input[type="radio"]').click(function () {
+
+                if ($(this).is(':checked')) {
+                    var Quest = $(this).attr("name");
+
+
+                    var x = ArrCompl.indexOf($(this).attr("name"));
+
+                    var Ans = $(this).val();
+                    var GroupItem = { strQuestion: Quest, strAnswer: Ans };
+
+                    if (x < 0) {
+                        Arrs.push(GroupItem);
+                        ArrCompl.push(Quest);
+                    } else {
+                        Arrs.splice(x, 1, GroupItem);
+                    }
+                }
+            });
+        }
+         
+        var x
+        function Gettime(strTime) {
             // Set the date we're counting down to
 
+            startTime = new Date();
+
+            //startTime = new Date().getTime();
             var now = new Date();
-            now.setMinutes(now.getMinutes() + 5); // timestamp
+            now.setMinutes(now.getMinutes() + strTime); // timestamp
             now = new Date(now);
 
             var countDownDate = new Date(now).getTime();
 
             // Update the count down every 1 second
-            var x = setInterval(function () {
+            x = setInterval(function () {
 
                 // Get today's date and time
                 var now = new Date().getTime();
 
                 // Find the distance between now and the count down date
-                var distance = countDownDate - now;
+                  distance = countDownDate - now;
 
                 // Time calculations for days, hours, minutes and seconds
                 var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -110,73 +179,200 @@
                 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
                 // Display the result in the element with id="demo"
-                document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-                    + minutes + "m " + seconds + "s ";
+                document.getElementById("demo").innerHTML =   hours + "ชม. "
+                    + minutes + "น. " + seconds + "วิ. ";
 
+                if (minutes == 0) {
+                    $("#Massaging").css("color", "#fff");
+                    $("#demo").css("color", "#fff");
+                    $("#cHeader").css("background-color", "#FF0808");
+                } else if (minutes <= 3) {
+                    $("#Massaging").css("color", "##3CB175");
+                    $("#demo").css("color", "#fff");
+                    $("#cHeader").css("background-color", "#FFDC3E");
+                }
+                else {
+                    $("#Massaging").css("color", "#f00");
+                   // $("#demo").css("color", "#fff");
+                    $("#cHeader").css("background-color", "#BDFFB2");
+                }
                 // If the count down is finished, write some text
                 if (distance < 0) {
                     clearInterval(x);
                     document.getElementById("demo").innerHTML = "EXPIRED";
 
+                    $("#DivContents").html("");
+                    GoOutFullscreen();
                     Swal.fire({
                         icon: 'warning',
                         title: 'TIME OUT!!',
                         type: 'error',
                         timer: 1700,
                     }).then(function () {
-
-                        return false;
+                        return true;
                     });
                 }
             }, 1000);
         }
 
-        function hashchanged() {
-            debugger
-            Swal.fire({
-                icon: 'warning',
-                title: 'TIME OUT!!',
-                type: 'error',
-                timer: 1700,
-            }).then(function () {
+        /* Get into full screen */
+            function GoInFullscreen(element) {
+
+            if (element.requestFullscreen)
+                element.requestFullscreen();
+            else if (element.mozRequestFullScreen)
+                element.mozRequestFullScreen();
+            else if (element.webkitRequestFullscreen)
+                element.webkitRequestFullscreen();
+            else if (element.msRequestFullscreen)
+                element.msRequestFullscreen();
+        }
+
+        /* Get out of full screen */
+        function GoOutFullscreen() {
+            if (document.exitFullscreen)
+                document.exitFullscreen();
+            else if (document.mozCancelFullScreen)
+                document.mozCancelFullScreen();
+            else if (document.webkitExitFullscreen)
+                document.webkitExitFullscreen();
+            else if (document.msExitFullscreen)
+                document.msExitFullscreen();
+
+        }
+
+        /* Is currently in full screen or not */
+        function IsFullScreenCurrently() {
+            var full_screen_element = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement || null;
+
+            // If no element is in full-screen
+            if (full_screen_element === null)
                 return false;
-            });
+            else
+                return true;
         }
-
-        function toggleFullScreen(elem) {
-            $(document).keydown(function (event) {
-                if (event.keyCode == 123) { // Prevent F12
-                    return false;
-                } else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) { // Prevent Ctrl+Shift+I        
-                    return false;
-                }
-            });
-            // ## The below if statement seems to work better ## if ((document.fullScreenElement && document.fullScreenElement !== null) || (document.msfullscreenElement && document.msfullscreenElement !== null) || (!document.mozFullScreen && !document.webkitIsFullScreen)) {
-            if ((document.fullScreenElement !== undefined && document.fullScreenElement === null) || (document.msFullscreenElement !== undefined && document.msFullscreenElement === null) || (document.mozFullScreen !== undefined && !document.mozFullScreen) || (document.webkitIsFullScreen !== undefined && !document.webkitIsFullScreen)) {
-                if (elem.requestFullScreen) {
-                    elem.requestFullScreen();
-                } else if (elem.mozRequestFullScreen) {
-                    elem.mozRequestFullScreen();
-                } else if (elem.webkitRequestFullScreen) {
-                    elem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
-                } else if (elem.msRequestFullscreen) {
-                    elem.msRequestFullscreen();
-                }
+        $("#testtest").on("click", function () {
+            if (IsFullScreenCurrently()) {
+                GoOutFullscreen();
             } else {
-                if (document.cancelFullScreen) {
-                    document.cancelFullScreen();
-                } else if (document.mozCancelFullScreen) {
-                    document.mozCancelFullScreen();
-                } else if (document.webkitCancelFullScreen) {
-                    document.webkitCancelFullScreen();
-                } else if (document.msExitFullscreen) {
-                    document.msExitFullscreen();
-                }
+                GoInFullscreen($("#element").get(0));
+                GetData();
+                $("#Massaging").css("display", "block");
+                $("#ftExam").css("display", "block");
             }
+        });
+
+        $("#btnSubmit").on("click", function () {
+            if (IsFullScreenCurrently()) {
+                GoOutFullscreen();
+            } else {
+                GoInFullscreen($("#element").get(0));
+            }
+        });
+
+        function CommitExam() {
+
+            if (strHTMLresult == "Error") {
+                Swal.fire({
+                    icon: 'error',
+                    title: strHTMLresult,
+                    text: "ระบบขัดข้องกรุณาติดต่อ TEC ",
+                    type: "warning",
+                    //timer: 1700,
+                }).then(function () {
+                    return false;
+                });
+
+            } else {
 
 
+
+                var day = startTime.getDate();       // yields date
+                var month = startTime.getMonth() + 1;    // yields month (add one as '.getMonth()' is zero indexed)
+                var year = startTime.getFullYear();  // yields year
+                var hour = startTime.getHours();     // yields hours
+                var minute = startTime.getMinutes(); // yields minutes
+                var second = startTime.getSeconds(); // yields seconds
+
+
+                strHTMLresult = month + "/" + day + "/" +year + " " + hour + ':' + minute + ':' + second;
+
+
+
+                //alert(strHTMLresult+" : "+"@ViewBag.Itemcateg" + ": "+"@ViewBag.InputItem"+ ": "+"@User.Identity.Name");
+               $.ajax({
+                type: 'POST',
+                   url: "../UIExam/CommitExam",
+                   data: { ArrAns: Arrs, strItemCateg: "@ViewBag.Itemcateg", strItemInput: "@ViewBag.InputItem", OPID: "@User.Identity.Name", strStart: strHTMLresult},
+                  dataType: 'json',
+                   success: function (Data) {
+
+                       var strTitle = "";
+                       var strText = "";
+                       var strCateg = "";
+                       if (Data.dataBool == true && Data.data == "OK") {
+
+                           if (Data.dataResult == "True") {
+                               strTitle = "คุณทำข้อสอบผ่าน";
+                               strText = "ยินดีด้วยครับ";
+                               strCateg = "success";
+                           } else {
+                               strTitle = "คุณทำข้อสอบไม่ผ่าน";
+                               strText = "กรุณาติดต่อ TEC เพื่อทำการสอบใหม่";
+                               strCateg = "error";
+                           }
+                       } else {
+
+                           strTitle = Data.data;
+                           strText = Data.dataResult;
+                           strCateg = "error";
+                       }
+
+                      Swal.fire({
+                          icon: strCateg,
+                          title: strTitle,
+                          text: strText,
+                          type: strCateg,
+                          //timer: 1700,
+                      }).then(function () {
+                          return true;
+                      });
+                  },
+                  error: function (ex) {
+                      //alert(ex.responseText);
+                      $("body").html(ex.responseText);
+                  },
+                });
+            }
         }
-       
+
+        $(document).on('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', function () {
+            if (IsFullScreenCurrently()) {
+                return false;
+            }
+            else {
+                clearInterval(x);
+                alert('The exam is over');
+                $("#DivContents").html("<div class='text-center m-4'><H1 class='text-danger'>จบการสอบ</H1><H1 class='text-danger'> </H1> <br/> <a href='@Url.Action("LicenceList")' class='btn  btn-link'> MainMenu</a></div>" );
+                $("#ftExam").css("display", "none");
+                CommitExam();
+                return false;
+            }
+        });
+
+
+        window.onbeforeunload = function (event) {
+            var message = 'Important: Please click on \'Save\' button to leave this page.';
+            if (typeof event == 'undefined') {
+                event = window.event;
+            }
+            if (event) {
+                event.returnValue = message;
+            }
+            return message;
+        };
+        $(window).on("beforeunload", function () {
+            return inFormOrLink ? "Do you really want to close?" : null;
+        });
     </script>
-}
-    <input type="button" value="click to toggle fullscreen" onclick="toggleFullScreen(document.body)">
+} 

@@ -62,7 +62,8 @@ namespace RISTExamOnlineProject.Models.TSQL
 
 
 
-        public string OperatorReqChange(string Flag, string DocNo, string OperatorID, string SectionCode, string SectionAttribute, string OperatorGroup, string License, string Active, string ReqOperatorID, string ChangeOperatorID)
+        public string OperatorReqChange(string Flag, string DocNo, string OperatorID, string SectionCode, string SectionAttribute, string OperatorGroup,
+            string License, string Active, string ReqOperatorID, string ChangeOperatorID)
         {
 
 

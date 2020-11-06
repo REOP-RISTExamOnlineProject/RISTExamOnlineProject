@@ -5,46 +5,53 @@
 }
 
 
+<div class="container-fluid ">
+    @*<div class="row">
+        <div class="mb-2 col-6">
+            <h1>Licensure Examination</h1>
+            <p>การสอบใบอนุญาต</p>
+        </div>
+    </div>
+    <hr />*@
 
-<div class="container-fluid">
-    <div class="mb-4">
-        <h1>Licensure Examination</h1>
-        <p>การสอบใบอนุญาต</p>
-    </div> 
-    <hr />
+
     <div class="card shadow">
+        <div class="fb-image-lg profile-bgExam   "> 
+        </div>
         <div class="card-body">
-            <h4 class="text-uppercase ml-4 font-weight-lighter">
-                Licence category
-            </h4>
-            <hr />
+            <div class="row justify-content-center">
+                <div class="fb-image-profilex">
+                    <h1 class="text-uppercase">หัวข้อข้อสอบ</h1>
+                </div>
+            </div>
             <div class="text-center bg-white p-3">
-                <table class="table table-bordered table-sm bg-white w-100" id="tbItemCatg">
-                    <thead class="bg-dark text-white">
+                <table class="table table-hover table-sm bg-white w-100" id="tbItemCatg">
+                    <thead class="bg-light">
                         <tr>
-                            <td>licensure Code</td>
-                            <td>licensure Name</td>
-                            <td>Mode/โหมด</td>
-                        </tr> 
+                            <td>รหัสหัวข้อข้อสอบ</td>
+                            <td>ชื่อหัวข้อข้อสอบ</td>
+                            <td>ยังไม่ได้สอบ</td>
+                            <td>เลือกหัวข้อ</td>
+                        </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody class="small"></tbody>
                 </table>
             </div>
         </div>
-        </div>
     </div>
+</div>
 
-<style>
-    #tbItemCatg tbody tr.even:hover {
-        background-color: cadetblue;
-        cursor: pointer;
-    }
+@*<style>
+        #tbItemCatg tbody tr.even:hover {
+            background-color: cadetblue;
+            cursor: pointer;
+        }
 
-    #tbItemCatg tr.even:hover td.sorting_1 {
-        background-color: cadetblue;
-        cursor: pointer;
-    }
-</style>
+        #tbItemCatg tr.even:hover td.sorting_1 {
+            background-color: cadetblue;
+            cursor: pointer;
+        }
+    </style>*@
 @section scripts{
     <link href="~/lib/datatables/Css/jquery.dataTables.min.css" rel="stylesheet" />
     <script src="~/lib/datatables/Js/jquery.dataTables.min.js"></script>
@@ -58,30 +65,41 @@
 
         function InitTable() {
 
-            myTables1 = $("#tbItemCatg").DataTable({ 
-               // searching: false, 
-                ordering: true, 
-                processing: true, 
+            myTables1 = $("#tbItemCatg").DataTable({
+                ordering: true,
+                processing: true,
                 dom: '<"top"l>rt<"bottom"ip><"clear">',
                 columns: [
                     { data: "itemCateg", name: "itemCateg", class: "text-wrap text-center" },
-                    { data: "itemCategName", name: "itemCategName", class: "text-wrap text-center" }, 
-                    { 
+                    { data: "itemCategName", name: "itemCategName", class: "text-wrap text-center" },
+                   {
+                       data: null,
+                       name: null,
+                       className: "center",
+                       "fnCreatedCell": function (nTd, oData) {
+                           var cntItemCateg = oData.cntItemCateg;
+                           var HTMLTag = "";
+                        
+                           HTMLTag = '<h6><span class="badge badge-danger"> ' + cntItemCateg + ' ชุด</span></h3>';
+                           $(nTd).html(HTMLTag);
+                       }, className: "dt-body-center"
+                   },
+                    {
                         data: null,
                         name: null,
                         className: "center",
-                        "fnCreatedCell": function (nTd, oData) {  
-                            var itemCateg = oData.itemCateg;
-                            $(nTd).html('<a href="../UIExam/ModeExemList?ItemCateg=' + itemCateg +' " class="btn btn-success btn-sm">SELECT</a>');  
+                        "fnCreatedCell": function (nTd, oData) {
+
+                            var cntItemCateg = oData.cntItemCateg;
+                            var ItemCateg = oData.itemCateg;
+                            $(nTd).html('<a href="../UIExam/ModeExemList?ItemCateg=' + ItemCateg + ' " class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> เลือกข้อสอบ</a>');
                         }, className: "dt-body-center"
-                    }, 
+                    },
                 ],
-                order: [0, "asc"], 
+                order: [0, "asc"],
             });
 
-       
-            //$('#tbItemCatg tbody').on('click', 'tr', function () {
-              
+            //$('#tbItemCatg tbody').on('hover', 'tr', function () {
             //    if ($(this).hasClass('selected')) {
             //        $(this).removeClass('selected');
             //    }
@@ -89,73 +107,51 @@
             //        myTables1.$('tr.selected').removeClass('selected');
             //        $(this).addClass('selected');
             //    }
-            //    var tete = myTables1.rows('.selected').data(); 
-            //    var eerer = tete[0].itemCateg;
-            //    window.location.href = "../Exam/new_exam";
-            //   // alert(eerer);
-                
             //});
-            $('#tbItemCatg tbody').on('hover', 'tr', function () {
-                if ($(this).hasClass('selected')) {
-                    $(this).removeClass('selected');
-                }
-                else {
-                    myTables1.$('tr.selected').removeClass('selected');
-                    $(this).addClass('selected');
-                }
-                //var tete = myTables1.rows('.selected').data(); 
-                //var eerer = tete[0].itemCateg;
-                //window.location.href = "../Exam/new_exam";
-                // alert(eerer);
-            });
         }
 
-           
+
 
 
         function GetData() {
-             
-             $.ajax({
+            $.ajax({
                 type: 'POST',
-                 url: "../UIExam/GetItemCatg",
-              //  data: { ArrData: strControl[0] },
+                url: "../UIExam/GetItemCatg",
                 dataType: 'json',
                 success: function (Data) {
-
                     myTables1.clear().draw();
                     if (Data._strResult == "OK") {
-                         
+
                         myTables1.rows.add(Data.data).draw();
-                       
+
                     } else {
                         Swal.fire({
                             icon: 'warning',
-                            title: Data.dataLabel,
+                            title: Data._strResult,
                             type: 'error',
-                            timer: 1700,
+                            // timer: 1700,
                         }).then(function () {
                             return false;
                         });
 
                     };
                 },
-                 error: function (ex) {
-                     Swal.fire({
-                         icon: 'warning',
-                         title: 'Failed to retrieve states.' + ex,
-                         type: 'error',
-                         timer: 1700,
-                     }).then(function () {
-                         return false;
-                     });
-                  
+                error: function (ex) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Failed to retrieve states.' + ex,
+                        type: 'error',
+                        // timer: 1700,
+                    }).then(function () {
+                        return false;
+                    });
+
                 },
             });
-            
-        } 
 
-     
-         
-        
+        }
+
+
+
     </script>
 }

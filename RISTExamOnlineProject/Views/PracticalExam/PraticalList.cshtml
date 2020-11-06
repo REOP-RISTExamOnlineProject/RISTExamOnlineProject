@@ -1,0 +1,134 @@
+﻿
+@{
+    ViewData["Title"] = "PraticalList";
+    Layout = "~/Views/Shared/_Parctical_Layout.cshtml";
+}
+
+
+
+<html>
+<head>
+
+</head>
+<body>
+
+
+    <header class="justify-content-xl-center text-center m-lg-5  m-md-5">        
+                <h1 class="font-weight-bold ">Pratical List</h1> 
+    </header>
+
+    <div class="container  justify-content-lg-center  justify-content-md-center ">
+
+
+        <div class="row justify-content-lg-center  justify-content-md-center m-lg-5     m-md-5 text-center ">
+
+            <div class="col col-lg-2  col-md-3 ">
+                <h6 class="font-weight-bold">  Plan ID :</h6>
+            </div>
+
+
+
+            <div class="col col-lg-3  col-md-5 ">
+                @Html.DropDownList("DDL_PlanID", new SelectList("", ""), new { @id = "DDL_PlanID", @class = "custom-select h-100 shadow-lg " })
+
+            </div>
+        </div>
+
+
+
+        <div class="row justify-content-lg-center justify-content-md-center mb-lg-5  mb-md-5">
+            <div class="col col-lg-5 col-md-7">
+                <button type="button" id="BTN_Preparation_Work" class="btn-lg w-100 h-100  btn-primary shadow-lg" onclick="JobList('0');">งานเตรียม</button>
+            </div>
+        </div>
+        <div class="row justify-content-lg-center justify-content-md-center  mb-lg-5  mb-md-5">
+            <div class="col col-lg-5 col-md-7">
+                <button type="button" id="BTN_Main_Work" class="btn-lg w-100  h-100  btn-primary shadow-lg" onclick="JobList('1');">งานหลัก</button>
+            </div>
+        </div>
+        <div class="row justify-content-lg-center justify-content-md-center  mb-lg-5  mb-md-5">
+            <div class="col col-lg-5 col-md-7">
+                <button type="button" id="BTN_Final_work" class="btn-lg w-100 h-100 btn-primary shadow-lg" onclick="JobList('2');">งานขั้นสุดท้าย/งานเสริม</button>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+
+    @section scripts{
+
+        <script src="~/lib/CustomJS/Practical/Practical_List.js"></script>
+
+
+        <script type="text/javascript">
+
+            var Staffcode;
+            var OPID;
+            var PlanID;
+            var LicenseName;
+
+
+            $(document).ready(function () {
+
+                OPID =   "@User.Identity.Name";
+                Staffcode =  getParams(document.URL);
+                GetPlanID(Staffcode);
+
+            });
+
+
+              function JobList(ItemID) {
+         
+
+              LicenseName = $('#DDL_PlanID').val();
+              PlanID = $("#DDL_PlanID option:selected").text();
+
+
+
+
+                  if (LicenseName != 0) {
+
+                  location.href = '@Url.Action("ParcticalDispaly", "PracticalExam")?OPID=' + OPID + '&Staffcode=' + Staffcode + '&ItemID=' + ItemID + '&PlanID=' + PlanID + '&LicenseName=' + LicenseName + '';
+
+
+
+                   } else {
+
+                              Swal.fire({
+                                  icon: 'error',
+                                  title: 'Oops...',
+                                  text: ('Plase select plan id')
+
+                              });
+
+                  }
+              }
+
+
+
+            function goBack() {
+                window.history.back();
+            };
+
+        </script>
+
+
+
+    }
+
+
+
+
+</body>
+</html>
+
+
+
+
+

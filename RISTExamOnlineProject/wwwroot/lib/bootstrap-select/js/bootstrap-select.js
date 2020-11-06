@@ -642,7 +642,7 @@
 
   var version = {
     success: false,
-    major: '4'
+    major: '3'
   };
 
   try {

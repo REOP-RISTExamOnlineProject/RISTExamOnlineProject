@@ -4,30 +4,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container-fluid">
-    <div class="mb-4">
-        <h1>Licensure Examination</h1>
-        <p>การสอบใบอนุญาต</p>
-    </div>
-    <hr />
+<div class="container-fluid"> 
     <div class="card shadow">
+        <div class="fb-image-lg profile-bgExam   ">
+        </div>
         <div class="card-body">
-            <h4 class="text-uppercase ml-4 font-weight-lighter">
-                Exam category  : @ViewBag.Itemcateg @ViewBag.ItemCateName
-            </h4>
-            <hr />
+            <div class="row justify-content-center">
+                <div class="fb-image-profilex">
+                    <h1 class="text-uppercase">ชุดข้อสอบ</h1>
+                </div>
+            </div>
             <div class=" p-3">
-                <table class="table table-bordered table-sm bg-white w-100" id="tbItemCatg">
-                    <thead class="bg-dark text-white">
+                <table class="table table-hover table-sm bg-white w-100" id="tbItemCatg">
+                    <thead class="bg-light">
                         <tr>
                             <th class="text-center">รหัสชุดข้อสอบ</th>
                             <th class="text-center">ชื่อข้อสอบ</th>
+                            <th class="text-center">จำกัดเวลา</th>
                             <th class="text-center">เลือกทำ</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
-                </table> 
-            </div> 
+                </table>
+            </div>
             <a href="@Url.Action("LicenceList")" class="btn  btn-link"> Back</a>
         </div>
     </div>
@@ -49,8 +48,7 @@
 
         function InitTable() {
 
-            myTables1 = $("#tbItemCatg").DataTable({
-                // searching: false,
+            myTables1 = $("#tbItemCatg").DataTable({ 
                 ordering: true,
                 processing: true,
                 dom: '<"top"l>rt<"bottom"ip><"clear">',
@@ -58,12 +56,26 @@
                     { data: "itemCateg", name: "itemCateg", class: "text-wrap  " },
                     { data: "itemCategName", name: "itemCategName", class: "text-wrap  " },
                     {
+                       data: null,
+                       name: null,
+                       className: "center",
+                       "fnCreatedCell": function (nTd, oData) {
+                           var cntItemCateg = oData.cntItemCateg;
+                           var HTMLTag = ""; 
+                           HTMLTag = '<h6><span class="badge badge-warning text-lg"> <i class="far fa-clock"></i> ' + cntItemCateg + ' นาที</span></h3>';
+                           $(nTd).html(HTMLTag);
+                       }, className: "dt-body-center"
+                   },
+                    {
                         data: null,
                         name: null,
                         className: "center",
                         "fnCreatedCell": function (nTd, oData) {
                             var itemCateg = oData.itemCateg;
-                            $(nTd).html('<a href="../UIExam/Examexamination?ItemInput=' + itemCateg + '"  class="btn btn-success btn-sm">SELECT</a>');
+                            var HTMLTag = "";
+                            var TEST = "@ViewBag.Itemcateg"; 
+                            HTMLTag = '<a href="@Url.Action("Examexamination")?ItemInput=' + itemCateg + '&ItemCateg=' + TEST +'"  class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> เลือกทำข้อสอบ</a>'; 
+                            $(nTd).html(HTMLTag);
                         }, className: "dt-body-center"
                     },
                 ],

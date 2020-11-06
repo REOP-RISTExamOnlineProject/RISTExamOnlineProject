@@ -1,56 +1,122 @@
 ﻿
-function GetExamDetail(Itemcode) {
- 
+
+function GetExamCategory(Type) {
+    
     $.ajax({
         type: 'POST',
-        url: '../Exam/GetExamDetail',
+        url: '../Exam/GetCategory',
         dataType: 'json',
-        data: { Itemcode: Itemcode },
-        success: function (response) {
-    
-            if (response.success == true) {
-                debugger
-                Max_Seq = response.max_Seq
-                QuestionCount = response.questionCount
-                ValueCodeQuestion = response.valueCodeQuestion
-                ValueCodeAnswer = response.valueCodeAnswer
-                ItemName = response.itemName
-           var     Detail = response.detail
-                $('#LB_Exam_Count').text(QuestionCount);
-                $('#LB_Exam_Name').text(ItemName);
-                debugger
-                MakeTable(Detail);
-
-            } else {
-
+        data: { CategoryType: Type },
+        success: function (respond) {
+            if (respond.length != 0) {
+                $.each(respond, function (i, div) {
+                    $("#DDL_ExamCategory").append('<option value="' + div.value + '">' + div.text + '</option>');
+                });
             }
+        },
+        error: function (ex) {
+            alert('Failed to retrieve states.' + ex);
+        }
+    });
+};
 
+
+function GetExamCategoryType() {
+    $.ajax({
+        type: 'POST',
+        url: '../Exam/GetCategType',
+        dataType: 'json',
+     //   data: { Job: Type },
+        success: function (respond) {
+            if (respond.length != 0) {
+                $.each(respond, function (i, div) {
+                    $("#DDL_CategoryType").append('<option value="' + div.value + '">' + div.text + '</option>');
+                });
+            }
+        },
+        error: function (ex) {
+            alert('Failed to retrieve states.' + ex);
+        }
+    });
+};
+
+
+
+
+function GetExamName(Category) {
+    $.ajax({
+        type: 'POST',
+        url: '../Exam/GetExamname',
+        dataType: 'json',
+        data: { Category: Category },
+        success: function (respond) {
+            if (respond.length != 0) {
+                $.each(respond, function (i, div) {
+                    $("#DDL_ExamName").append('<option value="' + div.value + '">' + div.text + '</option>');
+                });
+            }
         },
         error: function (ex) {
             alert('Failed to retrieve states.' + ex);
         }
     });
 
-
-
-
-}
-
-
-
-
-var $widget = $("[data-ks-widget]");
-var toggleCls = "open";
-
-$widget.on("click", "[data-widget-toggle]", function (e) {
-    e.preventDefault();
-    $widget.toggleClass(toggleCls);
-});
+};
 
 
 
 
+function GetExamDetail(Itemcode) {
 
+    $.ajax({
+        type: 'POST',
+        url: '../Exam/GetExamDetail',
+        dataType: 'json',
+        data: { Itemcode: Itemcode },
+        success: function (response) {    
+            if (response.success == true) {       
+                var Detail = response.detail
+                Max_Seq = response.max_Seq
+                QuestionCount = response.questionCount
+                ValueCodeQuestion = response.valueCodeQuestion
+                ValueCodeAnswer = response.valueCodeAnswer
+                ItemName = response.itemName    
+                Rewrite_ValueList = response.rewrite_ValueList
+                Rewrite_Master = response.rewrite_Master
+                UpdDate = response.updDate
+     
+                $('#LB_Rewrie').text(Rewrite_Master);
+                $('#LB_Update').text(UpdDate);
+                $('#LB_Exam_Count').text(QuestionCount);
+                $('#LB_Exam_Name').text(ItemName);              
+                MakeTable(Detail);
+                $('#Display').show();
+
+            } else {
+         
+                TableTarget = $("#MyTable").DataTable()
+
+
+                if (TableTarget != null) {
+                    TableTarget.destroy();
+                }
+                TableTarget.clear().draw();
+
+                $('#Display').show();
+                UpdDate = response.updDate
+                ValueCodeQuestion = response.valueCodeQuestion
+                ValueCodeAnswer = response.valueCodeAnswer
+                Rewrite_Master = response.rewrite_Master
+                $('#LB_Rewrie').text(Rewrite_Master);
+                $('#LB_Update').text(UpdDate);
+                $('#LB_Exam_Count').text('0');
+            }
+        },
+        error: function (ex) {
+            alert('Failed to retrieve states.' + ex);
+        }
+    });
+};
 
 function Add_Detail_Display(DisplayID, SummernoteID) {
     $('#BTN_Edit').attr('disabled', false);
@@ -59,18 +125,25 @@ function Add_Detail_Display(DisplayID, SummernoteID) {
     InputHTML(DisplayID, markup)
     Reset_Summernote(SummernoteID)
 };
+
+
 function Show_Summernote(DisplayID) {
 
     TempDisplayID = DisplayID
-    $('#Summernote_modal').summernote({ height: 150 });
-    Reset_Summernote('Summernote_modal')
+
+    $('#Summernote_modal').summernote({ height: 150 }); 
+    Reset_Summernote('Summernote_modal');
+    var range = document.getElementById('Summernote_modal');
+
     DeleteHTML('Display_Modal')
     var HTMLText = document.getElementById(DisplayID).innerHTML
     InputHTML('Display_Modal', HTMLText)
     $('#BTN_Edit').attr('disabled', false);
     $('#BTN_Save').attr('disabled', false);
-    $('#Modal_Summernote').modal('show')
-}
+    $('#Modal_Summernote').modal('show');  
+    $('#Summernote_modal').summernote('focus');
+
+};
 
 function Edit_Detail_Display(DisplayID, SummernoteID) {
 
@@ -85,49 +158,45 @@ function Edit_Detail_Display(DisplayID, SummernoteID) {
 
 
 function CountAns(type) {
-    if (type == 'new') {
+
+    if (type == 'NEW') {
         var parent = document.getElementById("FormDisplay_Answer_New");
-        var eee = 0
-        eee = parent.getElementsByClassName("ANS_New");
-        var count = eee.length
+        var Elements_obj = 0
+        Elements_obj = parent.getElementsByClassName("ANS_New");
+        var count = Elements_obj.length
         $('#LB_Ans_Count_New').text(count);
     } else {
         var parent = document.getElementById("FormDisplay_Answer_Edit");
-        var eee = 0
-        eee = parent.getElementsByClassName("ANS_Edit");
-        var count = eee.length
-
+        var Elements_obj = 0
+        Elements_obj = parent.getElementsByClassName("ANS_Edit");
+        var count = Elements_obj.length
         $('#LB_Ans_Count_Edit').text(count);
-
-    }
-   
+    } 
 
 
-}
+};
 
 
 function Summernote_PasteHTML(SummernoteID, HTMLText) {
     $('#' + SummernoteID).summernote('pasteHTML', HTMLText);
-}
+};
 
 
 function Reset_Summernote(SummernoteID) {
     $('#' + SummernoteID).summernote('reset');
-}
+};
 
 function Clear_Display(DisplayID) {
     DeleteHTML(DisplayID)
-}
+};
 
 
-
-
-
-$(document).on('click', 'button.remove-new', function (e) {
+$(document).on('click', 'button.remove-NewQuestion', function (e) {
+   
   
     var parent = document.getElementById("FormDisplay_Answer_New");
     var nodesSameClass = 0
-    nodesSameClass = parent.getElementsByClassName("ANS");
+    nodesSameClass = parent.getElementsByClassName("ANS_New");
 
     if (nodesSameClass.length > 1) {
 
@@ -137,11 +206,13 @@ $(document).on('click', 'button.remove-new', function (e) {
     }
 
 
-    CountAns('new')
+    CountAns('NEW')
 
 });
 
-$(document).on('click', 'button.remove-edit', function (e) {
+$(document).on('click', 'button.remove-EditQuestion', function (e) {
+
+    
 
     var parent = document.getElementById("FormDisplay_Answer_Edit");
     var nodesSameClass = 0
@@ -155,16 +226,13 @@ $(document).on('click', 'button.remove-edit', function (e) {
     }
 
 
-    CountAns('Edit')
+    CountAns('UPD')
 
 });
 
 
 
 function Save_Exam(job) {
-
-
-
     Swal.fire({
         icon: 'warning',
         title: 'Are you sure?',
@@ -184,21 +252,16 @@ function Save_Exam(job) {
     })
 
 
-}
-
-
+};
 
 function Insert_Exam(job) {
-    //------------------ Save Ans ----------------------
-  
-
     var CB_Need_class
     var FormDisplay_class
     var ANS_class
     var Display_Answer_class
     var RD_Display_class
     var Display_Question
-    if (job == 'new') {
+    if (job == 'NEW') {
         CB_Need_class = "CB_Need_New";
         FormDisplay_class = "FormDisplay_Answer_New";
         ANS_class = "ANS_New"
@@ -215,22 +278,17 @@ function Insert_Exam(job) {
     }
 
 
-
-
     var Ans_TextDisplay = [];
     var Ans_Text_HTML_Display = [];
-    var Ans_Value = [];
-  
+    var Ans_Value = [];  
     var Need_value = document.getElementById(CB_Need_class);
     Need_value = Need_value.checked;
-
     var parent = document.getElementById(FormDisplay_class);
-    var nodesSameClass = 0
+    var nodesSameClass = 0;
     nodesSameClass = parent.getElementsByClassName(ANS_class);
-    var AnsCount = nodesSameClass.length
+    var AnsCount = nodesSameClass.length;
     var Display = document.getElementsByClassName(Display_Answer_class);
     var RD = document.getElementsByClassName(RD_Display_class);
-
 
 
     for (var i = 0; i <= AnsCount - 1; i++) {
@@ -247,30 +305,30 @@ function Insert_Exam(job) {
     var TextHTML_Question;
 
     var Question_FormDetail = document.getElementById(Display_Question);
-    Text_Question = Question_FormDetail.innerText // TEXT
-    TextHTML_Question = Question_FormDetail.innerHTML // HTML TEXT
+    Text_Question = Question_FormDetail.innerText; // TEXT
+    TextHTML_Question = Question_FormDetail.innerHTML;// HTML TEXT
 
     //---------- Check ข้อมูลต้องถูก Input ให้ครบ ----
     var TextAleart = "";
-    var Check = true
+    var Check = true;
     var Check_Ans_Text = Ans_TextDisplay.indexOf(""); // -1 คือ ครบ
-    var Check_Ans = Ans_Value.indexOf(1) // ต้องไม่เท่ากับ -1             
+    var Check_Ans = Ans_Value.indexOf(1); // ต้องไม่เท่ากับ -1             
 
 
     if (Check_Ans_Text != -1) {
         TextAleart = TextAleart + " <p style='color: red;'>- กรุณาใส่คำตอบให้ครับ </p>"
         Check = false
-    }
+    };
 
     if (Check_Ans == -1) {
         TextAleart = TextAleart + " <p style='color: red;'>- กรุณากำหนดคำตอบที่ถูกต้อง</p>"
         Check = false
-    }
+    };
 
     if (Text_Question == "") {
-        TextAleart = TextAleart + " <p style='color: red;'>- กรุณาใส่คำถาม</p>"
-        Check = false
-    }
+        TextAleart = TextAleart + " <p style='color: red;'>- กรุณาใส่คำถาม</p>";
+        Check = false;
+    };
 
 
 
@@ -280,12 +338,12 @@ function Insert_Exam(job) {
 
         $.ajax({
             type: 'POST',
-            url: '../Exam/InseartExam',
+            url: '../Exam/Valueslist',
             dataType: 'json',
             data: {
                 Max_Seq: Max_Seq, QuestionCount: QuestionCount, ValueCodeQuestion: ValueCodeQuestion, ValueCodeAnswer: ValueCodeAnswer,
                 Ans_TextDisplay: Ans_TextDisplay, Ans_Text_HTML_Display: Ans_Text_HTML_Display, Ans_Value: Ans_Value, Need_value: Need_value,
-                Text_Question: Text_Question, TextHTML_Question: TextHTML_Question, job: job, OP_UPD: OP_UPD, DisplayOrder: DisplayOrder
+                Text_Question: Text_Question, TextHTML_Question: TextHTML_Question, job: job, OP_UPD: OP_UPD, DisplayOrder: DisplayOrder, Rewrite_Master: Rewrite_Master
             },
             success: function (response) {
                 if (response.success == true) {
@@ -297,9 +355,11 @@ function Insert_Exam(job) {
                         showConfirmButton: true,
                         //   timer: 1700
                     }).then(function (result) {
-
-                        location.reload();
-
+                        $('#Modal_Form_Main').modal('hide');
+                   //     location.reload();
+                        var ExamCode = $("#DDL_ExamName").val();
+                        GetExamDetail(ExamCode)
+                    
                     });
 
                 } else {
@@ -332,12 +392,10 @@ function Insert_Exam(job) {
 
 
 
-}
+};
 
 function Add_Ans(type) {
     if (type == "new") {
-
-
         var count_row = $('#LB_Ans_Count_New').text();
         if (count_row < 5) {
 
@@ -357,7 +415,7 @@ function Add_Ans(type) {
             newel[0].innerHTML = HTMLText
             $(newel).insertAfter(".ANS_New:last")
             $('#' + newid_Dp + '').empty();
-            CountAns('new')
+            CountAns('NEW')
         } else {
 
             Swal.fire({
@@ -396,7 +454,7 @@ function Add_Ans(type) {
             newel[0].innerHTML = HTMLText
             $(newel).insertAfter(".ANS_Edit:last")
             $('#' + newid_Dp + '').empty();
-            CountAns('Edit')
+            CountAns('UPD')
 
         } else {
 
@@ -410,19 +468,288 @@ function Add_Ans(type) {
 
     }
 
-}
+};
 
 
 
 function Save() {
-    $('#Modal_Summernote').modal('hide')
-    var HTMLText = document.getElementById('Display_Modal').innerHTML
-    DeleteHTML(TempDisplayID)
-    InputHTML(TempDisplayID, HTMLText)
+    $('#Modal_Summernote').modal('hide');
+    var HTMLText = document.getElementById('Display_Modal').innerHTML;
+    DeleteHTML(TempDisplayID);
+    InputHTML(TempDisplayID, HTMLText); 
+};
 
+
+
+function DeleteQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq, ValueStatus) {
+    var Job;
+    var TextAleart;
+    if (ValueStatus == 'NEW') {
+        Job = 'REJ'
+        TextAleart = 'This question has not been approved.If deleted, it cannot be recovered.'
+
+    }
+
+    else {
+        TextAleart = 'Are you sure you want to Delete Question ?'
+        Job = 'DEL'
+    }
+    Swal.fire({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: TextAleart,
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Delete it!'
+
+    }).then(function (result) {
+        if (result.value) {
+
+            $.ajax({
+                type: 'POST',
+                url: '../Exam/Valueslist',
+                dataType: 'json',
+                data: {
+
+                    Max_Seq: 0, QuestionCount: 0, ValueCodeQuestion: ValueCodeQuestion, ValueCodeAnswer: ValueCodeAnswer,
+                    Ans_TextDisplay: "", Ans_Text_HTML_Display: "", Ans_Value: "0", Need_value: "0",
+                    Text_Question: "", TextHTML_Question: "", job: Job, OP_UPD: OP_UPD, DisplayOrder: Seq     
+                },
+
+                success: function (response) {
+                    if (response.success == true) {
+                        Swal.fire({
+                            position: 'top-mid',
+                            icon: 'success',
+                            title: ("Delete  Question  success "),
+                            showConfirmButton: true,
+                            //   timer: 1700
+                        }).then(function (result) {
+                            var ExamCode = $("#DDL_ExamName").val();
+                            GetExamDetail(ExamCode)
+
+                        });
+                    }
+
+                }
+
+            });
+
+
+        }
+    });
+
+};
+
+
+function RestoreQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq) {
+    Swal.fire({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: "Are you sure you want to Rrestore Question ?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Do it!'
+
+    }).then(function (result) {
+        if (result.value) {
+
+            $.ajax({
+                type: 'POST',
+                url: '../Exam/Valueslist',
+                dataType: 'json',
+                data: {
+                    Max_Seq: 0, QuestionCount: 0, ValueCodeQuestion: ValueCodeQuestion, ValueCodeAnswer: ValueCodeAnswer,
+                    Ans_TextDisplay: "", Ans_Text_HTML_Display: "", Ans_Value: "0", Need_value: "0",
+                    Text_Question: "", TextHTML_Question: "", job: "RES", OP_UPD: OP_UPD, DisplayOrder: Seq
+                },
+
+                success: function (response) {
+                    if (response.success == true) {
+                        Swal.fire({
+                            position: 'top-mid',
+                            icon: 'success',
+                            title: ("Restore  Question  success "),
+                            showConfirmButton: true,
+                            //   timer: 1700
+                        }).then(function (result) {
+
+                            var ExamCode = $("#DDL_ExamName").val();
+                            GetExamDetail(ExamCode)
+
+                        });
+                    }
+
+                }
+
+            });
+
+
+        }
+    });
+
+};
+
+
+
+function NewQuestion() {
+
+    var HTML_TEXT;
+    $.ajax({
+        type: 'POST',
+        url: '../Exam/Get_HTML_Question_Detail',
+        dataType: 'json',
+        data: { ValueCodeAnswer: '0', ValueCodeQuestion: '0', Seq: 0, Job: "new" },
+        success: function (response) {
+            if (response.success == true) {
+                $('#LB_title').text('New Question');
+                HTML_TEXT = response.html;
+                DeleteHTML('Modal_body_Form_Main');
+                InputHTML('Modal_body_Form_Main', HTML_TEXT);
+                $('#Modal_Form_Main').modal('show');
+                CountAns('NEW');
+            }
+        }
+    });
+
+};
+
+function EditQuestion(ValueCodeAnswer, ValueCodeQuestion, Seq, Max_Seq) {
+    
+    Max_Seq = Max_Seq;
+    DisplayOrder = Seq;
+    var HTML_TEXT;
+    $.ajax({
+        type: 'POST',
+        url: '../Exam/Get_HTML_Question_Detail',
+        dataType: 'json',
+        data: { ValueCodeAnswer: ValueCodeAnswer, ValueCodeQuestion: ValueCodeQuestion, Seq: Seq, Job: "upd" },
+        success: function (response) {
+            if (response.success == true) {
+                
+
+                $('#LB_title').text('Edit Question');
+
+                HTML_TEXT = response.html;
+                DeleteHTML('Modal_body_Form_Main');
+                InputHTML('Modal_body_Form_Main', HTML_TEXT);
+                CountAns('UPD')
+                $('#Modal_Form_Main').modal('show')
+
+            }
+        }
+    });
+};
+
+
+function Manage_Exam() {
+  
+    var ExamCode = $("#DDL_ExamName").val();
+    if (ExamCode != '' && ExamCode != null) {
+
+        GetExamDetail(ExamCode)
+    } else {
+
+        Swal.fire({
+            text: ("Please Selete Exam Name"),
+            icon: 'error',
+            title: 'Oops...',
+
+        }).then(function () {
+            return false;
+        });
+
+
+    }
+
+};
+
+
+
+function MakeTable(Detail) {
+    TableTarget = $("#MyTable").DataTable()
+    if (TableTarget != null) {
+        TableTarget.destroy();
+    }
    
-   
-}
+    TableTarget = $("#MyTable").DataTable({
+        //searching: false,
+        ordering: false,
+        //serverSide: true,
+        //processing: true,
+        //paging: true,
+
+        //deferRender: true,
+        data: Detail,
+        dom: '<"top">rt<"bottom"l>ip<"clear">',
+        columns: [
+
+            { data: "question", name: "question", class: "text-wrap text-left" },
+            { data: "ans_Count", name: "ans_Count", class: "text-wrap text-center" },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    var valueStatus = row.valueStatus.trim();
+                    
+                    if (valueStatus == 'NEW') {
+                        return " <label  class='text-success font-weight-bold'>" + valueStatus + "</label> ";
+                    }
+                    else if (valueStatus == 'UPD') {
+                        return "<label  class='text-primary font-weight-bold'>" + valueStatus + "</label>";
+                    }
+                    else if (valueStatus == 'DEL') {
+                        return "<label  class='text-danger font-weight-bold'>" + valueStatus + "</label>";
+                    }
+                    else {
+                         return "<label  class='text-dark font-weight-bold'>" + valueStatus + "</label>";;
+                    }
+
+
+                }, class: "text-wrap text-center"
+
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    var ValueCodeQuestion = row.valueCodeQuestion.trim();
+                    var ValueCodeAnswer = row.valueCodeAnswer.trim();
+                    var Seq = row.seq;
+                    var Max_Seq_ = row.max_Seq.trim();
+                    var ValueStatus = row.valueStatus.trim();
+                    
+                    if (ValueStatus != 'DEL') {
+
+                        return "<div class='row justify-content-center m-2'>" +
+                            "<div class='col-5'> <a href='#' class='btn_response btn btn-info w-100 text-white ' title='Edit' onclick=EditQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "','" + Max_Seq_ + "') > <i class='fas fa-pencil-alt'></i> Edit</a> </div> " +
+
+                            "<div class='col-5'>  <a href='#' class='btn_response btn btn-danger w-100 text-white' title='Delete' onclick=DeleteQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "','" + ValueStatus + "') > <i class='fas fa-trash-alt'></i> Delete </a> </div>" +
+
+                            "</div>";
+                    } else {
+
+                        return "<div class='row justify-content-center m-2'>" +
+                         
+                            "<div class='col-5'>  <a href='#' class='btn_response btn btn-secondary w-100 text-white ' title='Restore Question' onclick=RestoreQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "') > <i class='fas fa-trash-restore-alt'></i> Restore </a> </div>" +
+                            "</div>";
+                    }
+
+
+                }, class: "text-wrap text-center"
+            },
+        ],
+
+
+
+    });
+
+
+
+};
+
 
 
 

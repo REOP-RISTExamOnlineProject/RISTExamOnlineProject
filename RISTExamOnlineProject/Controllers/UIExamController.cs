@@ -34,8 +34,11 @@ namespace RISTExamOnlineProject.Controllers
         {
             return View();
         }
+        public IActionResult ExamResultMonitor()
+        {
+            return View();
+        }
 
-       
 
         public IActionResult ModeExemList(string ItemCateg)
         {
@@ -50,12 +53,10 @@ namespace RISTExamOnlineProject.Controllers
             return View();
         }
 
-        public IActionResult Examexamination(string ItemInput )
+        public IActionResult Examexamination(string ItemInput, string ItemCateg)
         {
-            string ItemCateg = TempData["XX"].ToString();
-
             ViewBag.Itemcateg = ItemCateg;
-            ViewBag.InputItem = ItemInput; 
+            ViewBag.InputItem = ItemInput;
 
             return View();
         }
@@ -84,25 +85,95 @@ namespace RISTExamOnlineProject.Controllers
             mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
             //List<_OperatorItemCateg> dataList = new List<_OperatorItemCateg>();
             ResultItemCateg ResultOPcateg = new ResultItemCateg();
-            ResultOPcateg = ObjRun.GetInputItemList(itemCateg);
+            ResultOPcateg = ObjRun.GetInputItemList(itemCateg, UserName);
 
 
             var jsonResult = Json(new { data = ResultOPcateg._listOpCateg, _strResult = ResultOPcateg.strResult });
+            return jsonResult;
+        }
+        public JsonResult GetExamList(string itemCateg, string InputItem)
+        {
+            mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
+            DataTable dt = new DataTable();
 
-              
+
+            int strMinute = 0;
+
+            string Result = ObjRun.MakingExam(itemCateg, InputItem);
+            if (Result != "Error")
+            {
+                dt = ObjRun.GetInputItems(InputItem);
+                if (dt.Rows.Count != 0)
+                {
+                    strMinute = Convert.ToInt32(dt.Rows[0]["TimeLimit"].ToString());
+                }
+            }
+            TempData["GG"] = DateTime.Now.ToString();
+            var jsonResult = Json(new { data = "OK", _strResult = Result, _strMinute = strMinute });
+            return jsonResult;
+        }
+
+        public JsonResult CommitExam(List<_ExamQuestionAnswer> ArrAns, string strItemCateg, string strItemInput, string OPID, string strStart)
+        {
+            string ItemCateg = strItemCateg;
+            string ItemInput = strItemInput;
+            string strOPID = OPID;
+            mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
+            DateTime _strStartTime = Convert.ToDateTime(strStart);
+
+            string strStartTime = strStart;
+
+
+            string strEndTime = DateTime.Now.ToString();
+            string IP = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+            _ExamCommitResult dt = new _ExamCommitResult();
+            dt = ObjRun.CommitExam(strOPID, ItemCateg, ItemInput, strStartTime, strEndTime, ArrAns, IP);
+            var jsonResult = Json(new { data = dt.strResult, dataResult = dt.strMgs, dataBool = dt.BoolResult });
+            return jsonResult;
+        }
+
+        public JsonResult GetComtrolddl(string strCriteria)
+        {
+            ListSelectList_ listItems = new ListSelectList_();
+            mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
+            string strresult = "";
+            try
+            {
+                listItems = ObjRun.GetPlaning(strCriteria);
+            }
+            catch (Exception e)
+            {
+                strresult = e.Message;
+            }
+            var jsonResult = Json(new { data = new MultiSelectList(listItems._ListSelectList, "Value", "Text"), dataResult = listItems.strResult });
             return jsonResult;
         }
 
 
-        public JsonResult GetExamList(string itemCateg, string InputItem)
+
+        public JsonResult GetExamResultList(_excamResultCtrl strCtrl)
         {
-            mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration); 
-            string Result = ObjRun.MakingExam(itemCateg, InputItem);
+            DateTime test = Convert.ToDateTime(strCtrl.EndTime);
+            mgrSQLcommand ObjRun = new mgrSQLcommand(_configuration);
+            _ExamResultList listItems = new _ExamResultList();
 
 
-            var jsonResult = Json(new { data = "OK", _strResult = Result }); 
+
+
+            string strresult = "";
+            try
+            {
+                listItems = ObjRun.GetDataExamResultList(strCtrl);
+            }
+            catch (Exception e)
+            {
+                strresult = e.Message;
+            }
+            var jsonResult = Json(new { data = listItems.DataExamReultList, strResult = listItems.strResult });
+
+            //var jsonResult = Json(new { data="" });
             return jsonResult;
         }
 
     }
-} 
+}

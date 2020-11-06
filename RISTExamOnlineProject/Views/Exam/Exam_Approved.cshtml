@@ -1,0 +1,422 @@
+﻿
+@{
+    ViewData["Title"] = "Exam Approved";
+    Layout = "_Layout";
+}
+
+
+<html>
+
+<head>
+
+
+    <style>
+        .initiallyHidden {
+            display: none;
+        }
+
+        .modal {
+            overflow-y: auto;
+        }
+
+        .note-group-select-from-files {
+            display: none;
+        }
+
+        .BG_Custom {
+            background: rgb(136,150,101);
+            background: linear-gradient(309deg, rgba(136,150,101,1) 17%, rgba(113,142,86,1) 24%, rgba(26,71,83,1) 87%);
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+    <div class="container p-2">
+
+        <div class="row justify-content-around m-4">
+            <h1>  Exam Approved </h1>
+        </div>
+
+
+        <div id="Main" class="">
+            <div class="card  rounded shadow m-auto">
+                <div class="card-header  modal-o-bg shadow-sm  ">
+                    <h2>
+                        Select Exam for Approve
+                    </h2>
+
+                </div>
+                <div class="card-body">
+
+                    <div class="row justify-content-lg-center ">
+
+
+                        <div class="col col-lg-4">
+                            <form>
+                                <div class="form-group">
+                                    <label for="DDL_ExamCategoryType_Approved"><b> Type :</b></label>
+                                    @Html.DropDownList("DDL_ExamCategoryType_Approved", new SelectList("", ""), new { @id = "DDL_ExamCategoryType_Approved", @class = "custom-select h-100 " })
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+
+                        <div class="col col-lg-4">
+                            <form>
+                                <div class="form-group">
+                                    <label for="DDL_ExamCategory_Approved"><b> Category :</b></label>
+                                    @Html.DropDownList("DDL_ExamCategory_Approved", new SelectList("", ""), new { @id = "DDL_ExamCategory_Approved", @class = "custom-select h-100 " })
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                        <div class="col col-lg-4">
+                            <form>
+                                <div class="form-group">
+                                    <label for="DDL_ExamName_Approved"><b> Exam Name :</b></label>
+                                    @Html.DropDownList("DDL_ExamName_Approved", new SelectList("", ""), new { @id = "DDL_ExamName_Approved", @class = "custom-select h-100 " })
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="card  rounded shadow m-auto" id="Display">
+                <div class="card-header  modal-o-bg shadow-sm  ">
+
+                    <h3 class="text-white">  Exam Name :   <label class="text-white" id="LB_ExamName"></label>  </h3>
+                </div>
+                <div class="card-body">
+                    <div class="overflow-auto">
+                        <div class="row justify-content-lg-start m-2">
+                            <div class="col col-2">
+                                <button class="btn_response btn btn-success w-100" onclick="SubmitData('Approved')"> <i class="fas fa-thumbs-up"></i> Approved</button>
+                            </div>
+
+                            <div class="col col-2">
+                                <button class="btn_response btn btn-danger w-100" onclick="SubmitData('Reject')"> <i class="fas fa-thumbs-down"></i> Reject</button>
+                            </div>
+
+                        </div>
+
+                        <table class="table table-sm table-bordered table-striped  " style="font-size:small; color:black; width:100%; background-color:#fff;" id="MyTable">
+
+                            <thead class="bg-light">
+
+
+                                <tr>
+                                    <th><input name="select_all" value="1" id="example-select-all" type="checkbox" /></th>
+                                    <th>seq</th>
+                                    <th>Question</th>
+                                    <th>Ans Total</th>
+                                    <th>Status</th>
+                                    <th>Detail</th>
+                                </tr>
+
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    @*//----------------------------- Model-----------------------*@
+
+
+    <div class="modal hide fade  " id="Modal_ShowDetail" tabindex="-1" data-focus-on="input:first">
+        <div class="modal-dialog modal-dialog-centered" style="max-width:1200px;max-height:600px;width:auto;">
+
+            <div class="modal-content">
+                <div class="modal-header  modal-o-bg shadow-sm  ">
+                    <h4 class="modal-title"><label id="LB_title" class="text-white"> Detail </label></h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body" id="Modal_body_ShowDetail" style="overflow:auto">
+
+
+                    @*<ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="Detail-tab" data-toggle="tab" href="#Detail" role="tab" aria-controls="Detail" aria-selected="true">Detail</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="Edit-tab" data-toggle="tab" href="#EditQuestion" role="tab" aria-controls="EditQuestion" aria-selected="false">Edit Question</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content  overflow-auto" id="myTabContent" >
+
+                        <div class="tab-pane fade show active" id="Detail" role="tabpanel" aria-labelledby="Detail-tab">
+
+
+
+
+                        </div>
+
+                        <div class="tab-pane fade overflow-auto" id="EditQuestion" role="tabpanel" aria-labelledby="Edit-tab" >
+
+
+
+                        </div>
+
+
+
+                    </div>*@
+
+
+
+                </div>
+                @*<div class="modal-footer">*@
+
+
+                @*</div>*@
+            </div>
+
+        </div>
+
+
+    </div>
+    <div class="modal hide fade" id="Modal_Summernote" tabindex="-1" data-focus-on="input:first">
+        <div class="modal-dialog modal-dialog-centered modal-lg  ">
+            <div class="modal-content border border-dark shadow shadow-lg rounded ">
+                <!-- Modal Header -->
+                <div class="modal-header modal-o-bg">
+                    <h4 class="modal-title">Input Detail</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <div id="Display_Modal" class="border border-dark rounded m-3 p-3" style="min-height:30px; max-height:150px; overflow:auto;">
+
+
+
+                    </div>
+                    <textarea class="form-control " id="Summernote_modal" name="" style="height:150px; overflow:auto;"></textarea>
+                    <br />
+
+                    <div class="row justify-content-end m-3">
+                        <div class="col-2">
+                            <button class="btn btn-info w-100 btn-sm " id="BTN_Add" onclick="Add_Detail_Display('Display_Modal','Summernote_modal')">
+                                <i class="fas fa-plus"></i>     Add
+                            </button>
+
+                        </div>
+                        <div class="col-2">
+                            <button class="btn btn-info w-100 btn-sm " id="BTN_Edit" onclick="Edit_Detail_Display('Display_Modal','Summernote_modal')">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+
+                        </div>
+
+                        <div class="col-2">
+                            <button class="btn btn-danger w-100 btn-sm " id="BTN_Reset" onclick="Reset_Summernote('Summernote_modal')">
+                                <i class="fas fa-trash-alt"></i> Reset
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-sm " id="BTN_Save" onclick="Save()">
+                        <i class="fas fa-save"></i> Save Edit
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-sm " data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+    @*------------------------------------------------------------------------------*@
+
+
+
+
+
+
+    @section Scripts
+
+{
+
+        <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+
+
+
+        <link href="~/lib/DataTables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/colReorder.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/fixedColumns.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/fixedHeader.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/keyTable.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/responsive.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/rowGroup.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/rowReorder.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/scroller.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/select.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/buttons.dataTables.min.css" rel="stylesheet" />
+
+        <script src="~/lib/DataTables/js/jquery.dataTables.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.bootstrap4.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.colReorder.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.fixedHeader.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.keyTable.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.responsive.min.js"></script>
+        <script src="~/lib/DataTables/js/responsive.bootstrap4.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.rowGroup.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.rowReorder.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.scroller.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.select.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.buttons.min.js"></script>
+        <script src="~/lib/DataTables/js/buttons.bootstrap.min.js"></script>
+        <script src="~/lib/DataTables/js/buttons.flash.min.js"></script>
+        <script src="~/lib/DataTables/js/buttons.html5.min.js"></script>
+        <script src="~/lib/DataTables/js/buttons.print.min.js"></script>
+
+
+        <script src="~/lib/CustomJS/Exam/CommonJS.js"></script>
+        <script src="~/lib/CustomJS/Exam/Exam_Approved.js"></script>
+        <script src="~/lib/CustomJS/Exam/Create_Exam.js"></script>
+
+ 
+
+
+
+        <script>
+            var TableTarget;
+
+            var ValueCodeQuestion;
+            var ValueCodeAnswer;
+            var Rewrite_Master;
+            $(document).ready(function () {
+                OP_UPD = '@User.Identity.Name';
+                $('#Display').hide();
+                GetExamCategoryType_Approved();
+            });
+
+
+
+         
+
+
+
+
+
+            $("#DDL_ExamCategoryType_Approved").on("change", function () {
+                var CategoryType = $("#DDL_ExamCategoryType_Approved").val()
+
+                $('#Display').hide();
+                if (CategoryType != 0) {
+                    $("#DDL_ExamCategory_Approved option").remove();
+                    $("#DDL_ExamName_Approved option").remove();
+                    GetExamCategory_Approved(CategoryType);
+                } else {
+                    $("#DDL_ExamCategory_Approved option").remove();
+                    $("#DDL_ExamName_Approved option").remove();
+                }
+            });
+
+
+
+
+            $("#DDL_ExamCategory_Approved").on("change", function () {
+                var Category = $("#DDL_ExamCategory_Approved").val()
+
+               $('#Display').hide();
+                if (Category != 0) {
+                    $("#DDL_ExamName_Approved option").remove();
+                    GetExamname_Approved(Category)
+                } else {
+                    $("#DDL_ExamName_Approved option").remove();
+                }
+            });
+
+
+
+            $("#DDL_ExamName_Approved").on("change", function () {
+
+                var ValueExam = $("#DDL_ExamName_Approved").val()
+                var ExamName = $("#DDL_ExamName_Approved option:selected").text();
+                $('#LB_ExamName').text(ExamName)
+                $('#Display').hide();
+
+                if (ValueExam != 0) {
+
+                    ValueCodeQuestion = ValueExam.substring(0, ValueExam.lastIndexOf("-"));
+                    ValueCodeAnswer = ValueExam.substring(ValueExam.lastIndexOf("-") + 1, ValueExam.length);
+                    GetTableDetail(ValueCodeQuestion.trim(), ValueCodeAnswer.trim());
+                } else {
+                    $('#Display').hide();
+                }
+
+            });
+
+            $('#example-select-all').on('click', function () {
+
+                // Check/uncheck all checkboxes in the table
+
+                var rows = TableTarget.rows({ 'search': 'applied' }).nodes();
+                $('input[type="checkbox"]', rows).prop('checked', this.checked);
+
+            });
+
+            $('#MyTable tbody').on('change', 'input[type="checkbox"]', function () {
+
+                // If checkbox is not checked
+                if (!this.checked) {
+                    var el = $('#example-select-all').get(0);
+                    // If "Select all" control is checked and has 'indeterminate' property
+                    if (el && el.checked && ('indeterminate' in el)) {
+                        // Set visual state of "Select all" control
+                        // as 'indeterminate'
+                        el.indeterminate = true;
+                    }
+                }
+            });
+
+
+
+            $('#Modal_ShowDetail').on('hidden.bs.modal', function (e) {
+
+                $('#Edit-tab').removeClass("active");
+                $('#Edit-tab').attr("aria-expanded", "false");
+
+                $('#Detail-tab').addClass("active");
+                $('#Detail-tab').attr("aria-expanded", "true");
+
+            })
+
+
+
+
+        </script>
+
+
+
+
+    }
+
+</body>
+</html>
+

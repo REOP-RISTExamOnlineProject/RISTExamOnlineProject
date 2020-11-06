@@ -1,0 +1,171 @@
+﻿
+@{
+    ViewData["Title"] = "ParcticalDispaly";
+    Layout = "~/Views/Shared/_Parctical_Layout.cshtml";
+
+}
+
+<html>
+<head>
+
+    @*<link href="~/lib/Stopwatch/css/style.css" rel="stylesheet" />*@
+
+    <link href="~/lib/Airdatepicker/css/datepicker.css" rel="stylesheet" />
+
+    <link href="~/lib/bootstrap-toggle/css/bootstrap-toggle.min.css" rel="stylesheet" />
+    <link href="~/lib/CustomCSS/Parctical/ParcticalDispaly.css" rel="stylesheet" />
+ 
+
+
+</head>
+
+<body>
+    <div class="container " >       
+
+        <div class="row pt-lg-4 pt-md-4 " id="Main_Display">           
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+    @section scripts{
+
+        <script src="~/lib/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+
+        <script src="~/lib/CustomJS/Practical/Practical_Display.js"></script>
+        <script src="~/lib/CustomJS/Exam/CommonJS.js"></script>
+        <script src="~/lib/Stopwatch/js/script.js"></script>
+        <script src="~/lib/Airdatepicker/js/datepicker.js"></script>
+
+
+
+
+        <script type="text/javascript">
+
+            var Staffcode;
+            var OPID;
+            var PlanID;
+            var ItemID;
+            var LicenseName;
+            var QuestionNo;
+
+            $(document).ready(function () {
+       
+               OPID =   "@User.Identity.Name";
+
+                //$('ul.navbar-nav > li')
+                //    .click(function (e) {
+                //        $('ul.navbar-nav > li')
+                //            .removeClass('active');
+                //        $(this).addClass('active');
+                //    });
+
+
+
+                MakeDisplayPractical();
+
+                onReady(function () {  
+                    var timeout, interval;
+
+                    [].forEach.call(document.querySelectorAll('.Time_Forward'), function (button) {
+                        button.addEventListener('mousedown', function () {
+
+                            var id = button.dataset.target;
+                            incrementValue(id, '1');
+
+                            timeout = setTimeout(function () {
+                                interval = setInterval(function () {
+                                    incrementValue(id, '1');
+                                }, 50);
+                            }, 300);
+                        });
+
+                        button.addEventListener('mouseup', clearTimers);
+                        button.addEventListener('mouseleave', clearTimers);
+
+                        function clearTimers() {
+                            clearTimeout(timeout);
+                            clearInterval(interval);
+                        }
+                    });
+
+                    [].forEach.call(document.querySelectorAll('.Time_Backward'), function (button) {
+                        button.addEventListener('mousedown', function () {
+
+                            var id = button.dataset.target;
+                            incrementValue(id, '0');
+
+                            timeout = setTimeout(function () {
+                                interval = setInterval(function () {
+                                    incrementValue(id, '0');
+                                }, 50);
+                            }, 300);
+                        });
+
+                        button.addEventListener('mouseup', clearTimers);
+                        button.addEventListener('mouseleave', clearTimers);
+
+                        function clearTimers() {
+                            clearTimeout(timeout);
+                            clearInterval(interval);
+                        }
+
+
+                    });
+
+
+                   
+
+
+
+                    function incrementValue(Index_, Job_) {
+
+                        if (Job_ == '1') {
+                            forward(Index_);
+
+                        } else {
+
+                            backward(Index_);
+                        }
+
+                    }
+            
+                });
+
+         
+            });
+
+
+       
+
+            function onReady(callback) {
+                var intervalId = window.setInterval(function () {
+                    if (document.getElementsByTagName('body')[0] !== undefined) {
+                        window.clearInterval(intervalId);
+                        callback.call(this);
+                    }
+                }, 1000);
+            }
+
+    
+
+            //-------------
+
+
+        
+
+        </script>
+
+    }
+
+
+
+</body>
+
+</html>

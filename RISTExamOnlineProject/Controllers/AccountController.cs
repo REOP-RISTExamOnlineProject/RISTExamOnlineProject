@@ -92,7 +92,18 @@ namespace RISTExamOnlineProject.Controllers
                         identity = new ClaimsIdentity(new[]
                         {
                             new Claim(ClaimTypes.Name, model.OperatorID),
-                            new Claim(ClaimTypes.Role, "Admin")
+
+                            new Claim(ClaimTypes.Role, "Admin"),
+                        }, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                        isAuthenticated = true;
+                        break;
+                    case "7":
+                        //Create the identity for the Training
+                        identity = new ClaimsIdentity(new[]
+                        {
+                            new Claim(ClaimTypes.Name, model.OperatorID),           
+                            new Claim(ClaimTypes.Role, "Training")
                         }, CookieAuthenticationDefaults.AuthenticationScheme);
 
                         isAuthenticated = true;
@@ -101,7 +112,7 @@ namespace RISTExamOnlineProject.Controllers
                         //Create the identity for the user
                         identity = new ClaimsIdentity(new[]
                         {
-                            new Claim(ClaimTypes.Name, model.OperatorID),
+                            new Claim(ClaimTypes.Name, model.OperatorID),                   
                             new Claim(ClaimTypes.Role, "User")
                         }, CookieAuthenticationDefaults.AuthenticationScheme);
 

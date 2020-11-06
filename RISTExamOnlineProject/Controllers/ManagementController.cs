@@ -43,6 +43,8 @@ namespace RISTExamOnlineProject.Controllers
             return remoteIpAddress.ToString();
         }
 
+
+
         public IActionResult ManagementUser(string opno)
         {
             ViewBag.opno = opno;
@@ -938,7 +940,7 @@ namespace RISTExamOnlineProject.Controllers
 
             return View();
         }
-
+        
         [HttpPost]
         public IActionResult EditUserInChargeSubmit()
         {
@@ -1000,7 +1002,7 @@ namespace RISTExamOnlineProject.Controllers
 
 
                 //Get Running No.
-                string runningno;
+             //   string runningno;
                 var progdesc = new SqlParameter("Progdesc", "OPUPD");
                 var runningNo = new SqlParameter("RunningNo", "")
                 {
@@ -1017,8 +1019,6 @@ namespace RISTExamOnlineProject.Controllers
                
                 foreach (var item in queryvalue)
                 {
-
-
 
 
                     // Settings.  

@@ -35,6 +35,8 @@ namespace RISTExamOnlineProject.Models.TSQL
         {
             var constr = configuration.GetConnectionString("CONSPTO");
             var dt = new DataTable();
+
+
             try
             {
                 var query = Sql;
@@ -60,6 +62,85 @@ namespace RISTExamOnlineProject.Models.TSQL
                 return dt;
             }
         }
+
+
+
+        public DataTable GetDataTable(SqlCommand objCmd)
+        {
+            DataTable objDataTbl;
+            SqlDataAdapter objDataAdp;
+            //SqlConnection Con;        
+
+            var constr = configuration.GetConnectionString("CONSPTO");
+            try
+            {
+                // make result DataTable instance
+                objDataTbl = new DataTable();
+                using (var connection = new SqlConnection(constr))
+                {
+
+
+
+
+                    //if (connection.State == ConnectionState.Open)
+                    //{
+                    //    connection.Close();
+                    //}
+
+
+
+                    //    if (connection.State == ConnectionState.Closed)
+                    //{
+                    // connection.Open();
+                    //   }
+
+                    // connection referance set
+
+
+                    // make SqlDataAdapter class instance
+
+                    //cmd.Connection = con;
+                    //con.Open();
+                    //var adpterdata = new SqlDataAdapter();
+                    //adpterdata.SelectCommand = new SqlCommand(query, con);
+                    //adpterdata.Fill(dt);
+
+
+                    //---------------------------------
+                    objDataAdp = new SqlDataAdapter();
+                    objCmd.Connection = connection;
+                    objDataAdp.SelectCommand = objCmd;
+                    objDataAdp.Fill(objDataTbl);
+
+
+                    if (connection.State == ConnectionState.Open)
+                    {
+                        connection.Close();
+                    }
+
+                    return objDataTbl;
+
+                }
+
+
+            }
+            catch (SqlException sqlEx)
+            {
+
+
+                // occur SqlException
+                throw new Exception(sqlEx.Message);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            // return result
+
+        }
+
+
 
         public DataSet GetDataSet(string Sql)
         {
@@ -140,5 +221,52 @@ namespace RISTExamOnlineProject.Models.TSQL
 
             return DataReturn;
         }
+
+
+
+
+
+        public int ExecProc(string Sql) {
+            int iniRet = 0;
+
+            try
+            {
+                var constr = configuration.GetConnectionString("CONSPTO");
+                var query = Sql;
+                //string constr = ConfigurationManager.ConnectionStrings["BOIDbContext1"].ConnectionString; 
+                using (var con = new SqlConnection(constr))
+                {
+                    using (var cmd = new SqlCommand())
+                    {
+                        cmd.Connection = con;
+                        cmd.CommandText = query;
+
+                        con.Open();                      
+                        iniRet = cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                var dsa = e;
+                return 0;
+            }
+
+            return iniRet;
+        }
+
+
+
+
+
     }
+
+
+
+
+
+
+
+
 }

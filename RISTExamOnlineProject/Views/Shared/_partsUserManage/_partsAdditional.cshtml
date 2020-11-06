@@ -19,14 +19,14 @@
             Division
         </div>
         <div class="col-2">
-            @Html.DropDownList("DDL_Division", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "DDL_Division", @class = " custom-select custom-select-sm" })
+            @Html.DropDownList("DDL_Division", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "DDL_Division", @class = " custom-select" })
 
         </div>
         <div class="col-1">
             Department
         </div>
         <div class="col-2">
-            @Html.DropDownList("DDL_Department", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "DDL_Department", @class = " custom-select custom-select-sm" })
+            @Html.DropDownList("DDL_Department", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "DDL_Department", @class = " custom-select" })
 
         </div>
         <div class="col-1">
@@ -34,7 +34,7 @@
         </div>
         <div class="col-2">
 
-            @Html.DropDownList("DDL_Section", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "DDL_Section", @class = " custom-select custom-select-sm" })
+            @Html.DropDownList("DDL_Section", new MultiSelectList(string.Empty, "Value", "Text"), new { @id = "DDL_Section", @class = " custom-select" })
 
         </div>
         <div class="col-1">
@@ -97,7 +97,7 @@
         <div class="col-2">
 
             <button type="button" class="btn btn-success w-100" id="BTN_Save">
-                SAVE
+                <i class="fas fa-save"></i>   SAVE
             </button>
 
         </div>
