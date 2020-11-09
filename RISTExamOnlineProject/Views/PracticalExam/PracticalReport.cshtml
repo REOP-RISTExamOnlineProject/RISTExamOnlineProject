@@ -61,7 +61,7 @@
             </div>
 
             <div class="col col-lg-2 col-md-2">
-                <input type="submit" name="Preview" value="Preview" class="btn btn-primary btn-block" formaction="/PracticalExam/PracticalReport" formmethod="post"  />
+                <input type="submit" name="Preview" value="Preview" id="BTN_Submit" class="btn btn-primary btn-block" formaction="/PracticalExam/PracticalReport" formmethod="post"  />
                 @*<input type="submit" title="Delete" value="Submit" class="btn btn-primary btn-block" onclick="location.href = '@Url.Action("PracticalReport", "PracticalExam", new {opno = "007895"})'"/>*@
                 @*<input type="submit" value="Submit" class="btn btn-primary btn-block" />*@
                 @*<a class="btn btn-danger" asp-controller="PracticalExam" method="Post" asp-action="PracticalReport" asp-route-opno="007895" asp-route-licenseno="T2220-0001" asp-route-planid="CO1001">Preview PDF</a>*@
@@ -78,7 +78,7 @@
         @if (ViewBag.WebReport != null)
         {
         <div class="text-center">
-            <a class="btn btn-danger" asp-controller="PracticalExam" asp-action="Pdf">Download PDF</a>
+            <a class="btn btn-danger"   id="BTN_PDF" onclick="Download('@ViewBag.StaffID','@ViewBag.License_Name','@ViewBag.PlanID');" >Download PDF</a>
            
             @await ViewBag.WebReport.Render()
         </div>
@@ -91,16 +91,10 @@
     @section scripts{
 
 
-        <script type="text/javascript">
-            $(function () {
-                $("#submit").click(function () {
-                    document.forms[0].submit();
-                    return false;
-                });
-            });
-        </script>
+     
 
         <script>
+
             var Staffcode;
             var PlanID;
             var License_Name;
@@ -112,6 +106,47 @@
 
             });
 
+
+            function Download(Staffcode, License_Name, PlanID) {
+
+
+
+                location.href = '@Url.Action("Pdf", "PracticalExam")?OPID=' + Staffcode + '&DDL_License_Name=' + License_Name + '&DDL_PlanID=' + PlanID + '';
+
+
+                //$.ajax({
+                //    type: 'POST',
+                //    url: '../PracticalExam/Pdf',
+                //    dataType: 'json',
+                //    data: { OPID: Staffcode, DDL_License_Name: License_Name, DDL_PlanID: PlanID},
+                //    success: function (response) {
+                //        //if (response.length !== 0) {
+                //        //    $.each(response, function (i, div) {
+                //        //        $("#DDL_PlanID").append('<option value="' + div.value + '">' + div.text + '</option>');
+                //        //    });
+
+                //        //    $('#DIV_DDL').show();
+                //        //}
+                //        //else {
+                //        //    $('#DIV_DDL').hide();
+                //        //    Swal.fire({
+                //        //        icon: 'error',
+                //        //        title: 'Oops...',
+                //        //        text: ("OPID Not Found"),
+                //        //    });
+                //        //}
+                //    },
+                //    error: function (ex) {
+                //        Swal.fire({
+                //            icon: 'error',
+                //            title: 'Oops...',
+                //            text: ('Failed to retrieve states.' + ex)
+                //        });
+                //        $('#DIV_DDL').hide();
+                //    }
+                //});
+
+            }
 
 
 

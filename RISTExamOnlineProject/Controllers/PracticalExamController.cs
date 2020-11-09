@@ -378,13 +378,20 @@ namespace RISTExamOnlineProject.Controllers
             return webReport;
         }
         [HttpPost]
+
+
         [ActionName("PracticalReport")]
         public IActionResult PracticalReportPost(string OPID, string DDL_License_Name, string DDL_PlanID)
         {
             var webReport = GetReport(OPID,DDL_License_Name,DDL_PlanID);
             ViewBag.WebReport = webReport;
+            ViewBag.StaffID = OPID;
+            ViewBag.PlanID = DDL_PlanID;
+            ViewBag.License_Name = DDL_License_Name;
             return View();
         }
+
+
 
 
         public IActionResult Pdf(string OPID, string DDL_License_Name, string DDL_PlanID)
@@ -426,4 +433,6 @@ namespace RISTExamOnlineProject.Controllers
 
         
     }
+
+
 }
