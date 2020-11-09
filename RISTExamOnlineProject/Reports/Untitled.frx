@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" SmoothGraphics="true" ReportInfo.Created="10/28/2020 17:07:52" ReportInfo.Modified="11/06/2020 15:40:41" ReportInfo.CreatorVersion="2020.3.7.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqiTpLtvmgTJbV++pU1y3UbghmiF99ld0uyH0c2hCw4ho72U3A5YhsReBaSQHOtHTcJJ53qfx4R796sw2TQzjM5Dcxtqi3URbYAW3BchWBWnyaJQ/NSsKHNM/o4Na+7NYlrw+dz0/KaNNzhVqQ2ZaHtraZVeb0oyl35IzwxTFIdi9QVmhWRtV6W+FDUBo3W1E5uLbQyNWFPXNjmyqCnOGJ5Q==">
+      <TableDataSource Name="Z_002" DataType="System.Int32" Enabled="true" TableName="Z_002" SelectCommand="select * from Z_002 where Staffcode = @PAM_OP and PlanID = @PAM_PLANID and LicenseName = @PAM_License">
+        <Column Name="PracticalNbr" DataType="System.Int32"/>
+        <Column Name="Staffcode" DataType="System.String"/>
+        <Column Name="PlanID" DataType="System.String"/>
+        <Column Name="LicenseName" DataType="System.String"/>
+        <Column Name="LicenseType" DataType="System.String"/>
+        <Column Name="ItemID" DataType="System.Int32"/>
+        <Column Name="PracticalItem" DataType="System.String"/>
+        <Column Name="QuestionNo" DataType="System.Int32"/>
+        <Column Name="QuestionName" DataType="System.String"/>
+        <Column Name="DetailNo" DataType="System.Int32"/>
+        <Column Name="DetailName" DataType="System.String"/>
+        <Column Name="StandardTime" DataType="System.TimeSpan"/>
+        <Column Name="Min" DataType="System.TimeSpan"/>
+        <Column Name="Max" DataType="System.TimeSpan"/>
+        <Column Name="HearingJudge" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="ActualTime" DataType="System.TimeSpan"/>
+        <Column Name="PracticalJudge" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="Judge" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="AddDate" DataType="System.DateTime"/>
+        <Column Name="UpdDate" DataType="System.DateTime"/>
+        <Column Name="UserName" DataType="System.String"/>
+        <CommandParameter Name="PAM_OP" DataType="12" Expression="[PAM_OP]"/>
+        <CommandParameter Name="PAM_PLANID" DataType="12" Expression="[PAM_PLANID]"/>
+        <CommandParameter Name="PAM_License" DataType="12" Expression="[PAM_License]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="PAM_OP" DataType="System.String"/>
+    <Parameter Name="PAM_PLANID" DataType="System.String"/>
+    <Parameter Name="PAM_License" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" RawPaperSize="9" TopMargin="5" BottomMargin="0" Watermark.Font="Arial, 60pt">
+    <PageHeaderBand Name="PageHeader1" Width="718.2" Height="283.5">
+      <LineObject Name="Line1" Height="283.5" Diagonal="true"/>
+      <LineObject Name="Line3" Width="708.75" Diagonal="true"/>
+      <TextObject Name="Text1" Left="18.9" Width="396.9" Height="28.35" Text="ใบบันทึกการประเมิน การฝึกปฏิบัติงานเพื่อรับรองความสามารถ" VertAlign="Center" Font="Arial, 12pt"/>
+      <LineObject Name="Line2" Top="28.35" Width="708.75" Diagonal="true"/>
+      <LineObject Name="Line4" Top="47.25" Width="708.75" Diagonal="true"/>
+      <LineObject Name="Line5" Top="75.6" Width="245.7" Diagonal="true"/>
+      <TextObject Name="Text4" Top="28.35" Width="47.25" Height="18.9" Text="Div." HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+      <LineObject Name="Line6" Left="708.75" Height="283.5" Diagonal="true"/>
+      <LineObject Name="Line7" Left="47.25" Top="28.35" Height="47.25" Diagonal="true"/>
+      <TextObject Name="Text5" Top="47.25" Width="47.25" Height="28.35" Text="MCR" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+      <LineObject Name="Line8" Left="113.4" Top="28.35" Height="47.25" Diagonal="true"/>
+      <TextObject Name="Text6" Left="47.25" Top="28.35" Width="66.15" Height="18.9" Text="Dept." HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+      <TextObject Name="Text7" Left="113.4" Top="28.35" Width="66.15" Height="18.9" Text="Section" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+      <LineObject Name="Line9" Left="179.55" Top="28.35" Height="160.65" Diagonal="true"/>
+      <LineObject Name="Line10" Left="245.7" Top="28.35" Height="47.25" Diagonal="true"/>
+      <TextObject Name="Text8" Left="179.55" Top="28.35" Width="66.15" Height="18.9" Text="Process Name" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+      <LineObject Name="Line11" Left="368.55" Top="28.35" Height="141.75" Diagonal="true"/>
+      <LineObject Name="Line12" Left="481.95" Top="28.35" Height="75.6" Diagonal="true"/>
+      <LineObject Name="Line13" Left="595.35" Top="28.35" Height="141.75" Diagonal="true"/>
+      <TextObject Name="Text9" Left="245.7" Top="28.35" Width="122.85" Height="18.9" Text="Job Position" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+      <TextObject Name="Text10" Left="368.55" Top="28.35" Width="113.4" Height="18.9" Text="Made" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+      <TextObject Name="Text11" Left="481.95" Top="28.35" Width="113.4" Height="18.9" Text="Check" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+      <TextObject Name="Text12" Left="595.35" Top="28.35" Width="113.4" Height="18.9" Text="Approve" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+      <TextObject Name="Text13" Left="47.25" Top="47.25" Width="66.15" Height="28.35" Text="2nd Prod." HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+      <TextObject Name="Text14" Left="113.4" Top="47.25" Width="66.15" Height="28.35" Text="Chip Stock" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+      <TextObject Name="Text15" Left="179.55" Top="47.25" Width="66.15" Height="28.35" Text="BKB" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+      <LineObject Name="Line14" Top="103.95" Width="708.75" Diagonal="true"/>
+      <TextObject Name="Text16" Top="75.6" Width="75.6" Height="28.35" Text="Code No" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+      <LineObject Name="Line15" Left="75.6" Top="75.6" Height="113.4" Diagonal="true"/>
+      <TextObject Name="Text17" Left="75.6" Top="75.6" Width="103.95" Height="28.35" Text="Emp Name" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+      <ShapeObject Name="Shape1" Left="198.45" Top="85.05" Width="9.45" Height="9.45"/>
+      <TextObject Name="Text18" Left="207.9" Top="75.6" Width="56.7" Height="28.35" Text="INSPECTOR" VertAlign="Center" Font="Arial, 6pt"/>
+      <ShapeObject Name="Shape2" Left="264.6" Top="56.7" Width="9.45" Height="9.45"/>
+      <TextObject Name="Text19" Left="274.05" Top="47.25" Width="56.7" Height="28.35" Text="OPERATOR" VertAlign="Center" Font="Arial, 6pt"/>
+      <ShapeObject Name="Shape3" Left="302.4" Top="85.05" Width="9.45" Height="9.45"/>
+      <TextObject Name="Text20" Left="311.85" Top="75.6" Width="56.7" Height="28.35" Text="MK" VertAlign="Center" Font="Arial, 6pt"/>
+      <LineObject Name="Line16" Top="151.2" Width="311.85" Diagonal="true"/>
+      <LineObject Name="Line17" Left="179.55" Top="122.85" Width="132.3" Diagonal="true"/>
+      <TextObject Name="Text21" Left="179.55" Top="103.95" Width="132.3" Height="18.9" Text="Plan (Time)" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt, style=Bold"/>
+      <LineObject Name="Line18" Left="311.85" Top="103.95" Height="85.05" Diagonal="true"/>
+      <LineObject Name="Line19" Left="245.7" Top="122.85" Height="66.15" Diagonal="true"/>
+      <TextObject Name="Text22" Left="179.55" Top="122.85" Width="66.15" Height="28.35" Text="Start" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt, style=Bold"/>
+      <TextObject Name="Text23" Left="245.7" Top="122.85" Width="66.15" Height="28.35" Text="Finished" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt, style=Bold"/>
+      <LineObject Name="Line20" Top="170.1" Width="708.75" Diagonal="true"/>
+      <LineObject Name="Line21" Top="189" Width="708.75" Diagonal="true"/>
+      <TextObject Name="Text24" Top="151.2" Width="75.6" Height="18.9" Text="License" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt, style=Bold"/>
+      <TextObject Name="Text25" Left="75.6" Top="151.2" Width="103.95" Height="18.9" Text="Date (M/D/Y)" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt, style=Bold"/>
+      <TextObject Name="Text26" Left="179.55" Top="170.1" Width="66.15" Height="18.9" Text="Total Time" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt, style=Bold"/>
+      <TextObject Name="Text27" Left="311.85" Top="103.95" Width="56.7" Height="66.15" Text="Skill&#13;&#10;Judgement" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt, style=Bold"/>
+      <TextObject Name="Text28" Left="311.85" Top="170.1" Width="85.05" Height="18.9" Text="Skill Evaluate" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt, style=Bold"/>
+      <ShapeObject Name="Shape4" Left="387.45" Top="113.4" Width="9.45" Height="9.45"/>
+      <TextObject Name="Text29" Left="396.9" Top="113.4" Width="37.8" Height="9.45" Text="Level 1" VertAlign="Center" Font="Arial, 6pt"/>
+      <ShapeObject Name="Shape5" Left="387.45" Top="132.3" Width="9.45" Height="9.45"/>
+      <TextObject Name="Text30" Left="396.9" Top="132.3" Width="37.8" Height="9.45" Text="Level 4" VertAlign="Center" Font="Arial, 6pt"/>
+      <ShapeObject Name="Shape6" Left="463.05" Top="113.4" Width="9.45" Height="9.45"/>
+      <TextObject Name="Text31" Left="472.5" Top="113.4" Width="37.8" Height="9.45" Text="Level 2" VertAlign="Center" Font="Arial, 6pt"/>
+      <ShapeObject Name="Shape7" Left="463.05" Top="132.3" Width="9.45" Height="9.45"/>
+      <TextObject Name="Text32" Left="472.5" Top="132.3" Width="37.8" Height="9.45" Text="Level 5" VertAlign="Center" Font="Arial, 6pt"/>
+      <ShapeObject Name="Shape8" Left="548.1" Top="113.4" Width="9.45" Height="9.45"/>
+      <TextObject Name="Text33" Left="557.55" Top="113.4" Width="37.8" Height="9.45" Text="Level 3" VertAlign="Center" Font="Arial, 6pt"/>
+      <TextObject Name="Text34" Left="368.55" Top="151.2" Width="226.8" Height="18.9" Text="Remark : Level 1 - 2 (Non Pass) Level 3 - 5 (Pass)" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt, style=Bold"/>
+      <LineObject Name="Line22" Left="633.15" Top="103.95" Height="66.15" Diagonal="true"/>
+      <TextObject Name="Text35" Left="595.35" Top="103.95" Width="37.8" Height="66.15" Text="App License" HorzAlign="Center" VertAlign="Center" Angle="270" Font="Arial, 6pt, style=Bold"/>
+      <ShapeObject Name="Shape9" Left="642.6" Top="113.4" Width="9.45" Height="9.45"/>
+      <ShapeObject Name="Shape10" Left="642.6" Top="132.3" Width="9.45" Height="9.45"/>
+      <ShapeObject Name="Shape11" Left="642.6" Top="151.2" Width="9.45" Height="9.45"/>
+      <TextObject Name="Text36" Left="652.05" Top="113.4" Width="47.25" Height="9.45" Text="Junior" VertAlign="Center" Font="Arial, 6pt"/>
+      <TextObject Name="Text37" Left="652.05" Top="132.3" Width="47.25" Height="9.45" Text="Senior" VertAlign="Center" Font="Arial, 6pt"/>
+      <TextObject Name="Text38" Left="652.05" Top="151.2" Width="47.25" Height="9.45" Text="Expert" VertAlign="Center" Font="Arial, 6pt"/>
+      <LineObject Name="Line23" Left="396.9" Top="170.1" Height="18.9" Diagonal="true"/>
+      <TextObject Name="Text39" Left="425.25" Top="170.1" Width="47.25" Height="18.9" Text="Level Up" VertAlign="Center" Font="Arial, 6pt"/>
+      <TextObject Name="Text40" Left="510.3" Top="170.1" Width="85.05" Height="18.9" Text="License Review" VertAlign="Center" Font="Arial, 6pt"/>
+      <TextObject Name="Text41" Left="623.7" Top="170.1" Width="85.05" Height="18.9" Text="Retraining" VertAlign="Center" Font="Arial, 6pt"/>
+      <LineObject Name="Line24" Left="18.9" Top="189" Height="94.5" Diagonal="true"/>
+      <TextObject Name="Text42" Top="189" Width="18.9" Height="94.5" Text="No." HorzAlign="Center" VertAlign="Center" Font="Arial, 5pt"/>
+      <LineObject Name="Line26" Left="481.95" Top="189" Height="94.5" Diagonal="true"/>
+      <LineObject Name="Line27" Left="481.95" Top="207.9" Width="151.2" Diagonal="true"/>
+      <TextObject Name="Text43" Left="481.95" Top="189" Width="151.2" Height="18.9" Text="Method" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt, style=Bold"/>
+      <LineObject Name="Line28" Left="633.15" Top="189" Height="94.5" Diagonal="true"/>
+      <LineObject Name="Line29" Left="670.95" Top="189" Height="94.5" Diagonal="true"/>
+      <LineObject Name="Line30" Left="141.75" Top="189" Height="94.5" Diagonal="true"/>
+      <TextObject Name="Text44" Left="18.9" Top="189" Width="122.85" Height="94.5" Text="Confirm Item" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+      <LineObject Name="Line31" Left="519.75" Top="236.25" Width="113.4" Diagonal="true"/>
+      <LineObject Name="Line32" Left="519.75" Top="207.9" Height="75.6" Diagonal="true"/>
+      <TextObject Name="Text45" Left="519.75" Top="207.9" Width="113.4" Height="18.9" Text="Time Check (Min)" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt, style=Bold"/>
+      <TextObject Name="Text46" Left="141.75" Top="189" Width="340.2" Height="94.5" Text="Point Check" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+      <TextObject Name="Text47" Left="481.95" Top="207.9" Width="37.8" Height="75.6" Text="Hearing&#13;&#10;Judge" HorzAlign="Center" VertAlign="Center" Angle="270" Font="Arial, 6pt"/>
+      <LineObject Name="Line33" Left="557.55" Top="236.25" Height="47.25" Diagonal="true"/>
+      <LineObject Name="Line34" Left="595.35" Top="236.25" Height="47.25" Diagonal="true"/>
+      <TextObject Name="Text48" Left="519.75" Top="236.25" Width="37.8" Height="47.25" Text="Std.&#13;&#10;time" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+      <TextObject Name="Text49" Left="557.55" Top="236.25" Width="37.8" Height="47.25" Text="Actual" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+      <TextObject Name="Text50" Left="595.35" Top="236.25" Width="37.8" Height="47.25" Text="Practical&#13;&#10;Judge" HorzAlign="Center" VertAlign="Center" Angle="270" Font="Arial, 6pt"/>
+      <TextObject Name="Text51" Left="633.15" Top="189" Width="37.8" Height="94.5" Text="Paper&#13;&#10;test&#13;&#10;(%)" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+      <TextObject Name="Text52" Left="670.95" Top="189" Width="37.8" Height="94.5" Text="Judge" HorzAlign="Center" VertAlign="Center" Angle="270" Font="Arial, 6pt"/>
+      <LineObject Name="Line25" Top="283.5" Width="708.75" Diagonal="true"/>
+      <TextObject Name="Text68" Left="406.35" Top="170.1" Width="18.9" Height="18.9" Text="o" HorzAlign="Center" VertAlign="Center" Font="Wingdings, 5pt"/>
+      <TextObject Name="Text69" Left="491.4" Top="170.1" Width="18.9" Height="18.9" Text="o" HorzAlign="Center" VertAlign="Center" Font="Wingdings, 5pt"/>
+      <TextObject Name="Text70" Left="604.8" Top="170.1" Width="18.9" Height="18.9" Text="o" HorzAlign="Center" VertAlign="Center" Font="Wingdings, 5pt"/>
+      <TextObject Name="Text71" Top="113.4" Width="75.6" Height="18.9" Text="[PAM_OP]" HorzAlign="Center" VertAlign="Center" Font="Arial, 5pt"/>
+      <TextObject Name="Text72" Top="170.1" Width="75.6" Height="18.9" Text="[PAM_License]" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+      <TextObject Name="Text73" Left="491.4" Width="94.5" Height="18.9" Text="[PAM_PLANID]" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+    </PageHeaderBand>
+    <GroupHeaderBand Name="GroupHeader2" Top="287.5" Width="718.2" Height="18.9" Condition="[Z_002.ItemID]" SortOrder="None">
+      <TextObject Name="Text54" Width="94.5" Height="18.9" Text="[Z_002.PracticalItem]" VertAlign="Center" Font="Arial, 6pt"/>
+      <LineObject Name="Line36" Top="18.9" Width="633.15"/>
+      <LineObject Name="Line41" Height="18.9" Diagonal="true"/>
+      <LineObject Name="Line42" Width="18.9" Diagonal="true"/>
+      <LineObject Name="Line48" Left="633.15" Height="18.9" Diagonal="true"/>
+      <LineObject Name="Line49" Left="670.95" Height="18.9" Diagonal="true"/>
+      <LineObject Name="Line52" Left="708.75" Height="18.9" Diagonal="true"/>
+      <GroupHeaderBand Name="GroupHeader1" Top="310.4" Width="718.2" Height="18.9" Condition="[Z_002.DetailNo]" SortOrder="None" KeepTogether="true">
+        <TextObject Name="Text2" Left="141.75" Width="18.9" Height="18.9" Text="[[Z_002.DetailNo]]" VertAlign="Center" Font="Arial, 6pt"/>
+        <TextObject Name="Text53" Left="151.2" Width="330.75" Height="18.9" Text="[Z_002.DetailName]" VertAlign="Center" Font="Arial, 6pt"/>
+        <LineObject Name="Line35" Left="141.75" Top="18.9" Width="340.2"/>
+        <TextObject Name="Text3" Width="633.15" Height="18.9" Border.Lines="Bottom" Text="[[Z_002.QuestionNo]]" HideZeros="true" Duplicates="Merge" VertAlign="Center" Font="Arial, 6pt"/>
+        <LineObject Name="Line37" Left="18.9" Height="18.9" Diagonal="true"/>
+        <LineObject Name="Line38" Left="141.75" Height="18.9" Diagonal="true"/>
+        <LineObject Name="Line40" Height="18.9" Diagonal="true"/>
+        <LineObject Name="Line43" Left="481.95" Height="18.9" Diagonal="true"/>
+        <LineObject Name="Line44" Left="519.75" Height="18.9" Diagonal="true"/>
+        <LineObject Name="Line45" Left="557.55" Height="18.9" Diagonal="true"/>
+        <LineObject Name="Line46" Left="595.35" Height="18.9" Diagonal="true"/>
+        <LineObject Name="Line47" Left="633.15" Height="18.9" Diagonal="true"/>
+        <LineObject Name="Line50" Left="670.95" Height="18.9" Diagonal="true"/>
+        <LineObject Name="Line51" Left="708.75" Height="18.9" Diagonal="true"/>
+        <TextObject Name="Text55" Left="18.9" Width="122.85" Height="18.9" Border.Lines="Bottom" Text="[Z_002.QuestionName]" Duplicates="Merge" VertAlign="Center" Font="Arial, 5pt"/>
+        <DataBand Name="Data1" Top="333.3" Width="718.2" CanShrink="true" CanBreak="true" DataSource="Z_002"/>
+      </GroupHeaderBand>
+      <DataFooterBand Name="DataFooter1" Top="337.3" Width="718.2" Height="85.05">
+        <LineObject Name="Line56" Left="633.15" Width="75.6"/>
+        <LineObject Name="Line57" Top="18.9" Width="708.75"/>
+        <LineObject Name="Line58" Left="519.75" Height="18.9" Diagonal="true"/>
+        <LineObject Name="Line59" Left="557.55" Height="18.9" Diagonal="true"/>
+        <LineObject Name="Line60" Left="595.35" Height="18.9" Diagonal="true"/>
+        <LineObject Name="Line61" Left="633.15" Height="18.9" Diagonal="true"/>
+        <LineObject Name="Line62" Left="670.95" Height="18.9" Diagonal="true"/>
+        <LineObject Name="Line64" Height="75.6" Diagonal="true"/>
+        <LineObject Name="Line63" Left="708.75" Height="75.6" Diagonal="true"/>
+        <LineObject Name="Line65" Top="75.6" Width="708.75"/>
+        <TextObject Name="Text56" Top="75.6" Width="94.5" Height="9.45" Text="RISTS D55504-03.001" VertAlign="Bottom" Font="Arial, 5pt"/>
+        <TextObject Name="Text57" Left="18.9" Top="28.35" Width="122.85" Height="18.9" Border.Lines="Left, Right, Top" Text="Std time(min)" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+        <LineObject Name="Line66" Left="47.25" Top="47.25" Width="66.15" Diagonal="true"/>
+        <TextObject Name="Text58" Left="18.9" Top="47.25" Width="122.85" Height="18.9" Border.Lines="Left, Right, Bottom" Text="Actual time(min)" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+        <TextObject Name="Text59" Left="113.4" Top="37.8" Width="28.35" Height="18.9" Text=" * 100" VertAlign="Center" Font="Arial, 5pt"/>
+        <TextObject Name="Text60" Left="179.55" Top="18.9" Width="122.85" Height="18.9" Text="1.Time judgement criterion:" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+        <TextObject Name="Text61" Left="179.55" Top="37.8" Width="122.85" Height="9.45" Text="อยู่ระหว่าง 80% - 120%" HorzAlign="Center" Font="Arial, 6pt"/>
+        <TextObject Name="Text62" Left="179.55" Top="47.25" Width="122.85" Height="18.9" Text="&lt;80% หรือ &gt;120%" HorzAlign="Center" VertAlign="Center" Font="Arial, 6pt"/>
+        <TextObject Name="Text63" Left="302.4" Top="47.25" Width="37.8" Height="18.9" Text="&quot;ไม่ผ่าน&quot;" VertAlign="Center" Font="Arial, 6pt"/>
+        <TextObject Name="Text64" Left="302.4" Top="37.8" Width="37.8" Height="9.45" Text="&quot;ผ่าน&quot;" Font="Arial, 6pt"/>
+        <TextObject Name="Text65" Left="378" Top="18.9" Width="311.85" Height="18.9" Text="2.Point judgement:Hearing = ตอบเข้าใจ &quot;ผ่าน&quot;,ตอบไม่เข้าใจ &quot;ไม่ผ่าน&quot;" VertAlign="Center" Font="Arial, 6pt"/>
+        <TextObject Name="Text66" Left="444.15" Top="37.8" Width="245.7" Height="9.45" Text=" Practical = ปฏิบัติถูกต้อง &quot;ผ่าน&quot;,ปฏิบัติไม่ถูกต้อง&quot;ไม่ผ่าน&quot;" Font="Arial, 6pt"/>
+        <TextObject Name="Text67" Left="378" Top="47.25" Width="311.85" Height="18.9" Text="3.สัญลักษณ์การตัดสิน:ผ่าน = &quot;O&quot;,ไม่ผ่าน = &quot;X&quot;" VertAlign="Center" Font="Arial, 6pt"/>
+      </DataFooterBand>
+    </GroupHeaderBand>
+  </ReportPage>
+</Report>

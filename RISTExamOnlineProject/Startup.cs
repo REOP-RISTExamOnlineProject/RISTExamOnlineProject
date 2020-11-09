@@ -89,6 +89,9 @@ namespace RISTExamOnlineProject
             });
 
             app.UseSignalR(routes => { routes.MapHub<CounterHub>("/CounterHub"); });
+
+
+            app.UseFastReport();
         }
     }
 }

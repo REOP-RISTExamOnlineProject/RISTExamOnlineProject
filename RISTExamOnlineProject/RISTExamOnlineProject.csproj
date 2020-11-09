@@ -6,10 +6,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Reports\Untitled.frx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\lib\Video\new_and_update.mp4" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FastReport.OpenSource" Version="2020.4.6" />
+    <PackageReference Include="FastReport.OpenSource.Data.MsSql" Version="2020.4.6" />
+    <PackageReference Include="FastReport.OpenSource.Export.PdfSimple" Version="2020.4.6" />
+    <PackageReference Include="FastReport.OpenSource.Web" Version="2020.4.6" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />

@@ -53,9 +53,9 @@ jQueryAjaxDelete = form => {
     if (confirm("Are you sure to delete this record ?")) {
         try {
             $.ajax({
+                data: new FormData(form),
                 type: "POST",
                 url: form.action,
-                data: new FormData(form),
                 contentType: false,
                 processData: false,
                 success: function (res) {

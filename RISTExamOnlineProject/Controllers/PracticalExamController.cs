@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
+using FastReport.Data;
+using FastReport.Export.PdfSimple;
+using FastReport.Utils;
+using FastReport.Web;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
-using Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore;
-using Newtonsoft.Json;
 using RISTExamOnlineProject.Models.db;
 using RISTExamOnlineProject.Models.TSQL;
 
@@ -61,8 +62,8 @@ namespace RISTExamOnlineProject.Controllers
 
 
 
-            DataTable dt = new DataTable();
-            SqlCommand SqlCMD = new SqlCommand();
+            var dt = new DataTable();
+            var SqlCMD = new SqlCommand();
             try
             {
                 mgrSQL_ObjCommand ObjRun = new mgrSQL_ObjCommand(_configuration);
@@ -344,11 +345,60 @@ namespace RISTExamOnlineProject.Controllers
 
 
         }
-
+        [HttpGet]
         public IActionResult PracticalReport() {
-
+           
 
             return View();
+        }
+
+        public WebReport GetReport(string OPID, string DDL_License_Name, string DDL_PlanID)
+        {
+
+            RegisteredObjects.AddConnection(typeof(MsSqlDataConnection));
+            var webReport = new WebReport();
+
+            var sqlConnection = new MsSqlDataConnection
+            {
+                ConnectionString = "Data Source=10.29.1.116;Initial Catalog=sptosystem;Persist Security Info=True;User ID=sa;Password=pwpolicy;Application Name=SPTO_SYSTEM"
+            };
+            //sqlConnection.ConnectionString = sqlConnection;
+            sqlConnection.CreateAllTables();
+            webReport.Report.Dictionary.Connections.Add(sqlConnection);
+            webReport.Report.Load($@"Reports/Untitled.frx");
+            //var string staffop = OPID ;
+            //const string planid = "T2220-0001";
+            //const string license = "CO1001";
+            webReport.Report.SetParameterValue("PAM_OP", OPID);
+            webReport.Report.SetParameterValue("PAM_PLANID", DDL_PlanID);
+            webReport.Report.SetParameterValue("PAM_License", DDL_License_Name);
+
+            ViewBag.WebReport = webReport;
+            ViewBag.OPID = OPID;
+            return webReport;
+        }
+        [HttpPost]
+        [ActionName("PracticalReport")]
+        public IActionResult PracticalReportPost(string OPID, string DDL_License_Name, string DDL_PlanID)
+        {
+            var webReport = GetReport(OPID,DDL_License_Name,DDL_PlanID);
+            ViewBag.WebReport = webReport;
+            return View();
+        }
+
+
+        public IActionResult Pdf(string OPID, string DDL_License_Name, string DDL_PlanID)
+        {
+            var webReport = GetReport(OPID, DDL_License_Name, DDL_PlanID);
+            webReport.Report.Prepare();
+
+            using (var ms = new MemoryStream())
+            {
+                var pdfExport = new PDFSimpleExport();
+                pdfExport.Export(webReport.Report, ms);
+                ms.Flush();
+                return File(ms.ToArray(), "application/pdf", Path.GetFileNameWithoutExtension("Report_") + ".pdf");
+            }
         }
 
         public IActionResult GetPlanIDReport(string Staffcode)
