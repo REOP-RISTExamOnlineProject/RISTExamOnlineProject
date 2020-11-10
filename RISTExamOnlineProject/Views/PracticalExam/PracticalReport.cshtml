@@ -11,7 +11,7 @@
 
     @*<form asp-action="PracticalReport" >*@
     
-    <form>
+    <form method="post">
 
 
 
@@ -61,9 +61,9 @@
             </div>
 
             <div class="col col-lg-2 col-md-2">
-                <input type="submit" name="Preview" value="Preview" id="BTN_Submit" class="btn btn-primary btn-block" formaction="/PracticalExam/PracticalReport" formmethod="post"  />
+                @*<input type="submit" name="Preview" value="Preview" id="BTN_Submit" class="btn btn-primary btn-block" formaction="/PracticalExam/PracticalReport" formmethod="post"  />*@
                 @*<input type="submit" title="Delete" value="Submit" class="btn btn-primary btn-block" onclick="location.href = '@Url.Action("PracticalReport", "PracticalExam", new {opno = "007895"})'"/>*@
-                @*<input type="submit" value="Submit" class="btn btn-primary btn-block" />*@
+                <input type="submit" value="Preview" class="btn btn-primary btn-block" />
                 @*<a class="btn btn-danger" asp-controller="PracticalExam" method="Post" asp-action="PracticalReport" asp-route-opno="007895" asp-route-licenseno="T2220-0001" asp-route-planid="CO1001">Preview PDF</a>*@
                 @*@Html.ActionLink("Preview", "PracticalReport", "PracticalExam", new { opno = "007895" }, new { @class = "btn btn-danger" })*@
             </div>
