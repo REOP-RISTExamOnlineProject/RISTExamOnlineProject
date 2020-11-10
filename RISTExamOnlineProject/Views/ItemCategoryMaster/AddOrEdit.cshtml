@@ -25,7 +25,7 @@
                 }
                 else
                 {
-                    @Html.TextBoxFor(x => Model.ItemCateg, new { @class = "form-control" })
+                    @Html.TextBoxFor(x => Model.ItemCateg, new { @class = "form-control" , @maxlength="6" })
                 }
 
                 <span asp-validation-for="ItemCateg" class="text-danger"></span>
@@ -33,7 +33,7 @@
 
             <div class="form-group">
                 <label asp-for="ItemCategName" class="control-label"></label>
-                <input asp-for="ItemCategName" class="form-control" />
+                <input asp-for="ItemCategName" maxlength="50" class="form-control" />
                 <span asp-validation-for="ItemCategName" class="text-danger"></span>
             </div>
           
