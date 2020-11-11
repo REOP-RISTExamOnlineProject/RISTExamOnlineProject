@@ -1,0 +1,189 @@
+﻿
+@{
+    ViewData["Title"] = "PracticalViewPlan";
+    Layout = "~/Views/Shared/_Parctical_Layout.cshtml";
+}
+
+<html>
+<head>
+    <style>
+    </style>
+</head>
+<body>
+    <header class="text-center m-5">
+        <h1 class="font-weight-bold">Your Plan Detail </h1>
+    </header>
+
+    <div class="container">
+
+        @*<div class="row justify-content-lg-center justify-content-md-center overflow-auto m-2">*@
+
+
+    
+
+
+
+
+        <div class="overflow-auto  bg-white rounded shadow-lg p-lg-4 p-md-4 " id="Display" >
+
+            <div class="text-center" style="display: none;" id="Label_Show">
+
+                <h1 class="text-danger">Data Not Found...</h1>
+            </div>
+ 
+            <table class="table table-sm  table-striped border rounded" id="MyTable" style="display: none;">
+                <thead>
+                    <tr>
+                        <th class="text-wrap text-center">Plan ID</th>
+                        <th class="text-wrap text-center">Staff code</th>
+                        <th class="text-wrap text-center">License Name</th>
+                        <th class="text-wrap text-center">Start Training</th>
+                        <th class="text-wrap text-center">End Training</th>
+                        <th class="text-wrap text-center">Test Pass</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+
+
+
+        @*</div>*@
+
+
+
+
+
+
+
+
+    </div>
+    @section scripts{
+        <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+
+
+
+        <link href="~/lib/DataTables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/colReorder.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/fixedColumns.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/fixedHeader.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/keyTable.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/responsive.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/rowGroup.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/rowReorder.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/scroller.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/select.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+        <link href="~/lib/DataTables/css/buttons.dataTables.min.css" rel="stylesheet" />
+
+        <script src="~/lib/DataTables/js/jquery.dataTables.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.bootstrap4.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.colReorder.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.fixedHeader.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.keyTable.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.responsive.min.js"></script>
+        <script src="~/lib/DataTables/js/responsive.bootstrap4.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.rowGroup.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.rowReorder.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.scroller.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.select.min.js"></script>
+        <script src="~/lib/DataTables/js/dataTables.buttons.min.js"></script>
+        <script src="~/lib/DataTables/js/buttons.bootstrap.min.js"></script>
+        <script src="~/lib/DataTables/js/buttons.flash.min.js"></script>
+        <script src="~/lib/DataTables/js/buttons.html5.min.js"></script>
+        <script src="~/lib/DataTables/js/buttons.print.min.js"></script>
+
+        <script>
+
+
+            var OPID;
+            var TableTarget;
+
+            $(document).ready(function () {
+
+
+                OPID = "@User.Identity.Name";
+                GetViewDetail(OPID);
+            });
+
+
+
+
+            function GetViewDetail(OPID) {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '../PracticalExam/GetViewPlan',
+                    dataType: 'json',
+                    data: { OPID: OPID },
+                    success: function (respond) {
+
+
+                        if (respond.success == true) {
+                            $('#MyTable').show();
+                            MakeTable(respond.detail);
+                            $('#Label_Show').hide();
+                        } else {
+
+                            $('#Label_Show').show();
+                            $('#MyTable').hide();
+                        }
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+
+            };
+
+            function MakeTable(Detail) {
+                debugger
+                TableTarget = $("#MyTable").DataTable()
+                if (TableTarget != null) {
+                    TableTarget.destroy();
+                }
+
+                TableTarget = $("#MyTable").DataTable({
+                    searching: true,
+                    ordering: true,
+                    //serverSide: true,
+                    //processing: true,
+                    //paging: true,
+                    //deferRender: true,
+                    data: Detail,
+                    dom: '<"top">frt<"bottom"l>ip<"clear">',
+                    columns: [
+                        { data: "plan_ID", name: "plan_ID", class: "text-wrap text-center" },
+                        { data: "staffcode", name: "staffcode", class: "text-wrap text-center" },
+                        { data: "license_Name", name: "license_Name", class: "text-wrap text-center" },
+                        { data: "start_Training", name: "start_Training", class: "text-wrap text-center" },
+                        { data: "end_Training", name: "end_Training", class: "text-wrap text-center" },
+                        { data: "test_Pass", name: "test_Pass", class: "text-wrap text-center" },
+                    ],
+
+
+
+                });
+
+
+            };
+
+        </script>
+
+    }
+
+
+
+</body>
+</html>
+
+
+
+
+
+

@@ -723,17 +723,17 @@ function MakeTable(Detail) {
                     
                     if (ValueStatus != 'DEL') {
 
-                        return "<div class='row justify-content-center m-2'>" +
-                            "<div class='col-5'> <a href='#' class='btn_response btn btn-info w-100 text-white ' title='Edit' onclick=EditQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "','" + Max_Seq_ + "') > <i class='fas fa-pencil-alt'></i> Edit</a> </div> " +
+                        return "<div class='row justify-content-center p-0 m-0'>" +
+                            "<div class='col-6 p-1 '> <a href='#' class='btn_response btn btn-info  w-100 text-white ' title='Edit' onclick=EditQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "','" + Max_Seq_ + "') > <i class='fas fa-pencil-alt'></i> Edit</a> </div> " +
 
-                            "<div class='col-5'>  <a href='#' class='btn_response btn btn-danger w-100 text-white' title='Delete' onclick=DeleteQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "','" + ValueStatus + "') > <i class='fas fa-trash-alt'></i> Delete </a> </div>" +
+                            "<div class='col-6  p-1 '>  <a href='#' class='btn_response btn btn-danger w-100  text-white' title='Delete' onclick=DeleteQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "','" + ValueStatus + "') > <i class='fas fa-trash-alt'></i> Delete </a> </div>" +
 
                             "</div>";
                     } else {
 
-                        return "<div class='row justify-content-center m-2'>" +
+                        return "<div class='row justify-content-center'>" +
                          
-                            "<div class='col-5'>  <a href='#' class='btn_response btn btn-secondary w-100 text-white ' title='Restore Question' onclick=RestoreQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "') > <i class='fas fa-trash-restore-alt'></i> Restore </a> </div>" +
+                            "<div class='col-5 p-1 m-0'>  <a href='#' class='btn_response btn btn-secondary w-100 text-white ' title='Restore Question' onclick=RestoreQuestion('" + ValueCodeAnswer + "','" + ValueCodeQuestion + "','" + Seq + "') > <i class='fas fa-trash-restore-alt'></i> Restore </a> </div>" +
                             "</div>";
                     }
 

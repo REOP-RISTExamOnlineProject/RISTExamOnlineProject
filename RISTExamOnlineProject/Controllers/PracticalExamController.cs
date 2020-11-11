@@ -102,13 +102,13 @@ namespace RISTExamOnlineProject.Controllers
 
             return View();
         }
-
+        [Authorize]
         public IActionResult GetPlanID(string OPID, string Staffcode)
         {
             mgrSQL_ObjCommand ObjRun = new mgrSQL_ObjCommand(_configuration);
             DataTable dt = new DataTable();
             string Strsql = "SELECT  [PlanID],[LicenseName]  FROM [dbo].[vewPracticalSnapshotRemainList] where Staffcode = '" + Staffcode + "' and Trianer = '" + OPID + "' group by [PlanID],[LicenseName]  ";
-           
+
             SqlCommand SqlCMD = new SqlCommand();
             SqlCMD = new SqlCommand();
             SqlCMD.CommandType = CommandType.Text;
@@ -117,19 +117,20 @@ namespace RISTExamOnlineProject.Controllers
             dt = ObjRun.GetDataTable(SqlCMD);
 
 
-            if (dt.Rows.Count != 0) {
+            if (dt.Rows.Count != 0)
+            {
 
 
 
 
                 return Json(new { success = true, planID = dt.Rows[0]["PlanID"].ToString(), licenseName = dt.Rows[0]["LicenseName"].ToString() });
             }
-            
+
             return Json(new { success = false });
 
         }
 
-
+        [Authorize]
         public JsonResult LoginPratical_Staffcode(string OPID, string Staffcode)
         {
 
@@ -202,12 +203,12 @@ namespace RISTExamOnlineProject.Controllers
         }
 
 
-
+        [Authorize]
         public JsonResult MakeDisplayPractical(string OPID, string Staffcode, string PlanID, string ItemID, string LicenseName)
         {
 
 
-          
+
             mgrSQLcommand_Practical ObjRun_Practical = new mgrSQLcommand_Practical(_configuration);
             DataTable dt = new DataTable();
 
@@ -236,15 +237,15 @@ namespace RISTExamOnlineProject.Controllers
         }
 
 
-
+        [Authorize]
 
         public JsonResult Savepractical(string Flag, string Staffcode, string PlanID, string LicenseName,
-            int ItemID, int QuestionNo ,int HearingJudge, int ActualTime_Seconds, int PracticalJudge,int ActualTimeJudge, string OPID)
+            int ItemID, int QuestionNo, int HearingJudge, int ActualTime_Seconds, int PracticalJudge, int ActualTimeJudge, string OPID)
         {
             DataTable dt = new DataTable();
             mgrSQLcommand_Practical ObjRun_Practical = new mgrSQLcommand_Practical(_configuration);
 
-           // TimeSpan ts = TimeSpan.FromTicks(486000000000)
+            // TimeSpan ts = TimeSpan.FromTicks(486000000000)
 
             TimeSpan ActualTime = new TimeSpan();
             ActualTime = TimeSpan.FromSeconds(ActualTime_Seconds);
@@ -269,8 +270,9 @@ namespace RISTExamOnlineProject.Controllers
                 {
                     return Json(new { success = true, responetext = "บันทึกข้อมูลเรียบร้อยแล้ว", Judge = Judge, finish = false });
                 }
-                else if (MS == "Finish") {
-                    return Json(new { success = true, responetext = " บันทึกข้อมูลเรียบร้อยแล้ว", Judge = Judge , finish = true});
+                else if (MS == "Finish")
+                {
+                    return Json(new { success = true, responetext = " บันทึกข้อมูลเรียบร้อยแล้ว", Judge = Judge, finish = true });
                 }
                 else
                 {
@@ -278,30 +280,31 @@ namespace RISTExamOnlineProject.Controllers
                 }
 
             }
-            else {
+            else
+            {
                 return Json(new { success = false, responetext = "บันทึกข้อมูลไม่สำเร็จ" });
 
             }
 
 
 
-         
+
         }
 
-
-
-        public JsonResult IndexDashBoard(string OPID) {
+        [Authorize]
+        public JsonResult IndexDashBoard(string OPID)
+        {
             mgrSQL_ObjCommand ObjRun = new mgrSQL_ObjCommand(_configuration);
             DataTable dt = new DataTable();
-         
+
 
             List<vewPracticalSnapshotRemainList> Detail = new List<vewPracticalSnapshotRemainList>();
 
 
             SqlCommand SqlCMD = new SqlCommand();
-            string Strdql = "SELECT*   FROM[SPTOSystem].[dbo].[vewPracticalSnapshotRemainList] where[Trianer] = '"+ OPID + "'";
+            string Strdql = "SELECT*   FROM[SPTOSystem].[dbo].[vewPracticalSnapshotRemainList] where[Trianer] = '" + OPID + "'";
 
-         
+
             SqlCMD.CommandType = CommandType.Text;
             SqlCMD.CommandText = Strdql;
             dt = new DataTable();
@@ -332,26 +335,29 @@ namespace RISTExamOnlineProject.Controllers
                 return Json(new { success = true, Detail = Detail });
 
             }
-            else {
+            else
+            {
 
                 return Json(new { success = false });
             }
 
 
 
-         
+
 
 
 
 
         }
+        [Authorize]
         [HttpGet]
-        public IActionResult PracticalReport() {
-           
+        public IActionResult PracticalReport()
+        {
+
 
             return View();
         }
-
+        [Authorize]
         public WebReport GetReport(string OPID, string DDL_License_Name, string DDL_PlanID)
         {
 
@@ -379,11 +385,11 @@ namespace RISTExamOnlineProject.Controllers
         }
         [HttpPost]
 
-
+        [Authorize]
         [ActionName("PracticalReport")]
         public IActionResult PracticalReportPost(string OPID, string DDL_License_Name, string DDL_PlanID)
         {
-            var webReport = GetReport(OPID,DDL_License_Name,DDL_PlanID);
+            var webReport = GetReport(OPID, DDL_License_Name, DDL_PlanID);
             ViewBag.WebReport = webReport;
             ViewBag.StaffID = OPID;
             ViewBag.PlanID = DDL_PlanID;
@@ -407,23 +413,26 @@ namespace RISTExamOnlineProject.Controllers
                 return File(ms.ToArray(), "application/pdf", Path.GetFileNameWithoutExtension("Report_") + ".pdf");
             }
         }
-
+        [Authorize]
         public IActionResult GetPlanIDReport(string Staffcode)
         {
 
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
             List<SelectListItem> listItems = new List<SelectListItem>();
-            string Strsql = "select[PlanID],[PlanID] from  (select[PlanID] FROM [SPTOSystem].[dbo].[Z_001]  where[Staffcode] = '"+ Staffcode + "' group by [PlanID]) as e";
+            string Strsql = "select[PlanID],[PlanID] from  (select[PlanID] FROM [SPTOSystem].[dbo].[Z_001]  where[Staffcode] = '" + Staffcode + "' group by [PlanID]) as e";
             listItems = ObjRun.GetItemDropDownList(Strsql, "PlanID");
-            
+
 
             return Json(new SelectList(listItems, "Value", "Text"));
         }
-        public IActionResult GetLicense_NameReport(string Staffcode,string PlanID) {
+
+        [Authorize]
+        public IActionResult GetLicense_NameReport(string Staffcode, string PlanID)
+        {
 
             mgrSQLcommand_Exam ObjRun = new mgrSQLcommand_Exam(_configuration);
             List<SelectListItem> listItems = new List<SelectListItem>();
-            string Strsql = "select [LicenseName],[LicenseName] from (select[LicenseName] FROM [SPTOSystem].[dbo].[Z_001]  where[Staffcode]= '" + Staffcode + "' and [PlanID] = '"+ PlanID + "' group by [LicenseName]) as e";
+            string Strsql = "select [LicenseName],[LicenseName] from (select[LicenseName] FROM [SPTOSystem].[dbo].[Z_001]  where[Staffcode]= '" + Staffcode + "' and [PlanID] = '" + PlanID + "' group by [LicenseName]) as e";
             listItems = ObjRun.GetItemDropDownList(Strsql, "LicenseName");
 
 
@@ -431,7 +440,72 @@ namespace RISTExamOnlineProject.Controllers
 
         }
 
-        
+        [Authorize]
+
+
+        public IActionResult PracticalViewPlan()
+        {
+
+            return View();
+
+        }
+        [Authorize]
+
+        public JsonResult GetViewPlan(string OPID)
+        {
+
+            mgrSQL_ObjCommand ObjRun = new mgrSQL_ObjCommand(_configuration);
+            DataTable dt = new DataTable();
+
+
+            List<vewPlan_Trainee> Detail = new List<vewPlan_Trainee>();
+
+            SqlCommand SqlCMD = new SqlCommand();
+            string Strdql = "SELECT *  FROM [SPTOSystem].[dbo].[vewPlan_Trainee]  where [Trianer] = '" + OPID + "'order by   [Plan_ID],	   [Staffcode]       asc";
+
+
+            SqlCMD.CommandType = CommandType.Text;
+            SqlCMD.CommandText = Strdql;
+            dt = new DataTable();
+            dt = ObjRun.GetDataTable(SqlCMD);
+
+
+
+            if (dt.Rows.Count != 0)
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    Detail.Add(new vewPlan_Trainee()
+                    {
+                        Staffcode = row["Staffcode"].ToString(),
+                        Plan_ID = row["Plan_ID"].ToString(),
+                        Training_Section = row["Training_Section"].ToString(),
+                        License_Name = row["License_Name"].ToString(),
+                        Trianer = row["Trianer"].ToString(),
+                        ControlBy = row["ControlBy"].ToString(),
+                        Start_Training = row["Start_Training"].ToString().Substring(0,10),
+                        End_Training = row["End_Training"].ToString().Substring(0, 10),
+                        License_Type = row["License_Type"].ToString(),
+                        Plan_Type_Name = row["Plan_Type_Name"].ToString(),
+                        Test_Pass = row["Test_Pass"].ToString(),
+
+                    });
+                }
+                return Json(new { success = true, Detail = Detail });
+            }
+            else
+            {
+                return Json(new { success = false });
+            }
+
+
+
+
+        }
+
+
+
+
     }
 
 

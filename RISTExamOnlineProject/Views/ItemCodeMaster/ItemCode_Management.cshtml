@@ -39,7 +39,7 @@
                             <div class="col-5">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">  ItemCatagory Type :</label>
-                                    @Html.DropDownList("DDL_CategoryType", new SelectList("", ""), new { @id = "DDL_CategoryType", @class = "custom-select" })
+                                    @Html.DropDownList("DDL_CategoryType", new SelectList("", ""), new { @id = "DDL_CategoryType", @class = "custom-select w-100" })
 
                                 </div>
 
@@ -50,7 +50,7 @@
                             <div class="col-5">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">  ItemCatagory :</label>
-                                    @Html.DropDownList("DDL_Category", new SelectList("", ""), new { @id = "DDL_Category", @class = "custom-select" })
+                                    @Html.DropDownList("DDL_Category", new SelectList("", ""), new { @id = "DDL_Category", @class = "custom-select w-100" })
 
                                 </div>
 
@@ -144,16 +144,16 @@
                 </div>
                 <div class="modal-body">
                     <div class="row justify-content-center m-2">
-                        <div class="col-4">
+                        <div class="col-4 text-left">
                             ItemCode :
                         </div>
-                        <div class="col-6">
+                        <div class="col-6 text-left">
                             <input type="text" class="form-control" id="TB_ItemCode" maxlength="6" />
                         </div>
 
                     </div>
                     <div class="row justify-content-center m-2">
-                        <div class="col-4">
+                        <div class="col-4 text-left">
                             ItemName :
                         </div>
                         <div class="col-6">
@@ -164,7 +164,7 @@
 
 
                     <div class="row justify-content-center m-2">
-                        <div class="col-4">
+                        <div class="col-4 text-left">
                             Item limit :
                         </div>
                         <div class="col-2">
@@ -177,7 +177,7 @@
 
                         </div>
                         <div class="row justify-content-center m-2">
-                            <div class="col-4">
+                            <div class="col-4 text-left">
                                 Code Question :
                             </div>
                             <div class="col-6">
@@ -186,7 +186,7 @@
 
                         </div>
                         <div class="row justify-content-center m-2">
-                            <div class="col-4">
+                            <div class="col-4 text-left">
                                 Code Answer :
                             </div>
                             <div class="col-6">
@@ -467,14 +467,14 @@
                                 var valueCodeAnswer = row.valueCodeAnswer;
 
 
-                                return "<div class='row justify-content-center m-2'>" +
-                                    "<div class='col-6'> <a href='#' class='btn_response btn btn-info btn-sm  w-100 text-white text-nowrap '  onclick=EditItem('" + encodeURIComponent(itemCode) + "','" + encodeURIComponent(itemName) + "','" + timeLimit + "','" + nbr + "','" + encodeURIComponent(valueCodeQuestion) + "','" + encodeURIComponent(valueCodeAnswer) + "') ><i class='fas fa-pencil-alt'></i> Edit</a> </div> " +
-                                    "<div class='col-6'><a href='#' class='btn_response btn btn-danger btn-sm  w-100 text-white text-nowrap '  onclick=DeleteItemCode('" + nbr + "') ><i class='fas fa-trash-alt'></i> Delete </a> </div>" +
+                                return "<div class='row justify-content-center'>" +
+                                    "<div class='col-4'> <a href='#' class='btn_response btn btn-info btn-sm  w-100 text-white text-nowrap '  onclick=EditItem('" + encodeURIComponent(itemCode) + "','" + encodeURIComponent(itemName) + "','" + timeLimit + "','" + nbr + "','" + encodeURIComponent(valueCodeQuestion) + "','" + encodeURIComponent(valueCodeAnswer) + "') ><i class='fas fa-pencil-alt'></i> Edit</a> </div> " +
+                                    "<div class='col-4'><a href='#' class='btn_response btn btn-danger btn-sm  w-100 text-white text-nowrap '  onclick=DeleteItemCode('" + nbr + "') ><i class='fas fa-trash-alt'></i> Delete </a> </div>" +
                                     "</div>";
 
                             }, class: "text-wrap text-center"
                         },
-
+                         
 
 
 

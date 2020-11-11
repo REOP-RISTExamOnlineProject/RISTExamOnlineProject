@@ -58,7 +58,7 @@
                             <form>
                                 <div class="form-group">
                                     <label for="DDL_ExamCategoryType_Approved"><b> Type :</b></label>
-                                    @Html.DropDownList("DDL_ExamCategoryType_Approved", new SelectList("", ""), new { @id = "DDL_ExamCategoryType_Approved", @class = "custom-select h-100 " })
+                                    @Html.DropDownList("DDL_ExamCategoryType_Approved", new SelectList("", ""), new { @id = "DDL_ExamCategoryType_Approved", @class = "custom-select h-100  w-100" })
 
                                 </div>
 
@@ -71,7 +71,7 @@
                             <form>
                                 <div class="form-group">
                                     <label for="DDL_ExamCategory_Approved"><b> Category :</b></label>
-                                    @Html.DropDownList("DDL_ExamCategory_Approved", new SelectList("", ""), new { @id = "DDL_ExamCategory_Approved", @class = "custom-select h-100 " })
+                                    @Html.DropDownList("DDL_ExamCategory_Approved", new SelectList("", ""), new { @id = "DDL_ExamCategory_Approved", @class = "custom-select h-100  w-100 " })
 
                                 </div>
 
@@ -83,7 +83,7 @@
                             <form>
                                 <div class="form-group">
                                     <label for="DDL_ExamName_Approved"><b> Exam Name :</b></label>
-                                    @Html.DropDownList("DDL_ExamName_Approved", new SelectList("", ""), new { @id = "DDL_ExamName_Approved", @class = "custom-select h-100 " })
+                                    @Html.DropDownList("DDL_ExamName_Approved", new SelectList("", ""), new { @id = "DDL_ExamName_Approved", @class = "custom-select h-100  w-100" })
                                 </div>
                             </form>
                         </div>
@@ -140,10 +140,10 @@
 
 
     <div class="modal hide fade  " id="Modal_ShowDetail" tabindex="-1" data-focus-on="input:first">
-        <div class="modal-dialog modal-dialog-centered" style="max-width:1200px;max-height:600px;width:auto;">
+        <div class="modal-dialog modal-dialog-centered rounded" style="max-width:1200px;max-height:600px;width:auto;">
 
-            <div class="modal-content">
-                <div class="modal-header  modal-o-bg shadow-sm  ">
+            <div class="modal-content ">
+                <div class="modal-header  rounded-top modal-o-bg shadow-sm  ">
                     <h4 class="modal-title"><label id="LB_title" class="text-white"> Detail </label></h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>

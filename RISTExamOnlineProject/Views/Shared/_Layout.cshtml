@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="~/lib/img/Logo_ROHM.png">
     <title>@ViewBag.Title</title>
- 
+
 
     <environment include="Development">
         <!--Bootstrap CSS-->
@@ -49,6 +49,11 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
+        .table > tbody > tr > td {
+            vertical-align: middle;
+        }
+
     </style>
 
 
@@ -162,7 +167,7 @@
 
                         @if (User.Identity.IsAuthenticated)
                         {
-                         //   var userRoles = "";
+                            //   var userRoles = "";
                             //
 
 
@@ -174,19 +179,19 @@
 
                             @if (User.IsInRole("Admin"))
                             {
-                              //  userRoles = "Admin";
+                                //  userRoles = "Admin";
                                 Authority = 9;
 
                             }
                             else if (User.IsInRole("Training"))
                             {
-                             //   userRoles = "Training";
+                                //   userRoles = "Training";
                                 Authority = 7;
                             }
                             else
                             {
                                 Authority = 0;
-                             //   userRoles = "User";
+                                //   userRoles = "User";
                             }
 
 
@@ -235,9 +240,24 @@
                             @if (Authority >= 7)
                             {
                                 <li class="parent hideme">
-                                    <a href="@Url.Action("Index","PracticalExam")">
-                                        <i class="fas fa-diagnoses mr-3">   </i>       <span class="none">Practical</span>
+
+                                    <a href="#" class=" " onclick="toggle_menu('Shortcuts_Practical');return false;">
+                                        <p style="white-space:nowrap;">
+                                            <i class="fas fa-diagnoses mr-3"></i>
+                                            <span class="none no-arrow">Practical <i class="fa fa-angle-down pull-right align-bottom"></i></span>
+                                        </p>
                                     </a>
+                                    <ul class="#" id="Shortcuts_Practical">
+                                        @*--  <a href="@Url.Action("Index","PracticalExam")">*@
+
+                                        <li class="child "><a href="@Url.Action("Index","PracticalExam")" class="ml-4"><i class="fa fa-angle-right mr-2"></i>Practical Online </a></li>
+                                        <li class="child"><a href="@Url.Action("PracticalReport","PracticalExam")" class="ml-4"><i class="fa fa-angle-right mr-2"></i>Practical Report</a></li>
+                                        <li class="child"><a href="@Url.Action("PracticalViewPlan","PracticalExam")" class="ml-4"><i class="fa fa-angle-right mr-2"></i>Practical Plan Detail</a></li>
+
+
+
+                                    </ul>
+
                                 </li>
 
                             }
@@ -247,7 +267,7 @@
 
                         <li class="parent hideme">
                             <a href="@Url.Action("LicenceList","UIExam")">
-                                <i class="fas fa-stream mr-3"></i>     <span class="none">Examexamination</span>
+                                <i class="fas fa-stream mr-3"></i>     <span class="none">Exam</span>
                             </a>
                         </li>
 
@@ -278,7 +298,7 @@
 
 
 
-       </div>
+        </div>
         <div class="modal" tabindex="-1" role="dialog" id="form-modal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -318,7 +338,7 @@
     <environment include="Development">
         <!-- Page JavaScript Files-->
         @*<script src="~/lib/js/jquery.min.js"></script>
-        <script src="~/lib/js/jquery-1.12.4.min.js"></script>*@
+            <script src="~/lib/js/jquery-1.12.4.min.js"></script>*@
         <script src="~/lib/jquery/jquery.js"></script>
 
         <!--Popper JS-->
@@ -347,9 +367,9 @@
         <script src="~/lib/js/custom.js"></script>
         <!--Custom Js Script-->
         @*<script>
-                        //Nice select
-                        $('.bulk-actions').niceSelect();
-                    </script>*@
+                //Nice select
+                $('.bulk-actions').niceSelect();
+            </script>*@
         <!-- tempusdominus-bootstrap-4 -->
 
 

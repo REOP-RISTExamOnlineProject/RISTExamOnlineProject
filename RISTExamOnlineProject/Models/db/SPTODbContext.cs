@@ -31,6 +31,13 @@ namespace RISTExamOnlineProject.Models.db
             modelBuilder.Entity<Exam_QuestionDetail>()
               .HasKey(k => new { k.ItemCode,k.ValueCodeQuestion,k.ValueCodeAnswer });
 
+
+            modelBuilder.Entity<vewPlan_Trainee>()
+              .HasKey(k => new { k.Staffcode, k.Plan_ID });
+            
+
+
+
             /////////////////////////////////////////////////////
             //modelBuilder.Entity<ItemCategoryModel>(entity =>
             //{
@@ -111,7 +118,8 @@ namespace RISTExamOnlineProject.Models.db
         public DbSet<ItemCategoryModel> ItemCategory { get; set; }
         public DbSet<ItemCode_Detail> ItemCode_Detail { get; set; }
         public DbSet<ExamApproved_Detail> ExamApproved_Detail { get; set; }
-      
+
+        public DbSet<vewPlan_Trainee> vewPlan_Trainee { get; set; }
 
     }
 }
