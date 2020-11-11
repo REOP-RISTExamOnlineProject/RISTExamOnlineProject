@@ -352,7 +352,7 @@ namespace RISTExamOnlineProject.Models.TSQL
             try
             {
                 strSQL = "";
-                strSQL += "srpMakeHTMLExam";
+                strSQL += "sprMakeHTMLExam";
                 strSQL += " N'" + strItemCateg + "',";
                 strSQL += " N'" + strItemCode + "'";
                 dt = ObjRun.GetDatatables(strSQL);
