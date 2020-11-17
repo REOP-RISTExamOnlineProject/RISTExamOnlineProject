@@ -247,7 +247,9 @@ namespace RISTExamOnlineProject.Models.TSQL
 
                 if (Rewrite_Master > 0)
                 {
+
                     //------------------ Back up The last Exam -------
+
                     StrSql = @"insert into  [SPTOSystem].[dbo].[ValueList]  
 	                            ([ValueCode],[DisplayOrder],[Value_HTML],[Value_TEXT],[Answer],[Need]
                                  ,[ValueStatus],[Rewrite],[AddDate],[UpdDate],[UserName],[ComputerName])
@@ -255,10 +257,12 @@ namespace RISTExamOnlineProject.Models.TSQL
                                 ,'OLD',[Rewrite],[AddDate],[UpdDate],[UserName],[ComputerName] from [SPTOSystem].[dbo].[ValueList]
                                  where(ValueCode = '" + ValueCodeQuestion + "' or ValueCode = '" + ValueCodeAnswer + "') and  [ValueStatus] != 'NEW'    and Rewrite = '" + Rewrite_Master.ToString() + "' ";
                     Intpro = ObjRun.ExecProc(StrSql);
+                   
                     if (Intpro < 0)
                     {
                         return "False";
                     }
+
 
                 }
 
@@ -268,7 +272,10 @@ namespace RISTExamOnlineProject.Models.TSQL
                 dt = ObjRun.GetDatatables(strSQL);
                 MS = dt.Rows[0][1].ToString();
 
-                if (MS != "OK")
+
+
+
+                if (MS != "OK")   
                 {
                     StrSql = @"delete [SPTOSystem].[dbo].[ValueList]  where
                          (ValueCode = '" + ValueCodeQuestion + "' or ValueCode = '" + ValueCodeAnswer + "') and ValueStatus ='OLD' and Rewrite = '" + Rewrite_Master.ToString() + "'  ";
@@ -285,6 +292,7 @@ namespace RISTExamOnlineProject.Models.TSQL
 
 
             }
+
             else {
 
 
@@ -302,59 +310,27 @@ namespace RISTExamOnlineProject.Models.TSQL
 
         }
 
-        public string Approved_Reject_Question(string Job, string[] valueStatus_Array, int[] seq_Array, string ValueCodeQuestion, int Rewrite_Master)
+        public string Approved_Reject_Question(string Job, string valueStatus_Array, string seq_Array, string ValueCodeQuestion, int Rewrite_Master)
         {
 
-            var ObjRun = new mgrSQLConnect(_configuration);
-
-            var constr = _configuration.GetConnectionString("CONSPTO");
-            var dt = new DataTable();
-            int seq;
-            int Count = 0;
             string ValueCodeAnswer = Get_ValueCodeAnswer(ValueCodeQuestion);
 
-
             var ds = new DataSet();
-
-            using (var connection = new SqlConnection(constr))
-            {
-                connection.Open();
-                SqlCommand objSqlCmd = connection.CreateCommand();
-                SqlTransaction transaction;
-                transaction = connection.BeginTransaction();
-
-                foreach (string Status in valueStatus_Array)
-                {
-                    seq = seq_Array[Count];
-                    try
-                    {
-                        objSqlCmd.Connection = connection;
-                        objSqlCmd.Transaction = transaction;
-
+            SqlCommand objSqlCmd = new SqlCommand();
+            var OBJ = new mgrSQL_ObjCommand(_configuration);    
                         objSqlCmd.CommandType = CommandType.StoredProcedure;
-                        objSqlCmd.CommandText = "sprApproved_Reject_Question";
-                        objSqlCmd.Connection = connection;
+                        objSqlCmd.CommandText = "sprApproved_Reject_Question";              
                         objSqlCmd.Parameters.Clear();
                         objSqlCmd.Parameters.Add("@Job", SqlDbType.VarChar).Value = Job;
-                        objSqlCmd.Parameters.Add("@Status", SqlDbType.VarChar).Value = Status;
-                        objSqlCmd.Parameters.Add("@Seq", SqlDbType.Int).Value = seq;
-                        objSqlCmd.Parameters.Add("@valueCodeQuestion", SqlDbType.VarChar).Value = ValueCodeQuestion;
+                        objSqlCmd.Parameters.Add("@Status", SqlDbType.VarChar).Value = valueStatus_Array.ToString();
+                        objSqlCmd.Parameters.Add("@Seq", SqlDbType.VarChar).Value = seq_Array.ToString();
+                        objSqlCmd.Parameters.Add("@valueCodeQuestion", SqlDbType.VarChar).Value = ValueCodeQuestion.ToString();
                         objSqlCmd.Parameters.Add("@valueCodeAnswer", SqlDbType.VarChar).Value = ValueCodeAnswer;
-                        objSqlCmd.Transaction = transaction;
+                        objSqlCmd.Parameters.Add("@Rewrite", SqlDbType.Int).Value = Rewrite_Master;
+            
+                        dt = OBJ.GetDataTable(objSqlCmd);
 
-                        dt = ObjRun.GetDataTable(objSqlCmd);
-                    }
-                    catch (Exception e)
-                    {
-                        var dsa = e;
-                        transaction.Rollback();
-                    }
-                    Count = Count + 1;
-                }
-
-                transaction.Commit();
-            }
-            return "555";
+            return dt.Rows[0][1].ToString();
         }
 
 
