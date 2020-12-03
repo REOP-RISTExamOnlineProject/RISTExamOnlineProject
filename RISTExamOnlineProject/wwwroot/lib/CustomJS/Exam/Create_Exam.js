@@ -687,7 +687,8 @@ function MakeTable(Detail) {
         data: Detail,
         dom: '<"top">rt<"bottom"l>ip<"clear">',
         columns: [
-
+            
+            { data: "seq", name: "seq", class: "text-wrap text-center" },
             { data: "question", name: "question", class: "text-wrap text-left" },
             { data: "ans_Count", name: "ans_Count", class: "text-wrap text-center" },
             {
