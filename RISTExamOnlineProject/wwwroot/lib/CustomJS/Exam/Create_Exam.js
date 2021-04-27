@@ -74,7 +74,8 @@ function GetExamDetail(Itemcode) {
         dataType: 'json',
         data: { Itemcode: Itemcode },
         success: function (response) {    
-            if (response.success == true) {       
+            if (response.success == true) {    
+                debugger
                 var Detail = response.detail
                 Max_Seq = response.max_Seq
                 QuestionCount = response.questionCount
@@ -91,16 +92,19 @@ function GetExamDetail(Itemcode) {
                 $('#LB_Exam_Name').text(ItemName);              
                 MakeTable(Detail);
                 $('#Display').show();
+           
 
             } else {
          
-                TableTarget = $("#MyTable").DataTable()
-
+               // TableTarget = $("#MyTable").DataTable()
+                
 
                 if (TableTarget != null) {
                     TableTarget.destroy();
                 }
+                TableTarget = $("#MyTable").DataTable()
                 TableTarget.clear().draw();
+          
 
                 $('#Display').show();
                 UpdDate = response.updDate
@@ -254,13 +258,27 @@ function Save_Exam(job) {
 
 };
 
+
+
+function uuidv4() {
+    return 'xxxxxxxx_xxxx_4xxx_yxxx_xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+
+
+
 function Insert_Exam(job) {
+    
     var CB_Need_class
     var FormDisplay_class
     var ANS_class
     var Display_Answer_class
     var RD_Display_class
     var Display_Question
+    var UUID = [];
     if (job == 'NEW') {
         CB_Need_class = "CB_Need_New";
         FormDisplay_class = "FormDisplay_Answer_New";
@@ -278,35 +296,71 @@ function Insert_Exam(job) {
     }
 
 
+
     var Ans_TextDisplay = [];
-    var Ans_Text_HTML_Display = [];
-    var Ans_Value = [];  
+    var Ans_Text_HTML_Display = [];   
+
+    var Ans_Value = [];
     var Need_value = document.getElementById(CB_Need_class);
     Need_value = Need_value.checked;
     var parent = document.getElementById(FormDisplay_class);
     var nodesSameClass = 0;
     nodesSameClass = parent.getElementsByClassName(ANS_class);
     var AnsCount = nodesSameClass.length;
-    var Display = document.getElementsByClassName(Display_Answer_class);
-    var RD = document.getElementsByClassName(RD_Display_class);
 
 
-    for (var i = 0; i <= AnsCount - 1; i++) {
-        Ans_Text_HTML_Display.push(Display[i].innerHTML);  // HTML TEXT
-        Ans_TextDisplay.push(Display[i].innerText);   //  TEXT
-        Ans_Value.push(Number(RD[i].childNodes[0].checked)); // RadioValue
-    
-    }
+    var Question_Picture = [];
+    var Ans_Picture_Sub = [];
+    var Ans_Picture = [];
 
-
-    //----------------------------- Save Question ------------
+    //-----------------------------  Question ------------
 
     var Text_Question;
     var TextHTML_Question;
-
-    var Question_FormDetail = document.getElementById(Display_Question);
+  
+    var Question_FormDetail = document.getElementById(Display_Question); 
     Text_Question = Question_FormDetail.innerText; // TEXT
     TextHTML_Question = Question_FormDetail.innerHTML;// HTML TEXT
+
+    var IMG_Question = document.getElementById(Display_Question).getElementsByTagName('img'); 
+       //------------------------------------- push img -----------------------------------
+    if (IMG_Question.length > 0) {
+        for (var i = 0; i <= IMG_Question.length - 1; i++) {
+            Question_Picture.push(IMG_Question[i].src);
+        }
+    }
+  
+
+
+
+
+
+
+    //------------------------ Answer -------------
+
+
+    var Display = document.getElementsByClassName(Display_Answer_class);
+    var RD = document.getElementsByClassName(RD_Display_class);
+
+    for (var i = 0; i <= AnsCount - 1; i++) {       
+      
+        Ans_TextDisplay.push(Display[i].innerText);   //  TEXT
+        Ans_Value.push(Number(RD[i].childNodes[0].checked)); // RadioValue  
+        Ans_Text_HTML_Display.push(Display[i].innerHTML); 
+         //------------------------------------- push img -----------------------------------
+
+        var IMG_Ans = document.getElementById(Display[i].id).getElementsByTagName('img');
+        if (IMG_Ans.length > 0) {
+            for (var z = 0; z <= IMG_Ans.length - 1; z++) {
+                Ans_Picture.push([i,IMG_Ans[z].src]);
+            }
+        }
+     
+    }
+
+
+  
+
 
     //---------- Check ข้อมูลต้องถูก Input ให้ครบ ----
     var TextAleart = "";
@@ -343,7 +397,8 @@ function Insert_Exam(job) {
             data: {
                 Max_Seq: Max_Seq, QuestionCount: QuestionCount, ValueCodeQuestion: ValueCodeQuestion, ValueCodeAnswer: ValueCodeAnswer,
                 Ans_TextDisplay: Ans_TextDisplay, Ans_Text_HTML_Display: Ans_Text_HTML_Display, Ans_Value: Ans_Value, Need_value: Need_value,
-                Text_Question: Text_Question, TextHTML_Question: TextHTML_Question, job: job, OP_UPD: OP_UPD, DisplayOrder: DisplayOrder, Rewrite_Master: Rewrite_Master
+                Text_Question: Text_Question, TextHTML_Question: TextHTML_Question, job: job, OP_UPD: OP_UPD, DisplayOrder: DisplayOrder, Rewrite_Master: Rewrite_Master,
+                Ans_Picture: Ans_Picture, Question_Picture: Question_Picture
             },
             success: function (response) {
                 if (response.success == true) {
@@ -671,11 +726,14 @@ function Manage_Exam() {
 
 
 function MakeTable(Detail) {
-    TableTarget = $("#MyTable").DataTable()
+     
+
     if (TableTarget != null) {
         TableTarget.destroy();
     }
-   
+       
+
+
     TableTarget = $("#MyTable").DataTable({
         //searching: false,
         ordering: false,
@@ -694,6 +752,7 @@ function MakeTable(Detail) {
             {
                 data: null,
                 render: function (data, type, row) {
+                    
                     var valueStatus = row.valueStatus.trim();
                     
                     if (valueStatus == 'NEW') {

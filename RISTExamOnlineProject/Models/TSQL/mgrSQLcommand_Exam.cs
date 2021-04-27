@@ -318,6 +318,7 @@ namespace RISTExamOnlineProject.Models.TSQL
             var ds = new DataSet();
             SqlCommand objSqlCmd = new SqlCommand();
             var OBJ = new mgrSQL_ObjCommand(_configuration);    
+
                         objSqlCmd.CommandType = CommandType.StoredProcedure;
                         objSqlCmd.CommandText = "sprApproved_Reject_Question";              
                         objSqlCmd.Parameters.Clear();
@@ -327,6 +328,7 @@ namespace RISTExamOnlineProject.Models.TSQL
                         objSqlCmd.Parameters.Add("@valueCodeQuestion", SqlDbType.VarChar).Value = ValueCodeQuestion.ToString();
                         objSqlCmd.Parameters.Add("@valueCodeAnswer", SqlDbType.VarChar).Value = ValueCodeAnswer;
                         objSqlCmd.Parameters.Add("@Rewrite", SqlDbType.Int).Value = Rewrite_Master;
+
             
                         dt = OBJ.GetDataTable(objSqlCmd);
 

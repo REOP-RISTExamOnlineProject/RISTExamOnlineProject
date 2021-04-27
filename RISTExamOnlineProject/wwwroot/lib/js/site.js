@@ -3,7 +3,10 @@
 
 // Write your JavaScript code.
 showInPopup = (url, title) => {
+
+    
     $.ajax({
+        
         type: "GET",
         url: url,
         success: function (res) {

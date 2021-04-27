@@ -16,10 +16,10 @@
         .modal {
             overflow-y: auto;
         }
-
+/*
         .note-group-select-from-files {
             display: none;
-        }
+        }*/
 
         div:empty:before {
             content: attr(data-placeholder);
@@ -267,6 +267,8 @@
                     <button class="btn btn-success btn-sm " id="BTN_Save" onclick="Save()">
                         <i class="fas fa-save"></i> Save Edit
                     </button>
+           
+
                     <button type="button" class="btn btn-secondary btn-sm " data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -407,7 +409,7 @@
             });
 
             $("#DDL_ExamName").on("change", function () {
-
+                
                 var ItemCode = $("#DDL_ExamName").val()
 
                 if (ItemCode != 0) {
