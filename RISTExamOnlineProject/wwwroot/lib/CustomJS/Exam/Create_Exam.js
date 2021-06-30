@@ -75,7 +75,7 @@ function GetExamDetail(Itemcode) {
         data: { Itemcode: Itemcode },
         success: function (response) {    
             if (response.success == true) {    
-                debugger
+                
                 var Detail = response.detail
                 Max_Seq = response.max_Seq
                 QuestionCount = response.questionCount
@@ -103,9 +103,8 @@ function GetExamDetail(Itemcode) {
                     TableTarget.destroy();
                 }
                 TableTarget = $("#MyTable").DataTable()
-                TableTarget.clear().draw();
-          
-
+                TableTarget.clear().draw();          
+                Max_Seq = 0;
                 $('#Display').show();
                 UpdDate = response.updDate
                 ValueCodeQuestion = response.valueCodeQuestion
@@ -271,6 +270,7 @@ function uuidv4() {
 
 
 function Insert_Exam(job) {
+    
     
     var CB_Need_class
     var FormDisplay_class
@@ -778,6 +778,7 @@ function MakeTable(Detail) {
                     var ValueCodeQuestion = row.valueCodeQuestion.trim();
                     var ValueCodeAnswer = row.valueCodeAnswer.trim();
                     var Seq = row.seq;
+
                     var Max_Seq_ = row.max_Seq.trim();
                     var ValueStatus = row.valueStatus.trim();
                     

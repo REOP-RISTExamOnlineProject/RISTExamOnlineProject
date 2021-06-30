@@ -1,10 +1,13 @@
-﻿@model RISTExamOnlineProject.Models.db.ItemCategoryModel
+﻿@using System.Collections
+@model RISTExamOnlineProject.Models.db.ItemCategoryModel
 
 @{ Layout = null; }
-@{
-    //var page = ViewBag.pageCurrent;
-}
 
+@*@{
+
+
+    var licensetype = ViewData["LicenseTypeGroup"] as IEnumerable<ItemCategoryTypeModel>;
+}*@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <div class="row">
     <div class="col-md-12">
@@ -16,7 +19,6 @@
             <input type="hidden" asp-for="ComputerName" />
             <input type="hidden" asp-for="UserName" />
             <input type="hidden" name="page" value="@ViewBag.pageCurrent" />
-
             <div class="form-group">
                 <label asp-for="ItemCateg" class="control-label"></label>
                 @if (Model.Nbr != 0)
@@ -25,24 +27,37 @@
                 }
                 else
                 {
-                    @Html.TextBoxFor(x => Model.ItemCateg, new { @class = "form-control" , @maxlength="6" })
+                    @Html.TextBoxFor(x => Model.ItemCateg, new { @class = "form-control", @maxlength = "6" })
                 }
-
                 <span asp-validation-for="ItemCateg" class="text-danger"></span>
             </div>
-
             <div class="form-group">
                 <label asp-for="ItemCategName" class="control-label"></label>
                 <input asp-for="ItemCategName" maxlength="50" class="form-control" />
                 <span asp-validation-for="ItemCategName" class="text-danger"></span>
+
             </div>
-          
+
+            <div class="form-group">
+                <label asp-for="ItemCategType" class="control-label"></label>
+                @*@Html.DropDownList("Group_No", (IEnumerable<SelectListItem>) ViewBag.LicenseTypeGroup,"Select...", new { @class = "form-control" })*@
+                @Html.DropDownListFor(model => model.ItemCategType, (IEnumerable<SelectListItem>)ViewBag.LicenseTypeGroup, "--select--" ,new { @class = "form-control" })
+               @* @Html.DropDownListFor(m => Model.ItemCategType, new SelectList((IEnumerable)ViewBag.LicenseTypeGroup, "Group_No", "License_Grp_Nm", ""))*@
+            </div>
+
+            @*<div class="form-group ">
+                <label asp-for="ItemCategType" class="control-lable"></label>
+                <select asp-for="" asp-items="@ViewBag.LicenseTypeGroup" class="custom-select">
+                    <option value="">Select</option>
+                </select>
+                <span asp-validation-for="ItemCategType" class="text-danger"></span>
+            </div>*@
+
             <div class="form-group">
                 <input type="submit" value="Submit" class="btn btn-primary btn-block" />
             </div>
-           
+
         </form>
     </div>
 </div>
-
 

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RISTExamOnlineProject.Models.db;
 using X.PagedList;
@@ -30,9 +31,29 @@ namespace RISTExamOnlineProject.Controllers
 
         public async Task<IActionResult> AddOrEdit(int? page,int id = 0)
         {
+            ViewBag.LicenseTypeGroup = new SelectList(_context.vewLicense_Group, "License_Grp_Nm", "License_Grp_Nm");
             if (id == 0)
+                
                 return View(new ItemCategoryModel());
             ViewBag.pageCurrent = page;
+
+            //var listtype = (from listtypecroup in _context.vewLicense_Group
+            //                    select new SelectListItem()
+            //    {
+            //        Text = listtypecroup.Group_No.ToString(),
+            //        Value = listtypecroup.License_Grp_Nm.ToString(),
+            //    }).ToList();
+
+            //listtype.Insert(0, new SelectListItem
+            //{
+            //    Text = "----Select----",
+            //    Value = string.Empty
+            //});
+
+            //ViewBag.LicenseTypeGroup = listtype;
+            ////ViewBag.LicenseTypeGroup = new SelectList(_context.vewLicense_Group, "Group_No", "License_Grp_Nm");
+
+
             var itemCategoryModel = await _context.ItemCategory.FindAsync(id);
             if (itemCategoryModel == null)
             {
@@ -43,7 +64,7 @@ namespace RISTExamOnlineProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit(int id, [Bind("Nbr,ItemCateg,ItemCategName,AddDate,UpdDate,UserName,ComputerName")] int? page, ItemCategoryModel itemCategoryModel)
+        public async Task<IActionResult> AddOrEdit(int id, [Bind("Nbr,ItemCateg,ItemCategName,ItemCategType,AddDate,UpdDate,UserName,ComputerName")] int? page, ItemCategoryModel itemCategoryModel)
         {
             if (!ModelState.IsValid)
                 return Json(new
@@ -71,10 +92,12 @@ namespace RISTExamOnlineProject.Controllers
                     
                     itemCategoryModel.UpdDate = DateTime.Now;
                     itemCategoryModel.ItemCategName = itemCategoryModel.ItemCategName;
+                    itemCategoryModel.ItemCategType = itemCategoryModel.ItemCategType;
                     itemCategoryModel.UserName = User.Identity.Name;
                     itemCategoryModel.ComputerName = Request.HttpContext.Connection.RemoteIpAddress.ToString();
                     _context.Entry(itemCategoryModel).Property(x => x.UpdDate).IsModified = true;
                     _context.Entry(itemCategoryModel).Property(x => x.ItemCategName).IsModified = true;
+                    _context.Entry(itemCategoryModel).Property(x => x.ItemCategType).IsModified = true;
                     _context.Entry(itemCategoryModel).Property(x => x.UserName).IsModified = true;
                     _context.Entry(itemCategoryModel).Property(x => x.ComputerName).IsModified = true;
                    

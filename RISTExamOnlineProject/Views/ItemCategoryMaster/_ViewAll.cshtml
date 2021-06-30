@@ -35,6 +35,9 @@
                             @Html.DisplayNameFor(model => model.First().ItemCategName)
                         </th>
                         <th>
+                            @Html.DisplayNameFor(model => model.First().ItemCategType)
+                        </th>
+                        <th>
                             @Html.DisplayNameFor(model => model.First().AddDate)
                         </th>
                         <th>
@@ -54,38 +57,38 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ItemCateg)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ItemCategName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.AddDate)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.UpdDate)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.UserName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ComputerName)
-                            </td>
-                            <td>
-                                <div>
-                                    <a onclick="showInPopup('@Url.Action("AddOrEdit", "ItemCategoryMaster", new {id = item.Nbr, page = pageCurrent}, Context.Request.Scheme)', 'Update ItemCategory')" class="btn btn-info btn-sm text-white"><i class="fas fa-pencil-alt"></i> Edit</a>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ItemCateg)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ItemCategName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ItemCategType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AddDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UpdDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ComputerName)
+                        </td>
+                        <td>
+                            <div>
+                                <a onclick="showInPopup('@Url.Action("AddOrEdit", "ItemCategoryMaster", new {id = item.Nbr, page = pageCurrent}, Context.Request.Scheme)', 'Update ItemCategory')" class="btn btn-info btn-sm text-white"><i class="fas fa-pencil-alt"></i> Edit</a>
+                                <form asp-action="Delete" asp-route-id="@item.Nbr" asp-route-page="@ViewBag.pageCurrent" onsubmit="return jQueryAjaxDelete(this)" class="d-inline">
+                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Delete</button>
 
-                                    <form asp-action="Delete" asp-route-id="@item.Nbr" asp-route-page="@ViewBag.pageCurrent" onsubmit="return jQueryAjaxDelete(this)" class="d-inline">
-
-                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Delete</button>
-
-
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>

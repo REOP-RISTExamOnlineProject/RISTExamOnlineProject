@@ -121,5 +121,7 @@ namespace RISTExamOnlineProject.Models.db
 
         public DbSet<vewPlan_Trainee> vewPlan_Trainee { get; set; }
 
+        public DbSet<ItemCategoryTypeModel> vewLicense_Group { get; set; }
+
     }
 }

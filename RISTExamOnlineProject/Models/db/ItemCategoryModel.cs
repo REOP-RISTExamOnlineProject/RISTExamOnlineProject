@@ -18,6 +18,9 @@ namespace RISTExamOnlineProject.Models.db
         public string ItemCateg { get; set; }
         [Required(ErrorMessage = "This Field is required.")]
         public string ItemCategName { get; set; }
+        [Required(ErrorMessage = "This Field is required.")]
+        public string ItemCategType { get; set; }
+
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? AddDate { get; set; }
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]

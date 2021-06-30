@@ -21,6 +21,7 @@ using RISTExamOnlineProject.Models.db;
 using RISTExamOnlineProject.Models.TSQL;
 
 using Microsoft.AspNetCore.Hosting.Server;
+using SimpleImpersonation;
 
 namespace RISTExamOnlineProject.Controllers
 {
@@ -296,7 +297,10 @@ namespace RISTExamOnlineProject.Controllers
 
         }
 
-
+     
+            
+         
+       
 
         public string SavePictrue(string TextHTML, string PictrueText)
         {
@@ -310,18 +314,48 @@ namespace RISTExamOnlineProject.Controllers
                 {
                     try
                     {
-                        //  string Root = @"wwwroot\lib\IMG_For_Exam"; // Path
-                        string Root = @"\\10.29.1.116\G$\TEC_Train_Dept\Program\TestSkill_Image";
-                        string fileName = Path.GetFileNameWithoutExtension(Path.GetRandomFileName()) + "." + FileType;  // Make File Name Random
-                        TextHTML = TextHTML.Replace(PictrueText, @"http://10.29.1.116/SkillTestPicture/TestSkill_Image/" + fileName);   //---------- Replase
-                        PictrueText = PictrueText.Replace("data:image/" + FileType + ";base64,", "");                    //------- Set file for convert                               
+                        string _Domain;
+                        string _userName;
+                        string _Password;                      
 
-                        //--------- Convert File ----------------
-                        var base64string = PictrueText;
-                        var base64array = Convert.FromBase64String(base64string);
-                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), Root, fileName);
-                        // Save
-                        System.IO.File.WriteAllBytes(filePath, base64array);
+                        _Domain = @"Rist";
+                        _userName = @"Administrator";
+                        _Password = @"p@$$2009";
+
+                        var credentials = new UserCredentials(_Domain, _userName, _Password);
+
+                        Impersonation.RunAsUser(credentials, LogonType.NewCredentials, () =>
+                        {
+                           // string sourcefile = @"\\10.29.1.116\G$\TEC_Train_Dept\Program\TestSkill_Image";
+                            //  string targetfolder = @"D:\@01.PATSimple\Job\SGA_2020\QTRIST01.txt";
+                           // string targetfolder = @"D:\FileWatching\QTRIST01.txt";
+
+                      
+                      //      File.Copy(sourcefile, targetfolder, true);
+
+
+
+                            //---------------------------
+
+                            //  string Root = @"wwwroot\lib\IMG_For_Exam"; // Path
+                            string Root = @"\\10.29.1.116\G$\TEC_Train_Dept\Program\TestSkill_Image";
+                            string fileName = Path.GetFileNameWithoutExtension(Path.GetRandomFileName()) + "." + FileType;  // Make File Name Random
+                            TextHTML = TextHTML.Replace(PictrueText, @"http://10.29.1.116/SkillTestPicture/TestSkill_Image/" + fileName);   //---------- Replase
+                            PictrueText = PictrueText.Replace("data:image/" + FileType + ";base64,", "");                    //------- Set file for convert                               
+
+                            //--------- Convert File ----------------
+                            var base64string = PictrueText;
+                            var base64array = Convert.FromBase64String(base64string);
+                            var filePath = Path.Combine(Directory.GetCurrentDirectory(), Root, fileName);
+                            // Save
+                            System.IO.File.WriteAllBytes(filePath, base64array);
+
+                        });
+
+
+
+
+                    
                     }
                     catch (Exception ex)
                     {
