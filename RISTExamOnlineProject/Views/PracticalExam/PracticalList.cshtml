@@ -1,8 +1,6 @@
 ﻿
-@{
-    ViewData["Title"] = "PracticalList";
-    Layout = "~/Views/Shared/_Parctical_Layout.cshtml";
-}
+@{ ViewData["Title"] = "PracticalList";
+                Layout = "~/Views/Shared/_Parctical_Layout.cshtml"; }
 
 
 
@@ -13,8 +11,8 @@
 <body>
 
 
-    <header class="justify-content-xl-center text-center m-lg-5  m-md-5">        
-                <h1 class="font-weight-bold ">Pratical List</h1> 
+    <header class="justify-content-xl-center text-center m-lg-5  m-md-5">
+        <h1 class="font-weight-bold ">Pratical List</h1>
     </header>
 
     <div class="container  justify-content-lg-center  justify-content-md-center ">
@@ -34,21 +32,49 @@
             </div>
         </div>*@
 
+        <div class="row justify-content-lg-center justify-content-md-center mb-lg-5  mb-md-5">
+
+
+
+            <div class="col col-lg-1 col-md-4">
+                <label class="font-weight-bold">StaffID:</label>
+            </div>
+            <div class="col col-lg-2 col-md-4">
+                <label id="LB_Staff"></label>
+            </div>
+
+            <div class="col col-lg-1 ">
+                <label class="font-weight-bold">PlanID:</label>
+            </div>
+            <div class="col col-lg-2 ">
+                <label id="LB_PlanID"></label>
+            </div>
+
+            <div class="col col-lg-2 ">
+                <label class="font-weight-bold">LicenseName:</label>
+            </div>
+            <div class="col col-lg-2" >
+                <label id="LB_LicenseName"></label>
+            </div>
+        </div>
+
+
+
 
 
         <div class="row justify-content-lg-center justify-content-md-center mb-lg-5  mb-md-5">
             <div class="col col-lg-5 col-md-7">
-                <button type="button" id="BTN_Preparation_Work" class="btn-lg w-100 h-100  btn-primary shadow-lg" onclick="JobList('0');">งานเตรียม</button>
+                <button type="button" id="BTN_Preparation_Work" class="btn-lg w-100 h-100  btn-primary shadow-lg" onclick="JobList(0);">งานเตรียม</button>
             </div>
         </div>
         <div class="row justify-content-lg-center justify-content-md-center  mb-lg-5  mb-md-5">
             <div class="col col-lg-5 col-md-7">
-                <button type="button" id="BTN_Main_Work" class="btn-lg w-100  h-100  btn-primary shadow-lg" onclick="JobList('1');">งานหลัก</button>
+                <button type="button" id="BTN_Main_Work" class="btn-lg w-100  h-100  btn-primary shadow-lg"onclick="JobList(1);">งานหลัก</button>
             </div>
         </div>
         <div class="row justify-content-lg-center justify-content-md-center  mb-lg-5  mb-md-5">
             <div class="col col-lg-5 col-md-7">
-                <button type="button" id="BTN_Final_work" class="btn-lg w-100 h-100 btn-primary shadow-lg" onclick="JobList('2');">งานขั้นสุดท้าย/งานเสริม</button>
+                <button type="button" id="BTN_Final_work" class="btn-lg w-100 h-100 btn-primary shadow-lg"onclick="JobList(2);">งานขั้นสุดท้าย/งานเสริม</button>
             </div>
         </div>
 
@@ -74,22 +100,51 @@
             var LicenseName_List;
 
 
+            var data_form = new FormData();
+
+
             $(document).ready(function () {
 
                 OPID =   "@User.Identity.Name";
-                Staffcode =  getParams(document.URL);
-                GetPlanID(Staffcode);
+               // Staffcode = getParams(document.URL);
+
+                const QueryString = window.location.search.toUpperCase().trim();
+                GetValue(QueryString);
+
+              //  const QueryString = '?STAFFCODE=000712&ITEMID=0&PLANID=T2121-0030&LICENSENAME=TR1005';
+
+
+                // string: ?foo=lorem&bar=&baz
+
 
             });
 
-
-              function JobList(ItemID) {    
-
-          
-                      location.href = '@Url.Action("ParcticalDispaly", "PracticalExam")?OPID=' + OPID + '&Staffcode=' + Staffcode + '&ItemID=' + ItemID + '&PlanID=' + PlanID_List + '&LicenseName=' + LicenseName_List + '';
+       
 
 
-              }
+            function JobList(ItemID) {
+                
+
+                Staffcode_ = document.getElementById('LB_Staff').textContent; 
+
+                PlanID_List_ = document.getElementById('LB_PlanID').textContent;
+                LicenseName_List_ = document.getElementById('LB_LicenseName').textContent;
+      
+               
+
+                debugger
+                location.href = '@Url.Action("ParcticalDisplay","PracticalExam")?STAFFCODE=' + Staffcode + '&ITEMID=' + ItemID + '&PLANID=' + PlanID_List + '&LICENSENAME=' + LicenseName_List;
+              //  location.href = '@Url.Action("ParcticalDisplay","PracticalExam")?STAFFCODE=000712&ITEMID=0&PLANID=T2121-0030&LICENSENAME=TR1005';
+
+           //   location.href = '@Url.Action("ParcticalDisplay","PracticalExam")';
+
+            };
+
+
+
+
+
+
 
 
 

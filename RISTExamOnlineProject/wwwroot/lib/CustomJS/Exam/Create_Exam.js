@@ -98,7 +98,7 @@ function GetExamDetail(Itemcode) {
          
                // TableTarget = $("#MyTable").DataTable()
                 
-
+                
                 if (TableTarget != null) {
                     TableTarget.destroy();
                 }

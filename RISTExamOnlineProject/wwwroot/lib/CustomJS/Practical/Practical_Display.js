@@ -1,5 +1,5 @@
 ﻿var getParams = function (url) {
-
+    debugger
     var params = {};
     var parser = document.createElement('a');
     parser.href = url;
@@ -232,51 +232,102 @@ function Disabled(QuestionNo_) {
 
 };
 
+function GetParameter(QueryString, Type) {
+
+    Type = Type.toUpperCase();  
+
+
+    const UrlParams = new URLSearchParams(QueryString);
+    var Value = UrlParams.get(Type);
+
+
+
+    if (Value != undefined) {
+        return Value;
+    }
+    else {
+
+        return "";
+    }
+
+}
 
 
 
 function MakeDisplayPractical() {
     
-    var Parameter = {};
+    //var Parameter = {};
 
-    Parameter = getParams(document.URL)
-    Staffcode = Parameter.Staffcode;
-    PlanID = Parameter.PlanID;
-    ItemID = Parameter.ItemID;
-    LicenseName = Parameter.LicenseName;
-
-    
-    $.ajax({
-        type: 'POST',
-        url: '../PracticalExam/MakeDisplayPractical',
-        dataType: 'json',
-        data: { OPID: OPID, Staffcode: Staffcode, PlanID: PlanID, ItemID: ItemID, LicenseName: LicenseName },
-
-        success: function (response) {
-            if (response.success == true) {
-                
-                var HTML_Text = response.responetext
-
-                DeleteHTML('Main_Display');
-                InputHTML('Main_Display', HTML_Text);
+    //Parameter = getParams(document.URL)
+    //Staffcode = Parameter.Staffcode;
+    //PlanID = Parameter.PlanID;
+    //ItemID = Parameter.ItemID;
+    //LicenseName = Parameter.LicenseName;
+    debugger
 
 
-                //$("#pause_1, #resume_1").hide();
-                //$("#start_1").show();
-                //$("#reset_1, #stop_1, #DIV_Forward_and_Back_1").hide();
+    try {
+        const QueryString = window.location.search.toUpperCase();
+        ItemID = GetParameter(QueryString, 'ItemID');
+        Staffcode = GetParameter(QueryString, 'Staffcode');
+        PlanID = GetParameter(QueryString, 'PlanID');
+        LicenseName = GetParameter(QueryString, 'LicenseName');
+
+        ItemID = decodeURIComponent(ItemID);
+        Staffcode = decodeURIComponent(Staffcode);
+        PlanID = decodeURIComponent(PlanID);
+        LicenseName = decodeURIComponent(LicenseName);
+
+
+        $.ajax({
+            type: 'POST',
+            url: '../PracticalExam/MakeDisplayPractical',
+            dataType: 'json',
+            data: { OPID: OPID, Staffcode: Staffcode, PlanID: PlanID, ItemID: ItemID, LicenseName: LicenseName },
+
+            success: function (response) {
+                if (response.success == true) {
+
+                    var HTML_Text = response.responetext
+
+                    DeleteHTML('Main_Display');
+                    InputHTML('Main_Display', HTML_Text);
+
+
+                    //$("#pause_1, #resume_1").hide();
+                    //$("#start_1").show();
+                    //$("#reset_1, #stop_1, #DIV_Forward_and_Back_1").hide();
 
 
 
-            } else {
-                DeleteHTML('Main_Display');
+                } else {
+                    DeleteHTML('Main_Display');
 
+                }
+            },
+            error: function (ex) {
+           
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: ex,
+
+                })
             }
-        },
-        error: function (ex) {
-            alert('Failed to retrieve states.' + ex);
-        }
-        
-    });
+
+        });
+    } catch (e) {
+
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: e,
+
+        })
+
+    }
+    
 
 
 

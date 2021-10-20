@@ -57,57 +57,69 @@ namespace RISTExamOnlineProject.Controllers
             return View();
         }
         [Authorize]
-        public IActionResult ParcticalDispaly(string OPID, string Staffcode, string ItemID, string PlanID, string LicenseName)
+        public IActionResult ParcticalDisplay()
+           //   public IActionResult ParcticalDisplay(string Staffcode, string ItemID, string PlanID, string LicenseName)
         {
 
 
 
-            var dt = new DataTable();
-            var SqlCMD = new SqlCommand();
-            try
-            {
-                mgrSQL_ObjCommand ObjRun = new mgrSQL_ObjCommand(_configuration);
-                //------------ check permit ----------
-                string Strsql = "select *   FROM [SPTOSystem].[dbo].[vewPlan_Trainee] where [Staffcode] = '" + Staffcode + "' and [Trianer] = '" + OPID + "' and  [Plan_ID] = '" + PlanID + "' and License_Name = '" + LicenseName + "' ";
-                SqlCMD = new SqlCommand();
-                SqlCMD.CommandType = CommandType.Text;
-                SqlCMD.CommandText = Strsql;
-                dt = ObjRun.GetDataTable(SqlCMD);
-            }
-            catch (Exception)
-            {
+            //var dt = new DataTable();
+            //var SqlCMD = new SqlCommand();
+            //try
+            //{
+            //    mgrSQL_ObjCommand ObjRun = new mgrSQL_ObjCommand(_configuration);
+            //    //------------ check permit ----------
+            //    string Strsql = "select *   FROM [SPTOSystem].[dbo].[vewPlan_Trainee] where [Staffcode] = '" + Staffcode.Trim() + "' and [Trianer] = '" + OPID.Trim() + "' and  [Plan_ID] = '" + PlanID.Trim() + "' and License_Name = '" + LicenseName.Trim() + "' ";
+            //    SqlCMD = new SqlCommand();
+            //    SqlCMD.CommandType = CommandType.Text;
+            //    SqlCMD.CommandText = Strsql;
+            //    dt = ObjRun.GetDataTable(SqlCMD);
+            //}
+            //catch (Exception)
+            //{
 
-                return RedirectToAction(nameof(PracticalExamController.Index), "PracticalExam");
-                throw;
-            }
-
-
-            if (dt.Rows.Count > 0)
-            {
-                return View();
-            }
-            else
-            {
-
-                return RedirectToAction(nameof(PracticalExamController.Index), "PracticalExam");
-            }
+            //    return RedirectToAction(nameof(PracticalExamController.Index), "home");
+            //    throw;
+            //}
 
 
+            //if (dt.Rows.Count > 0)
+            //{
+            //    return View();
+            //}
+            //else
+            //{
+
+            //    return RedirectToAction(nameof(PracticalExamController.Index), "PracticalExam");
+            //}
+
+            return View();
 
         }
 
+
+        
+
+
+
+
+
+
+
         [Authorize]
-        public IActionResult PracticalList(string Staffcode)
+        public IActionResult PracticalList(string Staffcode,string planID,string licenseName)
         {
 
             return View();
         }
+      
         [Authorize]
-        public IActionResult GetPlanID(string OPID, string Staffcode)
+        public IActionResult GetPlanID(string OPID, string Staffcode, string planID, string licenseName)
         {
             mgrSQL_ObjCommand ObjRun = new mgrSQL_ObjCommand(_configuration);
             DataTable dt = new DataTable();
-            string Strsql = "SELECT  [PlanID],[LicenseName]  FROM [dbo].[vewPracticalSnapshotRemainList] where Staffcode = '" + Staffcode + "' and Trianer = '" + OPID + "' group by [PlanID],[LicenseName]  ";
+            string Strsql = "SELECT  [PlanID],[LicenseName]  FROM [dbo].[vewPracticalSnapshotRemainList] where Staffcode = '" + Staffcode + "' and" +
+                " Trianer = '" + OPID + "' and     [PlanID]  ='"+ planID + "'    and [LicenseName] = '"+ licenseName + "' group by [PlanID],[LicenseName]  ";
 
             SqlCommand SqlCMD = new SqlCommand();
             SqlCMD = new SqlCommand();
@@ -204,9 +216,10 @@ namespace RISTExamOnlineProject.Controllers
 
 
         [Authorize]
-        public JsonResult MakeDisplayPractical(string OPID, string Staffcode, string PlanID, string ItemID, string LicenseName)
+        public JsonResult MakeDisplayPractical(string OPID, string Staffcode, string PlanID, string ItemID, string LicenseName)      
         {
-
+           
+          
 
 
             mgrSQLcommand_Practical ObjRun_Practical = new mgrSQLcommand_Practical(_configuration);

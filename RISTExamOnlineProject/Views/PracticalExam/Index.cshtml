@@ -205,9 +205,11 @@
                             data: null,
                             render: function (data, type, row) {
                                 var staffcode = row.staffcode.trim();
+                                var planID = row.planID.trim();
+                                var licenseName = row.licenseName.trim();
 
 
-                                return "<button type='submit' class='btn btn-primary m-1' onclick=continuity('" + staffcode + "');>Continuous</button>";
+                                return "<button type='submit' class='btn btn-primary m-1' onclick=continuity('" + staffcode + "','" + planID + "','" + licenseName+"');>Continuous</button>";
 
                             }, class: "text-wrap text-center"
 
@@ -233,9 +235,10 @@
 
 
 
-            function continuity(Staffcode) {
+            function continuity(Staffcode, planID, licenseName) {
 
-                 location.href = '@Url.Action("PracticalList", "PracticalExam")?Staffcode=' + Staffcode;
+                location.href = '@Url.Action("PracticalList", "PracticalExam")?Staffcode=' + Staffcode + '&PlanID=' + planID + '&LicenseName=' + licenseName;
+         
             }
 
 
